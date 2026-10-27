@@ -571,7 +571,7 @@ kbd{font:11px var(--f-m);padding:2px 6px;border-radius:6px;border:1px solid rgba
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const stage=$('#stage'),pubUI=$('#pub'),pro=$('#pro'),bgPro=$('#bgPro'),gate=$('#gate'),zoom=$('#zoom'),lens=$('#lens'),lensDom=$('#lensDom'),divider=$('#divider');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const DUR=reduce?450:3600;
+const DUR=reduce?450:2800;
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 
@@ -791,7 +791,7 @@ function loop(t){
   const p=clamp((t-tStart)/DUR);IF.p=p;
   const c=IF.revealC,W=IF.W,H=IF.H;
   const maxR=Math.hypot(Math.max(c.x,W-c.x),Math.max(c.y,H-c.y))+30;
-  const q=ease(clamp((p-.56)/.44));IF.revealR=q*maxR;
+  const q=ease(clamp((p-.37)/.45));IF.revealR=q*maxR;
   clip('circle('+IF.revealR.toFixed(1)+'px at '+c.x.toFixed(1)+'px '+c.y.toFixed(1)+'px)');
   if(q>.15&&!pro.classList.contains('in'))pro.classList.add('in');
   if(p>=1)enterPro();
@@ -855,9 +855,9 @@ float fbm(vec2 p){float a=0.5,s=0.0;for(int i=0;i<3;i++){s+=a*vn(p);p*=2.03;a*=0
 const RTS=0.6;
 const rt=new THREE.WebGLRenderTarget(4,4,{type:renderer.extensions.has('EXT_color_buffer_half_float')||renderer.extensions.has('EXT_color_buffer_float')?THREE.HalfFloatType:THREE.UnsignedByteType,minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,generateMipmaps:false,samples:renderer.capabilities.isWebGL2?4:0});
 const bgMat=new THREE.ShaderMaterial({
- uniforms:{uRes:{value:new THREE.Vector2(1,1)},uTime:{value:0},uC:{value:new THREE.Vector2()},uR:{value:0},uCell:{value:new THREE.Vector2()},uPro:{value:0},uCmp:{value:0},uSX:{value:0},uK:{value:RTS},uPtr:{value:new THREE.Vector2(-999,-999)},uPtrOn:{value:0}},
+ uniforms:{uRes:{value:new THREE.Vector2(1,1)},uTime:{value:0},uC:{value:new THREE.Vector2()},uR:{value:0},uCell:{value:new THREE.Vector2()},uPro:{value:0},uCmp:{value:0},uSX:{value:0},uK:{value:RTS},uPtr:{value:new THREE.Vector2(-999,-999)},uPtrOn:{value:0},uFlash:{value:0},uFC:{value:new THREE.Vector2(-999,-999)}},
  vertexShader:`void main(){gl_Position=vec4(position.xy,0.9999,1.0);}`,
- fragmentShader:`uniform vec2 uRes;uniform float uTime;uniform vec2 uC;uniform float uR;uniform vec2 uCell;uniform float uPro;uniform float uCmp;uniform float uSX;uniform float uK;uniform vec2 uPtr;uniform float uPtrOn;
+ fragmentShader:`uniform vec2 uRes;uniform float uTime;uniform vec2 uC;uniform float uR;uniform vec2 uCell;uniform float uPro;uniform float uCmp;uniform float uSX;uniform float uK;uniform vec2 uPtr;uniform float uPtrOn;uniform float uFlash;uniform vec2 uFC;
  ${NOISE2}
  /* light waves: two drifting sheen bands + soft caustic filaments, warped by noise */
  float waves(vec2 uv,float f,float g,float pl){
@@ -899,6 +899,8 @@ const bgMat=new THREE.ShaderMaterial({
    edge=(uR>1.0&&uPro<0.5)?exp(-pow((d-uR)/(22.0*uK),2.0))*0.35:0.0;
   }
   vec3 col=mix(a,b,m)+edge;
+  float fd=distance(px,uFC)/uRes.y;
+  col+=uFlash*(exp(-fd*fd*30.0)*0.7+exp(-fd*fd*4.0)*0.16)*vec3(0.86,1.0,1.0);
   gl_FragColor=vec4(pow(max(col,0.0),vec3(2.2)),1.0);
  }`,
  depthWrite:false,depthTest:false,toneMapped:false
@@ -961,17 +963,17 @@ if(dot(objectNormal,dispP-vec3(sign(position.x)*uDiv.x*uSplit,0.0,0.0))<0.0)obje
 vec3 objectTangent=vec3(tangent.xyz);
 #endif`;
 const ATT_PUB=new THREE.Color('#9ED3E0'),ATT_PRO=new THREE.Color('#BFEFEF');
-const MU={uRT:{value:rt.texture},uFull:{value:new THREE.Vector2(1,1)},uTint:{value:new THREE.Color()},uRim:{value:new THREE.Color()}};
+const MU={uRT:{value:rt.texture},uFull:{value:new THREE.Vector2(1,1)},uTint:{value:new THREE.Color()},uRim:{value:new THREE.Color()},uGlow:{value:0}};
 const RIM_PUB=new THREE.Color('#2A7397'),RIM_PRO=new THREE.Color('#0F4A70');
 const memMat=new THREE.MeshPhysicalMaterial({color:0x000000,roughness:0.08,iridescence:1,iridescenceIOR:1.28,iridescenceThicknessRange:[140,640],clearcoat:1,clearcoatRoughness:0.06,envMapIntensity:1.25,specularIntensity:1});
 memMat.onBeforeCompile=sh=>{Object.assign(sh.uniforms,U,MU);
- sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D uRT;uniform vec2 uFull;uniform vec3 uTint;uniform vec3 uRim;').replace('#include <opaque_fragment>',`{
+ sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D uRT;uniform vec2 uFull;uniform vec3 uTint;uniform vec3 uRim;uniform float uGlow;').replace('#include <opaque_fragment>',`{
   vec2 suv=gl_FragCoord.xy/uFull;vec3 nv=normalize(normal);
   float ndv=clamp(abs(dot(nv,geometryViewDir)),0.0,1.0);float fr=pow(1.0-ndv,2.4);
   vec2 off=nv.xy*(0.04+0.05*fr);
   vec3 rf=vec3(texture2D(uRT,suv-off*0.9).r,texture2D(uRT,suv-off).g,texture2D(uRT,suv-off*1.12).b);
   rf*=mix(vec3(1.0),uTint,0.5+0.3*fr);
-  outgoingLight=rf*(1.0-0.55*fr)+uRim*fr*0.9+outgoingLight;
+  outgoingLight=rf*(1.0-0.55*fr)+uRim*fr*0.9+outgoingLight+uGlow*vec3(0.55,0.9,0.95)*(0.25+fr*1.2);
  }
 #include <opaque_fragment>`);
  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\n'+SNOISE).replace('#include <beginnormal_vertex>',NORMAL_CODE).replace('#include <begin_vertex>','vec3 transformed=dispP;');};
@@ -1015,7 +1017,7 @@ new ResizeObserver(resize).observe(stage);resize();
 
 const toPx=(x,y)=>({x:(x/vw+.5)*W,y:(.5-y/vh)*H});
 const tmpQ=new THREE.Quaternion(),tmpV=new THREE.Vector3(),dummy=new THREE.Object3D(),nt=new THREE.Vector3();
-let ripIdx=0,ptrAmt=0,snapped=false;
+let ripIdx=0,ptrAmt=0,snapped=false,flashT=-99;
 const ptrDir=new THREE.Vector3(0,0,1);
 
 function dirFor(px,py,cx,cy,R,mesh){
@@ -1141,18 +1143,19 @@ function frame(){
  const P=L.pub,Q=L.pro;
  const breath=1+.022*Math.sin(t*1.1);
  let ax,ay,aR,showB=false,bx=0,by=0,bR=0;
- const S1=.62,SNAP=.9,DR=.68;
+ const S1=.48,SNAP=.78,DR=.68;
  /* phase: 0 interphase · 1 dividing (one membrane) · 2 two daughters */
- let ph=0,u=0,dn=0,nucK=1,grow=1,Dd=0,tb=0;
+ let ph=0,u=0,dn=0,nucK=1,grow=1,Dd=0,tb=0,glow=0;
  if(!cmp&&s>0&&s<S1){u=s/S1;ph=u<SNAP?1:2;}else if(!cmp&&s>=S1&&s<1)ph=2;
- const cx=P.x-P.R*.32*sst(.05,.9,Math.min(1,s/S1));
+ const cx=P.x-P.R*.32*sst(.05,SNAP,Math.min(1,s/S1));
  if(ph===1){
-  tb=sst(.1,.5,u);
-  const rt=lerp(.6,.035,ease(clamp((u-.14)/.62)));
+  tb=sst(.08,.42,u);
+  const rt=lerp(.6,.035,ease(clamp((u-.12)/.5)));
   const th0=Math.asin(Math.min(.999,rt/DR));
-  Dd=DR*Math.cos(th0)+.07+sst(.6,SNAP,u)*.13;
+  Dd=DR*Math.cos(th0)+.07+sst(.56,SNAP,u)*.13;
+  glow=sst(.5,SNAP,u)*.55;{const sp=toPx(cx,P.y);IF.revealC.x=sp.x;IF.revealC.y=sp.y;}
   U.uSplit.value=tb;U.uDiv.value.set(Dd,rt,DR);
-  dn=Dd*sst(.05,.6,u);nucK=lerp(1,DR,sst(.05,.6,u));
+  dn=Dd*sst(.04,.45,u);nucK=lerp(1,DR,sst(.04,.45,u));
   ax=cx;ay=P.y;aR=P.R;
  }else{U.uSplit.value=0;}
  if(ph===2){
@@ -1165,8 +1168,11 @@ function frame(){
  }
  if(ph===0&&!cmp){if(s>=1){ax=Q.x;ay=Q.y;aR=Q.R;}else{ax=P.x;ay=P.y;aR=P.R;}}
  if(cmp){ax=(IF.cmpX/W-.5)*vw;ay=(.5-.48)*vh;aR=P.R*.78;}
- if(ph===2&&!snapped){snapped=true;U.uRip.value[0].set(-1,0,0,t);U.uRip.value[1].set(1,0,0,t);U.uRip.value[2].set(0,1,0,t+.12);ripIdx=3;}
- if(s===0)snapped=false;
+ if(ph===2&&!snapped){snapped=true;flashT=t;U.uRip.value[0].set(-1,0,0,t);U.uRip.value[1].set(1,0,0,t);U.uRip.value[2].set(0,1,0,t+.12);ripIdx=3;}
+ if(s===0){snapped=false;flashT=-99;}
+ const fl=Math.max(glow,flashT>-50?Math.exp(-Math.max(0,t-flashT)*2.6):0);
+ MU.uGlow.value=fl;bgMat.uniforms.uFlash.value=fl;
+ {const fp=toPx(cx,P.y),k=renderer.getPixelRatio()*RTS;if(ph===1)bgMat.uniforms.uFC.value.set(fp.x*k,(H-fp.y)*k);}
  A.g.position.set(ax,ay,0);A.g.scale.setScalar(aR*breath);
  B.g.visible=showB;if(showB){B.g.position.set(bx,by,0);B.g.scale.setScalar(bR*breath);}
 
@@ -1186,7 +1192,7 @@ function frame(){
   if(IF.mode==='transition')nt.set(0,0,0);
   A.nuc.position.set(dn,0,.02);A.nuc2.position.set(-dn,0,.02);A.nuc2.visible=true;
   const nr=.36*nucK*pulse;A.nuc.scale.set(nr*(1+.18*sst(.02,.25,u)*(1-sst(.3,.6,u))),nr,nr);A.nuc2.scale.copy(A.nuc.scale);
-  const bw=.075*(1-sst(.32,.56,u)),len=2*dn-nr*1.2;
+  const bw=.075*(1-sst(.24,.44,u)),len=2*dn-nr*1.2;
   A.br.visible=bw>.004&&len>.01&&u>.08;if(A.br.visible){A.br.position.set(0,0,.02);A.br.scale.set(len,bw*(1+.6*sst(.08,.2,u)),bw);}
   A.nl.scale.setScalar(.11*(1-sst(.02,.15,u)));A.nl.position.set(A.nuc.position.x+.09,.1,.24);
   updVes(A,t,1,tb,Dd,DR);
