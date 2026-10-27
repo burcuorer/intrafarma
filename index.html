@@ -287,6 +287,118 @@ kbd{font:11px var(--f-m);padding:2px 6px;border-radius:6px;border:1px solid rgba
   .rip{animation-duration:.4s}
 }
 
+
+/* public catalog + product summary */
+.nav-b{font:inherit;color:inherit;background:none;border:0;padding:0;border-bottom:1px solid transparent}
+.nav-b:hover{color:var(--ink);border-color:var(--ink)}
+.cat{position:absolute;inset:16px;z-index:6;border-radius:24px;background:rgba(250,251,253,.97);border:1px solid #fff;box-shadow:0 40px 100px rgba(16,22,46,.28);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(14px) scale(.985);transition:opacity .35s,transform .45s cubic-bezier(.2,.7,.2,1)}
+.cat.open{opacity:1;transform:none}
+.cat-head{padding:24px 28px 14px;display:grid;gap:12px;border-bottom:1px solid rgba(16,22,46,.08)}
+.cat-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-right:48px}
+.cat h3{font:800 clamp(26px,3.2vw,42px)/1 var(--f-d);letter-spacing:-.03em;margin:0}
+.cat .eyebrow{margin:0 0 8px}
+.cat-search{display:flex;align-items:center;gap:8px;min-width:min(260px,40vw);padding:9px 14px;border-radius:999px;border:1px solid rgba(16,22,46,.14);background:#fff;color:var(--ink-2)}
+.cat-search input{border:0;outline:0;font:14px var(--f-b);color:var(--ink);background:none;width:100%}
+.cchips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cchips .lab{font:500 10.5px var(--f-m);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-right:4px}
+.chip{font:500 12.5px var(--f-b);padding:7px 13px;border-radius:999px;border:1px solid rgba(16,22,46,.14);background:#fff;color:var(--ink);transition:background .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--navy)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.sm{font-size:11.5px;padding:5px 11px}
+.chip.sm[aria-pressed="true"]{background:#17707A;border-color:#17707A}
+.cat-x{position:absolute;right:18px;top:18px;z-index:3;width:38px;height:38px;border-radius:50%;border:1px solid rgba(16,22,46,.12);background:#fff;color:var(--ink);font:18px/1 var(--f-b)}
+.cat-body{flex:1;overflow:auto;padding:18px 28px 26px;overscroll-behavior:contain}
+.cat-note{font:11px var(--f-m);color:var(--ink-2);margin:14px 0 0}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:12px}
+.pcard{position:relative;text-align:left;display:grid;gap:7px;padding:10px 10px 14px;border-radius:16px;border:1px solid rgba(16,22,46,.1);background:#fff;font:inherit;color:var(--ink);transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,border-color .25s;animation:pin .45s cubic-bezier(.2,.7,.2,1) both}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(16,64,104,.16);border-color:rgba(32,144,152,.45)}
+@keyframes pin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pthumb{position:relative;height:96px;border-radius:11px;overflow:hidden;background:radial-gradient(70% 90% at 78% 20%,rgba(255,255,255,.9),transparent 60%),radial-gradient(80% 120% at 10% 110%,var(--tc,#209098),transparent 70%),linear-gradient(135deg,#E8F4F5,#CFE6EC)}
+.pthumb::after{content:"";position:absolute;right:12px;top:12px;width:16px;height:30px;background:var(--mark) no-repeat center/contain;opacity:.9}
+.pthumb i{position:absolute;left:12px;bottom:10px;font:500 10.5px var(--f-m);letter-spacing:.08em;color:#fff;text-shadow:0 1px 6px rgba(6,30,50,.35)}
+.pcard b{font:700 15px/1.2 var(--f-d);padding:0 4px}
+.pcard .ax{font:11px var(--f-m);color:var(--ink-2);padding:0 4px}
+.pcard .acc{display:inline-flex;align-items:center;gap:6px;font:500 11px var(--f-b);color:#17707A;padding:0 4px}
+.pcard .acc::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pcard .acc.open{color:#46596B}
+.cat-empty{padding:40px 0;color:var(--ink-2);font-size:14px}
+.pdet{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(18px,3vw,40px);align-items:start;animation:pin .45s cubic-bezier(.2,.7,.2,1) both}
+.pvis{position:relative;min-height:340px;border-radius:20px;overflow:hidden;background:radial-gradient(60% 70% at 72% 24%,rgba(255,255,255,.95),transparent 62%),radial-gradient(90% 110% at 0% 110%,var(--tc,#209098),transparent 70%),linear-gradient(140deg,#EAF5F6,#C9E2EA 60%,#9FCBD6);display:grid;place-items:end start;padding:22px}
+.pvis::before{content:"";position:absolute;right:26px;top:26px;width:34px;height:64px;background:var(--mark) no-repeat center/contain}
+.pvis span{font:800 clamp(28px,3.4vw,46px)/.95 var(--f-d);letter-spacing:-.03em;color:#0E2235;max-width:12ch}
+.pvis small{position:absolute;left:22px;top:22px;font:500 10.5px var(--f-m);letter-spacing:.1em;text-transform:uppercase;color:#0E2235;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.7)}
+.pinfo{display:grid;gap:14px;align-content:start}
+.pback{justify-self:start;font:500 13px var(--f-b);border:0;background:none;color:var(--ink-2);padding:4px 0}
+.pback:hover{color:var(--ink)}
+.pinfo h4{font:800 clamp(30px,3.6vw,50px)/.95 var(--f-d);letter-spacing:-.035em;margin:0}
+.pinfo .lede{margin:0;font-size:14.5px;max-width:48ch}
+.pmeta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0}
+.pmeta div{padding:12px;border-radius:14px;border:1px solid rgba(16,22,46,.1);background:#fff}
+.pmeta dt{font:500 10.5px var(--f-m);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.pmeta dd{margin:4px 0 0;font:600 13.5px/1.3 var(--f-b)}
+.lockbox{position:relative;overflow:hidden;display:grid;gap:10px;padding:20px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#0B2E4C,#104068 55%,#17707A)}
+.lockbox::before{content:"";position:absolute;right:-18%;top:-80%;width:70%;height:180%;background:radial-gradient(closest-side,rgba(255,255,255,.28),transparent);pointer-events:none}
+.lockbox>*{position:relative}
+.lockbox h5{font:700 17px/1.25 var(--f-d);margin:0;display:flex;gap:10px;align-items:center}
+.lockbox p{margin:0;font-size:13.5px;color:rgba(255,255,255,.86)}
+.lockbox .b-white{justify-self:start}
+.openbox{display:grid;gap:8px;padding:18px;border-radius:18px;border:1px solid rgba(32,144,152,.35);background:rgba(32,144,152,.07)}
+.openbox h5{font:700 16px var(--f-d);margin:0}
+.openbox p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.stag{justify-self:start;font:500 11px var(--f-m);color:#8A4B0A;background:#FFF7E8;border:1px solid #F7DDB0;border-radius:999px;padding:4px 10px}
+@media (max-width:760px){
+  .cat{inset:8px;border-radius:18px}
+  .cat-head{padding:18px 16px 12px}
+  .cat-top{flex-direction:column;align-items:stretch;padding-right:40px}
+  .cat-search{min-width:0}
+  .cat-body{padding:14px 16px 20px}
+  .pgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .pthumb{height:72px}
+  .pdet{grid-template-columns:minmax(0,1fr)}
+  .pvis{min-height:200px}
+  .pmeta{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .cchips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+  .cchips::-webkit-scrollbar{display:none}
+  .cchips .chip,.cchips .lab{flex:none}
+  .cat h3{font-size:26px}
+}
+
+/* Pro: nav, document centre, request form (reuse the catalog panel) */
+.pro-nav button{font:inherit;padding:6px 12px;border-radius:999px;border:0;background:none;color:var(--ink-2)}
+.pro-nav button:hover{color:var(--ink)}
+.pro-nav button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(16,22,46,.08)}
+.cat.pro-mode{background:rgba(246,250,251,.97);top:86px}
+@media (max-width:760px){.cat.pro-mode{top:8px}}
+.cat.pro-mode .eyebrow{color:#17707A}
+.dlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.dlist li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:#fff;border:1px solid rgba(16,22,46,.08);animation:pin .4s cubic-bezier(.2,.7,.2,1) both}
+.dlist li.sel{border-color:#17707A;box-shadow:0 0 0 1px #17707A inset}
+.dlist input{width:18px;height:18px;accent-color:#17707A;flex:none}
+.dlist .fi{width:34px;height:42px}
+.dlist .tx{flex:1;min-width:0;display:grid}
+.dlist b{font:600 14px/1.3 var(--f-b)}
+.dlist small{font:11px var(--f-m);color:var(--ink-2)}
+.dlist .ty{font:500 10.5px var(--f-m);letter-spacing:.06em;text-transform:uppercase;color:#17707A;border:1px solid rgba(23,112,122,.35);border-radius:999px;padding:3px 8px;white-space:nowrap}
+.dbar{position:sticky;bottom:-26px;margin:16px -28px -26px;padding:16px 28px 20px;display:grid;gap:10px;background:linear-gradient(135deg,#0B2E4C,#104068 55%,#17707A);color:#fff}
+.dbar .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.dbar .cnt{font:600 14px var(--f-b);margin-right:auto}
+.dbar input[type=email]{flex:1 1 220px;min-width:0;font:14px var(--f-b);padding:10px 16px;border-radius:999px;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.42)}
+.dbar input[type=email]::placeholder{color:rgba(255,255,255,.65)}
+.dbar .chk{color:#fff;font-size:12.5px}
+.dbar .chk input{accent-color:#fff}
+.dbar .err{color:#FFD7D7;margin:0;font-size:13px}
+.dbar .ok{color:#fff;margin:0;font-size:13px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35)}
+.rq{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.9fr);gap:clamp(18px,3vw,36px);align-items:start;animation:pin .45s cubic-bezier(.2,.7,.2,1) both}
+.rqf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rqf .full{grid-column:1/-1}
+.rqf textarea{font:14px var(--f-b);padding:10px 12px;border-radius:12px;border:1px solid rgba(16,22,46,.14);background:#fff;color:var(--ink);min-height:84px;resize:vertical;text-transform:none;letter-spacing:0}
+.rqt{display:flex;gap:8px;flex-wrap:wrap}
+.rqside{display:grid;gap:10px;padding:18px;border-radius:18px;border:1px solid rgba(32,144,152,.35);background:rgba(32,144,152,.07)}
+.rqside h5{font:700 16px var(--f-d);margin:0}
+.rqside p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.rqside ol{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink);display:grid;gap:6px}
+.rqok{grid-column:1/-1;padding:14px 16px;border-radius:14px;background:#E5F4E4;border:1px solid #9FD49B;color:#065F46;font-size:14px}
+@media (max-width:760px){.rq{grid-template-columns:minmax(0,1fr)}.rqf{grid-template-columns:minmax(0,1fr)}.dbar{margin:16px -16px -20px;padding:14px 16px 18px;bottom:-20px}.dlist .ty{display:none}}
 /* Liquid Glass — functional layer only (apple-design skill › liquid-glass.md) */
 .lg{isolation:isolate;border:0;background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);box-shadow:inset 1px 1px 0 rgba(255,255,255,.95),inset -1px -1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.7),0 8px 26px rgba(16,22,46,.13),0 1px 2px rgba(16,22,46,.07);--lx:30%;--ly:0%}
 .lg::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;background:radial-gradient(140px 70px at var(--lx) var(--ly),rgba(255,255,255,.85),rgba(255,255,255,0) 70%),linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 50%)}
@@ -342,7 +454,7 @@ kbd{font:11px var(--f-m);padding:2px 6px;border-radius:6px;border:1px solid rgba
     <section class="pub-ui" id="pub" aria-label="Intrafarma">
       <header class="pub-top">
         <span class="logo" role="img" aria-label="Intrafarma"></span>
-        <nav class="pub-nav"><span data-t="nav1"></span><span data-t="nav2"></span><span data-t="nav3"></span><span data-t="nav4"></span><span data-t="nav5"></span></nav>
+        <nav class="pub-nav"><span data-t="nav1"></span><span data-t="nav2"></span><button type="button" class="nav-b" data-cat data-magnet data-t="nav3"></button><span data-t="nav4"></span><span data-t="nav5"></span></nav>
         <div class="lang lg" role="group" aria-label="Dil"><button type="button" data-lang="tr">TR</button>|<button type="button" data-lang="en">EN</button></div>
         <button class="hcp lg btn" type="button" data-gate data-magnet data-t="hcp"></button>
       </header>
@@ -352,7 +464,7 @@ kbd{font:11px var(--f-m);padding:2px 6px;border-radius:6px;border:1px solid rgba
         <p class="lede" data-t="lede"></p>
         <div class="btns">
           <button class="b-pri" type="button" data-gate data-magnet><span data-t="cta1"></span><span class="o"></span></button>
-          <button class="b-link" type="button" data-magnet data-t="cta2"></button>
+          <button class="b-link" type="button" data-cat data-magnet data-t="cta2"></button>
         </div>
       </div>
       <div class="stats">
@@ -366,7 +478,7 @@ kbd{font:11px var(--f-m);padding:2px 6px;border-radius:6px;border:1px solid rgba
       <div class="pro-ui">
         <header class="pro-top lg rv">
           <div class="brand-pro"><span class="logo" role="img" aria-label="Intrafarma"></span><span class="pill">PRO</span></div>
-          <nav class="pro-nav"><span class="on" data-t="pn1"></span><span data-t="pn2"></span><span data-t="pn3"></span><span data-t="pn4"></span></nav>
+          <nav class="pro-nav" id="proNav"><button type="button" class="on" data-pv="home" data-t="pn1"></button><button type="button" data-pv="prod" data-t="pn2"></button><button type="button" data-pv="docs" data-t="pn3"></button><button type="button" data-pv="req" data-t="pn4"></button></nav>
           <div class="who">
             <span class="who-t"><span id="whoProf">Hekim · Türkiye</span><small data-t="via"></small></span>
             <button class="ghost" id="logout" type="button" data-magnet data-t="logout"></button>
@@ -476,6 +588,19 @@ kbd{font:11px var(--f-m);padding:2px 6px;border-radius:6px;border:1px solid rgba
       <button class="knob lg btn" id="knob" type="button" role="slider" aria-label="Karşılaştırma çizgisi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">⟷</button>
     </div>
 
+
+    <div class="cat" id="cat" hidden role="dialog" aria-modal="true" aria-labelledby="catTitle">
+      <button class="cat-x" id="catClose" type="button" aria-label="Kapat" data-magnet>×</button>
+      <div class="cat-head" id="catHead">
+        <div class="cat-top">
+          <div><p class="eyebrow" data-t="cat_ey"></p><h3 id="catTitle" data-t="cat_t"></h3></div>
+          <label class="cat-search" for="catQ"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="catQ" type="search" autocomplete="off" data-tp="cat_q"></label>
+        </div>
+        <div class="cchips" id="catAx" role="group"></div>
+        <div class="cchips ca" id="catCa" role="group"></div>
+      </div>
+      <div class="cat-body" id="catBody"></div>
+    </div>
     <div class="gate" id="gate" hidden>
       <form class="g-card lg thick" id="gForm" novalidate>
         <div>
@@ -576,7 +701,7 @@ const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 
 const T={tr:{
- nav1:'Hakkımızda',nav2:'Uzmanlık',nav3:'Ürünler',nav4:'Bilim',nav5:'İş ortakları',hcp:'Sağlık çalışanları',
+ pc_ey:'/ Pro · Ürünler',pc_t:'Ürün kütüphanesi',pd_ey:'/ Pro · Belgeler',pd_t:'Belge merkezi',pr_ey:'/ Pro · Talepler',pr_t:'Numune ve teklif talebi',cat_open:'Teknik detay açık',dt_all:'Tümü',dt_ifu:'Kullanım talimatı',dt_tds:'Teknik dosya',dt_bro:'Broşür',dt_cert:'Sertifika',dt_pub:'Yayın',dq:'Belge ara',d_sel:'{n} belge seçildi',d_none:'Göndermek için belge seçin',d_send:'Bağlantıları gönder',d_ok:'{n} belgenin bağlantısı {e} adresine gönderildi (prototip; gerçek gönderim yok).',e_sel:'En az bir belge seçin.',d_note:'Belge adları örnektir; gerçek dosyalar Intrafarma\'dan gelecek.',d_fmt:'TR · EN · PDF',d_pubn:'Klinik yayın {i} · Intrafarma sağlayacak',d_cert1:'ISO 13485 belgesi',d_cert2:'CE uygunluk beyanı',d_cat:'E-Katalog 2026',rq_type:'Talep türü',rq_t1:'Numune',rq_t2:'Fiyat teklifi',rq_t3:'Bilgi',rq_prod:'Ürün',rq_org:'Kurum',rq_name:'Ad soyad',rq_role:'Unvan',rq_phone:'Telefon',rq_mail:'E-posta',rq_qty:'Adet',rq_msg:'Not (isteğe bağlı)',rq_kvkk:'Aydınlatma metnini okudum; bilgilerimin bu talep için işlenmesini kabul ediyorum.',rq_send:'Talebi gönder',rq_ok:'Talebiniz alındı. Referans: {r}. Intrafarma satış ekibi sizinle iletişime geçecek. (Prototip; gerçek gönderim yok.)',rq_err:'Kurum, ad soyad, geçerli e-posta ve onay zorunlu.',rq_side_t:'Talep nereye gider?',rq_s1:'Form satış ekibinin e-postasına düşer.',rq_s2:'Size otomatik bir alındı e-postası gider.',rq_s3:'Fiyat herkese açık gösterilmez; teklif e-postayla gelir.',rq_side_b:'Talep takibi ekranı sonra eklenecek.',cat_ey:'/ Ürünler',cat_t:'Rejeneratif tıp portföyü',cat_all:'Tümü',cat_q:'Ürün ara',cat_ca:'Klinik alan',cat_note:'Ürün listesi mevcut siteden alındı. Klinik alan eşlemesi örnektir, Intrafarma onayından sonra kesinleşecek.',cat_pro:'Teknik detay Pro alanında',cat_pub:'Bilgiler herkese açık',cat_back:'← Tüm ürünler',cat_empty:'Bu filtrelerle eşleşen ürün yok.',cat_n:'{n} ürün',d_ax:'Portföy ekseni',d_ca:'Klinik alanlar',d_lang:'Dil',d_sample:'Örnek içerik · Intrafarma onayı bekleniyor',d_lede:'{n}, Intrafarma portföyünün {a} ekseninde yer alır. Ürünün tanıtım metni Intrafarma onayından sonra eklenecek.',lk_t:'Teknik bilgi sağlık çalışanlarına açık',lk_b:'Kullanım alanı, uygulama bilgisi, kullanım talimatı ve klinik yayınlar Pro alanında. Sağlık çalışanı olduğunuzu beyan etmeniz yeterli; tescil numarası istenmez.',lk_cta:'Sağlık çalışanı girişi',op_t:'Bu ürünün bilgileri herkese açık',op_b:'İçerik, kullanım ve saklama bilgileri bu sayfada yer alır. Metinler sağlık beyanı içermez.',nav1:'Hakkımızda',nav2:'Uzmanlık',nav3:'Ürünler',nav4:'Bilim',nav5:'İletişim',hcp:'Sağlık çalışanları',
  eyebrow:'/ Rejeneratif tıp',h:'Rejeneratif tıbbı <em>ileriye</em> taşıyoruz.',
  lede:'Ortopedi, estetik, üroloji ve kadın sağlığında çalışan klinisyenler için ortobiyolojik ürünler, hücresel tedaviler ve rejeneratif çözümler.',
  cta1:'Sağlık çalışanı girişi',cta2:'Portföyü keşfet',s1:'Klinik alan',s2:'Portföy ekseni',s3:'İki dil',
@@ -602,7 +727,7 @@ const T={tr:{
  m_ok:'Bağlantı {e} adresine gönderildi. Prototip: gerçek e-posta gönderilmez.',e_mail:'Geçerli bir e-posta adresi girin.',e_kvkk:'Devam etmek için aydınlatma metnini onaylayın.',
  an1:'EV · 30–150 nm',an2:'Lipit çift katman',an3:'Parakrin sinyal',an4:'Canlı zar',cmpL:'Herkese açık site',cmpR:'Sağlık çalışanı alanı'
 },en:{
- nav1:'About',nav2:'Expertise',nav3:'Products',nav4:'Science',nav5:'Partners',hcp:'Healthcare professionals',
+ pc_ey:'/ Pro · Products',pc_t:'Product library',pd_ey:'/ Pro · Documents',pd_t:'Document centre',pr_ey:'/ Pro · Requests',pr_t:'Sample and quote request',cat_open:'Technical detail open',dt_all:'All',dt_ifu:'Instructions for use',dt_tds:'Technical file',dt_bro:'Brochure',dt_cert:'Certificate',dt_pub:'Publication',dq:'Search documents',d_sel:'{n} documents selected',d_none:'Select documents to send',d_send:'Send links',d_ok:'Links to {n} documents sent to {e} (prototype; nothing is sent).',e_sel:'Select at least one document.',d_note:'Document names are samples; real files will come from Intrafarma.',d_fmt:'TR · EN · PDF',d_pubn:'Clinical publication {i} · to be provided by Intrafarma',d_cert1:'ISO 13485 certificate',d_cert2:'CE declaration of conformity',d_cat:'E-Catalogue 2026',rq_type:'Request type',rq_t1:'Sample',rq_t2:'Price quote',rq_t3:'Information',rq_prod:'Product',rq_org:'Institution',rq_name:'Full name',rq_role:'Title',rq_phone:'Phone',rq_mail:'Email',rq_qty:'Quantity',rq_msg:'Note (optional)',rq_kvkk:'I have read the privacy notice and agree to my data being processed for this request.',rq_send:'Send request',rq_ok:'Request received. Reference: {r}. The Intrafarma sales team will contact you. (Prototype; nothing is sent.)',rq_err:'Institution, name, a valid email and consent are required.',rq_side_t:'Where does the request go?',rq_s1:'The form lands in the sales team\'s inbox.',rq_s2:'You get an automatic receipt email.',rq_s3:'Prices are never public; quotes arrive by email.',rq_side_b:'A request tracking screen comes later.',cat_ey:'/ Products',cat_t:'Regenerative medicine portfolio',cat_all:'All',cat_q:'Search products',cat_ca:'Clinical field',cat_note:'Product list taken from the current site. Clinical field mapping is a sample, to be confirmed after Intrafarma approval.',cat_pro:'Technical detail in Pro',cat_pub:'Open to everyone',cat_back:'← All products',cat_empty:'No products match these filters.',cat_n:'{n} products',d_ax:'Portfolio pillar',d_ca:'Clinical fields',d_lang:'Language',d_sample:'Sample content · pending Intrafarma approval',d_lede:'{n} belongs to the {a} pillar of the Intrafarma portfolio. Product copy will be added after Intrafarma approval.',lk_t:'Technical information is for healthcare professionals',lk_b:'Indications, application details, instructions for use and clinical publications are in Pro. A self-declaration is enough; no registration number needed.',lk_cta:'Healthcare professional access',op_t:'This product\'s information is open to everyone',op_b:'Ingredients, use and storage information are on this page. Copy contains no health claims.',nav1:'About',nav2:'Expertise',nav3:'Products',nav4:'Science',nav5:'Contact',hcp:'Healthcare professionals',
  eyebrow:'/ Regenerative medicine',h:'Moving regenerative medicine <em>forward.</em>',
  lede:'Orthobiologics, cellular therapies and regenerative solutions for clinicians in orthopedics, aesthetics, urology and women\'s health.',
  cta1:'Healthcare professional access',cta2:'Explore portfolio',s1:'Clinical fields',s2:'Portfolio pillars',s3:'Two languages',
@@ -639,6 +764,7 @@ function applyLang(){
  document.documentElement.lang=IF.lang;
  if(zoomFrom)$('#zEyebrow').textContent=IF.tr(zoomFrom.dataset.k);
  updateWho();rebuildLens();if(IF.setInds)IF.setInds();
+ if(!cat.hidden)renderCat();
 }
 $$('[data-lang]').forEach(b=>b.addEventListener('click',()=>{IF.lang=b.dataset.lang;applyLang();}));
 
@@ -682,7 +808,7 @@ stage.addEventListener('pointerdown',e=>{
 $$('.card').forEach(el=>{
  el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;el.style.setProperty('--mx',(x*100).toFixed(1)+'%');el.style.setProperty('--my',(y*100).toFixed(1)+'%');if(!reduce)el.style.transform='perspective(700px) rotateX('+((.5-y)*9).toFixed(2)+'deg) rotateY('+((x-.5)*11).toFixed(2)+'deg) translateY(-3px)';});
  el.addEventListener('pointerleave',()=>{el.style.transform='';});
- el.addEventListener('click',()=>openZoom(el));
+ el.addEventListener('click',()=>{const k=el.dataset.k;if(k==='k1t')openPro('prod');else if(k==='k2t')openPro('docs');else if(k==='k3t')openPro('req');else openPro('docs',{dt:4});});
 });
 
 /* zoom */
@@ -692,7 +818,7 @@ function fitZoom(){const pad=IF.W<760?10:24;setRect({l:pad,t:pad,w:IF.W-pad*2,h:
 $('.z-in').addEventListener('scroll',e=>{zoom.classList.toggle('scrolled',e.currentTarget.scrollTop>4);},{passive:true});
 function openZoom(card){
  if(IF.mode==='compare')return;
- zoomFrom=card;$('#zEyebrow').textContent=IF.tr(card.dataset.k);
+ zoomFrom=card;$('#zEyebrow').textContent=IF.tr(card.dataset.k);$('#zTitle').innerHTML='Regenflex <span>32 mg</span>';
  $('#mOk').hidden=true;$('#mErr').textContent='';
  card.style.transform='';setRect(rectOf(card));zoom.hidden=false;zoom.classList.remove('open');void zoom.offsetWidth;
  requestAnimationFrame(()=>{fitZoom();zoom.classList.add('open');IF.setInds();});
@@ -724,6 +850,127 @@ $('#mailForm').addEventListener('submit',e=>{
  $('#mErr').textContent='';const ok=$('#mOk');ok.textContent=IF.tr('m_ok').replace('{e}',v);ok.hidden=false;
 });
 
+
+/* public catalog */
+const cat=$('#cat'),catBody=$('#catBody');
+const AX={tr:['Ortobiyolojikler','Hücresel tedaviler','Rejeneratif teknolojiler','Biyoaktif beslenme','Özel çözümler'],en:['Orthobiologics','Cellular therapies','Regenerative technologies','Bioactive nutrition','Specialised solutions']};
+const CA={tr:['Ortopedi','Spor hekimliği','Estetik','Üroloji','Kadın sağlığı','Veteriner'],en:['Orthopaedics','Sports medicine','Aesthetics','Urology','Women\'s health','Veterinary']};
+const AXCA=[[0,1,2],[0,2,4],[0,2],[0,1],[3]],AXC=['#1F8F98','#2F6E9E','#3FA9B0','#7FB8A8','#5A7FA6'];
+const PRODS=[['Regenflex Bio-Plus',0],['Regenflex Starter',0],['Regenflex Kit',0],['Regenflex T&M',0],['İnartro',0],['Easy PRP Kit',0],['Intra PRP',0],['Well PRP',0],
+ ['Eksozom',1],['Mezenkimal Kök Hücre',1],['Kondroblast',1],['Kondromembran',1],['AmnionGraft®',1],
+ ['MILLIEXO',2],['Lipocell-Mini',2],['Milligraft',2],['SW-ABMC',2],
+ ['Osblass Saşe',3],['Atrofit',3],['Nemact',3],['Intra Type II',3],['Collygen',3],['Konted Us',3],['Hip Safe',3],['Arthrys Regain',3],['Arthrys',3],
+ ['Innprost',4],['Innpeak',4]].map(([n,a])=>({n,a,open:a===3}));
+const CS={ax:-1,ca:-1,q:'',det:-1,mode:'pub',view:'prod',dt:-1,sel:new Set(),rqT:0,rqDone:''};
+function chip(label,on,cls,fn){const b=document.createElement('button');b.type='button';b.className='chip'+(cls?' '+cls:'');b.textContent=label;b.setAttribute('aria-pressed',on);b.addEventListener('click',fn);return b;}
+function renderChips(){
+ const L=IF.lang,ax=$('#catAx'),ca=$('#catCa');ax.innerHTML='';ca.innerHTML='';
+ ax.appendChild(chip(IF.tr('cat_all'),CS.ax<0,'',()=>{CS.ax=-1;CS.det=-1;renderCat();}));
+ AX[L].forEach((n,i)=>ax.appendChild(chip('0'+(i+1)+' '+n,CS.ax===i,'',()=>{CS.ax=CS.ax===i?-1:i;CS.det=-1;renderCat();})));
+ const lab=document.createElement('span');lab.className='lab';lab.textContent=IF.tr('cat_ca');ca.appendChild(lab);
+ CA[L].forEach((n,i)=>ca.appendChild(chip(n,CS.ca===i,'sm',()=>{CS.ca=CS.ca===i?-1:i;CS.det=-1;renderCat();})));
+}
+function esc(t){return t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);}
+function renderCat(){
+ const L=IF.lang;setHead();
+ if(CS.mode==='pro'&&CS.view==='docs'){renderDocs();return;}
+ if(CS.mode==='pro'&&CS.view==='req'){renderReq();return;}
+ renderChips();
+ if(CS.det>=0){renderDet(PRODS[CS.det]);return;}
+ const q=CS.q.trim().toLocaleLowerCase(L);
+ const list=PRODS.map((p,i)=>({...p,i})).filter(p=>(CS.ax<0||p.a===CS.ax)&&(CS.ca<0||AXCA[p.a].includes(CS.ca))&&(!q||p.n.toLocaleLowerCase(L).includes(q)));
+ catBody.innerHTML='';
+ if(!list.length){catBody.innerHTML='<p class="cat-empty">'+IF.tr('cat_empty')+'</p>';return;}
+ const g=document.createElement('div');g.className='pgrid';
+ list.forEach((p,k)=>{const b=document.createElement('button');b.type='button';b.className='pcard';b.style.animationDelay=Math.min(k*28,420)+'ms';b.style.setProperty('--tc',AXC[p.a]);
+  b.innerHTML='<span class="pthumb"><i>0'+(p.a+1)+'</i></span><b>'+esc(p.n)+'</b><span class="ax">'+esc(AX[L][p.a])+'</span><span class="acc'+(p.open||CS.mode==='pro'?' open':'')+'">'+IF.tr(CS.mode==='pro'?'cat_open':(p.open?'cat_pub':'cat_pro'))+'</span>';
+  b.addEventListener('click',()=>{if(CS.mode==='pro'){openProProduct(p.n);return;}CS.det=p.i;renderCat();catBody.scrollTop=0;});g.appendChild(b);});
+ catBody.appendChild(g);
+ const n=document.createElement('p');n.className='cat-note';n.textContent=IF.tr('cat_n').replace('{n}',list.length)+' · '+IF.tr('cat_note');catBody.appendChild(n);
+}
+function renderDet(p){
+ const L=IF.lang,axn=AX[L][p.a],cas=AXCA[p.a].map(i=>CA[L][i]).join(', ');
+ catBody.innerHTML='<div class="pdet"><div class="pvis" style="--tc:'+AXC[p.a]+'"><small>0'+(p.a+1)+' · '+esc(axn)+'</small><span>'+esc(p.n)+'</span></div>'+
+ '<div class="pinfo"><button type="button" class="pback" id="pBack">'+IF.tr('cat_back')+'</button><p class="eyebrow">'+esc(axn)+'</p><h4>'+esc(p.n)+'</h4>'+
+ '<p class="lede">'+esc(IF.tr('d_lede').replace('{n}',p.n).replace('{a}',axn))+'</p><span class="stag">'+IF.tr('d_sample')+'</span>'+
+ '<dl class="pmeta"><div><dt>'+IF.tr('d_ax')+'</dt><dd>0'+(p.a+1)+' '+esc(axn)+'</dd></div><div><dt>'+IF.tr('d_ca')+'</dt><dd>'+esc(cas)+'</dd></div><div><dt>'+IF.tr('d_lang')+'</dt><dd>TR · EN</dd></div></dl>'+
+ (p.open?'<div class="openbox"><h5>'+IF.tr('op_t')+'</h5><p>'+IF.tr('op_b')+'</p></div>':
+ '<div class="lockbox"><h5><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'+IF.tr('lk_t')+'</h5><p>'+IF.tr('lk_b')+'</p><button type="button" class="b-white" id="pGate" data-magnet>'+IF.tr('lk_cta')+'</button></div>')+
+ '</div></div>';
+ $('#pBack').addEventListener('click',()=>{CS.det=-1;renderCat();});
+ const g=$('#pGate');if(g)g.addEventListener('click',()=>{IF.after=/^Regenflex/.test(p.n)?p.n:'';openGate();});
+}
+function openCat(){if(IF.mode!=='public')return;CS.mode='pub';CS.view='prod';CS.det=-1;showCat();}
+function showCat(){cat.classList.toggle('pro-mode',CS.mode==='pro');renderCat();catBody.scrollTop=0;if(cat.hidden){cat.hidden=false;void cat.offsetWidth;cat.classList.add('open');}setTimeout(()=>$('#catClose').focus({preventScroll:true}),40);}
+function setHead(){
+ const k=CS.mode==='pub'?['cat_ey','cat_t','cat_q']:({prod:['pc_ey','pc_t','cat_q'],docs:['pd_ey','pd_t','dq'],req:['pr_ey','pr_t','']})[CS.view];
+ const e=$('#cat .cat-head .eyebrow'),t=$('#catTitle');e.dataset.t=k[0];e.innerHTML=IF.tr(k[0]);t.dataset.t=k[1];t.innerHTML=IF.tr(k[1]);
+ const q=$('#catQ');q.dataset.tp=k[2]||'cat_q';q.placeholder=IF.tr(q.dataset.tp);$('#cat .cat-search').hidden=!k[2];
+ $('#catCa').hidden=!(CS.view==='prod');if(CS.view==='req')$('#catAx').innerHTML='';
+}
+function openPro(view,opt){if(IF.mode!=='pro')return;
+ $$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv===view));
+ if(view==='home'){closeCat();return;}
+ if(!zoom.hidden)closeZoom(true);
+ CS.mode='pro';CS.view=view;CS.det=-1;CS.q='';$('#catQ').value='';CS.rqDone='';
+ if(view==='docs')CS.dt=opt&&opt.dt!=null?opt.dt:-1;
+ if(view==='req'&&opt&&opt.prod)CS.rqProd=opt.prod;
+ showCat();}
+function openProProduct(n){closeCat(true);$$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv==='home'));const c=$('.card[data-k=k1t]');openZoom(c);$('#zTitle').innerHTML=esc(n)+(/^Regenflex/.test(n)?' <span>32 mg</span>':'');const p=PRODS.find(x=>x.n===n),t=$('.tile b[data-t=dd1]');if(p&&t)t.textContent=AX[IF.lang][p.a];}
+const DT=['ifu','tds','bro','cert','pub'];
+const DOCS=[['Regenflex Bio-Plus',0],['Regenflex Bio-Plus',1],['Regenflex Bio-Plus',2],['Regenflex Starter',0],['Regenflex T&M',0],['Intra PRP',0],['Easy PRP Kit',1],['Eksozom',1],['Kondromembran',0],['MILLIEXO',0],['MILLIEXO',2],['Lipocell-Mini',1],['d_cat',2],['d_cert1',3],['d_cert2',3],['1',4],['2',4],['3',4]];
+function docTitle(d){if(d[1]===4)return IF.tr('d_pubn').replace('{i}',d[0]);if(d[0].startsWith('d_'))return IF.tr(d[0]);return d[0]+' — '+IF.tr('dt_'+DT.at(d[1]));}
+function renderDocs(){
+ const ax=$('#catAx');ax.innerHTML='';
+ ax.appendChild(chip(IF.tr('dt_all'),CS.dt<0,'',()=>{CS.dt=-1;renderCat();}));
+ DT.forEach((t,i)=>ax.appendChild(chip(IF.tr('dt_'+t),CS.dt===i,'',()=>{CS.dt=CS.dt===i?-1:i;renderCat();})));
+ const q=CS.q.trim().toLocaleLowerCase(IF.lang);
+ const list=DOCS.map((d,i)=>({d,i})).filter(o=>(CS.dt<0||o.d[1]===CS.dt)&&(!q||docTitle(o.d).toLocaleLowerCase(IF.lang).includes(q)));
+ catBody.innerHTML='';const ul=document.createElement('ul');ul.className='dlist';
+ list.forEach((o,k)=>{const li=document.createElement('li');li.style.animationDelay=Math.min(k*25,300)+'ms';const id='dc'+o.i;const on=CS.sel.has(o.i);li.classList.toggle('sel',on);
+  li.innerHTML='<input type="checkbox" id="'+id+'"'+(on?' checked':'')+'><span class="fi">PDF</span><label class="tx" for="'+id+'"><b>'+esc(docTitle(o.d))+'</b><small>'+IF.tr('d_fmt')+'</small></label><span class="ty">'+IF.tr('dt_'+DT.at(o.d[1]))+'</span>';
+  li.querySelector('input').addEventListener('change',e=>{if(e.target.checked)CS.sel.add(o.i);else CS.sel.delete(o.i);li.classList.toggle('sel',e.target.checked);updBar();});
+  ul.appendChild(li);});
+ if(!list.length)catBody.innerHTML='<p class="cat-empty">'+IF.tr('cat_empty')+'</p>';else catBody.appendChild(ul);
+ const n=document.createElement('p');n.className='cat-note';n.textContent=IF.tr('d_note');catBody.appendChild(n);
+ const bar=document.createElement('form');bar.className='dbar';bar.noValidate=true;
+ bar.innerHTML='<div class="row"><span class="cnt" id="dCnt"></span></div><div class="row"><input type="email" id="dMail" autocomplete="off" placeholder="'+IF.tr('m_ph')+'" aria-label="E-posta"><button class="b-white" type="submit">'+IF.tr('d_send')+'</button></div><label class="chk"><input type="checkbox" id="dKvkk"><span>'+IF.tr('m_kvkk')+'</span></label><label class="chk"><input type="checkbox"><span>'+IF.tr('m_news')+'</span></label><p class="err" id="dErr" role="alert"></p><p class="ok" id="dOk" hidden></p>';
+ bar.addEventListener('submit',e=>{e.preventDefault();const v=$('#dMail').value.trim(),er=$('#dErr'),ok=$('#dOk');ok.hidden=true;
+  if(!CS.sel.size){er.textContent=IF.tr('e_sel');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){er.textContent=IF.tr('e_mail');return;}
+  if(!$('#dKvkk').checked){er.textContent=IF.tr('e_kvkk');return;}
+  er.textContent='';ok.textContent=IF.tr('d_ok').replace('{n}',CS.sel.size).replace('{e}',v);ok.hidden=false;});
+ catBody.appendChild(bar);updBar();
+}
+function updBar(){const c=$('#dCnt');if(c)c.textContent=CS.sel.size?IF.tr('d_sel').replace('{n}',CS.sel.size):IF.tr('d_none');}
+function renderReq(){
+ const L=IF.lang,prof=$('#whoProf').textContent.split(' · ')[0];
+ const opts=PRODS.filter(p=>!p.open).map(p=>'<option'+(p.n===CS.rqProd?' selected':'')+'>'+esc(p.n)+'</option>').join('');
+ catBody.innerHTML='<div class="rq"><form class="rqf" id="rqF" novalidate>'+
+ '<div class="full fld2"><span>'+IF.tr('rq_type')+'</span><div class="rqt" role="group">'+['rq_t1','rq_t2','rq_t3'].map((k,i)=>'<button type="button" class="chip" aria-pressed="'+(CS.rqT===i)+'" data-rq="'+i+'">'+IF.tr(k)+'</button>').join('')+'</div></div>'+
+ '<label class="fld2 full" for="rqP"><span>'+IF.tr('rq_prod')+'</span><select id="rqP">'+opts+'</select></label>'+
+ '<label class="fld2" for="rqO"><span>'+IF.tr('rq_org')+'</span><input id="rqO" autocomplete="off" placeholder="'+IF.tr('s_org_ph')+'"></label>'+
+ '<label class="fld2" for="rqN"><span>'+IF.tr('rq_name')+'</span><input id="rqN" autocomplete="off"></label>'+
+ '<label class="fld2" for="rqR"><span>'+IF.tr('rq_role')+'</span><input id="rqR" autocomplete="off" value="'+esc(prof)+'"></label>'+
+ '<label class="fld2" for="rqTel"><span>'+IF.tr('rq_phone')+'</span><input id="rqTel" type="tel" autocomplete="off"></label>'+
+ '<label class="fld2" for="rqM"><span>'+IF.tr('rq_mail')+'</span><input id="rqM" type="email" autocomplete="off" placeholder="'+IF.tr('m_ph')+'"></label>'+
+ '<label class="fld2" for="rqQ"><span>'+IF.tr('rq_qty')+'</span><select id="rqQ"><option>1</option><option>2</option><option>5</option><option>10</option></select></label>'+
+ '<label class="fld2 full" for="rqMsg"><span>'+IF.tr('rq_msg')+'</span><textarea id="rqMsg"></textarea></label>'+
+ '<label class="chk full" for="rqK"><input type="checkbox" id="rqK"><span>'+IF.tr('rq_kvkk')+'</span></label>'+
+ '<div class="full"><button class="b-ink" type="submit" data-magnet>'+IF.tr('rq_send')+'</button></div><p class="err full" id="rqE" role="alert"></p>'+(CS.rqDone?'<p class="rqok">'+esc(IF.tr('rq_ok').replace('{r}',CS.rqDone))+'</p>':'')+'</form>'+
+ '<aside class="rqside"><h5>'+IF.tr('rq_side_t')+'</h5><ol><li>'+IF.tr('rq_s1')+'</li><li>'+IF.tr('rq_s2')+'</li><li>'+IF.tr('rq_s3')+'</li></ol><p>'+IF.tr('rq_side_b')+'</p></aside></div>';
+ $$('#rqF [data-rq]').forEach(b=>b.addEventListener('click',()=>{CS.rqT=+b.dataset.rq;$$('#rqF [data-rq]').forEach(x=>x.setAttribute('aria-pressed',x===b));}));
+ $('#rqF').addEventListener('submit',e=>{e.preventDefault();
+  const ok=$('#rqO').value.trim()&&$('#rqN').value.trim()&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test($('#rqM').value.trim())&&$('#rqK').checked;
+  if(!ok){$('#rqE').textContent=IF.tr('rq_err');return;}
+  CS.rqProd=$('#rqP').value;CS.rqDone='IF-2026-'+String(140+Math.floor(Math.random()*60)).padStart(4,'0');renderCat();const o=$('.rqok');if(o)o.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'});});
+}
+function closeCat(instant){if(cat.hidden)return;cat.classList.remove('open');if(CS.mode==='pro')$$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv==='home'));if(instant){cat.hidden=true;return;}setTimeout(()=>{cat.hidden=true;},reduce?0:300);}
+$$('#proNav button').forEach(b=>b.addEventListener('click',()=>openPro(b.dataset.pv)));
+$$('[data-cat]').forEach(b=>b.addEventListener('click',openCat));
+$('#catClose').addEventListener('click',closeCat);
+$('#catQ').addEventListener('input',e=>{CS.q=e.target.value;CS.det=-1;renderCat();});
+
 /* gate */
 function openGate(){if(IF.mode!=='public')return;gate.hidden=false;$('#gErr').textContent='';setTimeout(()=>{const f=$('#gForm input[name=prof]');if(f)f.focus({preventScroll:true});},30);}
 $$('[data-gate]').forEach(b=>b.addEventListener('click',openGate));
@@ -734,7 +981,7 @@ $('#gForm').addEventListener('submit',e=>{
  e.preventDefault();
  if(!$('#gForm input[name=prof]:checked')){$('#gErr').textContent=IF.tr('e_prof');return;}
  if(!$('#gDecl').checked){$('#gErr').textContent=IF.tr('e_decl');return;}
- updateWho();gate.hidden=true;startTransition();
+ updateWho();gate.hidden=true;if(!cat.hidden){cat.classList.remove('open');cat.hidden=true;}startTransition();
 });
 
 /* modes */
@@ -747,12 +994,14 @@ function startTransition(){
  pubUI.classList.add('leaving');rebuildLens();
 }
 function enterPro(){
+ if(!cat.hidden)closeCat(true);
  IF.mode='pro';IF.p=1;pro.hidden=false;bgPro.hidden=false;clip('none');pro.classList.add('in');
  pubUI.classList.add('leaving');pubUI.style.clipPath='';showPub(false);gate.hidden=true;divider.hidden=true;
  $('#cmp').classList.remove('on');rebuildLens();
+ if(IF.after){const nm=IF.after;IF.after='';setTimeout(()=>{const c=$('.card[data-k=k1t]');if(c&&IF.mode==='pro'){openZoom(c);$('#zTitle').innerHTML=esc(nm)+' <span>32 mg</span>';}},900);}
 }
 function goPublic(){
- closeZoom(true);IF.mode='public';IF.p=0;IF.revealR=0;pro.hidden=true;bgPro.hidden=true;pro.classList.remove('in');clip('');
+ closeZoom(true);closeCat(true);IF.mode='public';IF.p=0;IF.revealR=0;pro.hidden=true;bgPro.hidden=true;pro.classList.remove('in');clip('');
  pubUI.style.clipPath='';showPub(true);pubUI.classList.remove('leaving');gate.hidden=true;divider.hidden=true;
  $('#cmp').classList.remove('on');rebuildLens();
 }
@@ -772,7 +1021,7 @@ $('#logout').addEventListener('click',goPublic);
 $('#replay').addEventListener('click',goPublic);
 $('#skip').addEventListener('click',()=>{closeZoom(true);enterPro();});
 $('#cmp').addEventListener('click',()=>{if(IF.mode==='compare')goPublic();else enterCompare();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!zoom.hidden)closeZoom();else if(!gate.hidden)gate.hidden=true;}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!zoom.hidden)closeZoom();else if(!gate.hidden)gate.hidden=true;else if(!cat.hidden){if(CS.det>=0){CS.det=-1;renderCat();}else closeCat();}}});
 
 /* divider drag */
 let dragging=false;
@@ -797,11 +1046,11 @@ function loop(t){
   if(p>=1)enterPro();
  }
  syncLens();
- IF.overlay=!gate.hidden||!zoom.hidden;IF.zoomOpen=!zoom.hidden;
+ IF.overlay=!gate.hidden||!zoom.hidden||!cat.hidden;IF.zoomOpen=!zoom.hidden;IF.catOpen=!cat.hidden;
  const P=IF.ptr,show=P.in&&!P.touch;
  lens.style.opacity=show?1:0;
  if(show){
-  const overlay=!gate.hidden||!zoom.hidden||IF.mode==='transition'||dragging;
+  const overlay=!gate.hidden||!zoom.hidden||!cat.hidden||IF.mode==='transition'||dragging;
   let tx=P.x,ty=P.y,L,z;
   if(overlay){L=18;z=1;}
   else if(magnet){tx=P.x+(magnet.x-P.x)*.3;ty=P.y+(magnet.y-P.y)*.3;L=40;z=1.35;}
@@ -1137,6 +1386,7 @@ function frame(){
  if(++fCount%60===0&&fAvg>21&&DPR>.65){DPR=Math.max(.65,DPR-.15);renderer.setPixelRatio(DPR);resize();}
  if(!visible)return;
  if(IF.zoomOpen){if(!P3)P3=initProd();P3.render(clock.getElapsedTime()*SPD);if((skip++)%4)return;}
+ else if(IF.catOpen&&(skip++)%4)return;
  const t=clock.getElapsedTime()*SPD;U.uTime.value=t;bgMat.uniforms.uTime.value=t;cpMat.uniforms.uTime.value=t;
  const cmp=IF.mode==='compare';
  const s=IF.mode==='transition'?IF.p:(IF.mode==='pro'?1:0);
