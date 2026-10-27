@@ -571,7 +571,7 @@ kbd{font:11px var(--f-m);padding:2px 6px;border-radius:6px;border:1px solid rgba
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const stage=$('#stage'),pubUI=$('#pub'),pro=$('#pro'),bgPro=$('#bgPro'),gate=$('#gate'),zoom=$('#zoom'),lens=$('#lens'),lensDom=$('#lensDom'),divider=$('#divider');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const DUR=reduce?450:2000;
+const DUR=reduce?450:3600;
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 
@@ -791,7 +791,7 @@ function loop(t){
   const p=clamp((t-tStart)/DUR);IF.p=p;
   const c=IF.revealC,W=IF.W,H=IF.H;
   const maxR=Math.hypot(Math.max(c.x,W-c.x),Math.max(c.y,H-c.y))+30;
-  const q=ease(clamp((p-.38)/.62));IF.revealR=q*maxR;
+  const q=ease(clamp((p-.56)/.44));IF.revealR=q*maxR;
   clip('circle('+IF.revealR.toFixed(1)+'px at '+c.x.toFixed(1)+'px '+c.y.toFixed(1)+'px)');
   if(q>.15&&!pro.classList.contains('in'))pro.classList.add('in');
   if(p>=1)enterPro();
@@ -917,24 +917,35 @@ const cpMat=new THREE.ShaderMaterial({
 });
 const cp=new THREE.Mesh(new THREE.PlaneGeometry(2,2),cpMat);cp.frustumCulled=false;cp.renderOrder=-10;scene.add(cp);
 
-const U={uTime:{value:0},uSplit:{value:0},uPtrDir:{value:new THREE.Vector3(0,0,1)},uPtrAmt:{value:0},uRip:{value:[0,1,2,3].map(()=>new THREE.Vector4(0,0,1,-99))}};
+const U={uTime:{value:0},uSplit:{value:0},uDiv:{value:new THREE.Vector3(.4,.6,.68)},uPtrDir:{value:new THREE.Vector3(0,0,1)},uPtrAmt:{value:0},uRip:{value:[0,1,2,3].map(()=>new THREE.Vector4(0,0,1,-99))}};
 const SNOISE=`
 vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
 vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
 vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
 float snoise(vec3 v){const vec2 C=vec2(1.0/6.0,1.0/3.0);const vec4 D=vec4(0.0,0.5,1.0,2.0);vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.0-g;vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;i=mod289(i);vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));float n_=0.142857142857;vec3 ns=n_*D.wyz-D.xzx;vec4 j=p-49.0*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.0*x_);vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.0-abs(x)-abs(y);vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);vec4 s0=floor(b0)*2.0+1.0;vec4 s1=floor(b1)*2.0+1.0;vec4 sh=-step(h,vec4(0.0));vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0);m=m*m;return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));}
-uniform float uTime;uniform float uSplit;uniform vec3 uPtrDir;uniform float uPtrAmt;uniform vec4 uRip[4];
+uniform float uTime;uniform float uSplit;uniform vec3 uDiv;uniform vec3 uPtrDir;uniform float uPtrAmt;uniform vec4 uRip[4];
+/* p on the unit sphere -> two daughter spheres (radius uDiv.z, centres +-uDiv.x) joined by a tether of radius uDiv.y */
+vec3 dumb(vec3 p){
+ float r=uDiv.z,rt=uDiv.y,D=uDiv.x,e=0.14;
+ float sx=p.x>=0.0?1.0:-1.0;float ax=abs(p.x);
+ float l=length(p.yz);vec2 dir=l>1e-5?p.yz/l:vec2(0.0,1.0);
+ float th0=asin(clamp(rt/r,0.0,0.999));
+ float xj=D-r*cos(th0);
+ if(ax<e){float xn=ax/e;float rmin=max(rt*0.35,rt-0.5*xj*cos(th0)/max(sin(th0),0.02));float rad=mix(rmin,rt,xn*xn);return vec3(sx*xn*xj,dir*rad);}
+ float th=(3.14159265-th0)*acos(clamp(ax,0.0,1.0))/acos(e);
+ return vec3(sx*(D+r*cos(th)),dir*r*sin(th));
+}
 vec3 dispF(vec3 p){
- float n=snoise(p*1.05+vec3(0.0,0.0,uTime*0.18))*0.064+snoise(p*0.55+vec3(uTime*0.07))*0.03+snoise(p*2.1-vec3(uTime*0.2))*0.014;
+ float ca=cos(uTime*0.08),sa=sin(uTime*0.08);vec3 pn=vec3(ca*p.x+sa*p.z,p.y,-sa*p.x+ca*p.z);
+ float n=snoise(pn*1.05+vec3(0.0,0.0,uTime*0.18))*0.064+snoise(pn*0.55+vec3(uTime*0.07))*0.03+snoise(pn*2.1-vec3(uTime*0.2))*0.014;
  float dd=distance(p,uPtrDir);
  float bulge=uPtrAmt*exp(-dd*dd*5.0)*0.20;
  float r=0.0;
  for(int i=0;i<4;i++){float age=uTime-uRip[i].w;if(age>0.0&&age<3.0){float d2=distance(p,uRip[i].xyz);float fr=age*0.95;r+=sin((d2-fr)*16.0)*exp(-age*1.4)*exp(-pow(d2-fr,2.0)*7.0)*0.055;}}
- vec3 q=p*(1.0+n+bulge+r);
- q.x*=1.0+0.48*uSplit;
- float w=1.0-0.62*uSplit*exp(-q.x*q.x*3.2);
- q.y*=w;q.z*=w;
+ float k=1.0+n+bulge+r;
+ vec3 q=p*k;
+ if(uSplit>0.0)q=mix(q,dumb(p)*k,uSplit);
  return q;
 }`;
 const NORMAL_CODE=`
@@ -945,7 +956,7 @@ vec3 dispP=dispF(position);
 vec3 dA=dispF(normalize(position+tg*0.012));
 vec3 dB=dispF(normalize(position+bt*0.012));
 vec3 objectNormal=normalize(cross(dA-dispP,dB-dispP));
-if(dot(objectNormal,dispP)<0.0)objectNormal=-objectNormal;
+if(dot(objectNormal,dispP-vec3(sign(position.x)*uDiv.x*uSplit,0.0,0.0))<0.0)objectNormal=-objectNormal;
 #ifdef USE_TANGENT
 vec3 objectTangent=vec3(tangent.xyz);
 #endif`;
@@ -964,7 +975,7 @@ memMat.onBeforeCompile=sh=>{Object.assign(sh.uniforms,U,MU);
  }
 #include <opaque_fragment>`);
  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\n'+SNOISE).replace('#include <beginnormal_vertex>',NORMAL_CODE).replace('#include <begin_vertex>','vec3 transformed=dispP;');};
-const memGeo=new THREE.SphereGeometry(1,64,48);
+const memGeo=new THREE.SphereGeometry(1,64,64).rotateZ(Math.PI/2);
 const NUC_PUB=new THREE.Color('#2F6E9E'),NUC_PRO=new THREE.Color('#1F9AA2');
 const nucMat=new THREE.MeshPhysicalMaterial({color:NUC_PUB.clone(),roughness:0.22,metalness:0.05,clearcoat:1,clearcoatRoughness:0.1,iridescence:0.7,iridescenceIOR:1.3,envMapIntensity:1.1});
 const nlMat=new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0.15,clearcoat:1,emissive:new THREE.Color('#c6ecee'),emissiveIntensity:0.25});
@@ -978,10 +989,12 @@ function makeCell(){
  const nl=new THREE.Mesh(sph,nlMat);nl.scale.setScalar(0.11);g.add(nl);
  const N=24,ves=new THREE.InstancedMesh(sph,vesMat,N);g.add(ves);
  const data=[];for(let i=0;i<N;i++){const u=Math.random()*2-1,th=Math.random()*Math.PI*2;data.push({u,th,r:0.5+Math.random()*0.32,s:0.025+Math.random()*0.045,sp:(Math.random()-0.5)*0.35,ph:Math.random()*6.28});}
- [nuc,nl,ves].forEach(o=>o.layers.enable(1));
- return {g,mem,nuc,nl,ves,data};
+ const nuc2=new THREE.Mesh(sph,nucMat);nuc2.visible=false;g.add(nuc2);
+ const br=new THREE.Mesh(new THREE.CylinderGeometry(1,1,1,14,1,true).rotateZ(Math.PI/2),nucMat);br.visible=false;g.add(br);
+ [nuc,nl,ves,nuc2,br].forEach(o=>o.layers.enable(1));
+ return {g,mem,nuc,nl,ves,data,nuc2,br};
 }
-const A=makeCell(),B=makeCell();scene.add(A.g);scene.add(B.g);B.g.visible=false;
+const A=makeCell(),B=makeCell();B.data=A.data;scene.add(A.g);scene.add(B.g);B.g.visible=false;
 
 const exo=[];
 [[.53,.22,-1.5,.11,1],[.92,.18,-2.5,.07,0],[.95,.78,.8,.09,1],[.58,.86,-1,.06,0],[.83,.62,1.6,.05,0],[.45,.62,-3,.05,0],[.78,.08,0.5,.045,0]].forEach(([fx,fy,z,s,glass],i)=>{
@@ -1002,7 +1015,7 @@ new ResizeObserver(resize).observe(stage);resize();
 
 const toPx=(x,y)=>({x:(x/vw+.5)*W,y:(.5-y/vh)*H});
 const tmpQ=new THREE.Quaternion(),tmpV=new THREE.Vector3(),dummy=new THREE.Object3D(),nt=new THREE.Vector3();
-let ripIdx=0,ptrAmt=0;
+let ripIdx=0,ptrAmt=0,snapped=false;
 const ptrDir=new THREE.Vector3(0,0,1);
 
 function dirFor(px,py,cx,cy,R,mesh){
@@ -1011,9 +1024,14 @@ function dirFor(px,py,cx,cy,R,mesh){
  mesh.getWorldQuaternion(tmpQ);tmpV.applyQuaternion(tmpQ.invert());
  return d;
 }
-function updVes(c,t){
+const sst=(a,b,x)=>{const t=clamp((x-a)/(b-a));return t*t*(3-2*t);};
+/* mode 0 normal · 1 dividing (tb blend, D centre, r radius) · 2 daughter (keep parity, other parity scaled by grow) */
+function updVes(c,t,mode=0,tb=0,D=0,r=1,keep=0,grow=1){
  for(let i=0;i<c.data.length;i++){const q=c.data[i],th=q.th+t*q.sp,rr=q.r*(1+.03*Math.sin(t*1.3+q.ph)),s=Math.sqrt(1-q.u*q.u);
-  dummy.position.set(Math.cos(th)*s*rr,q.u*rr,Math.sin(th)*s*rr);dummy.scale.setScalar(q.s);dummy.updateMatrix();c.ves.setMatrixAt(i,dummy.matrix);}
+  let x=Math.cos(th)*s*rr,y=q.u*rr,z=Math.sin(th)*s*rr,sz=q.s;
+  if(mode===1){const sd=i%2?-1:1;x=lerp(x,sd*D+r*x,tb);y=lerp(y,r*y,tb);z=lerp(z,r*z,tb);sz*=lerp(1,r,tb);}
+  else if(mode===2&&(i%2)!==keep)sz*=grow;
+  dummy.position.set(x,y,z);dummy.scale.setScalar(Math.max(sz,1e-4));dummy.updateMatrix();c.ves.setMatrixAt(i,dummy.matrix);}
  c.ves.instanceMatrix.needsUpdate=true;
 }
 
@@ -1123,15 +1141,34 @@ function frame(){
  const P=L.pub,Q=L.pro;
  const breath=1+.022*Math.sin(t*1.1);
  let ax,ay,aR,showB=false,bx=0,by=0,bR=0;
- const S1=.42;
- if(cmp){U.uSplit.value=0;ax=(IF.cmpX/W-.5)*vw;ay=(.5-.48)*vh;aR=P.R*.78;}
- else if(s<S1){U.uSplit.value=ease(s/S1);ax=P.x;ay=P.y;aR=P.R;}
- else{U.uSplit.value=0;const b=ease((s-S1)/(1-S1));const d0=P.R*.56,r0=P.R*.69;
-  ax=lerp(P.x+d0,Q.x,b);ay=lerp(P.y,Q.y,b);aR=lerp(r0,Q.R,b);
-  if(b<.999){showB=true;bx=lerp(P.x-d0,P.x-P.R*2.6,b);by=lerp(P.y,P.y-P.R*1.3,b);bR=r0*(1-b*.92);}}
+ const S1=.62,SNAP=.9,DR=.68;
+ /* phase: 0 interphase · 1 dividing (one membrane) · 2 two daughters */
+ let ph=0,u=0,dn=0,nucK=1,grow=1,Dd=0,tb=0;
+ if(!cmp&&s>0&&s<S1){u=s/S1;ph=u<SNAP?1:2;}else if(!cmp&&s>=S1&&s<1)ph=2;
+ const cx=P.x-P.R*.32*sst(.05,.9,Math.min(1,s/S1));
+ if(ph===1){
+  tb=sst(.1,.5,u);
+  const rt=lerp(.6,.035,ease(clamp((u-.14)/.62)));
+  const th0=Math.asin(Math.min(.999,rt/DR));
+  Dd=DR*Math.cos(th0)+.07+sst(.6,SNAP,u)*.13;
+  U.uSplit.value=tb;U.uDiv.value.set(Dd,rt,DR);
+  dn=Dd*sst(.05,.6,u);nucK=lerp(1,DR,sst(.05,.6,u));
+  ax=cx;ay=P.y;aR=P.R;
+ }else{U.uSplit.value=0;}
+ if(ph===2){
+  const th0=Math.asin(.035/DR),Dsnap=DR*Math.cos(th0)+.2;
+  const uu=s<S1?(s/S1-SNAP)/(1-SNAP):1;Dd=Dsnap+.1*ease(clamp(uu));
+  const b=s<S1?0:ease((s-S1)/(1-S1));grow=b;
+  const d0=Dd*P.R,r0=DR*P.R;
+  ax=lerp(cx+d0,Q.x,b);ay=lerp(P.y,Q.y,b);aR=lerp(r0,Q.R,b);
+  if(b<.999){showB=true;bx=lerp(cx-d0,cx-P.R*2.4,b);by=lerp(P.y,P.y-P.R*1.2,b);bR=r0*(1-b*.92);}
+ }
+ if(ph===0&&!cmp){if(s>=1){ax=Q.x;ay=Q.y;aR=Q.R;}else{ax=P.x;ay=P.y;aR=P.R;}}
+ if(cmp){ax=(IF.cmpX/W-.5)*vw;ay=(.5-.48)*vh;aR=P.R*.78;}
+ if(ph===2&&!snapped){snapped=true;U.uRip.value[0].set(-1,0,0,t);U.uRip.value[1].set(1,0,0,t);U.uRip.value[2].set(0,1,0,t+.12);ripIdx=3;}
+ if(s===0)snapped=false;
  A.g.position.set(ax,ay,0);A.g.scale.setScalar(aR*breath);
- A.mem.rotation.y=t*.08;A.mem.rotation.x=Math.sin(t*.13)*.15;
- B.g.visible=showB;if(showB){B.g.position.set(bx,by,0);B.g.scale.setScalar(bR);B.mem.rotation.y=-t*.1;}
+ B.g.visible=showB;if(showB){B.g.position.set(bx,by,0);B.g.scale.setScalar(bR*breath);}
 
  const ct=cmp?.5:clamp((s-.3)/.7);
  MU.uTint.value.copy(ATT_PUB).lerp(ATT_PRO,ct);MU.uRim.value.copy(RIM_PUB).lerp(RIM_PRO,ct);nucMat.color.copy(NUC_PUB).lerp(NUC_PRO,ct);
@@ -1143,10 +1180,24 @@ function frame(){
  while(IF.ripples.length){const r=IF.ripples.shift();const d=dirFor(r.x,r.y,ax,ay,aR,A.mem);if(d<2.4){U.uRip.value[ripIdx].set(tmpV.x,tmpV.y,tmpV.z,t);ripIdx=(ripIdx+1)%4;}}
 
  nt.set(0,0,0);if(ptr.in){const wx=(ptr.x/W-.5)*vw,wy=(.5-ptr.y/H)*vh;nt.set(clamp((wx-ax)/aR*.09,-.1,.1),clamp((wy-ay)/aR*.09,-.1,.1),.04);}
- A.nuc.position.lerp(nt,.06);A.nl.position.set(A.nuc.position.x*1.6+.09,A.nuc.position.y*1.6+.1,.24);
- B.nl.position.set(.09,.1,.24);
- A.nuc.scale.setScalar(.36*(1+.03*Math.sin(t*1.7)));
- updVes(A,t);if(showB)updVes(B,t);
+ const pulse=1+.03*Math.sin(t*1.7);
+ if(ph===1){
+  /* nucleus pulls apart into two, joined by a thinning chromatin bridge that finally snaps */
+  if(IF.mode==='transition')nt.set(0,0,0);
+  A.nuc.position.set(dn,0,.02);A.nuc2.position.set(-dn,0,.02);A.nuc2.visible=true;
+  const nr=.36*nucK*pulse;A.nuc.scale.set(nr*(1+.18*sst(.02,.25,u)*(1-sst(.3,.6,u))),nr,nr);A.nuc2.scale.copy(A.nuc.scale);
+  const bw=.075*(1-sst(.32,.56,u)),len=2*dn-nr*1.2;
+  A.br.visible=bw>.004&&len>.01&&u>.08;if(A.br.visible){A.br.position.set(0,0,.02);A.br.scale.set(len,bw*(1+.6*sst(.08,.2,u)),bw);}
+  A.nl.scale.setScalar(.11*(1-sst(.02,.15,u)));A.nl.position.set(A.nuc.position.x+.09,.1,.24);
+  updVes(A,t,1,tb,Dd,DR);
+ }else{
+  A.nuc2.visible=false;A.br.visible=false;
+  if(ph===2)A.nuc.position.set(0,0,.02);else A.nuc.position.lerp(nt,.06);
+  A.nl.position.set(A.nuc.position.x*1.6+.09,A.nuc.position.y*1.6+.1,.24);
+  A.nuc.scale.setScalar(.36*pulse);
+  const ng=ph===2?grow:1;A.nl.scale.setScalar(.11*ng);B.nl.scale.setScalar(.11*ng);B.nl.position.set(.09,.1,.24);
+  if(ph===2){updVes(A,t,2,0,0,1,0,grow);updVes(B,t,2,0,0,1,1,0);}else updVes(A,t);
+ }
 
  const pxo=ptr.in?(ptr.x/W-.5):0,pyo=ptr.in?(ptr.y/H-.5):0;
  exo.forEach(e=>{const k=(e.z+4)*.06;e.m.position.set((e.fx-.5)*vw+Math.sin(t*.4+e.ph)*.12-pxo*k,(.5-e.fy)*vh+Math.cos(t*.33+e.ph)*.12+pyo*k,e.z);e.m.scale.setScalar(e.s*vh*.18*(1+.04*Math.sin(t+e.ph)));});
