@@ -47,6 +47,7 @@ body{background:var(--page);color:var(--page-fg);font:15px/1.55 var(--f-b);paddi
 .g-brand{display:flex;align-items:center;gap:10px;margin:0 0 14px}.g-brand .logo{height:22px}
 .pub-top{display:flex;align-items:center;gap:26px}
 .pub-nav{display:flex;gap:22px;font-size:13px;color:var(--ink-2)}
+.pub-nav a{color:inherit;text-decoration:none}.pub-nav a:hover{color:var(--ink)}
 .lang{margin-left:auto;display:flex;align-items:center;gap:2px;font:12px var(--f-m);color:var(--ink-2)}
 .lang button{font:inherit;border:0;background:none;color:var(--ink-2);padding:4px 6px;border-radius:6px}
 .lang button.on{color:var(--ink);font-weight:500;background:rgba(255,255,255,.7)}
@@ -454,7 +455,7 @@ kbd{font:11px var(--f-m);padding:2px 6px;border-radius:6px;border:1px solid rgba
     <section class="pub-ui" id="pub" aria-label="Intrafarma">
       <header class="pub-top">
         <span class="logo" role="img" aria-label="Intrafarma"></span>
-        <nav class="pub-nav"><span data-t="nav1"></span><span data-t="nav2"></span><button type="button" class="nav-b" data-cat data-magnet data-t="nav3"></button><span data-t="nav4"></span><span data-t="nav5"></span></nav>
+        <nav class="pub-nav"><a href="hakkimizda.html" data-t="nav1"></a><span data-t="nav2"></span><button type="button" class="nav-b" data-cat data-magnet data-t="nav3"></button><span data-t="nav4"></span><span data-t="nav5"></span></nav>
         <div class="lang lg" role="group" aria-label="Dil"><button type="button" data-lang="tr">TR</button>|<button type="button" data-lang="en">EN</button></div>
         <button class="hcp lg btn" type="button" data-gate data-magnet data-t="hcp"></button>
       </header>
