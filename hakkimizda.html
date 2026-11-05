@@ -181,6 +181,35 @@ body{margin:0;background:var(--page);color:var(--page-fg);font:15px/1.55 var(--f
   .quote{grid-template-columns:72px minmax(0,1fr)}
   .badge{width:96px;font-size:16px}
 }
+
+/* v2: compact page head + sticky sub-headings (tabs); each tab is about one screen */
+.phead{padding-block:clamp(26px,4vw,44px) 22px;background:radial-gradient(50% 120% at 92% 0%,var(--mist),transparent 70%)}
+.phead .big{font-size:clamp(34px,4.6vw,56px)}
+.phead .lede{margin-top:14px;max-width:62ch}
+.subnav-wrap{position:sticky;top:0;z-index:5;background:rgba(246,247,251,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-block:1px solid var(--line)}
+.subnav{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.subnav::-webkit-scrollbar{display:none}
+.subnav button{font:500 13.5px var(--f-b);padding:9px 16px;border-radius:999px;border:1px solid transparent;background:none;color:var(--ink-2);cursor:pointer;white-space:nowrap;flex:none}
+.subnav button:hover{color:var(--ink);border-color:var(--line)}
+.subnav button[aria-selected="true"]{background:var(--ink);color:#fff}
+.panel{padding-block:clamp(28px,4vw,48px);display:grid;gap:clamp(30px,4vw,48px)}
+.blk{min-width:0}
+.blk .note,.phead .note,.closing .note{margin-bottom:18px}
+.notes-on .blk,.notes-on .phead,.notes-on .closing>.close{outline:1.5px dashed rgba(16,64,104,.22);outline-offset:10px;border-radius:6px}
+.h3{font:700 22px/1.15 var(--f-d);margin:0 0 14px;letter-spacing:-.01em}
+.vals h4{font:700 18px/1.15 var(--f-d);margin:0 0 6px;letter-spacing:-.01em}
+.intro{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(20px,4vw,48px);align-items:center}
+.intro .ph{aspect-ratio:4/3}
+.intro .sub{margin:0}
+.media{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:start}
+.media .film{aspect-ratio:16/10}
+.row{display:grid;gap:4px;padding:13px 0;border-top:1px solid var(--line);text-decoration:none}
+.row:hover b{color:var(--cobalt)}
+.row small{font:500 10.5px var(--f-m);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.row b{font:700 16px/1.25 var(--f-d)}
+.side .arrow{display:inline-block;margin-top:14px}
+.closing{padding-block:4px clamp(28px,4vw,44px)}
+@media (max-width:900px){.intro,.media{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -201,145 +230,147 @@ body{margin:0;background:var(--page);color:var(--page-fg);font:15px/1.55 var(--f
   <main class="site notes-on" id="site" aria-label="Hakkımızda sayfası prototipi">
     <div class="in top">
       <a class="logo" href="index.html" aria-label="Intrafarma ana sayfa"></a>
-      <nav class="nav" aria-label="Ana menü"><a href="#" aria-current="page">Hakkımızda</a><a href="index.html">Uzmanlık</a><a href="index.html">Ürünler</a><a href="index.html">Bilim</a><a href="index.html">İletişim</a></nav>
+      <nav class="nav" aria-label="Ana menü"><a href="#biz-kimiz" aria-current="page">Hakkımızda</a><a href="index.html">Uzmanlık</a><a href="index.html">Ürünler</a><a href="index.html">Bilim</a><a href="index.html">İletişim</a></nav>
       <div class="lang" aria-label="Dil"><span class="on">TR</span>|<span>EN</span></div>
       <a class="hcp" href="index.html">Sağlık çalışanları</a>
     </div>
 
-    <!-- 1 -->
-    <section class="sec in hero" aria-labelledby="h1">
-      <div class="note"><span class="n">01 · Açılış</span><span class="src">Konumlandırma cümlesi + kısa giriş: Metinler klasörü (Hakkimizda_TR) · Fotoğraf: Videolar ve Fotoğraflar</span><span class="st ask">İstendi</span></div>
-      <div>
-        <p class="eyebrow">/ Hakkımızda</p>
-        <h2 class="big" id="h1">Dünyadaki rejeneratif tıp teknolojisini <em>hekimle</em> buluşturuyoruz.</h2>
-        <p class="lede">Intrafarma 2011'den bu yana ortopedi, spor hekimliği, estetik, üroloji, kadın sağlığı ve veteriner alanlarında çalışan sağlık profesyonellerine ortobiyolojik ürünler ve hücresel çözümler sunuyor.</p>
-        <span class="draft">Taslak cümle · Intrafarma onaylayacak</span>
+    <header class="in phead">
+      <div class="note"><span class="n">00 · Sayfa başlığı</span><span class="src">Kısa giriş cümlesi: Metinler klasörü (Hakkimizda_TR) · alt başlıklar sabit kalır, sayfa uzamaz</span><span class="st ask">İstendi</span></div>
+      <p class="eyebrow">/ Hakkımızda</p>
+      <h1 class="big">Hakkımızda</h1>
+      <p class="lede">2011'den bu yana ortopedi, spor hekimliği, estetik, üroloji, kadın sağlığı ve veteriner alanlarında çalışan sağlık profesyonellerine ortobiyolojik ürünler ve hücresel çözümler sunuyoruz.</p>
+    </header>
+
+    <div class="subnav-wrap">
+      <div class="in subnav" role="tablist" aria-label="Hakkımızda alt başlıkları">
+        <button role="tab" id="t-biz-kimiz" aria-controls="biz-kimiz" data-tab="biz-kimiz">Biz kimiz</button>
+        <button role="tab" id="t-nasil" aria-controls="nasil" data-tab="nasil">Nasıl çalışıyoruz</button>
+        <button role="tab" id="t-tarihce" aria-controls="tarihce" data-tab="tarihce">Tarihçe</button>
+        <button role="tab" id="t-is-ortaklari" aria-controls="is-ortaklari" data-tab="is-ortaklari">İş ortaklarımız</button>
+        <button role="tab" id="t-medya" aria-controls="medya" data-tab="medya">Medya ve basın</button>
       </div>
-      <div class="ph">Fotoğraf<br>bina, laboratuvar ya da ekip</div>
-    </section>
+    </div>
 
-    <!-- 2 -->
-    <section class="sec in" aria-labelledby="h2">
-      <div class="note"><span class="n">02 · Rakamlarla Intrafarma</span><span class="src">Kurumsal Site Listesi → Rakamlar sekmesi · her rakamın kaynağı ve tarihi yazılı olmalı</span><span class="st ask">İstendi</span></div>
-      <h2 class="h2" id="h2">Rakamlarla Intrafarma</h2>
-      <p class="sub">Üç ila beş rakam; her biri kaynağı belli, sağlık iddiası içermeyen bilgiler.</p>
-      <div class="nums">
-        <div><b>2011</b>Kuruluş</div>
-        <div><b>28</b>Ürün<small>35'e kadar çıkacak</small></div>
-        <div><b>6</b>Klinik alan</div>
-        <div class="tbd"><b>00</b>İş ortağı<small>Intrafarma verecek</small></div>
-        <div class="tbd"><b>00</b>Ülke<small>Intrafarma verecek</small></div>
-      </div>
-    </section>
-
-    <!-- 3 -->
-    <section class="sec in" aria-labelledby="h3">
-      <div class="note"><span class="n">03 · Nasıl çalışıyoruz</span><span class="src">Her adım için 2–3 cümle · sayfanın Intrafarma'yı en çok ayırt eden bölümü</span><span class="st miss">Eksik</span></div>
-      <h2 class="h2" id="h3">Üreticiden hekime, <em>dört adımda</em></h2>
-      <p class="sub">Intrafarma üretici değil; dünyadaki üreticilerin teknolojisini Türkiye'ye ve Global pazara getiren köprü.</p>
-      <div class="steps">
-        <div class="step"><i>01</i><h3>Üretici seçimi</h3><p>Klinik kanıtı ve kalite belgeleri olan üreticilerle çalışıyoruz.</p></div>
-        <div class="step"><i>02</i><h3>Mevzuat ve ÜTS</h3><p>Ürünlerin ruhsat, CE ve ÜTS kayıt süreçlerini yürütüyoruz.</p></div>
-        <div class="step"><i>03</i><h3>Eğitim ve klinik destek</h3><p>Hekimlere uygulama eğitimi ve sahada klinik destek veriyoruz.</p></div>
-        <div class="step"><i>04</i><h3>Tedarik</h3><p>Ürünlerin kliniğe zamanında ve doğru koşullarda ulaşmasını sağlıyoruz.</p></div>
-      </div>
-      <span class="draft">Taslak metin · adımların içeriğini Intrafarma yazacak</span>
-    </section>
-
-    <!-- 4 -->
-    <section class="sec in" aria-labelledby="h4">
-      <div class="note"><span class="n">04 · Kilometre taşları</span><span class="src">Kurumsal Site Listesi → Kilometre taşları sekmesi · 5–8 madde, yıl ve tek cümle</span><span class="st ask">İstendi</span></div>
-      <h2 class="h2" id="h4">Kilometre taşları</h2>
-      <p class="sub">Yatay zaman çizelgesi; mobilde parmakla kaydırılır.</p>
-      <ol class="tl" aria-label="Zaman çizelgesi">
-        <li><b>2011</b><span>Intrafarma kuruldu.</span></li>
-        <li class="tbd"><b>20XX</b><span>İlk ortobiyolojik ürün (örnek)</span></li>
-        <li class="tbd"><b>20XX</b><span>Hücresel tedavi portföyü (örnek)</span></li>
-        <li class="tbd"><b>20XX</b><span>Yeni iş ortağı ya da pazar (örnek)</span></li>
-        <li class="tbd"><b>20XX</b><span>Sertifika ya da kalite adımı (örnek)</span></li>
-        <li class="tbd"><b>2026</b><span>Yeni web sitesi ve Pro alanı</span></li>
-      </ol>
-    </section>
-
-    <!-- 5 -->
-    <section class="sec in" aria-labelledby="h5">
-      <div class="note"><span class="n">05 · İş ortaklarımız</span><span class="src">Üretici adı, ülke, logo ve logo kullanma izni · mevcut sitedeki ayrı sayfa buraya taşınır</span><span class="st miss">Eksik</span></div>
-      <h2 class="h2" id="h5">İş ortaklarımız</h2>
-      <p class="sub">Birlikte çalıştığımız üreticiler. Logolar gri tonda, üzerine gelince renklenir.</p>
-      <div class="logos">
-        <div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div>
-        <div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div>
-      </div>
-    </section>
-
-    <!-- 6 -->
-    <section class="sec in" aria-labelledby="h6">
-      <div class="note"><span class="n">06 · Kalite ve mevzuat</span><span class="src">Sertifikalar klasörü · ayrıntı Kalite ve mevzuat sayfasında</span><span class="st ask">İstendi</span></div>
-      <div class="q">
-        <div>
-          <h2 class="h2" id="h6">Kalite ve mevzuat</h2>
-          <p class="sub">Belgelerin kendisi Kalite sayfasında; burada yalnızca özet rozetler.</p>
-          <a class="arrow" href="#">Kalite ve mevzuat sayfası →</a>
+    <!-- Tab 1 -->
+    <section class="panel in" id="biz-kimiz" role="tabpanel" aria-labelledby="t-biz-kimiz">
+      <div class="blk">
+        <div class="note"><span class="n">01 · Açılış</span><span class="src">Konumlandırma cümlesi + kısa paragraf · fotoğraf: Videolar ve Fotoğraflar klasörü</span><span class="st ask">İstendi</span></div>
+        <div class="intro">
+          <div>
+            <h2 class="h2">Dünyadaki rejeneratif tıp teknolojisini <em>hekimle</em> buluşturuyoruz.</h2>
+            <p class="sub">Intrafarma üretici değil; dünyadaki üreticilerin teknolojisini Türkiye'ye ve Global pazara getiren köprü.</p>
+            <span class="draft">Taslak cümle · Intrafarma onaylayacak</span>
+          </div>
+          <div class="ph">Fotoğraf<br>bina, laboratuvar ya da ekip</div>
         </div>
-        <div class="badges"><div class="badge">ISO<small>Belge türü örnek</small></div><div class="badge">CE<small>Uygunluk</small></div><div class="badge">ÜTS<small>Kayıtlı ürünler</small></div></div>
+      </div>
+      <div class="blk">
+        <div class="note"><span class="n">02 · Rakamlarla Intrafarma</span><span class="src">Kurumsal Site Listesi → Rakamlar · her rakamın kaynağı ve tarihi yazılı olmalı</span><span class="st ask">İstendi</span></div>
+        <div class="nums">
+          <div><b>2011</b>Kuruluş</div>
+          <div><b>28</b>Ürün<small>35'e kadar çıkacak</small></div>
+          <div><b>6</b>Klinik alan</div>
+          <div class="tbd"><b>00</b>İş ortağı<small>Intrafarma verecek</small></div>
+          <div class="tbd"><b>00</b>Ülke<small>Intrafarma verecek</small></div>
+        </div>
+      </div>
+      <div class="blk">
+        <div class="note"><span class="n">03 · Değerlerimiz</span><span class="src">Dört değer mevcut siteden · açıklama cümleleri taslak</span><span class="st ok">Hazır</span></div>
+        <h3 class="h3">Değerlerimiz</h3>
+        <div class="vals">
+          <div><h4>Dikkatli</h4><p>Her ürünü klinik kanıtı ve belgeleriyle değerlendiririz.</p></div>
+          <div><h4>Şeffaf</h4><p>Ürün bilgisini ve belgeleri açık ve güncel tutarız.</p></div>
+          <div><h4>Etik</h4><p>Tanıtımda mevzuata ve hekim–firma ilişkisi kurallarına uyarız.</p></div>
+          <div><h4>Doğaya saygılı</h4><p>Ambalaj ve tedarikte çevresel etkiyi azaltmaya çalışırız.</p></div>
+        </div>
       </div>
     </section>
 
-    <!-- 7 -->
-    <section class="sec in" aria-labelledby="h7">
-      <div class="note"><span class="n">07 · Değerlerimiz</span><span class="src">Dört değer mevcut siteden · her birine tek somut cümle eklenecek</span><span class="st ok">Hazır</span></div>
-      <h2 class="h2" id="h7">Değerlerimiz</h2>
-      <p class="sub">Mevcut sitedeki dört değer; açıklama cümleleri taslak.</p>
-      <div class="vals">
-        <div><h3>Dikkatli</h3><p>Her ürünü klinik kanıtı ve belgeleriyle değerlendiririz.</p></div>
-        <div><h3>Şeffaf</h3><p>Ürün bilgisini ve belgeleri açık ve güncel tutarız.</p></div>
-        <div><h3>Etik</h3><p>Tanıtımda mevzuata ve hekim–firma ilişkisi kurallarına uyarız.</p></div>
-        <div><h3>Doğaya saygılı</h3><p>Ambalaj ve tedarikte çevresel etkiyi azaltmaya çalışırız.</p></div>
+    <!-- Tab 2 -->
+    <section class="panel in" id="nasil" role="tabpanel" aria-labelledby="t-nasil" hidden>
+      <div class="blk">
+        <div class="note"><span class="n">04 · Nasıl çalışıyoruz</span><span class="src">Her adım için 2–3 cümle · Intrafarma'yı en çok ayırt eden bölüm</span><span class="st miss">Eksik</span></div>
+        <h2 class="h2">Üreticiden hekime, <em>dört adımda</em></h2>
+        <div class="steps">
+          <div class="step"><i>01</i><h3>Üretici seçimi</h3><p>Klinik kanıtı ve kalite belgeleri olan üreticilerle çalışıyoruz.</p></div>
+          <div class="step"><i>02</i><h3>Mevzuat ve ÜTS</h3><p>Ürünlerin ruhsat, CE ve ÜTS kayıt süreçlerini yürütüyoruz.</p></div>
+          <div class="step"><i>03</i><h3>Eğitim ve klinik destek</h3><p>Hekimlere uygulama eğitimi ve sahada klinik destek veriyoruz.</p></div>
+          <div class="step"><i>04</i><h3>Tedarik</h3><p>Ürünlerin kliniğe zamanında ve doğru koşullarda ulaşmasını sağlıyoruz.</p></div>
+        </div>
+        <span class="draft">Taslak metin · adımların içeriğini Intrafarma yazacak</span>
       </div>
-      <span class="draft">Taslak açıklamalar · Intrafarma onaylayacak</span>
-    </section>
-
-    <!-- 8 -->
-    <section class="sec in" aria-labelledby="h8">
-      <div class="note"><span class="n">08 · Tanıtım filmi ve klipler</span><span class="src">Videolar Listesi + klasörü · video ana sayfada değil burada; tıklanınca açılır pencerede oynar</span><span class="st ask">İstendi</span></div>
-      <h2 class="h2" id="h8">Intrafarma'yı yakından tanıyın</h2>
-      <p class="sub">Sayfa yüklenirken video oynamaz; kapak görseli ve oynat düğmesi görünür.</p>
-      <button class="film" type="button" id="openFilm" aria-haspopup="dialog"><span class="play" aria-hidden="true"></span><span class="cap"><span>Tanıtım filmi · 0:00</span><b>Kapak görseli ve film başlığı</b></span></button>
-      <div class="clips"><div class="ph">Klip 1 · kapak</div><div class="ph">Klip 2 · kapak</div><div class="ph">Klip 3 · kapak</div></div>
-    </section>
-
-    <!-- 9 -->
-    <section class="sec in" aria-labelledby="h9">
-      <div class="note"><span class="n">09 · Basında Biz</span><span class="src">Basında Biz Listesi · son 3 haber burada, tamamı Basında Biz sayfasında</span><span class="st ask">İstendi</span></div>
-      <div class="headrow"><div><h2 class="h2" id="h9">Basında Biz</h2><p class="sub">Haberin metni kopyalanmaz; başlık, yayın, tarih ve bağlantı.</p></div><a class="arrow" href="#">Tüm haberler →</a></div>
-      <div class="press">
-        <a class="card" href="#"><small>Yayın adı · Tarih</small><b>Haber başlığı buraya gelecek</b><span>Habere git ↗</span></a>
-        <a class="card" href="#"><small>Yayın adı · Tarih</small><b>Röportaj ya da kongre haberi</b><span>Habere git ↗</span></a>
-        <a class="card" href="#"><small>Yayın adı · Tarih</small><b>Etkinlik ya da duyuru</b><span>Habere git ↗</span></a>
+      <div class="blk">
+        <div class="note"><span class="n">05 · Kalite ve mevzuat</span><span class="src">Sertifikalar klasörü · belgelerin kendisi Kalite sayfasında</span><span class="st ask">İstendi</span></div>
+        <div class="q">
+          <div><h3 class="h3">Kalite ve mevzuat</h3><p class="sub">Burada yalnızca özet rozetler; belgeler Kalite sayfasında.</p><a class="arrow" href="#">Kalite ve mevzuat sayfası →</a></div>
+          <div class="badges"><div class="badge">ISO<small>Belge türü örnek</small></div><div class="badge">CE<small>Uygunluk</small></div><div class="badge">ÜTS<small>Kayıtlı ürünler</small></div></div>
+        </div>
       </div>
     </section>
 
-    <!-- 10 -->
-    <section class="sec in" aria-labelledby="h10">
-      <div class="note"><span class="n">10 · Yönetimden bir söz</span><span class="src">Kurucu ya da genel müdür mesajı, fotoğraf ve yayın izni · ekip fotoğrafları da olabilir</span><span class="st opt">İsteğe bağlı</span></div>
-      <h2 class="h2" id="h10" hidden>Yönetimden bir söz</h2>
-      <div class="quote">
-        <div class="ph">Portre</div>
-        <div><blockquote>"Kuruluşumuzdan bu yana tek bir amacımız var: hekimin elindeki seçenekleri güvenle çoğaltmak."</blockquote><cite>Ad Soyad · Unvan (örnek alıntı)</cite></div>
+    <!-- Tab 3 -->
+    <section class="panel in" id="tarihce" role="tabpanel" aria-labelledby="t-tarihce" hidden>
+      <div class="blk">
+        <div class="note"><span class="n">06 · Kilometre taşları</span><span class="src">Kurumsal Site Listesi → Kilometre taşları · 5–8 madde, yıl ve tek cümle</span><span class="st ask">İstendi</span></div>
+        <h2 class="h2">Kilometre taşları</h2>
+        <ol class="tl" aria-label="Zaman çizelgesi">
+          <li><b>2011</b><span>Intrafarma kuruldu.</span></li>
+          <li class="tbd"><b>20XX</b><span>İlk ortobiyolojik ürün (örnek)</span></li>
+          <li class="tbd"><b>20XX</b><span>Hücresel tedavi portföyü (örnek)</span></li>
+          <li class="tbd"><b>20XX</b><span>Yeni iş ortağı ya da pazar (örnek)</span></li>
+          <li class="tbd"><b>20XX</b><span>Sertifika ya da kalite adımı (örnek)</span></li>
+          <li class="tbd"><b>2026</b><span>Yeni web sitesi ve Pro alanı</span></li>
+        </ol>
+      </div>
+      <div class="blk">
+        <div class="note"><span class="n">07 · Yönetimden bir söz</span><span class="src">Kurucu ya da genel müdür mesajı, portre ve yayın izni</span><span class="st opt">İsteğe bağlı</span></div>
+        <div class="quote">
+          <div class="ph">Portre</div>
+          <div><blockquote>"Kuruluşumuzdan bu yana tek bir amacımız var: hekimin elindeki seçenekleri güvenle çoğaltmak."</blockquote><cite>Ad Soyad · Unvan (örnek alıntı)</cite></div>
+        </div>
       </div>
     </section>
 
-    <!-- 11 -->
-    <section class="sec in" aria-labelledby="h11">
-      <div class="note"><span class="n">11 · Kapanış</span><span class="src">Sayfadan sonraki adımlar · içerik hazır</span><span class="st ok">Hazır</span></div>
-      <h2 class="h2" id="h11">Birlikte çalışalım</h2>
-      <p class="sub">Sayfayı okuyan kişiyi bir sonraki adıma yönlendiren üç bağlantı.</p>
+    <!-- Tab 4 -->
+    <section class="panel in" id="is-ortaklari" role="tabpanel" aria-labelledby="t-is-ortaklari" hidden>
+      <div class="blk">
+        <div class="note"><span class="n">08 · İş ortaklarımız</span><span class="src">Üretici adı, ülke, logo ve logo kullanma izni · mevcut sitedeki ayrı sayfa buraya taşınır</span><span class="st miss">Eksik</span></div>
+        <h2 class="h2">İş ortaklarımız</h2>
+        <p class="sub">Birlikte çalıştığımız üreticiler. Logolar gri tonda, üzerine gelince renklenir.</p>
+        <div class="logos">
+          <div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div>
+          <div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div><div class="ph">Üretici logosu<em>Ülke</em></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 5 -->
+    <section class="panel in" id="medya" role="tabpanel" aria-labelledby="t-medya" hidden>
+      <div class="blk">
+        <div class="note"><span class="n">09 · Tanıtım filmi</span><span class="src">Videolar Listesi + klasörü · sayfa açılınca oynamaz, tıklanınca açılır pencerede oynar</span><span class="st ask">İstendi</span></div>
+        <div class="media">
+          <button class="film" type="button" id="openFilm" aria-haspopup="dialog"><span class="play" aria-hidden="true"></span><span class="cap"><span>Tanıtım filmi · 0:00</span><b>Kapak görseli ve film başlığı</b></span></button>
+          <div class="side">
+            <div class="note"><span class="n">10 · Basında Biz</span><span class="src">Basında Biz Listesi · son 3 haber</span><span class="st ask">İstendi</span></div>
+            <h2 class="h3">Basında Biz</h2>
+            <a class="row" href="#"><small>Yayın adı · Tarih</small><b>Haber başlığı buraya gelecek</b></a>
+            <a class="row" href="#"><small>Yayın adı · Tarih</small><b>Röportaj ya da kongre haberi</b></a>
+            <a class="row" href="#"><small>Yayın adı · Tarih</small><b>Etkinlik ya da duyuru</b></a>
+            <a class="arrow" href="#">Tüm haberler →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="in closing">
+      <div class="note"><span class="n">11 · Kapanış</span><span class="src">Her alt başlığın altında aynı kalır · içerik hazır</span><span class="st ok">Hazır</span></div>
       <div class="close">
         <a href="index.html"><b>İletişim</b><span>Adres, telefon ve iletişim formu</span></a>
         <a href="#"><b>Kariyer</b><span>Açık pozisyonlar ve başvuru</span></a>
         <a class="dark" href="index.html"><b>Sağlık çalışanları</b><span>Ürün bilgisi ve belgeler için Pro alanı</span></a>
       </div>
-    </section>
+    </div>
 
     <footer class="in foot"><span>© Intrafarma · KVKK · Çerez politikası · Yan etki bildirimi</span><span>Prototip · gerçek içerik değildir</span></footer>
   </main>
@@ -347,22 +378,22 @@ body{margin:0;background:var(--page);color:var(--page-fg);font:15px/1.55 var(--f
   <section class="ex" aria-labelledby="exh">
     <h2 id="exh">Bu sayfada ne nereden geliyor?</h2>
     <div class="tw"><table>
-      <thead><tr><th>#</th><th>Bölüm</th><th>İçerik nereden?</th><th>Durum</th></tr></thead>
+      <thead><tr><th>#</th><th>Alt başlık</th><th>Bölüm</th><th>İçerik nereden?</th><th>Durum</th></tr></thead>
       <tbody>
-        <tr><td>01</td><td>Açılış</td><td>Metinler klasörü (Hakkimizda_TR / EN), bir bina ya da ekip fotoğrafı</td><td><span class="st ask">İstendi</span></td></tr>
-        <tr><td>02</td><td>Rakamlarla Intrafarma</td><td>Kurumsal Site Listesi → Rakamlar</td><td><span class="st ask">İstendi</span></td></tr>
-        <tr><td>03</td><td>Nasıl çalışıyoruz</td><td>Henüz istenmedi; ilk toplantıda her adım için 2–3 cümle istenecek</td><td><span class="st miss">Eksik</span></td></tr>
-        <tr><td>04</td><td>Kilometre taşları</td><td>Kurumsal Site Listesi → Kilometre taşları</td><td><span class="st ask">İstendi</span></td></tr>
-        <tr><td>05</td><td>İş ortaklarımız</td><td>Henüz istenmedi; üretici adı, ülke, logo ve logo izni</td><td><span class="st miss">Eksik</span></td></tr>
-        <tr><td>06</td><td>Kalite ve mevzuat</td><td>Sertifikalar klasörü</td><td><span class="st ask">İstendi</span></td></tr>
-        <tr><td>07</td><td>Değerlerimiz</td><td>Mevcut site; açıklama cümleleri onaylanacak</td><td><span class="st ok">Hazır</span></td></tr>
-        <tr><td>08</td><td>Tanıtım filmi ve klipler</td><td>Videolar Listesi + klasörü</td><td><span class="st ask">İstendi</span></td></tr>
-        <tr><td>09</td><td>Basında Biz</td><td>Basında Biz Listesi</td><td><span class="st ask">İstendi</span></td></tr>
-        <tr><td>10</td><td>Yönetimden bir söz</td><td>Mesaj, portre ve yayın izni</td><td><span class="st opt">İsteğe bağlı</span></td></tr>
-        <tr><td>11</td><td>Kapanış</td><td>Site içi bağlantılar</td><td><span class="st ok">Hazır</span></td></tr>
+        <tr><td>01</td><td>Biz kimiz</td><td>Açılış</td><td>Metinler klasörü (Hakkimizda_TR / EN), bir bina ya da ekip fotoğrafı</td><td><span class="st ask">İstendi</span></td></tr>
+        <tr><td>02</td><td>Biz kimiz</td><td>Rakamlarla Intrafarma</td><td>Kurumsal Site Listesi → Rakamlar</td><td><span class="st ask">İstendi</span></td></tr>
+        <tr><td>03</td><td>Biz kimiz</td><td>Değerlerimiz</td><td>Mevcut site; açıklama cümleleri onaylanacak</td><td><span class="st ok">Hazır</span></td></tr>
+        <tr><td>04</td><td>Nasıl çalışıyoruz</td><td>Dört adım</td><td>Henüz istenmedi; ilk toplantıda her adım için 2–3 cümle istenecek</td><td><span class="st miss">Eksik</span></td></tr>
+        <tr><td>05</td><td>Nasıl çalışıyoruz</td><td>Kalite ve mevzuat</td><td>Sertifikalar klasörü</td><td><span class="st ask">İstendi</span></td></tr>
+        <tr><td>06</td><td>Tarihçe</td><td>Kilometre taşları</td><td>Kurumsal Site Listesi → Kilometre taşları</td><td><span class="st ask">İstendi</span></td></tr>
+        <tr><td>07</td><td>Tarihçe</td><td>Yönetimden bir söz</td><td>Mesaj, portre ve yayın izni</td><td><span class="st opt">İsteğe bağlı</span></td></tr>
+        <tr><td>08</td><td>İş ortaklarımız</td><td>Logolar</td><td>Henüz istenmedi; üretici adı, ülke, logo ve logo izni</td><td><span class="st miss">Eksik</span></td></tr>
+        <tr><td>09</td><td>Medya ve basın</td><td>Tanıtım filmi</td><td>Videolar Listesi + klasörü</td><td><span class="st ask">İstendi</span></td></tr>
+        <tr><td>10</td><td>Medya ve basın</td><td>Basında Biz</td><td>Basında Biz Listesi</td><td><span class="st ask">İstendi</span></td></tr>
+        <tr><td>11</td><td>Tümü</td><td>Kapanış</td><td>Site içi bağlantılar</td><td><span class="st ok">Hazır</span></td></tr>
       </tbody>
     </table></div>
-    <p>Sayfada bilerek olmayanlar: hasta sayısı ya da tedavi başarısı gibi sağlık iddiaları, dayanağı olmayan "lider" ifadeleri ve kendiliğinden oynayan video.</p>
+    <p>Sayfa tek uzun akış yerine beş alt başlığa bölündü; her alt başlığın kendi adresi var (örneğin hakkimizda.html#tarihce), menüden doğrudan açılabilir. Bilerek olmayanlar: sağlık iddiaları, dayanağı olmayan "lider" ifadeleri ve kendiliğinden oynayan video.</p>
   </section>
 </div>
 
@@ -385,6 +416,13 @@ body{margin:0;background:var(--page);color:var(--page-fg);font:15px/1.55 var(--f
   o.addEventListener('click',open);c.addEventListener('click',close);
   m.addEventListener('click',e=>{if(e.target===m)close()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!m.hidden)close()});
+  const tabs=[...document.querySelectorAll('[role="tab"]')],ids=tabs.map(t=>t.dataset.tab);
+  const show=(id,focus)=>{tabs.forEach(t=>{const on=t.dataset.tab===id;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.dataset.tab).hidden=!on;if(on&&focus)t.focus()})};
+  const fromHash=()=>{const h=location.hash.slice(1);return ids.includes(h)?h:ids[0]};
+  show(fromHash());
+  const go=(id,focus)=>{show(id,focus);try{history.replaceState(null,'','#'+id)}catch(e){}const w=document.querySelector('.subnav-wrap');if(w.getBoundingClientRect().top<0)w.scrollIntoView({block:'start'})};
+  tabs.forEach((t,i)=>{t.addEventListener('click',()=>go(t.dataset.tab));t.addEventListener('keydown',e=>{const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(!k)return;e.preventDefault();go(ids[(i+k+ids.length)%ids.length],true)})});
+  addEventListener('hashchange',()=>show(fromHash()));
   document.querySelectorAll('.site a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
 })();
 </script>
