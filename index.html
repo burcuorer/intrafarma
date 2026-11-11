@@ -700,6 +700,67 @@ html:lang(ar) .ev-g h3{text-transform:none}
  .fq-l summary{font-size:16px}
 }
 [dir=rtl] .ua-c i{transform:scaleX(-1)}
+/* ---- v3: daha belirgin ve yavaş giriş animasyonları ---- */
+[data-rv]{opacity:0;transition:opacity 1.3s cubic-bezier(.16,1,.3,1),transform 1.7s cubic-bezier(.16,1,.3,1),filter 1.3s ease;transition-delay:calc(var(--i,0)*150ms)}
+[data-rv=up]{transform:translateY(96px) scale(.95)}
+[data-rv=left]{transform:translateX(-170px) rotate(-2deg)}
+[data-rv=right]{transform:translateX(170px) rotate(2deg)}
+[data-rv=rise]{transform:translateY(80px) scale(.88);filter:blur(12px)}
+[dir=rtl] [data-rv=left]{transform:translateX(170px) rotate(2deg)}[dir=rtl] [data-rv=right]{transform:translateX(-170px) rotate(-2deg)}
+[data-rv].in{opacity:1;transform:none;filter:none}
+.hc [data-rv=left].in,.hc [data-rv=right].in{transition-delay:calc(var(--i,0)*150ms)}
+/* headings rise word by word */
+.wd{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em .02em .14em;margin:-.12em -.02em -.14em}
+.wd>span{display:inline-block;transform:translateY(115%) rotate(4deg);transform-origin:0 100%;transition:transform 1.5s cubic-bezier(.16,1,.3,1);transition-delay:calc(.2s + var(--w,0)*85ms)}
+.in .wd>span{transform:none}
+@media (prefers-reduced-motion:reduce){[data-rv]{opacity:1;transform:none;filter:none;transition:none}.wd>span{transform:none;transition:none}}
+/* colour bands that open up while scrolling */
+.band{isolation:isolate;padding-bottom:clamp(64px,9vw,112px)}
+.band::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bb);clip-path:inset(9% 7% round 56px);opacity:.4;transition:clip-path 1.8s cubic-bezier(.16,1,.3,1),opacity 1.2s ease}
+.band.bin::before{clip-path:inset(0 round 0);opacity:1}
+@media (prefers-reduced-motion:reduce){.band::before{clip-path:none;opacity:1;transition:none}}
+.band.tint{--bb:radial-gradient(50% 80% at 100% 0%,rgba(32,144,152,.16),transparent 70%),#E3F2F4}
+.band.ice{--bb:radial-gradient(45% 70% at 0% 100%,rgba(16,64,104,.10),transparent 70%),linear-gradient(180deg,#E8EFF7,#DCE7F1)}
+.band.dark{--bb:radial-gradient(55% 45% at 50% 38%,rgba(32,144,152,.38),transparent 72%),linear-gradient(172deg,#0E2235 0%,#104068 62%,#17707A 130%)}
+.band.dark2{--bb:radial-gradient(50% 70% at 88% 18%,rgba(32,144,152,.5),transparent 70%),linear-gradient(160deg,#104068,#17707A)}
+.band.dark,.band.dark2{color:#fff}
+.band.dark .hs-h h2,.band.dark2 h2{color:#fff}
+.band.dark .eyebrow,.band.dark2 .eyebrow{color:rgba(255,255,255,.72)}
+.band.dark .hs-h p:not(.eyebrow),.band.dark2 p:not(.eyebrow){color:rgba(255,255,255,.82)}
+.band.dark .hs-h h2 em{color:#8FDCE0}
+.band.dark .stage{box-shadow:0 40px 90px rgba(4,16,30,.45);border-color:rgba(255,255,255,.12)}
+.band.dark2 .hc-m{color:#fff;border-color:rgba(255,255,255,.5)}
+.band.dark2 .hc-m:hover{background:#fff;color:var(--cobalt)}
+.band.dark2 .lb-b{border-color:#145063}
+.band.dark2 .lb-f figcaption{color:rgba(255,255,255,.66)}
+/* stats sit on the tint band now */
+.st-in{background:none;box-shadow:none;color:var(--ink);padding:0}
+.st-h .eyebrow{color:var(--cobalt)}.st-h h2{color:var(--ink)}
+.st-g{border-top-color:rgba(16,64,104,.18)}
+.st-g div+div{border-inline-start-color:rgba(16,64,104,.14)}
+.st-g b{color:var(--cobalt);background:linear-gradient(120deg,#104068,#17707A 60%,#209098);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.st-g span{color:var(--ink-2)}
+.st-note{color:var(--ink-2)}
+/* keyword strip */
+.kw{position:relative;margin:clamp(56px,8vw,96px) -2% 0;width:104%;transform:rotate(-1.6deg);background:linear-gradient(90deg,#104068,#17707A 55%,#209098);color:#fff;overflow:hidden;padding:18px 0;box-shadow:0 18px 40px rgba(16,64,104,.18)}
+.kw-t{display:flex;width:max-content;animation:ptmq 38s linear infinite;font:700 clamp(22px,2.6vw,34px)/1 var(--f-d);letter-spacing:-.01em;white-space:nowrap}
+.kw-t span{padding:0 22px;display:inline-flex;align-items:center;gap:44px}
+.kw-t span::after{content:"";width:10px;height:10px;border-radius:50%;background:#8FDCE0;flex:none}
+[dir=rtl] .kw-t{animation-name:ptmqr}
+@media (prefers-reduced-motion:reduce){.kw-t{animation:none}}
+/* organelle cards around the cell */
+.oc{position:absolute;z-index:4;top:50%;width:212px;display:flex;flex-direction:column;gap:12px;pointer-events:none;transform:translateY(-54%);transition:opacity .6s}
+.oc.l{left:26px}.oc.r{right:26px}
+.oc-c{background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:14px 15px 13px;box-shadow:0 10px 28px rgba(16,64,104,.10);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s,border-color .5s,background .5s}
+.oc-c b{display:flex;align-items:center;gap:8px;font:600 15px/1.25 var(--f-d);color:var(--ink)}
+.oc-c b::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--oc);box-shadow:0 0 0 3px color-mix(in srgb,var(--oc) 22%,transparent);flex:none}
+.oc-c p{margin:6px 0 0;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+.oc-c.on{background:rgba(255,255,255,.92);border-color:var(--oc);box-shadow:0 16px 36px rgba(16,64,104,.18);transform:translateX(var(--nx,0)) scale(1.04)}
+.oc.l .oc-c.on{--nx:8px}.oc.r .oc-c.on{--nx:-8px}
+.oc-c[data-o=o_nuc]{--oc:#6A4A9E}.oc-c[data-o=o_mito]{--oc:#D2553A}.oc-c[data-o=o_er]{--oc:#C48AD6}.oc-c[data-o=o_golgi]{--oc:#E2B03A}
+.ex-cap{position:absolute;z-index:4;left:0;top:0;pointer-events:none;font:500 11px var(--f-m);letter-spacing:.04em;color:var(--cobalt);background:rgba(255,255,255,.78);border:1px solid rgba(16,22,46,.08);padding:5px 10px;border-radius:999px;white-space:nowrap;transition:opacity .5s}
+@media (max-width:1180px){.oc{display:none}}
+@media (max-width:760px){.ex-cap{display:none}.kw{transform:rotate(-2.4deg)}}
 </style>
 <style>body{margin:0}</style></head><body>
 
@@ -753,7 +814,7 @@ html:lang(ar) .ev-g h3{text-transform:none}
     </section>
 
     <section class="hs hc-sec" aria-labelledby="hcH">
-      <div class="hs-h c" data-rv="up"><p class="eyebrow" data-t="hc_ey"></p><h2 id="hcH" data-t="hc_h"></h2></div>
+      <div class="hs-h c" data-rv="rise"><p class="eyebrow" data-t="hc_ey"></p><h2 id="hcH" data-t="hc_h"></h2></div>
       <div class="hc">
       <article class="hc-c" data-rv="left">
         <span class="hc-i" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M7.5 12h9"/></svg></span>
@@ -773,8 +834,8 @@ html:lang(ar) .ev-g h3{text-transform:none}
       </div>
     </section>
 
-    <div class="cell-sec" id="hucre">
-      <div class="hs-h c" data-rv="up"><p class="eyebrow" data-t="c_ey"></p><h2 data-t="c_h"></h2><p data-t="c_lede"></p></div>
+    <div class="cell-sec band dark" id="hucre">
+      <div class="hs-h c" data-rv="rise"><p class="eyebrow" data-t="c_ey"></p><h2 data-t="c_h"></h2><p data-t="c_lede"></p></div>
   <div class="stage" id="stage">
     <div class="bg-pub" aria-hidden="true"></div>
     <div class="bg-pro" id="bgPro" aria-hidden="true" hidden></div>
@@ -804,6 +865,9 @@ html:lang(ar) .ev-g h3{text-transform:none}
         <div><b>06</b><span data-t="s3"></span></div>
       </div>
     </section>
+
+    <div class="oc l" aria-hidden="true"><div class="oc-c" data-o="o_nuc"><b data-t="o_nuc"></b><p data-t="ox_nuc"></p></div><div class="oc-c" data-o="o_golgi"><b data-t="o_golgi"></b><p data-t="ox_golgi"></p></div></div>
+    <div class="oc r" aria-hidden="true"><div class="oc-c" data-o="o_mito"><b data-t="o_mito"></b><p data-t="ox_mito"></p></div><div class="oc-c" data-o="o_er"><b data-t="o_er"></b><p data-t="ox_er"></p></div></div>
 
     <section class="pro" id="pro" aria-label="Intrafarma Pro" hidden>
       <div class="pro-ui">
@@ -973,9 +1037,9 @@ html:lang(ar) .ev-g h3{text-transform:none}
 
     </div>
 
-    <section class="hs st" aria-labelledby="stH">
-      <div class="st-in" data-rv="up">
-        <div class="st-h"><p class="eyebrow" data-t="st_ey"></p><h2 id="stH" data-t="st_h"></h2></div>
+    <section class="hs st band tint" aria-labelledby="stH">
+      <div class="st-in">
+        <div class="st-h" data-rv="rise"><p class="eyebrow" data-t="st_ey"></p><h2 id="stH" data-t="st_h"></h2></div>
         <div class="st-g">
           <div><b data-n="6" data-pad="2">06</b><span data-t="st1"></span></div>
           <div><b data-n="28">28</b><span data-t="st2"></span></div>
@@ -988,11 +1052,13 @@ html:lang(ar) .ev-g h3{text-transform:none}
     </section>
 
     <section class="hs ua" id="uzmanlik" aria-labelledby="uaH">
-      <div class="hs-h" data-rv="up"><p class="eyebrow" data-t="ua_ey"></p><h2 id="uaH" data-t="ua_h"></h2><p data-t="ua_p"></p></div>
+      <div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="ua_ey"></p><h2 id="uaH" data-t="ua_h"></h2><p data-t="ua_p"></p></div>
       <div class="ua-g" id="uaG"></div>
     </section>
 
-    <section class="hs hp" id="urunler" aria-labelledby="hpH">
+    <div class="kw" aria-hidden="true"><div class="kw-t" id="kwT"></div></div>
+
+    <section class="hs hp band ice" id="urunler" aria-labelledby="hpH">
       <figure class="hp-f" data-rv="left">
         <img src="media/gorsel/urun.jpg" alt="" loading="lazy" decoding="async">
         <span class="hp-3d"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></svg><span data-t="hp_3d"></span></span>
@@ -1004,7 +1070,7 @@ html:lang(ar) .ev-g h3{text-transform:none}
       </div>
     </section>
 
-    <section class="hs lb" aria-labelledby="lbH">
+    <section class="hs lb band dark2" aria-labelledby="lbH">
       <div class="lb-t" data-rv="left">
         <p class="eyebrow" data-t="lb_ey"></p><h2 id="lbH" data-t="lb_h"></h2><p data-t="lb_p"></p>
         <a class="hc-m" href="#site-foot"><span data-t="lb_cta"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>
@@ -1017,7 +1083,7 @@ html:lang(ar) .ev-g h3{text-transform:none}
     </section>
 
     <section class="hs ev" aria-labelledby="evH">
-      <div class="hs-h" data-rv="up"><p class="eyebrow" data-t="ev_ey"></p><h2 id="evH" data-t="ev_h"></h2></div>
+      <div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="ev_ey"></p><h2 id="evH" data-t="ev_h"></h2></div>
       <div class="ev-g">
         <div class="ev-up" data-rv="left">
           <h3 data-t="ev_up"></h3>
@@ -1039,8 +1105,8 @@ html:lang(ar) .ev-g h3{text-transform:none}
       </div>
     </section>
 
-    <section class="hs bl" aria-labelledby="blH">
-      <div class="hs-h row" data-rv="up"><div><p class="eyebrow" data-t="bl_ey"></p><h2 id="blH" data-t="bl_h"></h2></div><a class="b-link" href="#" data-t="bl_all"></a></div>
+    <section class="hs bl band tint" aria-labelledby="blH">
+      <div class="hs-h row" data-rv="rise"><div><p class="eyebrow" data-t="bl_ey"></p><h2 id="blH" data-t="bl_h"></h2></div><a class="b-link" href="#" data-t="bl_all"></a></div>
       <div class="bl-g">
         <article data-rv="up"><div class="ph"><span class="bl-c" data-t="bl_c1"></span></div><h3 data-t="bl_t"></h3></article>
         <article data-rv="up"><div class="ph"><span class="bl-c" data-t="bl_c2"></span></div><h3 data-t="bl_t"></h3></article>
@@ -1048,9 +1114,9 @@ html:lang(ar) .ev-g h3{text-transform:none}
       </div>
     </section>
 
-    <section class="hs bk" aria-labelledby="bkH">
-      <div class="hs-h c" data-rv="up"><p class="eyebrow" data-t="bk_ey"></p><h2 id="bkH" data-t="bk_h"></h2></div>
-      <div class="bk-g" data-rv="up">
+    <section class="hs bk band ice" aria-labelledby="bkH">
+      <div class="hs-h c" data-rv="rise"><p class="eyebrow" data-t="bk_ey"></p><h2 id="bkH" data-t="bk_h"></h2></div>
+      <div class="bk-g">
         <figure><span class="ph"><i data-t="bk_ph"></i></span><figcaption data-t="bk_n"></figcaption></figure>
         <figure><span class="ph"><i data-t="bk_ph"></i></span><figcaption data-t="bk_n"></figcaption></figure>
         <figure><span class="ph"><i data-t="bk_ph"></i></span><figcaption data-t="bk_n"></figcaption></figure>
@@ -1059,8 +1125,8 @@ html:lang(ar) .ev-g h3{text-transform:none}
     </section>
 
     <section class="hs fq" aria-labelledby="fqH">
-      <div class="hs-h" data-rv="up"><p class="eyebrow" data-t="fq_ey"></p><h2 id="fqH" data-t="fq_h"></h2></div>
-      <div class="fq-l" data-rv="up">
+      <div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="fq_ey"></p><h2 id="fqH" data-t="fq_h"></h2></div>
+      <div class="fq-l">
         <details><summary data-t="fq1"></summary><p data-t="fq_a"></p></details>
         <details><summary data-t="fq2"></summary><p data-t="fq_a"></p></details>
         <details><summary data-t="fq3"></summary><p data-t="fq_a"></p></details>
@@ -1069,7 +1135,7 @@ html:lang(ar) .ev-g h3{text-transform:none}
     </section>
 
     <section class="pt" aria-labelledby="ptH">
-      <div class="pt-head" data-rv="up"><p class="eyebrow" data-t="pt_ey"></p><h2 id="ptH" data-t="pt_h"></h2></div>
+      <div class="pt-head" data-rv="rise"><p class="eyebrow" data-t="pt_ey"></p><h2 id="ptH" data-t="pt_h"></h2></div>
       <div class="pt-row" id="ptRow"><div class="pt-track" id="ptTrack"></div></div>
     </section>
   </div>
@@ -1199,6 +1265,7 @@ Object.assign(T,{"ar":{"pc_ey":"/ Pro · المنتجات","pc_t":"مكتبة ا
 
 for(const [l,o] of Object.entries({"tr": {"v_cap1": "Bilim · hücreler arası iletişim", "v_cap2": "Laboratuvar · Regenyal, İtalya", "v_cap3": "Üretim · Regenyal, İtalya", "v_cap4": "Ürün · Eksozom", "v_prev": "Önceki video", "v_next": "Sonraki video", "v_pause": "Videoyu duraklat", "v_play": "Videoyu oynat", "v_slide": "Video", "hc1t": "Uzmanlık alanları", "hc1b": "Ortopedi, spor hekimliği, estetik, üroloji, kadın sağlığı ve veteriner hekimlik.", "hc2t": "Ürünler", "hc2b": "Beş eksende ortobiyolojik ürünler, hücresel tedaviler ve rejeneratif çözümler.", "hc3t": "Sağlık çalışanları", "hc3b": "Kullanım talimatları, teknik dosyalar ve numune talebi Pro alanında.", "hc_more": "İncele", "pt_ey": "/ Global iş ortaklarımız", "pt_h": "Birlikte çalıştığımız üreticiler ve markalar", "c_ey": "/ Bilim", "c_h": "Hücrenin <em>içine</em> bakın.", "c_lede": "Rejeneratif tıbbın temelinde hücreler arası iletişim var. İmleci hücrenin üzerine getirin: çekirdek, mitokondriler, endoplazmik retikulum ve Golgi aygıtı belirsin.", "c_hint": "İçine bakmak için üzerine gelin", "o_nuc": "Çekirdek", "o_mito": "Mitokondri", "o_er": "Endoplazmik retikulum", "o_golgi": "Golgi aygıtı", "ft_rights": "© Intrafarma · Prototip, gerçek içerik değildir", "ft_kvkk": "KVKK Aydınlatma Metni", "ft_cookie": "Çerez tercihleri", "ft_ae": "Ürün güvenliği bildirimi", "totop": "Sayfa başına dön"}, "en": {"v_cap1": "Science · cell-to-cell communication", "v_cap2": "Laboratory · Regenyal, Italy", "v_cap3": "Manufacturing · Regenyal, Italy", "v_cap4": "Product · Exosome", "v_prev": "Previous video", "v_next": "Next video", "v_pause": "Pause video", "v_play": "Play video", "v_slide": "Video", "hc1t": "Areas of expertise", "hc1b": "Orthopaedics, sports medicine, aesthetics, urology, women's health and veterinary medicine.", "hc2t": "Products", "hc2b": "Orthobiologics, cell therapies and regenerative solutions across five pillars.", "hc3t": "Healthcare professionals", "hc3b": "Instructions for use, technical files and sample requests in the Pro area.", "hc_more": "Explore", "pt_ey": "/ Global partners", "pt_h": "The manufacturers and brands we work with", "c_ey": "/ Science", "c_h": "Look <em>inside</em> the cell.", "c_lede": "Cell-to-cell communication lies at the heart of regenerative medicine. Move your cursor over the cell to reveal the nucleus, mitochondria, endoplasmic reticulum and Golgi apparatus.", "c_hint": "Hover to look inside", "o_nuc": "Nucleus", "o_mito": "Mitochondrion", "o_er": "Endoplasmic reticulum", "o_golgi": "Golgi apparatus", "ft_rights": "© Intrafarma · Prototype, not real content", "ft_kvkk": "Privacy notice", "ft_cookie": "Cookie preferences", "ft_ae": "Product safety reporting", "totop": "Back to top"}, "ar": {"v_cap1": "العلوم · التواصل بين الخلايا", "v_cap2": "المختبر · Regenyal، إيطاليا", "v_cap3": "التصنيع · Regenyal، إيطاليا", "v_cap4": "المنتج · الإكسوسوم", "v_prev": "الفيديو السابق", "v_next": "الفيديو التالي", "v_pause": "إيقاف الفيديو مؤقتًا", "v_play": "تشغيل الفيديو", "v_slide": "فيديو", "hc1t": "مجالات الخبرة", "hc1b": "جراحة العظام والطب الرياضي والتجميل والمسالك البولية وصحة المرأة والطب البيطري.", "hc2t": "المنتجات", "hc2b": "منتجات بيولوجية عظمية وعلاجات خلوية وحلول تجديدية في خمسة محاور.", "hc3t": "العاملون في القطاع الصحي", "hc3b": "تعليمات الاستخدام والملفات الفنية وطلبات العينات في منطقة Pro.", "hc_more": "استكشف", "pt_ey": "/ شركاؤنا العالميون", "pt_h": "الشركات المصنّعة والعلامات التجارية التي نعمل معها", "c_ey": "/ العلوم", "c_h": "انظر <em>داخل</em> الخلية.", "c_lede": "يقوم الطب التجديدي على التواصل بين الخلايا. مرّر المؤشر فوق الخلية لتظهر النواة والميتوكوندريا والشبكة الإندوبلازمية وجهاز غولجي.", "c_hint": "مرّر المؤشر للنظر إلى الداخل", "o_nuc": "النواة", "o_mito": "الميتوكوندريا", "o_er": "الشبكة الإندوبلازمية", "o_golgi": "جهاز غولجي", "ft_rights": "© Intrafarma · نموذج أولي، ليس محتوى حقيقيًا", "ft_kvkk": "إشعار الخصوصية", "ft_cookie": "تفضيلات ملفات تعريف الارتباط", "ft_ae": "الإبلاغ عن سلامة المنتج", "totop": "العودة إلى الأعلى"}, "it": {"v_cap1": "Scienza · comunicazione tra cellule", "v_cap2": "Laboratorio · Regenyal, Italia", "v_cap3": "Produzione · Regenyal, Italia", "v_cap4": "Prodotto · Esosoma", "v_prev": "Video precedente", "v_next": "Video successivo", "v_pause": "Metti in pausa il video", "v_play": "Riproduci il video", "v_slide": "Video", "hc1t": "Aree di competenza", "hc1b": "Ortopedia, medicina dello sport, medicina estetica, urologia, salute della donna e veterinaria.", "hc2t": "Prodotti", "hc2b": "Ortobiologici, terapie cellulari e soluzioni rigenerative in cinque aree.", "hc3t": "Operatori sanitari", "hc3b": "Istruzioni per l'uso, documentazione tecnica e richieste di campioni nell'area Pro.", "hc_more": "Scopri", "pt_ey": "/ Partner globali", "pt_h": "I produttori e i marchi con cui lavoriamo", "c_ey": "/ Scienza", "c_h": "Guarda <em>dentro</em> la cellula.", "c_lede": "Alla base della medicina rigenerativa c'è la comunicazione tra cellule. Passa il cursore sulla cellula per vedere nucleo, mitocondri, reticolo endoplasmatico e apparato di Golgi.", "c_hint": "Passa sopra per guardare dentro", "o_nuc": "Nucleo", "o_mito": "Mitocondrio", "o_er": "Reticolo endoplasmatico", "o_golgi": "Apparato di Golgi", "ft_rights": "© Intrafarma · Prototipo, contenuto non reale", "ft_kvkk": "Informativa sulla privacy", "ft_cookie": "Preferenze cookie", "ft_ae": "Segnalazione sicurezza prodotto", "totop": "Torna su"}, "ru": {"v_cap1": "Наука · межклеточная коммуникация", "v_cap2": "Лаборатория · Regenyal, Италия", "v_cap3": "Производство · Regenyal, Италия", "v_cap4": "Продукт · Экзосомы", "v_prev": "Предыдущее видео", "v_next": "Следующее видео", "v_pause": "Приостановить видео", "v_play": "Воспроизвести видео", "v_slide": "Видео", "hc1t": "Области экспертизы", "hc1b": "Ортопедия, спортивная медицина, эстетическая медицина, урология, женское здоровье и ветеринария.", "hc2t": "Продукция", "hc2b": "Ортобиологические продукты, клеточная терапия и регенеративные решения по пяти направлениям.", "hc3t": "Медицинским специалистам", "hc3b": "Инструкции, техническая документация и запрос образцов — в разделе Pro.", "hc_more": "Подробнее", "pt_ey": "/ Глобальные партнёры", "pt_h": "Производители и бренды, с которыми мы работаем", "c_ey": "/ Наука", "c_h": "Загляните <em>внутрь</em> клетки.", "c_lede": "В основе регенеративной медицины — межклеточная коммуникация. Наведите курсор на клетку, чтобы увидеть ядро, митохондрии, эндоплазматическую сеть и аппарат Гольджи.", "c_hint": "Наведите, чтобы заглянуть внутрь", "o_nuc": "Ядро", "o_mito": "Митохондрия", "o_er": "Эндоплазматическая сеть", "o_golgi": "Аппарат Гольджи", "ft_rights": "© Intrafarma · Прототип, не реальный контент", "ft_kvkk": "Уведомление о конфиденциальности", "ft_cookie": "Настройки cookie", "ft_ae": "Сообщить о безопасности продукта", "totop": "Наверх"}, "ro": {"v_cap1": "Știință · comunicarea dintre celule", "v_cap2": "Laborator · Regenyal, Italia", "v_cap3": "Producție · Regenyal, Italia", "v_cap4": "Produs · Exozomi", "v_prev": "Videoclipul anterior", "v_next": "Videoclipul următor", "v_pause": "Întrerupe videoclipul", "v_play": "Redă videoclipul", "v_slide": "Videoclip", "hc1t": "Domenii de expertiză", "hc1b": "Ortopedie, medicină sportivă, medicină estetică, urologie, sănătatea femeii și medicină veterinară.", "hc2t": "Produse", "hc2b": "Produse ortobiologice, terapii celulare și soluții regenerative în cinci direcții.", "hc3t": "Profesioniști din sănătate", "hc3b": "Instrucțiuni de utilizare, documentație tehnică și solicitări de mostre în zona Pro.", "hc_more": "Detalii", "pt_ey": "/ Parteneri globali", "pt_h": "Producătorii și mărcile cu care lucrăm", "c_ey": "/ Știință", "c_h": "Privește <em>în interiorul</em> celulei.", "c_lede": "La baza medicinei regenerative stă comunicarea dintre celule. Treceți cursorul peste celulă pentru a vedea nucleul, mitocondriile, reticulul endoplasmatic și aparatul Golgi.", "c_hint": "Treceți cursorul pentru a privi înăuntru", "o_nuc": "Nucleu", "o_mito": "Mitocondrie", "o_er": "Reticul endoplasmatic", "o_golgi": "Aparatul Golgi", "ft_rights": "© Intrafarma · Prototip, conținut nereal", "ft_kvkk": "Notă de informare", "ft_cookie": "Preferințe cookie", "ft_ae": "Raportare siguranța produsului", "totop": "Înapoi sus"}}))Object.assign(T[l],o);
 for(const [l,o] of Object.entries({"tr": {"hc_ey": "/ Intrafarma", "hc_h": "Nasıl yardımcı olabiliriz?", "c_lede": "Rejeneratif tıbbın temelinde hücreler arası iletişim var. İmleci hücrenin üzerine getirin: büyüteç zarın ardını netleştirir; çekirdek, mitokondriler, endoplazmik retikulum ve Golgi aygıtı görünür.", "st_ey": "/ Rakamlarla Intrafarma", "st_h": "Birlikte büyüyen bir ağ", "st1": "Uzmanlık alanı", "st2": "Ürün", "st3": "İş ortağı", "st4": "Ülkeden üretici", "st5": "Kongre ve etkinlik", "st_note": "Rakamlar örnektir; firma onayıyla güncellenecek.", "ua_ey": "/ Uzmanlık alanlarımız", "ua_h": "Altı klinik alanda rejeneratif çözümler", "ua_p": "Her alan için ürünler, belgeler ve eğitim içerikleri.", "ua_photo": "Fotoğraf gelecek", "lb_ey": "/ Laboratuvarlar ve üretim", "lb_h": "Kendi markanızı birlikte üretelim", "lb_p": "Oral takviye gıdalarda formülden ambalaja, kişiye özel marka ürünler geliştiriyoruz.", "lb_cta": "Özel marka için görüşelim", "lb_cap": "Görseller: üretim ortağımız Regenyal Laboratories, İtalya", "ev_ey": "/ Etkinlikler", "ev_h": "Kongreler, fuarlar ve bölgesel toplantılar", "ev_up": "Yaklaşan", "ev_past": "Geçmiş etkinlikler", "ev_t": "[Etkinlik adı]", "ev_p": "[Şehir] · [Stand]", "ev_pt": "[Geçmiş etkinlik]", "ev_ph": "Etkinlik fotoğrafları", "ev_all": "Tüm etkinlikler", "bl_ey": "/ Blog", "bl_h": "Bilgilendirme, röportaj ve makale", "bl_c1": "Bilgilendirme", "bl_c2": "Hekim röportajı", "bl_c3": "Makale özeti", "bl_t": "[Yazı başlığı]", "bl_all": "Tüm yazılar", "bk_ey": "/ Bilimsel danışma kurulu", "bk_h": "Konuşmacı ve danışman hekimlerimiz", "bk_n": "[Prof. Dr. Ad Soyad]", "bk_ph": "Fotoğraf", "fq_ey": "/ Soru ve cevap", "fq_h": "Endikasyonlar ve tedaviler", "fq1": "Rejeneratif ürünler hangi klinik alanlarda kullanılır?", "fq2": "Eksozom ve PRP arasındaki fark nedir?", "fq3": "Numune ve eğitim talebi nasıl yapılır?", "fq4": "Ürünlerin kalite belgeleri nelerdir?", "fq_a": "[Cevap Intrafarma tarafından yazılacak ve mevzuat açısından onaylanacak.]", "hp_ey": "/ Ürünler", "hp_h": "Beş eksende ürün portföyü", "hp_p": "Yüksek çözünürlüklü ürün fotoğraflarından 3D modeller hazırlanacak; ziyaretçi ürünü çevirerek inceleyebilecek.", "hp_cta": "Ürün kataloğu", "hp_3d": "3D model · yakında", "hp_n": "ürün", "ev_d": "[Tarih]"}, "en": {"hc_ey": "/ Intrafarma", "hc_h": "How can we help?", "c_lede": "Cell-to-cell communication lies at the heart of regenerative medicine. Move your cursor over the cell: the magnifier sees through the membrane and reveals the nucleus, mitochondria, endoplasmic reticulum and Golgi apparatus.", "st_ey": "/ Intrafarma in numbers", "st_h": "A network that grows together", "st1": "Areas of expertise", "st2": "Products", "st3": "Partners", "st4": "Manufacturer countries", "st5": "Congresses and events", "st_note": "Figures are examples; they will be updated with the company's approval.", "ua_ey": "/ Areas of expertise", "ua_h": "Regenerative solutions in six clinical areas", "ua_p": "Products, documents and training content for each area.", "ua_photo": "Photo to come", "lb_ey": "/ Laboratories and manufacturing", "lb_h": "Let's build your own brand together", "lb_p": "From formula to packaging, we develop private-label oral food supplements.", "lb_cta": "Talk to us about private label", "lb_cap": "Images: our manufacturing partner Regenyal Laboratories, Italy", "ev_ey": "/ Events", "ev_h": "Congresses, trade fairs and regional meetings", "ev_up": "Upcoming", "ev_past": "Past events", "ev_t": "[Event name]", "ev_p": "[City] · [Booth]", "ev_pt": "[Past event]", "ev_ph": "Event photos", "ev_all": "All events", "bl_ey": "/ Blog", "bl_h": "Insights, interviews and articles", "bl_c1": "Insight", "bl_c2": "Physician interview", "bl_c3": "Article summary", "bl_t": "[Post title]", "bl_all": "All posts", "bk_ey": "/ Scientific advisory board", "bk_h": "Our speaker and advisory physicians", "bk_n": "[Prof. Dr. Name Surname]", "bk_ph": "Photo", "fq_ey": "/ Questions and answers", "fq_h": "Indications and treatments", "fq1": "In which clinical areas are regenerative products used?", "fq2": "What is the difference between exosomes and PRP?", "fq3": "How do I request samples or training?", "fq4": "Which quality certificates do the products have?", "fq_a": "[Answer to be written by Intrafarma and approved for regulatory compliance.]", "hp_ey": "/ Products", "hp_h": "A portfolio across five pillars", "hp_p": "3D models will be built from high-resolution product photos so visitors can rotate and inspect each product.", "hp_cta": "Product catalogue", "hp_3d": "3D model · coming soon", "hp_n": "products", "ev_d": "[Date]"}, "ar": {"hc_ey": "/ Intrafarma", "hc_h": "كيف يمكننا المساعدة؟", "c_lede": "يقوم الطب التجديدي على التواصل بين الخلايا. مرّر المؤشر فوق الخلية: تكشف العدسة ما وراء الغشاء وتظهر النواة والميتوكوندريا والشبكة الإندوبلازمية وجهاز غولجي.", "st_ey": "/ Intrafarma بالأرقام", "st_h": "شبكة تنمو معًا", "st1": "مجالات الخبرة", "st2": "منتج", "st3": "شريك", "st4": "دول المصنّعين", "st5": "مؤتمرات وفعاليات", "st_note": "الأرقام أمثلة وستُحدَّث بعد موافقة الشركة.", "ua_ey": "/ مجالات الخبرة", "ua_h": "حلول تجديدية في ستة مجالات سريرية", "ua_p": "منتجات ومستندات ومحتوى تدريبي لكل مجال.", "ua_photo": "ستُضاف صورة", "lb_ey": "/ المختبرات والتصنيع", "lb_h": "لنصنع علامتك التجارية معًا", "lb_p": "نطوّر مكمّلات غذائية فموية بعلامة خاصة، من التركيبة إلى العبوة.", "lb_cta": "تواصل معنا بشأن العلامة الخاصة", "lb_cap": "الصور: شريكنا في التصنيع Regenyal Laboratories، إيطاليا", "ev_ey": "/ الفعاليات", "ev_h": "مؤتمرات ومعارض واجتماعات إقليمية", "ev_up": "القادمة", "ev_past": "فعاليات سابقة", "ev_t": "[اسم الفعالية]", "ev_p": "[المدينة] · [الجناح]", "ev_pt": "[فعالية سابقة]", "ev_ph": "صور الفعالية", "ev_all": "كل الفعاليات", "bl_ey": "/ المدونة", "bl_h": "معلومات ومقابلات ومقالات", "bl_c1": "معلومات", "bl_c2": "مقابلة مع طبيب", "bl_c3": "ملخص مقال", "bl_t": "[عنوان المقال]", "bl_all": "كل المقالات", "bk_ey": "/ المجلس الاستشاري العلمي", "bk_h": "أطباؤنا المتحدثون والمستشارون", "bk_n": "[أ. د. الاسم الكامل]", "bk_ph": "صورة", "fq_ey": "/ أسئلة وأجوبة", "fq_h": "دواعي الاستعمال والعلاجات", "fq1": "في أي مجالات سريرية تُستخدم المنتجات التجديدية؟", "fq2": "ما الفرق بين الإكسوسومات والبلازما الغنية بالصفائح؟", "fq3": "كيف أطلب عينات أو تدريبًا؟", "fq4": "ما شهادات الجودة التي تحملها المنتجات؟", "fq_a": "[ستكتب Intrafarma الإجابة وتُعتمد من الناحية التنظيمية.]", "hp_ey": "/ المنتجات", "hp_h": "محفظة منتجات في خمسة محاور", "hp_p": "ستُعدّ نماذج ثلاثية الأبعاد من صور المنتجات عالية الدقة ليتمكن الزائر من تدوير المنتج وفحصه.", "hp_cta": "كتالوج المنتجات", "hp_3d": "نموذج ثلاثي الأبعاد · قريبًا", "hp_n": "منتج", "ev_d": "[التاريخ]"}, "it": {"hc_ey": "/ Intrafarma", "hc_h": "Come possiamo aiutarti?", "c_lede": "Alla base della medicina rigenerativa c'è la comunicazione tra cellule. Passa il cursore sulla cellula: la lente vede oltre la membrana e mostra nucleo, mitocondri, reticolo endoplasmatico e apparato di Golgi.", "st_ey": "/ Intrafarma in cifre", "st_h": "Una rete che cresce insieme", "st1": "Aree di competenza", "st2": "Prodotti", "st3": "Partner", "st4": "Paesi dei produttori", "st5": "Congressi ed eventi", "st_note": "Le cifre sono esempi; saranno aggiornate con l'approvazione dell'azienda.", "ua_ey": "/ Aree di competenza", "ua_h": "Soluzioni rigenerative in sei aree cliniche", "ua_p": "Prodotti, documenti e contenuti formativi per ogni area.", "ua_photo": "Foto in arrivo", "lb_ey": "/ Laboratori e produzione", "lb_h": "Creiamo insieme il tuo marchio", "lb_p": "Dalla formula al confezionamento, sviluppiamo integratori alimentari orali a marchio privato.", "lb_cta": "Parliamo di marchio privato", "lb_cap": "Immagini: il nostro partner produttivo Regenyal Laboratories, Italia", "ev_ey": "/ Eventi", "ev_h": "Congressi, fiere e incontri regionali", "ev_up": "In arrivo", "ev_past": "Eventi passati", "ev_t": "[Nome evento]", "ev_p": "[Città] · [Stand]", "ev_pt": "[Evento passato]", "ev_ph": "Foto dell'evento", "ev_all": "Tutti gli eventi", "bl_ey": "/ Blog", "bl_h": "Approfondimenti, interviste e articoli", "bl_c1": "Approfondimento", "bl_c2": "Intervista a un medico", "bl_c3": "Sintesi di un articolo", "bl_t": "[Titolo dell'articolo]", "bl_all": "Tutti gli articoli", "bk_ey": "/ Comitato scientifico", "bk_h": "I nostri medici relatori e consulenti", "bk_n": "[Prof. Dr. Nome Cognome]", "bk_ph": "Foto", "fq_ey": "/ Domande e risposte", "fq_h": "Indicazioni e trattamenti", "fq1": "In quali aree cliniche si usano i prodotti rigenerativi?", "fq2": "Qual è la differenza tra esosomi e PRP?", "fq3": "Come si richiedono campioni o formazione?", "fq4": "Quali certificati di qualità hanno i prodotti?", "fq_a": "[Risposta a cura di Intrafarma, da approvare dal punto di vista normativo.]", "hp_ey": "/ Prodotti", "hp_h": "Un portafoglio in cinque aree", "hp_p": "Dalle foto ad alta risoluzione saranno creati modelli 3D che il visitatore potrà ruotare ed esaminare.", "hp_cta": "Catalogo prodotti", "hp_3d": "Modello 3D · in arrivo", "hp_n": "prodotti", "ev_d": "[Data]"}, "ru": {"hc_ey": "/ Intrafarma", "hc_h": "Чем мы можем помочь?", "c_lede": "В основе регенеративной медицины — межклеточная коммуникация. Наведите курсор на клетку: лупа заглядывает за мембрану и показывает ядро, митохондрии, эндоплазматическую сеть и аппарат Гольджи.", "st_ey": "/ Intrafarma в цифрах", "st_h": "Сеть, которая растёт вместе", "st1": "Области экспертизы", "st2": "Продуктов", "st3": "Партнёров", "st4": "Стран-производителей", "st5": "Конгрессов и мероприятий", "st_note": "Цифры приведены для примера и будут обновлены после согласования с компанией.", "ua_ey": "/ Области экспертизы", "ua_h": "Регенеративные решения в шести клинических областях", "ua_p": "Продукция, документы и обучающие материалы для каждой области.", "ua_photo": "Фото будет добавлено", "lb_ey": "/ Лаборатории и производство", "lb_h": "Создадим ваш бренд вместе", "lb_p": "От рецептуры до упаковки — разрабатываем пероральные БАД под собственной торговой маркой.", "lb_cta": "Обсудить собственную марку", "lb_cap": "Фото: наш производственный партнёр Regenyal Laboratories, Италия", "ev_ey": "/ Мероприятия", "ev_h": "Конгрессы, выставки и региональные встречи", "ev_up": "Предстоящие", "ev_past": "Прошедшие мероприятия", "ev_t": "[Название мероприятия]", "ev_p": "[Город] · [Стенд]", "ev_pt": "[Прошедшее мероприятие]", "ev_ph": "Фото мероприятия", "ev_all": "Все мероприятия", "bl_ey": "/ Блог", "bl_h": "Статьи, интервью и обзоры", "bl_c1": "Полезно знать", "bl_c2": "Интервью с врачом", "bl_c3": "Обзор статьи", "bl_t": "[Заголовок статьи]", "bl_all": "Все статьи", "bk_ey": "/ Научный совет", "bk_h": "Наши врачи-спикеры и консультанты", "bk_n": "[Проф. д-р Имя Фамилия]", "bk_ph": "Фото", "fq_ey": "/ Вопросы и ответы", "fq_h": "Показания и лечение", "fq1": "В каких клинических областях применяются регенеративные продукты?", "fq2": "Чем экзосомы отличаются от PRP?", "fq3": "Как запросить образцы или обучение?", "fq4": "Какие сертификаты качества есть у продукции?", "fq_a": "[Ответ подготовит Intrafarma; он будет согласован с учётом регуляторных требований.]", "hp_ey": "/ Продукция", "hp_h": "Портфель по пяти направлениям", "hp_p": "По фотографиям высокого разрешения будут созданы 3D-модели — посетитель сможет вращать и рассматривать продукт.", "hp_cta": "Каталог продукции", "hp_3d": "3D-модель · скоро", "hp_n": "продуктов", "ev_d": "[Дата]"}, "ro": {"hc_ey": "/ Intrafarma", "hc_h": "Cum vă putem ajuta?", "c_lede": "La baza medicinei regenerative stă comunicarea dintre celule. Treceți cursorul peste celulă: lupa vede dincolo de membrană și arată nucleul, mitocondriile, reticulul endoplasmatic și aparatul Golgi.", "st_ey": "/ Intrafarma în cifre", "st_h": "O rețea care crește împreună", "st1": "Domenii de expertiză", "st2": "Produse", "st3": "Parteneri", "st4": "Țări producătoare", "st5": "Congrese și evenimente", "st_note": "Cifrele sunt exemple; vor fi actualizate cu aprobarea companiei.", "ua_ey": "/ Domenii de expertiză", "ua_h": "Soluții regenerative în șase domenii clinice", "ua_p": "Produse, documente și conținut de formare pentru fiecare domeniu.", "ua_photo": "Fotografie în curând", "lb_ey": "/ Laboratoare și producție", "lb_h": "Să construim împreună marca dvs.", "lb_p": "De la formulă la ambalaj, dezvoltăm suplimente alimentare orale sub marcă proprie.", "lb_cta": "Discutați cu noi despre marca proprie", "lb_cap": "Imagini: partenerul nostru de producție Regenyal Laboratories, Italia", "ev_ey": "/ Evenimente", "ev_h": "Congrese, târguri și întâlniri regionale", "ev_up": "Urmează", "ev_past": "Evenimente trecute", "ev_t": "[Numele evenimentului]", "ev_p": "[Oraș] · [Stand]", "ev_pt": "[Eveniment trecut]", "ev_ph": "Fotografii de la eveniment", "ev_all": "Toate evenimentele", "bl_ey": "/ Blog", "bl_h": "Informații, interviuri și articole", "bl_c1": "Informare", "bl_c2": "Interviu cu un medic", "bl_c3": "Rezumat de articol", "bl_t": "[Titlul articolului]", "bl_all": "Toate articolele", "bk_ey": "/ Consiliul științific", "bk_h": "Medicii noștri speakeri și consultanți", "bk_n": "[Prof. Dr. Nume Prenume]", "bk_ph": "Fotografie", "fq_ey": "/ Întrebări și răspunsuri", "fq_h": "Indicații și tratamente", "fq1": "În ce domenii clinice se folosesc produsele regenerative?", "fq2": "Care este diferența dintre exozomi și PRP?", "fq3": "Cum solicit mostre sau instruire?", "fq4": "Ce certificate de calitate au produsele?", "fq_a": "[Răspunsul va fi redactat de Intrafarma și aprobat din punct de vedere al reglementărilor.]", "hp_ey": "/ Produse", "hp_h": "Un portofoliu în cinci direcții", "hp_p": "Din fotografiile de înaltă rezoluție vor fi create modele 3D pe care vizitatorul le va putea roti și examina.", "hp_cta": "Catalog de produse", "hp_3d": "Model 3D · în curând", "hp_n": "produse", "ev_d": "[Data]"}}))Object.assign(T[l],o);
+for(const [l,o] of Object.entries({"tr": {"ox_nuc": "Genetik bilgiyi taşır; hücrenin onarım ve yenilenme programını yönetir.", "ox_mito": "Hücrenin enerji santrali; doku onarımının ihtiyaç duyduğu enerjiyi üretir.", "ox_er": "Protein ve lipit üretim hattı; çekirdeğin çevresini sarar.", "ox_golgi": "Proteinleri paketler, eksozom gibi veziküllerle hücre dışına gönderir.", "ex_cap": "Eksozomlar · hücreler arası mesaj"}, "en": {"ox_nuc": "Holds the genetic information and directs the cell's repair and renewal programme.", "ox_mito": "The cell's power plant, producing the energy tissue repair depends on.", "ox_er": "The production line for proteins and lipids, wrapped around the nucleus.", "ox_golgi": "Packages proteins and ships them out of the cell in vesicles such as exosomes.", "ex_cap": "Exosomes · messages between cells"}, "ar": {"ox_nuc": "تحمل المعلومات الوراثية وتدير برنامج الإصلاح والتجدد في الخلية.", "ox_mito": "محطة طاقة الخلية، تنتج الطاقة التي يحتاجها إصلاح الأنسجة.", "ox_er": "خط إنتاج البروتينات والدهون، يلتف حول النواة.", "ox_golgi": "يغلّف البروتينات ويرسلها خارج الخلية في حويصلات مثل الإكسوسومات.", "ex_cap": "الإكسوسومات · رسائل بين الخلايا"}, "it": {"ox_nuc": "Custodisce l'informazione genetica e dirige il programma di riparazione e rinnovamento della cellula.", "ox_mito": "La centrale energetica della cellula, che produce l'energia necessaria alla riparazione dei tessuti.", "ox_er": "La linea di produzione di proteine e lipidi, avvolta attorno al nucleo.", "ox_golgi": "Confeziona le proteine e le invia fuori dalla cellula in vescicole come gli esosomi.", "ex_cap": "Esosomi · messaggi tra cellule"}, "ru": {"ox_nuc": "Хранит генетическую информацию и управляет программой восстановления и обновления клетки.", "ox_mito": "Энергетическая станция клетки: вырабатывает энергию, необходимую для восстановления тканей.", "ox_er": "Конвейер синтеза белков и липидов, окружающий ядро.", "ox_golgi": "Упаковывает белки и отправляет их из клетки в пузырьках, например в экзосомах.", "ex_cap": "Экзосомы · сообщения между клетками"}, "ro": {"ox_nuc": "Păstrează informația genetică și coordonează programul de reparare și reînnoire al celulei.", "ox_mito": "Centrala energetică a celulei, care produce energia necesară reparării țesuturilor.", "ox_er": "Linia de producție a proteinelor și lipidelor, înfășurată în jurul nucleului.", "ox_golgi": "Împachetează proteinele și le trimite în afara celulei în vezicule precum exozomii.", "ex_cap": "Exozomi · mesaje între celule"}}))Object.assign(T[l],o);
 const IF=window.IF={mode:'public',p:0,ptr:{x:-999,y:-999,in:false,touch:false},W:0,H:0,near:0,cell:null,revealC:{x:0,y:0},revealR:0,ripples:[],reduce,cmpX:0,lang:(()=>{const q=new URLSearchParams(location.search).get('lang');if(q&&T[q])return q;try{const s=localStorage.getItem('if_lang');if(s&&T[s])return s;}catch(e){}return 'tr';})(),lens:null};
 IF.tr=k=>T[IF.lang][k]??T.en[k]??k;
 let tStart=0,magnet=null,zoomFrom=null,curX=-100,curY=-100,lensL=56,lensZ=1.7,lensPub=null,lensPro=null;
@@ -1567,7 +1634,7 @@ go(0);
 /* keep the second language picker and aria labels in sync with applyLang */
 const sel2=$('#langSel2');
 sel2.addEventListener('change',e=>{const b=document.querySelector('.site-top [data-lang="'+e.target.value+'"]');if(b)b.click();});
-new MutationObserver(()=>{sel2.value=document.documentElement.lang;labels();homeData();}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+new MutationObserver(()=>{sel2.value=document.documentElement.lang;labels();homeData();splitWords();}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 sel2.value=document.documentElement.lang||'tr';
 
 /* outer buttons open things inside the cell stage: bring it into view first */
@@ -1595,12 +1662,24 @@ const UA_IMG=['ortopedi','spor',null,null,null,null];
 const UA_IC=['<circle cx="12" cy="12" r="9"/><path d="M8 8.5c2 1 2 3 0 4M16 11.5c-2 1-2 3 0 4M9 12.5h6"/>','<circle cx="12" cy="12" r="9"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>','<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>','<rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 8v6"/>','<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>','<path d="M6 13c0-3 3-4 6-4s6 1 6 4-2 6-6 6-6-3-6-6z"/><circle cx="7" cy="6" r="1.6"/><circle cx="12" cy="4.5" r="1.6"/><circle cx="17" cy="6" r="1.6"/>'];
 function homeData(){
  const D=window.IFD;if(!D)return;const L=(window.IF&&IF.lang)||'tr',CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en;
- const g=$('#uaG');if(g){g.innerHTML='';CA.forEach((n,i)=>{const a=document.createElement('a');a.href='#hucre';a.className='ua-c'+(UA_IMG[i]?'':' noimg');a.setAttribute('data-rv','up');a.classList.add('in');
+ const g=$('#uaG');if(g){const was=!!g.querySelector('.in');g.innerHTML='';CA.forEach((n,i)=>{const a=document.createElement('a');a.href='#hucre';a.className='ua-c'+(UA_IMG[i]?'':' noimg');a.setAttribute('data-rv',i%3===0?'left':i%3===2?'right':'up');a.style.setProperty('--i',i%3+Math.floor(i/3));if(was)a.classList.add('in');else io.observe(a);
   a.innerHTML=(UA_IMG[i]?'<img src="media/gorsel/'+UA_IMG[i]+'.jpg" alt="" loading="lazy" decoding="async">':'<svg class="ua-ic" viewBox="0 0 24 24" aria-hidden="true">'+UA_IC[i]+'</svg><span class="ua-tb">'+tr('ua_photo')+'</span>')+'<span class="ua-n">0'+(i+1)+'</span><span class="ua-x"><b></b><i aria-hidden="true">→</i></span>';
   a.querySelector('b').textContent=n;g.appendChild(a);});}
- const l=$('#hpL');if(l){l.innerHTML='';AX.forEach((n,i)=>{const c=D.PRODS.filter(p=>p.a===i).length;const li=document.createElement('li');li.innerHTML='<i>0'+(i+1)+'</i><b></b><span></span>';li.querySelector('b').textContent=n;li.querySelector('span').textContent=c+' '+tr('hp_n');l.appendChild(li);});}
+ const l=$('#hpL');if(l){const was=!!l.querySelector('.in');l.innerHTML='';AX.forEach((n,i)=>{const c=D.PRODS.filter(p=>p.a===i).length;const li=document.createElement('li');li.innerHTML='<i>0'+(i+1)+'</i><b></b><span></span>';li.querySelector('b').textContent=n;li.querySelector('span').textContent=c+' '+tr('hp_n');li.dataset.rv='up';li.style.setProperty('--i',i+2);if(was)li.classList.add('in');else io.observe(li);l.appendChild(li);});}
+ const kw=$('#kwT');if(kw){kw.innerHTML='';[0,1].forEach(()=>AX.concat(CA).forEach(n=>{const sp=document.createElement('span');sp.textContent=n;kw.appendChild(sp);}));}
 }
 homeData();
+
+
+/* v3: staggered children, headings rising word by word, colour bands opening while scrolling */
+[['.hc','.hc-c'],['.st-g','div'],['.bl-g','article'],['.bk-g','figure'],['.fq-l','details'],['.ev-up ul','li']].forEach(([p,c])=>$$(p).forEach(par=>[...par.children].forEach((el,i)=>{if(!el.matches(c))return;if(!el.dataset.rv){el.dataset.rv='up';io.observe(el);}el.style.setProperty('--i',i);})));
+const WSEL='.hs-h h2,.st-h h2,.hp-t h2,.lb-t h2,.pt-head h2';
+function splitWords(){if(RM)return;$$(WSEL).forEach(h=>{if(h.querySelector('.wd'))return;let n=0;
+ const walk=node=>[...node.childNodes].forEach(ch=>{if(ch.nodeType===3){const fr=document.createDocumentFragment();ch.textContent.split(/(\s+)/).forEach(p=>{if(!p)return;if(/^\s+$/.test(p)){fr.appendChild(document.createTextNode(p));return;}const w=document.createElement('span');w.className='wd';const x=document.createElement('span');x.textContent=p;x.style.setProperty('--w',n++);w.appendChild(x);fr.appendChild(w);});ch.replaceWith(fr);}else if(ch.nodeType===1)walk(ch);});
+ walk(h);});}
+splitWords();
+const bio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('bin');bio.unobserve(e.target);}}),{threshold:0,rootMargin:'0px 0px -22% 0px'});
+$$('.band').forEach(b=>bio.observe(b));
 
 /* back to top */
 const tt=$('#totop');addEventListener('scroll',()=>tt.classList.toggle('show',scrollY>560),{passive:true});
@@ -1833,6 +1912,22 @@ const lensMat=new THREE.ShaderMaterial({transparent:true,depthTest:false,depthWr
  }`});
 const lensScene=new THREE.Scene();{const q=new THREE.Mesh(new THREE.PlaneGeometry(2,2),lensMat);q.frustumCulled=false;lensScene.add(q);}
 let lensA=0;
+
+/* the cell is not alone: neighbouring cells and exosomes travelling between them */
+const nbMem=new THREE.MeshPhysicalMaterial({color:'#EAF6F8',roughness:.12,transparent:true,opacity:.42,iridescence:1,iridescenceIOR:1.3,iridescenceThicknessRange:[160,620],clearcoat:1,clearcoatRoughness:.08,envMapIntensity:1.35,depthWrite:false});
+const nbNuc=new THREE.MeshPhysicalMaterial({color:'#7A5DB0',roughness:.3,clearcoat:.8});
+const nbMito=new THREE.MeshPhysicalMaterial({color:'#D2553A',roughness:.4,clearcoat:.4});
+const nbGeo=new THREE.SphereGeometry(1,48,32);
+const NB=[{fx:.07,fy:.84,rf:.17,z:-1.4,ph:0},{fx:.94,fy:.13,rf:.12,z:-2,ph:2},{fx:.91,fy:.9,rf:.065,z:-.4,ph:4}].map(n=>{
+ const g=new THREE.Group();const m=new THREE.Mesh(nbGeo,nbMem);m.renderOrder=3;g.add(m);
+ const nu=new THREE.Mesh(sph,nbNuc);nu.scale.setScalar(.36);nu.position.set(.08,.05,0);g.add(nu);
+ for(let k=0;k<4;k++){const c=new THREE.Mesh(mitoGeo,nbMito);const a=k*1.7+n.ph;c.position.set(Math.cos(a)*.62,Math.sin(a)*.5,.15);c.rotation.set(a,a*.7,a);c.scale.setScalar(1.25);g.add(c);}
+ g.visible=false;scene.add(g);return Object.assign(n,{g,x:0,y:0,R:0});});
+const flowMat=new THREE.MeshPhysicalMaterial({color:'#ffffff',roughness:.2,clearcoat:1,emissive:new THREE.Color('#5CC8D0'),emissiveIntensity:.9});
+const FL=[0,1,0,1,0,2,1,0,1,0,2,1].map((k,i)=>{const m=new THREE.Mesh(sph,flowMat);m.visible=false;scene.add(m);return {m,k,off:(i*.618)%1,rev:i%3===2,sp:.11+(i%4)*.025};});
+let nbA=0,OPOS=null;
+const OCW=[...stage.querySelectorAll('.oc')],OCC=[...stage.querySelectorAll('.oc-c')];
+const EXC=document.createElement('div');EXC.className='ex-cap';EXC.setAttribute('aria-hidden','true');stage.appendChild(EXC);
 let W=1,H=1,vh=1,vw=1;const L={pub:{},pro:{}};
 function place(o,fx,fy,rf){const n=W<760;if(document.documentElement.dir==='rtl')fx=1-fx;o.fx=fx;o.fy=fy;o.rf=Math.min(rf,(n?.40:.34)*vw/vh);o.x=(fx-.5)*vw;o.y=(.5-fy)*vh;o.R=o.rf*vh;}
 function resize(){
@@ -2060,7 +2155,7 @@ function frame(){
   tmpV.copy(A.anch.er);A.org.localToWorld(tmpV);pos.o_er=toPx(tmpV.x,tmpV.y);
   tmpV.copy(A.anch.golgi);A.org.localToWorld(tmpV);pos.o_golgi=toPx(tmpV.x,tmpV.y);
   /* labels on the left side: nucleus, Golgi; right side: mitochondria, ER. keep 24px apart vertically */
-  const side={o_nuc:1,o_golgi:1,c_hint:1,o_mito:0,o_er:0};
+  OPOS=pos;const side={o_nuc:1,o_golgi:1,c_hint:1,o_mito:0,o_er:0};
   [[ 'o_nuc','o_golgi'],['o_mito','o_er']].forEach(gr=>{const s=gr.map(k=>({k,y:pos[k].y})).sort((a,b)=>a.y-b.y);for(let i=1;i<s.length;i++)if(s[i].y-s[i-1].y<26)s[i].y=s[i-1].y+26;s.forEach(o=>pos[o.k].ly=o.y);});
   OLAB.forEach(el=>{const k=el.dataset.k,p=pos[k],left=!!side[k];
    const txt=IF.tr(k);const sp=el.lastChild;if(sp.textContent!==txt)sp.textContent=txt;
@@ -2091,6 +2186,19 @@ function frame(){
    const u=lensMat.uniforms;u.uLC.value.set(LZ.x*pr,(H-LZ.y)*pr);u.uLR.value=LZ.L*pr/2;u.uCC.value.set(sc.x*pr,(H-sc.y)*pr);u.uCR.value=cr*pr;u.uZ.value=LZ.z;u.uA.value=lensA;
    renderer.autoClear=false;renderer.render(lensScene,cam);renderer.autoClear=true;
   }}
+
+ {const on=IF.mode==='public'&&!cmp;nbA+=((on?1:0)-nbA)*.04;const rtl=document.documentElement.dir==='rtl';
+  NB.forEach(n=>{const fx=rtl?1-n.fx:n.fx;n.x=(fx-.5)*vw+Math.sin(t*.25+n.ph)*.08;n.y=(.5-n.fy)*vh+Math.cos(t*.21+n.ph)*.08;n.R=Math.min(n.rf*vh,n.rf*1.6*vw)*nbA;
+   n.g.visible=nbA>.01;n.g.position.set(n.x,n.y,n.z);n.g.scale.set(Math.max(n.R,1e-4)*(1+.035*Math.sin(t*1.1+n.ph)),Math.max(n.R,1e-4)*(1+.035*Math.cos(t*.9+n.ph)),Math.max(n.R,1e-4));n.g.rotation.z=t*.05+n.ph;});
+  FL.forEach(f=>{const n=NB[f.k];let u=(t*f.sp+f.off)%1;if(f.rev)u=1-u;
+   const dx=n.x-ax,dy=n.y-ay,Ln=Math.hypot(dx,dy)||1,s0=Math.min(.45,aR*.92/Ln),e0=Math.max(.55,1-n.R*.85/Ln),uu=s0+(e0-s0)*u,b=4*uu*(1-uu),bend=(f.k===1?-.16:.16)*Ln;
+   f.m.position.set(ax+dx*uu-dy/Ln*bend*b,ay+dy*uu+dx/Ln*bend*b,.4);
+   const fade=Math.sin(Math.PI*u);f.m.visible=nbA>.01;f.m.scale.setScalar(Math.max(1e-4,vh*.015*fade*nbA));});
+  const showOC=IF.mode==='public'&&W>=760&&!IF.overlay;OCW.forEach(w=>{const v=showOC?'1':'0';if(w.style.opacity!==v)w.style.opacity=v;});
+  let best=null;if(lensA>.3&&IF.lens&&OPOS){let bd=1e9;['o_nuc','o_mito','o_er','o_golgi'].forEach(k=>{const p=OPOS[k];if(!p)return;const d=Math.hypot(p.x-IF.lens.x,p.y-IF.lens.y);if(d<bd){bd=d;best=k;}});}
+  OCC.forEach(c=>c.classList.toggle('on',c.dataset.o===best));
+  const n0=NB[0],cp=toPx(n0.x+n0.R*.62,n0.y+n0.R*1.0),txt=IF.tr('ex_cap');if(EXC.textContent!==txt)EXC.textContent=txt;
+  EXC.style.opacity=(showOC&&nbA>.6)?1:0;EXC.style.transform='translate('+(rtl?cp.x-EXC.offsetWidth:cp.x).toFixed(1)+'px,'+(cp.y-12).toFixed(1)+'px)';}
  if(!stage.classList.contains('gl-on'))stage.classList.add('gl-on');
 }
 requestAnimationFrame(frame);
