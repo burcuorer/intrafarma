@@ -563,6 +563,143 @@ html{scroll-behavior:smooth}
  .pt{padding:48px 0 36px}
  .pt-l{width:148px;height:80px}
 }
+
+/* ---- ana sayfa v2: tek akış, yukarıdan aşağıya ---- */
+/* hero: video oranına yakın, alt kesilmesin; yazı arkasında yalnız soldan hafif perde */
+.vh{aspect-ratio:2.1/1;min-height:540px;padding:120px clamp(18px,3.4vw,44px) 104px;transform-origin:50% 0;will-change:transform;border-radius:0}
+.vh-veil{background:linear-gradient(90deg,rgba(246,247,251,.94) 0%,rgba(246,247,251,.84) 24%,rgba(246,247,251,.4) 42%,rgba(246,247,251,0) 58%),linear-gradient(180deg,rgba(246,247,251,.62) 0%,rgba(246,247,251,0) 17%)}
+.vh-ctl{bottom:30px}
+/* generic home sections */
+.hs{position:relative;padding:clamp(64px,9vw,112px) clamp(18px,3.4vw,44px) 0;box-sizing:border-box}
+.hs-h{max-width:720px;margin:0 0 clamp(28px,4vw,44px)}
+.hs-h.c{margin-inline:auto;text-align:center}
+.hs-h.row{max-width:none;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.hs-h .eyebrow{margin:0 0 12px}
+.hs-h h2,.hp-t h2,.lb-t h2,.st-h h2{margin:0;font:700 clamp(28px,3.6vw,46px)/1.08 var(--f-d);letter-spacing:-.025em;color:var(--ink)}
+.hs-h h2 em{font-style:normal;color:var(--iris)}
+.hs-h p:not(.eyebrow){margin:14px 0 0;color:var(--ink-2);font-size:16px;line-height:1.6}
+.hs-h.c p:not(.eyebrow){margin-inline:auto;max-width:600px}
+/* cards: "ikinci sayfa" — videonun altında kendi alanında */
+.hc-sec{min-height:min(80vh,760px);display:flex;flex-direction:column;justify-content:center;padding-top:clamp(88px,12vh,136px)}
+.hc{margin:0;align-items:stretch}
+/* cell: yalnız hücre, büyük ve ortada */
+.cell-sec{padding:clamp(72px,10vw,120px) clamp(18px,3.4vw,44px) 0;scroll-margin-top:0}
+.cell-sec .hs-h{margin-bottom:28px}
+.home .stage{height:clamp(620px,84vh,820px);box-shadow:0 30px 70px rgba(16,64,104,.10);border:1px solid rgba(16,22,46,.06)}
+.home .stage .pub-hero{align-self:end;justify-self:center;text-align:center;max-width:none}
+.home .stage .pub-hero>:not(.btns),.home .stage .stats{display:none}
+.home .stage .pub-hero .btns{justify-content:center;margin:0}
+/* stats */
+.st-in{border-radius:24px;padding:clamp(32px,4.4vw,56px);background:radial-gradient(60% 90% at 90% 0%,rgba(32,144,152,.55),transparent 70%),linear-gradient(160deg,#17707A,#104068);color:#fff;box-shadow:0 26px 60px rgba(16,64,104,.22)}
+.st-h .eyebrow{color:rgba(255,255,255,.72);margin:0 0 10px}
+.st-h h2{color:#fff}
+.st-g{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:clamp(28px,4vw,44px);border-top:1px solid rgba(255,255,255,.22)}
+.st-g div{padding:22px 18px 4px 0;display:flex;flex-direction:column;gap:6px}
+.st-g div+div{padding-inline-start:18px;border-inline-start:1px solid rgba(255,255,255,.16)}
+.st-g b{font:700 clamp(40px,5vw,64px)/1 var(--f-d);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.st-g span{font-size:14px;color:rgba(255,255,255,.82)}
+.st-note{margin:22px 0 0;font:500 11px var(--f-m);letter-spacing:.04em;color:rgba(255,255,255,.6)}
+/* uzmanlık image cards */
+.ua-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ua-c{position:relative;display:block;aspect-ratio:4/3;border-radius:20px;overflow:hidden;background:#E3EEF2;color:#fff;text-decoration:none;isolation:isolate}
+.ua-c img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.ua-c:hover img{transform:scale(1.05)}
+.ua-c::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(14,34,53,0) 42%,rgba(14,34,53,.72) 100%)}
+.ua-c.noimg{background:radial-gradient(70% 80% at 80% 10%,rgba(32,144,152,.35),transparent 70%),linear-gradient(160deg,#DCECF1,#B9D6E0)}
+.ua-c.noimg::after{background:linear-gradient(180deg,rgba(14,34,53,0) 40%,rgba(16,64,104,.62) 100%)}
+.ua-c .ua-x{position:absolute;z-index:2;left:22px;right:22px;bottom:20px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.ua-c b{font:700 22px/1.15 var(--f-d);letter-spacing:-.01em}
+.ua-c i{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);font:500 15px/1 var(--f-b);font-style:normal;transition:background .3s,color .3s}.ua-c:hover i{background:#fff;color:var(--cobalt)}
+.ua-c .ua-n{position:absolute;z-index:2;top:18px;left:22px;font:500 12px var(--f-m);letter-spacing:.06em;color:#fff;background:rgba(14,34,53,.32);padding:5px 9px;border-radius:999px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ua-c.noimg .ua-n{background:rgba(16,64,104,.5)}
+.ua-c .ua-tb{position:absolute;z-index:2;top:18px;right:22px;font:500 10.5px var(--f-m);letter-spacing:.05em;color:var(--cobalt);background:rgba(255,255,255,.7);padding:5px 9px;border-radius:999px}
+.ua-c svg.ua-ic{position:absolute;z-index:0;right:-14px;top:50%;width:46%;transform:translateY(-58%);fill:none;stroke:rgba(16,64,104,.22);stroke-width:.9}
+[dir=rtl] .ua-c .ua-n{left:auto;right:22px}[dir=rtl] .ua-c .ua-tb{right:auto;left:22px}
+/* products */
+.hp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+.hp-f{position:relative;margin:0;border-radius:24px;overflow:hidden;aspect-ratio:4/4.4;background:#EAF2F5}
+.hp-f img{width:100%;height:100%;object-fit:cover;display:block}
+.hp-3d{position:absolute;left:18px;bottom:18px;display:inline-flex;align-items:center;gap:8px;font:500 12px var(--f-m);letter-spacing:.04em;color:var(--ink);background:rgba(255,255,255,.86);border:1px solid rgba(16,22,46,.08);padding:8px 12px;border-radius:999px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hp-3d svg{width:16px;height:16px;fill:none;stroke:var(--iris);stroke-width:1.7;stroke-linejoin:round}
+.hp-t .eyebrow{margin:0 0 12px}
+.hp-p{margin:14px 0 0;color:var(--ink-2);line-height:1.6}
+.hp-l{list-style:none;margin:26px 0 28px;padding:0;border-top:1px solid rgba(16,22,46,.1)}
+.hp-l li{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:baseline;padding:15px 0;border-bottom:1px solid rgba(16,22,46,.1)}
+.hp-l li i{font:500 12px var(--f-m);font-style:normal;color:var(--iris)}
+.hp-l li b{font:600 18px/1.3 var(--f-d)}
+.hp-l li span{font:500 12px var(--f-m);color:var(--ink-2)}
+.hp-t .b-pri{cursor:pointer}
+/* laboratuvar & üretim */
+.lb{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,72px);align-items:center}
+.lb-t .eyebrow{margin:0 0 12px}
+.lb-t p:not(.eyebrow){margin:14px 0 24px;color:var(--ink-2);line-height:1.6}
+.lb-f{position:relative;margin:0;padding-bottom:56px}
+.lb-a{width:88%;aspect-ratio:4/3;object-fit:cover;border-radius:24px;display:block}
+.lb-b{position:absolute;right:0;bottom:24px;width:44%;aspect-ratio:1;object-fit:cover;border-radius:20px;border:6px solid var(--pearl);box-shadow:0 20px 44px rgba(16,64,104,.18)}
+[dir=rtl] .lb-b{right:auto;left:0}
+.lb-f figcaption{position:absolute;left:0;bottom:0;font:500 11px var(--f-m);letter-spacing:.04em;color:var(--ink-2)}
+[dir=rtl] .lb-f figcaption{left:auto;right:0}
+/* events */
+.ev-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:20px}
+.ev-up,.ev-past{background:#fff;border:1px solid rgba(16,22,46,.08);border-radius:20px;padding:24px}
+.ev-g h3{margin:0 0 14px;font:600 13px var(--f-m);letter-spacing:.06em;text-transform:uppercase;color:var(--iris)}
+html:lang(ar) .ev-g h3{text-transform:none}
+.ev-up ul{list-style:none;margin:0 0 18px;padding:0}
+.ev-up li{display:flex;gap:16px;align-items:center;padding:14px 0;border-top:1px solid rgba(16,22,46,.08)}
+.ev-d{flex:none;width:76px;height:64px;border-radius:14px;background:#E3F2F4;color:var(--cobalt);display:grid;place-items:center;font:500 11.5px var(--f-m);text-align:center}
+.ev-up li b{display:block;font:600 17px/1.3 var(--f-d)}
+.ev-up li small{display:block;margin-top:3px;color:var(--ink-2);font-size:13px}
+.ev-ph{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:12px;height:calc(100% - 34px);min-height:260px}
+.ev-ph .ph:first-child{grid-row:1/3}
+.ph{position:relative;margin:0;border-radius:16px;overflow:hidden;background:repeating-linear-gradient(135deg,rgba(16,64,104,.05) 0 12px,transparent 12px 24px),linear-gradient(160deg,#E3EEF2,#CFE2E9);display:grid;place-items:center;color:rgba(16,64,104,.55);font:500 11px var(--f-m);letter-spacing:.05em;text-align:center}
+.ev-ph figcaption{position:absolute;left:12px;bottom:10px;font:600 13px var(--f-d);color:var(--ink)}
+[dir=rtl] .ev-ph figcaption{left:auto;right:12px}
+/* blog */
+.bl-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.bl-g article{background:#fff;border:1px solid rgba(16,22,46,.08);border-radius:20px;padding:12px 12px 20px;transition:box-shadow .3s,transform .3s}
+.bl-g article:hover{box-shadow:0 18px 44px rgba(16,64,104,.12);transform:translateY(-3px)}
+.bl-g .ph{aspect-ratio:16/10;place-items:start}
+.bl-c{margin:12px;font:500 11px var(--f-m);letter-spacing:.05em;color:#fff;background:var(--cobalt);padding:5px 9px;border-radius:999px}
+.bl-g h3{margin:16px 10px 0;font:600 19px/1.3 var(--f-d)}
+.bl-g article:nth-child(2) .bl-c{background:var(--iris)}.bl-g article:nth-child(3) .bl-c{background:var(--teal)}
+/* advisory board */
+.bk-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;max-width:980px;margin:0 auto}
+.bk-g figure{margin:0;text-align:center}
+.bk-g .ph{aspect-ratio:1;border-radius:50%;max-width:180px;margin:0 auto 14px}
+.bk-g .ph i{font-style:normal}
+.bk-g figcaption{font:600 15px/1.35 var(--f-d)}
+/* faq */
+.fq-l{max-width:880px;border-top:1px solid rgba(16,22,46,.12)}
+.fq-l details{border-bottom:1px solid rgba(16,22,46,.12)}
+.fq-l summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:18px;align-items:center;padding:20px 0;font:600 18px/1.35 var(--f-d)}
+.fq-l summary::-webkit-details-marker{display:none}
+.fq-l summary::after{content:"";flex:none;width:28px;height:28px;border-radius:50%;border:1px solid rgba(16,64,104,.3);background:linear-gradient(var(--cobalt),var(--cobalt)) center/10px 1.6px no-repeat,linear-gradient(var(--cobalt),var(--cobalt)) center/1.6px 10px no-repeat;transition:transform .3s}
+.fq-l details[open] summary::after{transform:rotate(45deg)}
+.fq-l details p{margin:0 0 20px;color:var(--ink-2);line-height:1.6;max-width:720px}
+/* partners last */
+.pt{padding:clamp(64px,9vw,112px) 0 56px}
+@media (max-width:980px){
+ .st-g{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .st-g div:nth-child(4){padding-inline-start:0;border-inline-start:0}
+ .ua-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hp,.lb,.ev-g{grid-template-columns:1fr}
+ .hp-f{aspect-ratio:16/11}
+ .bk-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){.hc-sec{min-height:0}.hc{margin-top:0}}
+@media (max-width:760px){
+ .vh{aspect-ratio:auto;min-height:640px;align-items:flex-end;padding:150px 18px 96px}
+ .vh-veil{background:linear-gradient(180deg,rgba(246,247,251,.7) 0%,rgba(246,247,251,0) 22%,rgba(246,247,251,0) 38%,rgba(246,247,251,.86) 62%,rgba(246,247,251,.94) 100%)}
+ .vh-ctl{bottom:26px}
+ .home .stage{height:min(640px,86vh)}
+ .st-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .st-g div:nth-child(n){padding-inline-start:0;border-inline-start:0}
+ .st-g div:nth-child(even){padding-inline-start:16px;border-inline-start:1px solid rgba(255,255,255,.16)}
+ .ua-g,.bl-g{grid-template-columns:1fr}
+ .ev-ph{min-height:220px}
+ .fq-l summary{font-size:16px}
+}
+[dir=rtl] .ua-c i{transform:scaleX(-1)}
 </style>
 <style>body{margin:0}</style></head><body>
 
@@ -571,7 +708,7 @@ html{scroll-behavior:smooth}
   <div class="bar">
     <div>
       <h1>Intrafarma ana sayfa · pilot</h1>
-      <p>Prototip · videolar üstte, hücre altta · sağlık çalışanı girişi hücreden</p>
+      <p>Prototip · v2 · video, kartlar, hücre, rakamlar, uzmanlık, ürünler, üretim, etkinlik, blog, kurul, SSS, ortaklar</p>
     </div>
     <div class="acts">
       <button class="tb" id="replay" type="button">Baştan oynat</button>
@@ -615,31 +752,29 @@ html{scroll-behavior:smooth}
       </div>
     </section>
 
-    <section class="hc" aria-label="Intrafarma">
+    <section class="hs hc-sec" aria-labelledby="hcH">
+      <div class="hs-h c" data-rv="up"><p class="eyebrow" data-t="hc_ey"></p><h2 id="hcH" data-t="hc_h"></h2></div>
+      <div class="hc">
       <article class="hc-c" data-rv="left">
         <span class="hc-i" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M7.5 12h9"/></svg></span>
         <h3 data-t="hc1t"></h3><p data-t="hc1b"></p>
-        <a class="hc-m" href="#hucre"><span data-t="hc_more"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>
+        <a class="hc-m" href="#uzmanlik"><span data-t="hc_more"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>
       </article>
       <article class="hc-c hi" data-rv="up">
         <span class="hc-i" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="18" rx="3"/><path d="M8 9h8M10.5 13h3"/></svg></span>
         <h3 data-t="hc2t"></h3><p data-t="hc2b"></p>
-        <button class="hc-m" type="button" data-cat><span data-t="hc_more"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
+        <a class="hc-m" href="#urunler"><span data-t="hc_more"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>
       </article>
       <article class="hc-c" data-rv="right">
         <span class="hc-i" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4 4-6 7.5-6s6.5 2 7.5 6"/></svg></span>
         <h3 data-t="hc3t"></h3><p data-t="hc3b"></p>
         <button class="hc-m" type="button" data-gate><span data-t="hc_more"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
       </article>
+      </div>
     </section>
 
-    <section class="pt" aria-labelledby="ptH">
-      <div class="pt-head" data-rv="up"><p class="eyebrow" data-t="pt_ey"></p><h2 id="ptH" data-t="pt_h"></h2></div>
-      <div class="pt-row" id="ptRow"><div class="pt-track" id="ptTrack"></div></div>
-    </section>
-  </div>
-
-  <div class="cell-sec" id="hucre">
+    <div class="cell-sec" id="hucre">
+      <div class="hs-h c" data-rv="up"><p class="eyebrow" data-t="c_ey"></p><h2 data-t="c_h"></h2><p data-t="c_lede"></p></div>
   <div class="stage" id="stage">
     <div class="bg-pub" aria-hidden="true"></div>
     <div class="bg-pro" id="bgPro" aria-hidden="true" hidden></div>
@@ -836,6 +971,107 @@ html{scroll-behavior:smooth}
     <div class="lens" id="lens" aria-hidden="true"><div class="lens-in"><div class="lens-dom" id="lensDom"></div></div><span class="ct"></span></div>
   </div>
 
+    </div>
+
+    <section class="hs st" aria-labelledby="stH">
+      <div class="st-in" data-rv="up">
+        <div class="st-h"><p class="eyebrow" data-t="st_ey"></p><h2 id="stH" data-t="st_h"></h2></div>
+        <div class="st-g">
+          <div><b data-n="6" data-pad="2">06</b><span data-t="st1"></span></div>
+          <div><b data-n="28">28</b><span data-t="st2"></span></div>
+          <div><b data-n="19">19</b><span data-t="st3"></span></div>
+          <div><b data-n="5">5</b><span data-t="st4"></span></div>
+          <div><b data-n="50" data-suf="+">50+</b><span data-t="st5"></span></div>
+        </div>
+        <p class="st-note" data-t="st_note"></p>
+      </div>
+    </section>
+
+    <section class="hs ua" id="uzmanlik" aria-labelledby="uaH">
+      <div class="hs-h" data-rv="up"><p class="eyebrow" data-t="ua_ey"></p><h2 id="uaH" data-t="ua_h"></h2><p data-t="ua_p"></p></div>
+      <div class="ua-g" id="uaG"></div>
+    </section>
+
+    <section class="hs hp" id="urunler" aria-labelledby="hpH">
+      <figure class="hp-f" data-rv="left">
+        <img src="media/gorsel/urun.jpg" alt="" loading="lazy" decoding="async">
+        <span class="hp-3d"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></svg><span data-t="hp_3d"></span></span>
+      </figure>
+      <div class="hp-t" data-rv="right">
+        <p class="eyebrow" data-t="hp_ey"></p><h2 id="hpH" data-t="hp_h"></h2><p class="hp-p" data-t="hp_p"></p>
+        <ol class="hp-l" id="hpL"></ol>
+        <button class="b-pri" type="button" data-cat><span data-t="hp_cta"></span><span class="o"></span></button>
+      </div>
+    </section>
+
+    <section class="hs lb" aria-labelledby="lbH">
+      <div class="lb-t" data-rv="left">
+        <p class="eyebrow" data-t="lb_ey"></p><h2 id="lbH" data-t="lb_h"></h2><p data-t="lb_p"></p>
+        <a class="hc-m" href="#site-foot"><span data-t="lb_cta"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>
+      </div>
+      <figure class="lb-f" data-rv="right">
+        <img class="lb-a" src="media/gorsel/tesis.jpg" alt="" loading="lazy" decoding="async">
+        <img class="lb-b" src="media/gorsel/uretim2.jpg" alt="" loading="lazy" decoding="async">
+        <figcaption data-t="lb_cap"></figcaption>
+      </figure>
+    </section>
+
+    <section class="hs ev" aria-labelledby="evH">
+      <div class="hs-h" data-rv="up"><p class="eyebrow" data-t="ev_ey"></p><h2 id="evH" data-t="ev_h"></h2></div>
+      <div class="ev-g">
+        <div class="ev-up" data-rv="left">
+          <h3 data-t="ev_up"></h3>
+          <ul>
+            <li><span class="ev-d" data-t="ev_d"></span><span><b data-t="ev_t"></b><small data-t="ev_p"></small></span></li>
+            <li><span class="ev-d" data-t="ev_d"></span><span><b data-t="ev_t"></b><small data-t="ev_p"></small></span></li>
+            <li><span class="ev-d" data-t="ev_d"></span><span><b data-t="ev_t"></b><small data-t="ev_p"></small></span></li>
+          </ul>
+          <a class="b-link" href="#" data-t="ev_all"></a>
+        </div>
+        <div class="ev-past" data-rv="right">
+          <h3 data-t="ev_past"></h3>
+          <div class="ev-ph">
+            <figure class="ph"><span data-t="ev_ph"></span><figcaption data-t="ev_pt"></figcaption></figure>
+            <figure class="ph"><span data-t="ev_ph"></span><figcaption data-t="ev_pt"></figcaption></figure>
+            <figure class="ph"><span data-t="ev_ph"></span><figcaption data-t="ev_pt"></figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hs bl" aria-labelledby="blH">
+      <div class="hs-h row" data-rv="up"><div><p class="eyebrow" data-t="bl_ey"></p><h2 id="blH" data-t="bl_h"></h2></div><a class="b-link" href="#" data-t="bl_all"></a></div>
+      <div class="bl-g">
+        <article data-rv="up"><div class="ph"><span class="bl-c" data-t="bl_c1"></span></div><h3 data-t="bl_t"></h3></article>
+        <article data-rv="up"><div class="ph"><span class="bl-c" data-t="bl_c2"></span></div><h3 data-t="bl_t"></h3></article>
+        <article data-rv="up"><div class="ph"><span class="bl-c" data-t="bl_c3"></span></div><h3 data-t="bl_t"></h3></article>
+      </div>
+    </section>
+
+    <section class="hs bk" aria-labelledby="bkH">
+      <div class="hs-h c" data-rv="up"><p class="eyebrow" data-t="bk_ey"></p><h2 id="bkH" data-t="bk_h"></h2></div>
+      <div class="bk-g" data-rv="up">
+        <figure><span class="ph"><i data-t="bk_ph"></i></span><figcaption data-t="bk_n"></figcaption></figure>
+        <figure><span class="ph"><i data-t="bk_ph"></i></span><figcaption data-t="bk_n"></figcaption></figure>
+        <figure><span class="ph"><i data-t="bk_ph"></i></span><figcaption data-t="bk_n"></figcaption></figure>
+        <figure><span class="ph"><i data-t="bk_ph"></i></span><figcaption data-t="bk_n"></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="hs fq" aria-labelledby="fqH">
+      <div class="hs-h" data-rv="up"><p class="eyebrow" data-t="fq_ey"></p><h2 id="fqH" data-t="fq_h"></h2></div>
+      <div class="fq-l" data-rv="up">
+        <details><summary data-t="fq1"></summary><p data-t="fq_a"></p></details>
+        <details><summary data-t="fq2"></summary><p data-t="fq_a"></p></details>
+        <details><summary data-t="fq3"></summary><p data-t="fq_a"></p></details>
+        <details><summary data-t="fq4"></summary><p data-t="fq_a"></p></details>
+      </div>
+    </section>
+
+    <section class="pt" aria-labelledby="ptH">
+      <div class="pt-head" data-rv="up"><p class="eyebrow" data-t="pt_ey"></p><h2 id="ptH" data-t="pt_h"></h2></div>
+      <div class="pt-row" id="ptRow"><div class="pt-track" id="ptTrack"></div></div>
+    </section>
   </div>
 
   <footer class="site-foot" id="site-foot">
@@ -962,6 +1198,7 @@ const T={tr:{
 Object.assign(T,{"ar":{"pc_ey":"/ Pro · المنتجات","pc_t":"مكتبة المنتجات","pd_ey":"/ Pro · المستندات","pd_t":"مركز المستندات","pr_ey":"/ Pro · الطلبات","pr_t":"طلب عينة وعرض سعر","cat_open":"التفاصيل الفنية متاحة","dt_all":"الكل","dt_ifu":"تعليمات الاستخدام","dt_tds":"الملف الفني","dt_bro":"كتيّب","dt_cert":"شهادة","dt_pub":"منشور علمي","dq":"ابحث في المستندات","d_sel":"تم اختيار {n} من المستندات","d_none":"اختر المستندات لإرسالها","d_send":"أرسل الروابط","d_ok":"تم إرسال روابط {n} من المستندات إلى {e} (نموذج أولي؛ لا يتم إرسال أي شيء فعليًا).","e_sel":"اختر مستندًا واحدًا على الأقل.","d_note":"أسماء المستندات أمثلة؛ الملفات الفعلية ستقدّمها Intrafarma.","d_fmt":"TR · EN · PDF","d_pubn":"منشور سريري {i} · ستقدّمه Intrafarma","d_cert1":"شهادة ISO 13485","d_cert2":"إعلان المطابقة CE","d_cat":"الكتالوج الإلكتروني 2026","rq_type":"نوع الطلب","rq_t1":"عينة","rq_t2":"عرض سعر","rq_t3":"معلومات","rq_prod":"المنتج","rq_org":"المؤسسة","rq_name":"الاسم الكامل","rq_role":"المسمى الوظيفي","rq_phone":"الهاتف","rq_mail":"البريد الإلكتروني","rq_qty":"الكمية","rq_msg":"ملاحظة (اختياري)","rq_kvkk":"قرأتُ إشعار الخصوصية وأوافق على معالجة بياناتي لغرض هذا الطلب.","rq_send":"أرسل الطلب","rq_ok":"تم استلام طلبك. الرقم المرجعي: {r}. سيتواصل معك فريق مبيعات Intrafarma. (نموذج أولي؛ لا يتم إرسال أي شيء.)","rq_err":"المؤسسة والاسم وبريد إلكتروني صالح والموافقة حقول إلزامية.","rq_side_t":"إلى أين يذهب الطلب؟","rq_s1":"يصل النموذج إلى البريد الإلكتروني لفريق المبيعات.","rq_s2":"تصلك رسالة تأكيد استلام تلقائية.","rq_s3":"لا تُعرض الأسعار للعموم؛ يصلك العرض عبر البريد الإلكتروني.","rq_side_b":"ستُضاف لاحقًا شاشة لمتابعة الطلبات.","cat_ey":"/ المنتجات","cat_t":"محفظة الطب التجديدي","cat_all":"الكل","cat_q":"ابحث عن منتج","cat_ca":"المجال السريري","cat_note":"قائمة المنتجات مأخوذة من الموقع الحالي. ربط المجالات السريرية مثال، وسيُعتمد بعد موافقة Intrafarma.","cat_pro":"التفاصيل الفنية في منطقة Pro","cat_pub":"متاح للجميع","cat_back":"→ كل المنتجات","cat_empty":"لا توجد منتجات تطابق هذه المرشحات.","cat_n":"{n} منتج","d_ax":"محور المحفظة","d_ca":"المجالات السريرية","d_lang":"اللغة","d_sample":"محتوى تجريبي · بانتظار موافقة Intrafarma","d_lede":"ينتمي {n} إلى محور «{a}» في محفظة Intrafarma. سيُضاف النص التعريفي للمنتج بعد موافقة Intrafarma.","lk_t":"المعلومات الفنية مخصّصة للعاملين في القطاع الصحي","lk_b":"مجالات الاستخدام وتفاصيل التطبيق وتعليمات الاستخدام والمنشورات السريرية متاحة في منطقة Pro. يكفي أن تُقرّ بأنك من العاملين في القطاع الصحي؛ لا يُطلب رقم تسجيل.","lk_cta":"دخول العاملين في القطاع الصحي","op_t":"معلومات هذا المنتج متاحة للجميع","op_b":"معلومات المكوّنات والاستخدام والتخزين موجودة في هذه الصفحة. لا تتضمن النصوص ادعاءات صحية.","nav1":"من نحن","nav2":"خبراتنا","nav3":"المنتجات","nav4":"العلوم","nav5":"اتصل بنا","hcp":"العاملون في القطاع الصحي","eyebrow":"/ الطب التجديدي","h":"نمضي بالطب التجديدي <em>إلى الأمام.</em>","lede":"منتجات بيولوجية عظمية وعلاجات خلوية وحلول تجديدية للأطباء العاملين في جراحة العظام والتجميل والمسالك البولية وصحة المرأة.","cta1":"دخول العاملين في القطاع الصحي","cta2":"استكشف المحفظة","s1":"مجالات سريرية","s2":"محاور المحفظة","s3":"لغات","g_eyebrow":"/ Intrafarma Pro","g_title":"هذه المنطقة مخصّصة للعاملين في القطاع الصحي","g_body":"معلومات المنتجات هنا موجّهة للعاملين في القطاع الصحي فقط، وفقًا للوائح الأجهزة الطبية. وهي ليست معلومات للمرضى ولا تُعدّ نصيحة طبية.","g_prof":"مهنتك","p1":"طبيب","p2":"طبيب أسنان","p3":"صيدلي","p4":"ممرض / قابلة","p5":"أخصائي علاج طبيعي","p6":"طبيب بيطري","p7":"عامل آخر في القطاع الصحي","g_country":"بلدك","c1":"تركيا","c2":"أذربيجان","c3":"ألمانيا","c4":"الإمارات العربية المتحدة","c5":"العراق","c6":"أخرى","g_decl":"أُقرّ بأنني من العاملين في القطاع الصحي.","g_go":"متابعة","g_back":"العودة إلى الموقع المؤسسي","g_note":"يُحفظ اختيارك في هذا المتصفح لمدة 30 يومًا.","e_prof":"اختر مهنتك للمتابعة.","e_decl":"ضع علامة في مربع الإقرار للمتابعة.","pn1":"نظرة عامة","pn2":"المنتجات","pn3":"المستندات","pn4":"الطلبات","via":"دخول بالإقرار","logout":"خروج","p_eyebrow":"/ مساحة العمل المهنية","p_h":"العلم <em>في متناول يدك.</em>","p_lede":"معلومات المنتجات والملفات الفنية وطلبات العينات للعاملين في القطاع الصحي، في مكان واحد.","p_search":"ابحث عن منتج أو تعليمات استخدام أو منشور","k1t":"مكتبة المنتجات","k1m":"5 محاور للمحفظة","k2t":"الملفات الفنية","k2m":"IFU · TDS · كتيّب","k3t":"طلب عينة","k3m":"عينة · عرض سعر","k4t":"الأدلة العلمية","k4m":"منشورات مصنّفة حسب مستوى الدليل","z_tag":"محتوى تجريبي · بانتظار موافقة Intrafarma","tab1":"معلومات فنية","tab2":"المستندات","tab3":"المنشورات","tab4":"طلب عينة","dt1":"الفئة","dd1":"منتجات بيولوجية عظمية","dt2":"التسجيل (ÜTS)","dd2":"بانتظار الموافقة","dt4":"الوصول","dd4":"العاملون في القطاع الصحي","dt5":"اللغات","z_lede":"صفحة منتج تمثيلية. ستُضاف نصوص المنتج والمستندات والصور بعد موافقة Intrafarma.","ps_model":"نموذج ثلاثي الأبعاد تمثيلي","ps_hint":"اسحب للتدوير","ps_prod":"المنتج","ps_box":"العبوة","d1":"تعليمات الاستخدام (IFU)","d1m":"PDF · TR، EN · ملف نموذجي","d2":"ورقة البيانات الفنية (TDS)","d2m":"PDF · EN · ملف نموذجي","d3":"كتيّب المنتج","d3m":"PDF · TR · ملف نموذجي","d_get":"استلم عبر البريد","pub_t":"ستُضاف قائمة المنشورات بعد الموافقة","pub_b":"سيُدرج كل منشور مع تصنيف مستوى الدليل.","s_org":"المؤسسة","s_org_ph":"اسم المستشفى أو العيادة","s_qty":"الكمية","s_send":"أرسل الطلب","s_ok":"تم إرسال طلبك إلى فريق المبيعات. نموذج أولي: لا تُرسل أي بيانات.","e_org":"أدخل اسم مؤسستك.","m_title":"نرسل المستندات إلى بريدك الإلكتروني","m_body":"نرسل رابط تعليمات الاستخدام والملفات الفنية إلى بريدك الإلكتروني. لا حاجة إلى كلمة مرور.","m_ph":"name.surname@hospital.com","m_send":"أرسل الرابط","m_kvkk":"قرأتُ إشعار الخصوصية.","m_news":"أرغب في تلقي النشرة الخاصة بالمنتجات الجديدة والمحتوى العلمي (اختياري).","m_ok":"تم إرسال الرابط إلى {e}. نموذج أولي: لا تُرسل رسائل فعلية.","e_mail":"أدخل بريدًا إلكترونيًا صالحًا.","e_kvkk":"وافق على إشعار الخصوصية للمتابعة.","an1":"EV · 30–150 nm","an2":"طبقة دهنية مزدوجة","an3":"إشارة نظيرة الصماوية","an4":"غشاء حي","cmpL":"الموقع العام","cmpR":"منطقة العاملين في القطاع الصحي","draft":"ترجمة أولية · بانتظار مراجعة متحدث أصلي"},"it":{"pc_ey":"/ Pro · Prodotti","pc_t":"Libreria prodotti","pd_ey":"/ Pro · Documenti","pd_t":"Centro documenti","pr_ey":"/ Pro · Richieste","pr_t":"Richiesta campioni e preventivi","cat_open":"Dettagli tecnici disponibili","dt_all":"Tutti","dt_ifu":"Istruzioni per l'uso","dt_tds":"Scheda tecnica","dt_bro":"Brochure","dt_cert":"Certificato","dt_pub":"Pubblicazione","dq":"Cerca documenti","d_sel":"{n} documenti selezionati","d_none":"Seleziona i documenti da inviare","d_send":"Invia i link","d_ok":"Link a {n} documenti inviati a {e} (prototipo; nessun invio reale).","e_sel":"Seleziona almeno un documento.","d_note":"I nomi dei documenti sono esempi; i file reali saranno forniti da Intrafarma.","d_fmt":"TR · EN · PDF","d_pubn":"Pubblicazione clinica {i} · fornita da Intrafarma","d_cert1":"Certificato ISO 13485","d_cert2":"Dichiarazione di conformità CE","d_cat":"E-catalogo 2026","rq_type":"Tipo di richiesta","rq_t1":"Campione","rq_t2":"Preventivo","rq_t3":"Informazioni","rq_prod":"Prodotto","rq_org":"Struttura","rq_name":"Nome e cognome","rq_role":"Qualifica","rq_phone":"Telefono","rq_mail":"E-mail","rq_qty":"Quantità","rq_msg":"Nota (facoltativa)","rq_kvkk":"Ho letto l'informativa sulla privacy e acconsento al trattamento dei miei dati per questa richiesta.","rq_send":"Invia richiesta","rq_ok":"Richiesta ricevuta. Riferimento: {r}. Il team commerciale di Intrafarma ti contatterà. (Prototipo; nessun invio reale.)","rq_err":"Struttura, nome, un'e-mail valida e il consenso sono obbligatori.","rq_side_t":"Dove arriva la richiesta?","rq_s1":"Il modulo arriva nella casella e-mail del team commerciale.","rq_s2":"Ricevi un'e-mail automatica di conferma.","rq_s3":"I prezzi non sono pubblici; il preventivo arriva via e-mail.","rq_side_b":"Una schermata per seguire le richieste sarà aggiunta in seguito.","cat_ey":"/ Prodotti","cat_t":"Portafoglio di medicina rigenerativa","cat_all":"Tutti","cat_q":"Cerca prodotti","cat_ca":"Area clinica","cat_note":"Elenco prodotti tratto dal sito attuale. L'associazione alle aree cliniche è un esempio e sarà confermata dopo l'approvazione di Intrafarma.","cat_pro":"Dettagli tecnici nell'area Pro","cat_pub":"Accessibile a tutti","cat_back":"← Tutti i prodotti","cat_empty":"Nessun prodotto corrisponde a questi filtri.","cat_n":"{n} prodotti","d_ax":"Area del portafoglio","d_ca":"Aree cliniche","d_lang":"Lingua","d_sample":"Contenuto di esempio · in attesa di approvazione Intrafarma","d_lede":"{n} appartiene all'area {a} del portafoglio Intrafarma. Il testo di presentazione sarà aggiunto dopo l'approvazione di Intrafarma.","lk_t":"Le informazioni tecniche sono riservate agli operatori sanitari","lk_b":"Indicazioni, modalità di applicazione, istruzioni per l'uso e pubblicazioni cliniche si trovano nell'area Pro. Basta un'autodichiarazione; non serve un numero di iscrizione.","lk_cta":"Accesso operatori sanitari","op_t":"Le informazioni su questo prodotto sono accessibili a tutti","op_b":"Composizione, uso e conservazione sono riportati in questa pagina. I testi non contengono indicazioni sulla salute.","nav1":"Chi siamo","nav2":"Competenze","nav3":"Prodotti","nav4":"Scienza","nav5":"Contatti","hcp":"Operatori sanitari","eyebrow":"/ Medicina rigenerativa","h":"Portiamo <em>avanti</em> la medicina rigenerativa.","lede":"Ortobiologici, terapie cellulari e soluzioni rigenerative per i clinici che lavorano in ortopedia, medicina estetica, urologia e salute della donna.","cta1":"Accesso operatori sanitari","cta2":"Scopri il portafoglio","s1":"Aree cliniche","s2":"Aree del portafoglio","s3":"Lingue","g_eyebrow":"/ Intrafarma Pro","g_title":"Quest'area è riservata agli operatori sanitari","g_body":"Le informazioni sui prodotti presenti qui sono destinate esclusivamente agli operatori sanitari, in conformità alla normativa sui dispositivi medici. Non sostituiscono le informazioni per i pazienti né il parere medico.","g_prof":"La tua professione","p1":"Medico","p2":"Odontoiatra","p3":"Farmacista","p4":"Infermiere / ostetrica","p5":"Fisioterapista","p6":"Medico veterinario","p7":"Altro operatore sanitario","g_country":"Il tuo paese","c1":"Turchia","c2":"Azerbaigian","c3":"Germania","c4":"Emirati Arabi Uniti","c5":"Iraq","c6":"Altro","g_decl":"Dichiaro di essere un operatore sanitario.","g_go":"Continua","g_back":"Torna al sito aziendale","g_note":"La tua scelta viene ricordata in questo browser per 30 giorni.","e_prof":"Seleziona la tua professione per continuare.","e_decl":"Spunta la casella di dichiarazione per continuare.","pn1":"Panoramica","pn2":"Prodotti","pn3":"Documenti","pn4":"Richieste","via":"accesso con autodichiarazione","logout":"Esci","p_eyebrow":"/ Area professionale","p_h":"La scienza, <em>a portata di clic.</em>","p_lede":"Informazioni sui prodotti, documentazione tecnica e richieste di campioni per gli operatori sanitari, in un unico posto.","p_search":"Cerca prodotti, istruzioni per l'uso, pubblicazioni","k1t":"Libreria prodotti","k1m":"5 aree del portafoglio","k2t":"Documentazione tecnica","k2m":"IFU · TDS · brochure","k3t":"Richiesta campioni","k3m":"Campione · preventivo","k4t":"Evidenze scientifiche","k4m":"Pubblicazioni classificate","z_tag":"Contenuto di esempio · in attesa di approvazione Intrafarma","tab1":"Info tecniche","tab2":"Documenti","tab3":"Pubblicazioni","tab4":"Richiedi campione","dt1":"Categoria","dd1":"Ortobiologici","dt2":"Registrazione (ÜTS)","dd2":"In attesa di approvazione","dt4":"Accesso","dd4":"Operatori sanitari","dt5":"Lingue","z_lede":"Pagina prodotto rappresentativa. Testi, documenti e immagini saranno aggiunti dopo l'approvazione di Intrafarma.","ps_model":"Modello 3D rappresentativo","ps_hint":"Trascina per ruotare","ps_prod":"Prodotto","ps_box":"Confezione","d1":"Istruzioni per l'uso (IFU)","d1m":"PDF · TR, EN · file di esempio","d2":"Scheda dati tecnici (TDS)","d2m":"PDF · EN · file di esempio","d3":"Brochure del prodotto","d3m":"PDF · TR · file di esempio","d_get":"Ricevi via e-mail","pub_t":"L'elenco delle pubblicazioni sarà aggiunto dopo l'approvazione","pub_b":"Ogni pubblicazione sarà elencata con il relativo livello di evidenza.","s_org":"Struttura","s_org_ph":"Nome dell'ospedale o della clinica","s_qty":"Quantità","s_send":"Invia richiesta","s_ok":"La tua richiesta è stata inoltrata al team commerciale. Prototipo: nessun dato viene inviato.","e_org":"Inserisci il nome della struttura.","m_title":"Ricevi i documenti via e-mail","m_body":"Inviamo al tuo indirizzo e-mail un link alle istruzioni per l'uso e alla documentazione tecnica. Nessuna password necessaria.","m_ph":"nome.cognome@ospedale.it","m_send":"Invia link","m_kvkk":"Ho letto l'informativa sulla privacy.","m_news":"Desidero ricevere la newsletter su nuovi prodotti e contenuti scientifici (facoltativo).","m_ok":"Link inviato a {e}. Prototipo: nessuna e-mail reale viene inviata.","e_mail":"Inserisci un indirizzo e-mail valido.","e_kvkk":"Conferma l'informativa sulla privacy per continuare.","an1":"EV · 30–150 nm","an2":"Doppio strato lipidico","an3":"Segnale paracrino","an4":"Membrana vivente","cmpL":"Sito pubblico","cmpR":"Area operatori sanitari","draft":"Traduzione preliminare · in attesa di revisione madrelingua"},"ru":{"pc_ey":"/ Pro · Продукция","pc_t":"Каталог продукции","pd_ey":"/ Pro · Документы","pd_t":"Центр документов","pr_ey":"/ Pro · Запросы","pr_t":"Запрос образца и коммерческого предложения","cat_open":"Технические данные открыты","dt_all":"Все","dt_ifu":"Инструкция по применению","dt_tds":"Техническое досье","dt_bro":"Брошюра","dt_cert":"Сертификат","dt_pub":"Публикация","dq":"Поиск документов","d_sel":"Выбрано документов: {n}","d_none":"Выберите документы для отправки","d_send":"Отправить ссылки","d_ok":"Ссылки на документы ({n}) отправлены на {e} (прототип; ничего не отправляется).","e_sel":"Выберите хотя бы один документ.","d_note":"Названия документов — примеры; реальные файлы предоставит Intrafarma.","d_fmt":"TR · EN · PDF","d_pubn":"Клиническая публикация {i} · предоставит Intrafarma","d_cert1":"Сертификат ISO 13485","d_cert2":"Декларация соответствия CE","d_cat":"Электронный каталог 2026","rq_type":"Тип запроса","rq_t1":"Образец","rq_t2":"Коммерческое предложение","rq_t3":"Информация","rq_prod":"Продукт","rq_org":"Учреждение","rq_name":"Имя и фамилия","rq_role":"Должность","rq_phone":"Телефон","rq_mail":"Эл. почта","rq_qty":"Количество","rq_msg":"Комментарий (необязательно)","rq_kvkk":"Я ознакомился(-ась) с уведомлением о конфиденциальности и согласен(-на) на обработку моих данных для этого запроса.","rq_send":"Отправить запрос","rq_ok":"Запрос получен. Номер: {r}. С вами свяжется отдел продаж Intrafarma. (Прототип; ничего не отправляется.)","rq_err":"Учреждение, имя, действующий адрес эл. почты и согласие обязательны.","rq_side_t":"Куда попадает запрос?","rq_s1":"Форма поступает на эл. почту отдела продаж.","rq_s2":"Вы получаете автоматическое письмо-подтверждение.","rq_s3":"Цены не публикуются; предложение приходит по эл. почте.","rq_side_b":"Экран отслеживания запросов будет добавлен позже.","cat_ey":"/ Продукция","cat_t":"Портфель регенеративной медицины","cat_all":"Все","cat_q":"Поиск продукции","cat_ca":"Клиническая область","cat_note":"Список продукции взят с текущего сайта. Привязка к клиническим областям — пример; она будет утверждена после согласования с Intrafarma.","cat_pro":"Технические данные — в разделе Pro","cat_pub":"Открыто для всех","cat_back":"← Вся продукция","cat_empty":"Нет продуктов, соответствующих фильтрам.","cat_n":"Продуктов: {n}","d_ax":"Направление портфеля","d_ca":"Клинические области","d_lang":"Язык","d_sample":"Пример содержания · ожидает согласования Intrafarma","d_lede":"{n} относится к направлению «{a}» портфеля Intrafarma. Описание продукта будет добавлено после согласования с Intrafarma.","lk_t":"Техническая информация доступна медицинским специалистам","lk_b":"Показания, особенности применения, инструкции и клинические публикации находятся в разделе Pro. Достаточно подтвердить, что вы медицинский специалист; регистрационный номер не требуется.","lk_cta":"Вход для медицинских специалистов","op_t":"Информация об этом продукте открыта для всех","op_b":"Состав, применение и условия хранения указаны на этой странице. Тексты не содержат заявлений о влиянии на здоровье.","nav1":"О компании","nav2":"Экспертиза","nav3":"Продукция","nav4":"Наука","nav5":"Контакты","hcp":"Медицинским специалистам","eyebrow":"/ Регенеративная медицина","h":"Развиваем регенеративную медицину <em>дальше.</em>","lede":"Ортобиологические продукты, клеточная терапия и регенеративные решения для врачей в ортопедии, эстетической медицине, урологии и женском здоровье.","cta1":"Вход для медицинских специалистов","cta2":"Смотреть портфель","s1":"Клинических областей","s2":"Направлений портфеля","s3":"Языков","g_eyebrow":"/ Intrafarma Pro","g_title":"Этот раздел предназначен для медицинских специалистов","g_body":"В соответствии с законодательством о медицинских изделиях информация о продукции в этом разделе предназначена только для медицинских специалистов. Она не является информацией для пациентов или медицинской рекомендацией.","g_prof":"Ваша профессия","p1":"Врач","p2":"Стоматолог","p3":"Фармацевт","p4":"Медсестра / акушерка","p5":"Физиотерапевт","p6":"Ветеринарный врач","p7":"Другой медицинский специалист","g_country":"Ваша страна","c1":"Турция","c2":"Азербайджан","c3":"Германия","c4":"Объединённые Арабские Эмираты","c5":"Ирак","c6":"Другая","g_decl":"Подтверждаю, что я медицинский специалист.","g_go":"Продолжить","g_back":"Вернуться на корпоративный сайт","g_note":"Ваш выбор будет сохранён в этом браузере на 30 дней.","e_prof":"Выберите профессию, чтобы продолжить.","e_decl":"Отметьте поле подтверждения, чтобы продолжить.","pn1":"Обзор","pn2":"Продукция","pn3":"Документы","pn4":"Запросы","via":"вход по подтверждению","logout":"Выйти","p_eyebrow":"/ Профессиональное пространство","p_h":"Наука — <em>в один клик.</em>","p_lede":"Информация о продукции, техническая документация и запросы образцов для медицинских специалистов — в одном месте.","p_search":"Поиск продукции, инструкций, публикаций","k1t":"Каталог продукции","k1m":"5 направлений портфеля","k2t":"Техническая документация","k2m":"IFU · TDS · брошюра","k3t":"Запрос образца","k3m":"Образец · предложение","k4t":"Научные данные","k4m":"Публикации с уровнем доказательности","z_tag":"Пример содержания · ожидает согласования Intrafarma","tab1":"Техническая информация","tab2":"Документы","tab3":"Публикации","tab4":"Запрос образца","dt1":"Категория","dd1":"Ортобиологические продукты","dt2":"Регистрация (ÜTS)","dd2":"Ожидает согласования","dt4":"Доступ","dd4":"Медицинские специалисты","dt5":"Языки","z_lede":"Демонстрационная страница продукта. Тексты, документы и изображения будут добавлены после согласования с Intrafarma.","ps_model":"Демонстрационная 3D-модель","ps_hint":"Перетащите, чтобы повернуть","ps_prod":"Продукт","ps_box":"Упаковка","d1":"Инструкция по применению (IFU)","d1m":"PDF · TR, EN · пример файла","d2":"Технический паспорт (TDS)","d2m":"PDF · EN · пример файла","d3":"Брошюра продукта","d3m":"PDF · TR · пример файла","d_get":"Получить по эл. почте","pub_t":"Список публикаций будет добавлен после согласования","pub_b":"Каждая публикация будет указана с уровнем доказательности.","s_org":"Учреждение","s_org_ph":"Название больницы или клиники","s_qty":"Количество","s_send":"Отправить запрос","s_ok":"Ваш запрос передан в отдел продаж. Прототип: данные не отправляются.","e_org":"Укажите учреждение.","m_title":"Отправим документы на вашу почту","m_body":"Мы отправим ссылку на инструкции по применению и техническую документацию на ваш адрес эл. почты. Пароль не нужен.","m_ph":"imya.familiya@klinika.ru","m_send":"Отправить ссылку","m_kvkk":"Я ознакомился(-ась) с уведомлением о конфиденциальности.","m_news":"Хочу получать рассылку о новых продуктах и научных материалах (необязательно).","m_ok":"Ссылка отправлена на {e}. Прототип: письма не отправляются.","e_mail":"Введите действующий адрес эл. почты.","e_kvkk":"Подтвердите уведомление о конфиденциальности, чтобы продолжить.","an1":"EV · 30–150 nm","an2":"Липидный бислой","an3":"Паракринный сигнал","an4":"Живая мембрана","cmpL":"Публичный сайт","cmpR":"Раздел для специалистов","draft":"Черновой перевод · ожидает проверки носителем языка"},"ro":{"pc_ey":"/ Pro · Produse","pc_t":"Bibliotecă de produse","pd_ey":"/ Pro · Documente","pd_t":"Centru de documente","pr_ey":"/ Pro · Solicitări","pr_t":"Solicitare de mostre și ofertă","cat_open":"Detalii tehnice disponibile","dt_all":"Toate","dt_ifu":"Instrucțiuni de utilizare","dt_tds":"Fișă tehnică","dt_bro":"Broșură","dt_cert":"Certificat","dt_pub":"Publicație","dq":"Caută documente","d_sel":"{n} documente selectate","d_none":"Selectați documentele de trimis","d_send":"Trimite linkurile","d_ok":"Linkurile către {n} documente au fost trimise la {e} (prototip; nu se trimite nimic).","e_sel":"Selectați cel puțin un document.","d_note":"Denumirile documentelor sunt exemple; fișierele reale vor fi furnizate de Intrafarma.","d_fmt":"TR · EN · PDF","d_pubn":"Publicație clinică {i} · furnizată de Intrafarma","d_cert1":"Certificat ISO 13485","d_cert2":"Declarație de conformitate CE","d_cat":"Catalog electronic 2026","rq_type":"Tipul solicitării","rq_t1":"Mostră","rq_t2":"Ofertă de preț","rq_t3":"Informații","rq_prod":"Produs","rq_org":"Instituție","rq_name":"Nume și prenume","rq_role":"Funcție","rq_phone":"Telefon","rq_mail":"E-mail","rq_qty":"Cantitate","rq_msg":"Notă (opțional)","rq_kvkk":"Am citit nota de informare privind confidențialitatea și sunt de acord cu prelucrarea datelor mele pentru această solicitare.","rq_send":"Trimite solicitarea","rq_ok":"Solicitare primită. Referință: {r}. Echipa de vânzări Intrafarma vă va contacta. (Prototip; nu se trimite nimic.)","rq_err":"Instituția, numele, un e-mail valid și acordul sunt obligatorii.","rq_side_t":"Unde ajunge solicitarea?","rq_s1":"Formularul ajunge în e-mailul echipei de vânzări.","rq_s2":"Primiți automat un e-mail de confirmare.","rq_s3":"Prețurile nu sunt publice; oferta vine prin e-mail.","rq_side_b":"Un ecran de urmărire a solicitărilor va fi adăugat ulterior.","cat_ey":"/ Produse","cat_t":"Portofoliu de medicină regenerativă","cat_all":"Toate","cat_q":"Caută produse","cat_ca":"Domeniu clinic","cat_note":"Lista de produse provine de pe site-ul actual. Asocierea cu domeniile clinice este un exemplu și va fi confirmată după aprobarea Intrafarma.","cat_pro":"Detalii tehnice în zona Pro","cat_pub":"Accesibil tuturor","cat_back":"← Toate produsele","cat_empty":"Niciun produs nu corespunde acestor filtre.","cat_n":"{n} produse","d_ax":"Direcție de portofoliu","d_ca":"Domenii clinice","d_lang":"Limbă","d_sample":"Conținut exemplificativ · în așteptarea aprobării Intrafarma","d_lede":"{n} face parte din direcția {a} a portofoliului Intrafarma. Textul de prezentare va fi adăugat după aprobarea Intrafarma.","lk_t":"Informațiile tehnice sunt destinate profesioniștilor din sănătate","lk_b":"Indicațiile, modul de aplicare, instrucțiunile de utilizare și publicațiile clinice se află în zona Pro. Este suficientă o declarație pe propria răspundere; nu este necesar un număr de înregistrare.","lk_cta":"Acces pentru profesioniști din sănătate","op_t":"Informațiile despre acest produs sunt accesibile tuturor","op_b":"Compoziția, utilizarea și condițiile de păstrare sunt prezentate pe această pagină. Textele nu conțin mențiuni de sănătate.","nav1":"Despre noi","nav2":"Expertiză","nav3":"Produse","nav4":"Știință","nav5":"Contact","hcp":"Profesioniști din sănătate","eyebrow":"/ Medicină regenerativă","h":"Ducem medicina regenerativă <em>mai departe.</em>","lede":"Produse ortobiologice, terapii celulare și soluții regenerative pentru medicii din ortopedie, medicină estetică, urologie și sănătatea femeii.","cta1":"Acces pentru profesioniști din sănătate","cta2":"Explorează portofoliul","s1":"Domenii clinice","s2":"Direcții de portofoliu","s3":"Limbi","g_eyebrow":"/ Intrafarma Pro","g_title":"Această zonă este destinată profesioniștilor din sănătate","g_body":"Informațiile despre produse de aici sunt destinate exclusiv profesioniștilor din sănătate, conform reglementărilor privind dispozitivele medicale. Nu înlocuiesc informațiile pentru pacienți sau sfatul medical.","g_prof":"Profesia dvs.","p1":"Medic","p2":"Medic dentist","p3":"Farmacist","p4":"Asistent medical / moașă","p5":"Fizioterapeut","p6":"Medic veterinar","p7":"Alt profesionist din sănătate","g_country":"Țara dvs.","c1":"Turcia","c2":"Azerbaidjan","c3":"Germania","c4":"Emiratele Arabe Unite","c5":"Irak","c6":"Altă țară","g_decl":"Declar că sunt profesionist în domeniul sănătății.","g_go":"Continuă","g_back":"Înapoi la site-ul corporativ","g_note":"Alegerea dvs. este reținută în acest browser timp de 30 de zile.","e_prof":"Alegeți profesia pentru a continua.","e_decl":"Bifați caseta de declarație pentru a continua.","pn1":"Prezentare","pn2":"Produse","pn3":"Documente","pn4":"Solicitări","via":"acces pe bază de declarație","logout":"Ieșire","p_eyebrow":"/ Spațiu profesional","p_h":"Știința, <em>la un clic distanță.</em>","p_lede":"Informații despre produse, documentație tehnică și solicitări de mostre pentru profesioniștii din sănătate, într-un singur loc.","p_search":"Caută produse, instrucțiuni, publicații","k1t":"Bibliotecă de produse","k1m":"5 direcții de portofoliu","k2t":"Documentație tehnică","k2m":"IFU · TDS · broșură","k3t":"Solicitare de mostre","k3m":"Mostră · ofertă","k4t":"Dovezi științifice","k4m":"Publicații clasificate","z_tag":"Conținut exemplificativ · în așteptarea aprobării Intrafarma","tab1":"Informații tehnice","tab2":"Documente","tab3":"Publicații","tab4":"Solicită mostră","dt1":"Categorie","dd1":"Ortobiologice","dt2":"Înregistrare (ÜTS)","dd2":"În așteptarea aprobării","dt4":"Acces","dd4":"Profesioniști din sănătate","dt5":"Limbi","z_lede":"Pagină de produs reprezentativă. Textele, documentele și imaginile vor fi adăugate după aprobarea Intrafarma.","ps_model":"Model 3D reprezentativ","ps_hint":"Trageți pentru a roti","ps_prod":"Produs","ps_box":"Ambalaj","d1":"Instrucțiuni de utilizare (IFU)","d1m":"PDF · TR, EN · fișier exemplu","d2":"Fișă cu date tehnice (TDS)","d2m":"PDF · EN · fișier exemplu","d3":"Broșura produsului","d3m":"PDF · TR · fișier exemplu","d_get":"Primește pe e-mail","pub_t":"Lista de publicații va fi adăugată după aprobare","pub_b":"Fiecare publicație va fi listată cu nivelul de evidență.","s_org":"Instituție","s_org_ph":"Numele spitalului sau al clinicii","s_qty":"Cantitate","s_send":"Trimite solicitarea","s_ok":"Solicitarea dvs. a fost transmisă echipei de vânzări. Prototip: nu se trimit date.","e_org":"Introduceți instituția.","m_title":"Vă trimitem documentele pe e-mail","m_body":"Trimitem pe adresa dvs. de e-mail un link către instrucțiunile de utilizare și documentația tehnică. Nu este nevoie de parolă.","m_ph":"nume.prenume@spital.ro","m_send":"Trimite linkul","m_kvkk":"Am citit nota de informare privind confidențialitatea.","m_news":"Doresc să primesc newsletterul despre produse noi și conținut științific (opțional).","m_ok":"Link trimis la {e}. Prototip: nu se trimite niciun e-mail real.","e_mail":"Introduceți o adresă de e-mail validă.","e_kvkk":"Confirmați nota de informare pentru a continua.","an1":"EV · 30–150 nm","an2":"Dublu strat lipidic","an3":"Semnal paracrin","an4":"Membrană vie","cmpL":"Site public","cmpR":"Zona profesioniștilor din sănătate","draft":"Traducere preliminară · în așteptarea verificării de către un vorbitor nativ"}});
 
 for(const [l,o] of Object.entries({"tr": {"v_cap1": "Bilim · hücreler arası iletişim", "v_cap2": "Laboratuvar · Regenyal, İtalya", "v_cap3": "Üretim · Regenyal, İtalya", "v_cap4": "Ürün · Eksozom", "v_prev": "Önceki video", "v_next": "Sonraki video", "v_pause": "Videoyu duraklat", "v_play": "Videoyu oynat", "v_slide": "Video", "hc1t": "Uzmanlık alanları", "hc1b": "Ortopedi, spor hekimliği, estetik, üroloji, kadın sağlığı ve veteriner hekimlik.", "hc2t": "Ürünler", "hc2b": "Beş eksende ortobiyolojik ürünler, hücresel tedaviler ve rejeneratif çözümler.", "hc3t": "Sağlık çalışanları", "hc3b": "Kullanım talimatları, teknik dosyalar ve numune talebi Pro alanında.", "hc_more": "İncele", "pt_ey": "/ Global iş ortaklarımız", "pt_h": "Birlikte çalıştığımız üreticiler ve markalar", "c_ey": "/ Bilim", "c_h": "Hücrenin <em>içine</em> bakın.", "c_lede": "Rejeneratif tıbbın temelinde hücreler arası iletişim var. İmleci hücrenin üzerine getirin: çekirdek, mitokondriler, endoplazmik retikulum ve Golgi aygıtı belirsin.", "c_hint": "İçine bakmak için üzerine gelin", "o_nuc": "Çekirdek", "o_mito": "Mitokondri", "o_er": "Endoplazmik retikulum", "o_golgi": "Golgi aygıtı", "ft_rights": "© Intrafarma · Prototip, gerçek içerik değildir", "ft_kvkk": "KVKK Aydınlatma Metni", "ft_cookie": "Çerez tercihleri", "ft_ae": "Ürün güvenliği bildirimi", "totop": "Sayfa başına dön"}, "en": {"v_cap1": "Science · cell-to-cell communication", "v_cap2": "Laboratory · Regenyal, Italy", "v_cap3": "Manufacturing · Regenyal, Italy", "v_cap4": "Product · Exosome", "v_prev": "Previous video", "v_next": "Next video", "v_pause": "Pause video", "v_play": "Play video", "v_slide": "Video", "hc1t": "Areas of expertise", "hc1b": "Orthopaedics, sports medicine, aesthetics, urology, women's health and veterinary medicine.", "hc2t": "Products", "hc2b": "Orthobiologics, cell therapies and regenerative solutions across five pillars.", "hc3t": "Healthcare professionals", "hc3b": "Instructions for use, technical files and sample requests in the Pro area.", "hc_more": "Explore", "pt_ey": "/ Global partners", "pt_h": "The manufacturers and brands we work with", "c_ey": "/ Science", "c_h": "Look <em>inside</em> the cell.", "c_lede": "Cell-to-cell communication lies at the heart of regenerative medicine. Move your cursor over the cell to reveal the nucleus, mitochondria, endoplasmic reticulum and Golgi apparatus.", "c_hint": "Hover to look inside", "o_nuc": "Nucleus", "o_mito": "Mitochondrion", "o_er": "Endoplasmic reticulum", "o_golgi": "Golgi apparatus", "ft_rights": "© Intrafarma · Prototype, not real content", "ft_kvkk": "Privacy notice", "ft_cookie": "Cookie preferences", "ft_ae": "Product safety reporting", "totop": "Back to top"}, "ar": {"v_cap1": "العلوم · التواصل بين الخلايا", "v_cap2": "المختبر · Regenyal، إيطاليا", "v_cap3": "التصنيع · Regenyal، إيطاليا", "v_cap4": "المنتج · الإكسوسوم", "v_prev": "الفيديو السابق", "v_next": "الفيديو التالي", "v_pause": "إيقاف الفيديو مؤقتًا", "v_play": "تشغيل الفيديو", "v_slide": "فيديو", "hc1t": "مجالات الخبرة", "hc1b": "جراحة العظام والطب الرياضي والتجميل والمسالك البولية وصحة المرأة والطب البيطري.", "hc2t": "المنتجات", "hc2b": "منتجات بيولوجية عظمية وعلاجات خلوية وحلول تجديدية في خمسة محاور.", "hc3t": "العاملون في القطاع الصحي", "hc3b": "تعليمات الاستخدام والملفات الفنية وطلبات العينات في منطقة Pro.", "hc_more": "استكشف", "pt_ey": "/ شركاؤنا العالميون", "pt_h": "الشركات المصنّعة والعلامات التجارية التي نعمل معها", "c_ey": "/ العلوم", "c_h": "انظر <em>داخل</em> الخلية.", "c_lede": "يقوم الطب التجديدي على التواصل بين الخلايا. مرّر المؤشر فوق الخلية لتظهر النواة والميتوكوندريا والشبكة الإندوبلازمية وجهاز غولجي.", "c_hint": "مرّر المؤشر للنظر إلى الداخل", "o_nuc": "النواة", "o_mito": "الميتوكوندريا", "o_er": "الشبكة الإندوبلازمية", "o_golgi": "جهاز غولجي", "ft_rights": "© Intrafarma · نموذج أولي، ليس محتوى حقيقيًا", "ft_kvkk": "إشعار الخصوصية", "ft_cookie": "تفضيلات ملفات تعريف الارتباط", "ft_ae": "الإبلاغ عن سلامة المنتج", "totop": "العودة إلى الأعلى"}, "it": {"v_cap1": "Scienza · comunicazione tra cellule", "v_cap2": "Laboratorio · Regenyal, Italia", "v_cap3": "Produzione · Regenyal, Italia", "v_cap4": "Prodotto · Esosoma", "v_prev": "Video precedente", "v_next": "Video successivo", "v_pause": "Metti in pausa il video", "v_play": "Riproduci il video", "v_slide": "Video", "hc1t": "Aree di competenza", "hc1b": "Ortopedia, medicina dello sport, medicina estetica, urologia, salute della donna e veterinaria.", "hc2t": "Prodotti", "hc2b": "Ortobiologici, terapie cellulari e soluzioni rigenerative in cinque aree.", "hc3t": "Operatori sanitari", "hc3b": "Istruzioni per l'uso, documentazione tecnica e richieste di campioni nell'area Pro.", "hc_more": "Scopri", "pt_ey": "/ Partner globali", "pt_h": "I produttori e i marchi con cui lavoriamo", "c_ey": "/ Scienza", "c_h": "Guarda <em>dentro</em> la cellula.", "c_lede": "Alla base della medicina rigenerativa c'è la comunicazione tra cellule. Passa il cursore sulla cellula per vedere nucleo, mitocondri, reticolo endoplasmatico e apparato di Golgi.", "c_hint": "Passa sopra per guardare dentro", "o_nuc": "Nucleo", "o_mito": "Mitocondrio", "o_er": "Reticolo endoplasmatico", "o_golgi": "Apparato di Golgi", "ft_rights": "© Intrafarma · Prototipo, contenuto non reale", "ft_kvkk": "Informativa sulla privacy", "ft_cookie": "Preferenze cookie", "ft_ae": "Segnalazione sicurezza prodotto", "totop": "Torna su"}, "ru": {"v_cap1": "Наука · межклеточная коммуникация", "v_cap2": "Лаборатория · Regenyal, Италия", "v_cap3": "Производство · Regenyal, Италия", "v_cap4": "Продукт · Экзосомы", "v_prev": "Предыдущее видео", "v_next": "Следующее видео", "v_pause": "Приостановить видео", "v_play": "Воспроизвести видео", "v_slide": "Видео", "hc1t": "Области экспертизы", "hc1b": "Ортопедия, спортивная медицина, эстетическая медицина, урология, женское здоровье и ветеринария.", "hc2t": "Продукция", "hc2b": "Ортобиологические продукты, клеточная терапия и регенеративные решения по пяти направлениям.", "hc3t": "Медицинским специалистам", "hc3b": "Инструкции, техническая документация и запрос образцов — в разделе Pro.", "hc_more": "Подробнее", "pt_ey": "/ Глобальные партнёры", "pt_h": "Производители и бренды, с которыми мы работаем", "c_ey": "/ Наука", "c_h": "Загляните <em>внутрь</em> клетки.", "c_lede": "В основе регенеративной медицины — межклеточная коммуникация. Наведите курсор на клетку, чтобы увидеть ядро, митохондрии, эндоплазматическую сеть и аппарат Гольджи.", "c_hint": "Наведите, чтобы заглянуть внутрь", "o_nuc": "Ядро", "o_mito": "Митохондрия", "o_er": "Эндоплазматическая сеть", "o_golgi": "Аппарат Гольджи", "ft_rights": "© Intrafarma · Прототип, не реальный контент", "ft_kvkk": "Уведомление о конфиденциальности", "ft_cookie": "Настройки cookie", "ft_ae": "Сообщить о безопасности продукта", "totop": "Наверх"}, "ro": {"v_cap1": "Știință · comunicarea dintre celule", "v_cap2": "Laborator · Regenyal, Italia", "v_cap3": "Producție · Regenyal, Italia", "v_cap4": "Produs · Exozomi", "v_prev": "Videoclipul anterior", "v_next": "Videoclipul următor", "v_pause": "Întrerupe videoclipul", "v_play": "Redă videoclipul", "v_slide": "Videoclip", "hc1t": "Domenii de expertiză", "hc1b": "Ortopedie, medicină sportivă, medicină estetică, urologie, sănătatea femeii și medicină veterinară.", "hc2t": "Produse", "hc2b": "Produse ortobiologice, terapii celulare și soluții regenerative în cinci direcții.", "hc3t": "Profesioniști din sănătate", "hc3b": "Instrucțiuni de utilizare, documentație tehnică și solicitări de mostre în zona Pro.", "hc_more": "Detalii", "pt_ey": "/ Parteneri globali", "pt_h": "Producătorii și mărcile cu care lucrăm", "c_ey": "/ Știință", "c_h": "Privește <em>în interiorul</em> celulei.", "c_lede": "La baza medicinei regenerative stă comunicarea dintre celule. Treceți cursorul peste celulă pentru a vedea nucleul, mitocondriile, reticulul endoplasmatic și aparatul Golgi.", "c_hint": "Treceți cursorul pentru a privi înăuntru", "o_nuc": "Nucleu", "o_mito": "Mitocondrie", "o_er": "Reticul endoplasmatic", "o_golgi": "Aparatul Golgi", "ft_rights": "© Intrafarma · Prototip, conținut nereal", "ft_kvkk": "Notă de informare", "ft_cookie": "Preferințe cookie", "ft_ae": "Raportare siguranța produsului", "totop": "Înapoi sus"}}))Object.assign(T[l],o);
+for(const [l,o] of Object.entries({"tr": {"hc_ey": "/ Intrafarma", "hc_h": "Nasıl yardımcı olabiliriz?", "c_lede": "Rejeneratif tıbbın temelinde hücreler arası iletişim var. İmleci hücrenin üzerine getirin: büyüteç zarın ardını netleştirir; çekirdek, mitokondriler, endoplazmik retikulum ve Golgi aygıtı görünür.", "st_ey": "/ Rakamlarla Intrafarma", "st_h": "Birlikte büyüyen bir ağ", "st1": "Uzmanlık alanı", "st2": "Ürün", "st3": "İş ortağı", "st4": "Ülkeden üretici", "st5": "Kongre ve etkinlik", "st_note": "Rakamlar örnektir; firma onayıyla güncellenecek.", "ua_ey": "/ Uzmanlık alanlarımız", "ua_h": "Altı klinik alanda rejeneratif çözümler", "ua_p": "Her alan için ürünler, belgeler ve eğitim içerikleri.", "ua_photo": "Fotoğraf gelecek", "lb_ey": "/ Laboratuvarlar ve üretim", "lb_h": "Kendi markanızı birlikte üretelim", "lb_p": "Oral takviye gıdalarda formülden ambalaja, kişiye özel marka ürünler geliştiriyoruz.", "lb_cta": "Özel marka için görüşelim", "lb_cap": "Görseller: üretim ortağımız Regenyal Laboratories, İtalya", "ev_ey": "/ Etkinlikler", "ev_h": "Kongreler, fuarlar ve bölgesel toplantılar", "ev_up": "Yaklaşan", "ev_past": "Geçmiş etkinlikler", "ev_t": "[Etkinlik adı]", "ev_p": "[Şehir] · [Stand]", "ev_pt": "[Geçmiş etkinlik]", "ev_ph": "Etkinlik fotoğrafları", "ev_all": "Tüm etkinlikler", "bl_ey": "/ Blog", "bl_h": "Bilgilendirme, röportaj ve makale", "bl_c1": "Bilgilendirme", "bl_c2": "Hekim röportajı", "bl_c3": "Makale özeti", "bl_t": "[Yazı başlığı]", "bl_all": "Tüm yazılar", "bk_ey": "/ Bilimsel danışma kurulu", "bk_h": "Konuşmacı ve danışman hekimlerimiz", "bk_n": "[Prof. Dr. Ad Soyad]", "bk_ph": "Fotoğraf", "fq_ey": "/ Soru ve cevap", "fq_h": "Endikasyonlar ve tedaviler", "fq1": "Rejeneratif ürünler hangi klinik alanlarda kullanılır?", "fq2": "Eksozom ve PRP arasındaki fark nedir?", "fq3": "Numune ve eğitim talebi nasıl yapılır?", "fq4": "Ürünlerin kalite belgeleri nelerdir?", "fq_a": "[Cevap Intrafarma tarafından yazılacak ve mevzuat açısından onaylanacak.]", "hp_ey": "/ Ürünler", "hp_h": "Beş eksende ürün portföyü", "hp_p": "Yüksek çözünürlüklü ürün fotoğraflarından 3D modeller hazırlanacak; ziyaretçi ürünü çevirerek inceleyebilecek.", "hp_cta": "Ürün kataloğu", "hp_3d": "3D model · yakında", "hp_n": "ürün", "ev_d": "[Tarih]"}, "en": {"hc_ey": "/ Intrafarma", "hc_h": "How can we help?", "c_lede": "Cell-to-cell communication lies at the heart of regenerative medicine. Move your cursor over the cell: the magnifier sees through the membrane and reveals the nucleus, mitochondria, endoplasmic reticulum and Golgi apparatus.", "st_ey": "/ Intrafarma in numbers", "st_h": "A network that grows together", "st1": "Areas of expertise", "st2": "Products", "st3": "Partners", "st4": "Manufacturer countries", "st5": "Congresses and events", "st_note": "Figures are examples; they will be updated with the company's approval.", "ua_ey": "/ Areas of expertise", "ua_h": "Regenerative solutions in six clinical areas", "ua_p": "Products, documents and training content for each area.", "ua_photo": "Photo to come", "lb_ey": "/ Laboratories and manufacturing", "lb_h": "Let's build your own brand together", "lb_p": "From formula to packaging, we develop private-label oral food supplements.", "lb_cta": "Talk to us about private label", "lb_cap": "Images: our manufacturing partner Regenyal Laboratories, Italy", "ev_ey": "/ Events", "ev_h": "Congresses, trade fairs and regional meetings", "ev_up": "Upcoming", "ev_past": "Past events", "ev_t": "[Event name]", "ev_p": "[City] · [Booth]", "ev_pt": "[Past event]", "ev_ph": "Event photos", "ev_all": "All events", "bl_ey": "/ Blog", "bl_h": "Insights, interviews and articles", "bl_c1": "Insight", "bl_c2": "Physician interview", "bl_c3": "Article summary", "bl_t": "[Post title]", "bl_all": "All posts", "bk_ey": "/ Scientific advisory board", "bk_h": "Our speaker and advisory physicians", "bk_n": "[Prof. Dr. Name Surname]", "bk_ph": "Photo", "fq_ey": "/ Questions and answers", "fq_h": "Indications and treatments", "fq1": "In which clinical areas are regenerative products used?", "fq2": "What is the difference between exosomes and PRP?", "fq3": "How do I request samples or training?", "fq4": "Which quality certificates do the products have?", "fq_a": "[Answer to be written by Intrafarma and approved for regulatory compliance.]", "hp_ey": "/ Products", "hp_h": "A portfolio across five pillars", "hp_p": "3D models will be built from high-resolution product photos so visitors can rotate and inspect each product.", "hp_cta": "Product catalogue", "hp_3d": "3D model · coming soon", "hp_n": "products", "ev_d": "[Date]"}, "ar": {"hc_ey": "/ Intrafarma", "hc_h": "كيف يمكننا المساعدة؟", "c_lede": "يقوم الطب التجديدي على التواصل بين الخلايا. مرّر المؤشر فوق الخلية: تكشف العدسة ما وراء الغشاء وتظهر النواة والميتوكوندريا والشبكة الإندوبلازمية وجهاز غولجي.", "st_ey": "/ Intrafarma بالأرقام", "st_h": "شبكة تنمو معًا", "st1": "مجالات الخبرة", "st2": "منتج", "st3": "شريك", "st4": "دول المصنّعين", "st5": "مؤتمرات وفعاليات", "st_note": "الأرقام أمثلة وستُحدَّث بعد موافقة الشركة.", "ua_ey": "/ مجالات الخبرة", "ua_h": "حلول تجديدية في ستة مجالات سريرية", "ua_p": "منتجات ومستندات ومحتوى تدريبي لكل مجال.", "ua_photo": "ستُضاف صورة", "lb_ey": "/ المختبرات والتصنيع", "lb_h": "لنصنع علامتك التجارية معًا", "lb_p": "نطوّر مكمّلات غذائية فموية بعلامة خاصة، من التركيبة إلى العبوة.", "lb_cta": "تواصل معنا بشأن العلامة الخاصة", "lb_cap": "الصور: شريكنا في التصنيع Regenyal Laboratories، إيطاليا", "ev_ey": "/ الفعاليات", "ev_h": "مؤتمرات ومعارض واجتماعات إقليمية", "ev_up": "القادمة", "ev_past": "فعاليات سابقة", "ev_t": "[اسم الفعالية]", "ev_p": "[المدينة] · [الجناح]", "ev_pt": "[فعالية سابقة]", "ev_ph": "صور الفعالية", "ev_all": "كل الفعاليات", "bl_ey": "/ المدونة", "bl_h": "معلومات ومقابلات ومقالات", "bl_c1": "معلومات", "bl_c2": "مقابلة مع طبيب", "bl_c3": "ملخص مقال", "bl_t": "[عنوان المقال]", "bl_all": "كل المقالات", "bk_ey": "/ المجلس الاستشاري العلمي", "bk_h": "أطباؤنا المتحدثون والمستشارون", "bk_n": "[أ. د. الاسم الكامل]", "bk_ph": "صورة", "fq_ey": "/ أسئلة وأجوبة", "fq_h": "دواعي الاستعمال والعلاجات", "fq1": "في أي مجالات سريرية تُستخدم المنتجات التجديدية؟", "fq2": "ما الفرق بين الإكسوسومات والبلازما الغنية بالصفائح؟", "fq3": "كيف أطلب عينات أو تدريبًا؟", "fq4": "ما شهادات الجودة التي تحملها المنتجات؟", "fq_a": "[ستكتب Intrafarma الإجابة وتُعتمد من الناحية التنظيمية.]", "hp_ey": "/ المنتجات", "hp_h": "محفظة منتجات في خمسة محاور", "hp_p": "ستُعدّ نماذج ثلاثية الأبعاد من صور المنتجات عالية الدقة ليتمكن الزائر من تدوير المنتج وفحصه.", "hp_cta": "كتالوج المنتجات", "hp_3d": "نموذج ثلاثي الأبعاد · قريبًا", "hp_n": "منتج", "ev_d": "[التاريخ]"}, "it": {"hc_ey": "/ Intrafarma", "hc_h": "Come possiamo aiutarti?", "c_lede": "Alla base della medicina rigenerativa c'è la comunicazione tra cellule. Passa il cursore sulla cellula: la lente vede oltre la membrana e mostra nucleo, mitocondri, reticolo endoplasmatico e apparato di Golgi.", "st_ey": "/ Intrafarma in cifre", "st_h": "Una rete che cresce insieme", "st1": "Aree di competenza", "st2": "Prodotti", "st3": "Partner", "st4": "Paesi dei produttori", "st5": "Congressi ed eventi", "st_note": "Le cifre sono esempi; saranno aggiornate con l'approvazione dell'azienda.", "ua_ey": "/ Aree di competenza", "ua_h": "Soluzioni rigenerative in sei aree cliniche", "ua_p": "Prodotti, documenti e contenuti formativi per ogni area.", "ua_photo": "Foto in arrivo", "lb_ey": "/ Laboratori e produzione", "lb_h": "Creiamo insieme il tuo marchio", "lb_p": "Dalla formula al confezionamento, sviluppiamo integratori alimentari orali a marchio privato.", "lb_cta": "Parliamo di marchio privato", "lb_cap": "Immagini: il nostro partner produttivo Regenyal Laboratories, Italia", "ev_ey": "/ Eventi", "ev_h": "Congressi, fiere e incontri regionali", "ev_up": "In arrivo", "ev_past": "Eventi passati", "ev_t": "[Nome evento]", "ev_p": "[Città] · [Stand]", "ev_pt": "[Evento passato]", "ev_ph": "Foto dell'evento", "ev_all": "Tutti gli eventi", "bl_ey": "/ Blog", "bl_h": "Approfondimenti, interviste e articoli", "bl_c1": "Approfondimento", "bl_c2": "Intervista a un medico", "bl_c3": "Sintesi di un articolo", "bl_t": "[Titolo dell'articolo]", "bl_all": "Tutti gli articoli", "bk_ey": "/ Comitato scientifico", "bk_h": "I nostri medici relatori e consulenti", "bk_n": "[Prof. Dr. Nome Cognome]", "bk_ph": "Foto", "fq_ey": "/ Domande e risposte", "fq_h": "Indicazioni e trattamenti", "fq1": "In quali aree cliniche si usano i prodotti rigenerativi?", "fq2": "Qual è la differenza tra esosomi e PRP?", "fq3": "Come si richiedono campioni o formazione?", "fq4": "Quali certificati di qualità hanno i prodotti?", "fq_a": "[Risposta a cura di Intrafarma, da approvare dal punto di vista normativo.]", "hp_ey": "/ Prodotti", "hp_h": "Un portafoglio in cinque aree", "hp_p": "Dalle foto ad alta risoluzione saranno creati modelli 3D che il visitatore potrà ruotare ed esaminare.", "hp_cta": "Catalogo prodotti", "hp_3d": "Modello 3D · in arrivo", "hp_n": "prodotti", "ev_d": "[Data]"}, "ru": {"hc_ey": "/ Intrafarma", "hc_h": "Чем мы можем помочь?", "c_lede": "В основе регенеративной медицины — межклеточная коммуникация. Наведите курсор на клетку: лупа заглядывает за мембрану и показывает ядро, митохондрии, эндоплазматическую сеть и аппарат Гольджи.", "st_ey": "/ Intrafarma в цифрах", "st_h": "Сеть, которая растёт вместе", "st1": "Области экспертизы", "st2": "Продуктов", "st3": "Партнёров", "st4": "Стран-производителей", "st5": "Конгрессов и мероприятий", "st_note": "Цифры приведены для примера и будут обновлены после согласования с компанией.", "ua_ey": "/ Области экспертизы", "ua_h": "Регенеративные решения в шести клинических областях", "ua_p": "Продукция, документы и обучающие материалы для каждой области.", "ua_photo": "Фото будет добавлено", "lb_ey": "/ Лаборатории и производство", "lb_h": "Создадим ваш бренд вместе", "lb_p": "От рецептуры до упаковки — разрабатываем пероральные БАД под собственной торговой маркой.", "lb_cta": "Обсудить собственную марку", "lb_cap": "Фото: наш производственный партнёр Regenyal Laboratories, Италия", "ev_ey": "/ Мероприятия", "ev_h": "Конгрессы, выставки и региональные встречи", "ev_up": "Предстоящие", "ev_past": "Прошедшие мероприятия", "ev_t": "[Название мероприятия]", "ev_p": "[Город] · [Стенд]", "ev_pt": "[Прошедшее мероприятие]", "ev_ph": "Фото мероприятия", "ev_all": "Все мероприятия", "bl_ey": "/ Блог", "bl_h": "Статьи, интервью и обзоры", "bl_c1": "Полезно знать", "bl_c2": "Интервью с врачом", "bl_c3": "Обзор статьи", "bl_t": "[Заголовок статьи]", "bl_all": "Все статьи", "bk_ey": "/ Научный совет", "bk_h": "Наши врачи-спикеры и консультанты", "bk_n": "[Проф. д-р Имя Фамилия]", "bk_ph": "Фото", "fq_ey": "/ Вопросы и ответы", "fq_h": "Показания и лечение", "fq1": "В каких клинических областях применяются регенеративные продукты?", "fq2": "Чем экзосомы отличаются от PRP?", "fq3": "Как запросить образцы или обучение?", "fq4": "Какие сертификаты качества есть у продукции?", "fq_a": "[Ответ подготовит Intrafarma; он будет согласован с учётом регуляторных требований.]", "hp_ey": "/ Продукция", "hp_h": "Портфель по пяти направлениям", "hp_p": "По фотографиям высокого разрешения будут созданы 3D-модели — посетитель сможет вращать и рассматривать продукт.", "hp_cta": "Каталог продукции", "hp_3d": "3D-модель · скоро", "hp_n": "продуктов", "ev_d": "[Дата]"}, "ro": {"hc_ey": "/ Intrafarma", "hc_h": "Cum vă putem ajuta?", "c_lede": "La baza medicinei regenerative stă comunicarea dintre celule. Treceți cursorul peste celulă: lupa vede dincolo de membrană și arată nucleul, mitocondriile, reticulul endoplasmatic și aparatul Golgi.", "st_ey": "/ Intrafarma în cifre", "st_h": "O rețea care crește împreună", "st1": "Domenii de expertiză", "st2": "Produse", "st3": "Parteneri", "st4": "Țări producătoare", "st5": "Congrese și evenimente", "st_note": "Cifrele sunt exemple; vor fi actualizate cu aprobarea companiei.", "ua_ey": "/ Domenii de expertiză", "ua_h": "Soluții regenerative în șase domenii clinice", "ua_p": "Produse, documente și conținut de formare pentru fiecare domeniu.", "ua_photo": "Fotografie în curând", "lb_ey": "/ Laboratoare și producție", "lb_h": "Să construim împreună marca dvs.", "lb_p": "De la formulă la ambalaj, dezvoltăm suplimente alimentare orale sub marcă proprie.", "lb_cta": "Discutați cu noi despre marca proprie", "lb_cap": "Imagini: partenerul nostru de producție Regenyal Laboratories, Italia", "ev_ey": "/ Evenimente", "ev_h": "Congrese, târguri și întâlniri regionale", "ev_up": "Urmează", "ev_past": "Evenimente trecute", "ev_t": "[Numele evenimentului]", "ev_p": "[Oraș] · [Stand]", "ev_pt": "[Eveniment trecut]", "ev_ph": "Fotografii de la eveniment", "ev_all": "Toate evenimentele", "bl_ey": "/ Blog", "bl_h": "Informații, interviuri și articole", "bl_c1": "Informare", "bl_c2": "Interviu cu un medic", "bl_c3": "Rezumat de articol", "bl_t": "[Titlul articolului]", "bl_all": "Toate articolele", "bk_ey": "/ Consiliul științific", "bk_h": "Medicii noștri speakeri și consultanți", "bk_n": "[Prof. Dr. Nume Prenume]", "bk_ph": "Fotografie", "fq_ey": "/ Întrebări și răspunsuri", "fq_h": "Indicații și tratamente", "fq1": "În ce domenii clinice se folosesc produsele regenerative?", "fq2": "Care este diferența dintre exozomi și PRP?", "fq3": "Cum solicit mostre sau instruire?", "fq4": "Ce certificate de calitate au produsele?", "fq_a": "[Răspunsul va fi redactat de Intrafarma și aprobat din punct de vedere al reglementărilor.]", "hp_ey": "/ Produse", "hp_h": "Un portofoliu în cinci direcții", "hp_p": "Din fotografiile de înaltă rezoluție vor fi create modele 3D pe care vizitatorul le va putea roti și examina.", "hp_cta": "Catalog de produse", "hp_3d": "Model 3D · în curând", "hp_n": "produse", "ev_d": "[Data]"}}))Object.assign(T[l],o);
 const IF=window.IF={mode:'public',p:0,ptr:{x:-999,y:-999,in:false,touch:false},W:0,H:0,near:0,cell:null,revealC:{x:0,y:0},revealR:0,ripples:[],reduce,cmpX:0,lang:(()=>{const q=new URLSearchParams(location.search).get('lang');if(q&&T[q])return q;try{const s=localStorage.getItem('if_lang');if(s&&T[s])return s;}catch(e){}return 'tr';})(),lens:null};
 IF.tr=k=>T[IF.lang][k]??T.en[k]??k;
 let tStart=0,magnet=null,zoomFrom=null,curX=-100,curY=-100,lensL=56,lensZ=1.7,lensPub=null,lensPro=null;
@@ -1075,6 +1312,7 @@ const PRODS=[['Regenflex Bio-Plus',0],['Regenflex Starter',0],['Regenflex Kit',0
  ['MILLIEXO',2],['Lipocell-Mini',2],['Milligraft',2],['SW-ABMC',2],
  ['Osblass Saşe',3],['Atrofit',3],['Nemact',3],['Intra Type II',3],['Collygen',3],['Konted Us',3],['Hip Safe',3],['Arthrys Regain',3],['Arthrys',3],
  ['Innprost',4],['Innpeak',4]].map(([n,a])=>({n,a,open:a===3}));
+window.IFD={AX,CA,PRODS};
 const CS={ax:-1,ca:-1,q:'',det:-1,mode:'pub',view:'prod',dt:-1,sel:new Set(),rqT:0,rqDone:''};
 function chip(label,on,cls,fn){const b=document.createElement('button');b.type='button';b.className='chip'+(cls?' '+cls:'');b.textContent=label;b.setAttribute('aria-pressed',on);b.addEventListener('click',fn);return b;}
 function renderChips(){
@@ -1268,7 +1506,7 @@ function loop(t){
   let tx=P.x,ty=P.y,L,z;
   if(overlay){L=18;z=1;}
   else if(magnet){tx=P.x+(magnet.x-P.x)*.3;ty=P.y+(magnet.y-P.y)*.3;L=40;z=1.35;}
-  else{L=56+IF.near*32;z=1.7+IF.near*.7;}
+  else{L=56+IF.near*104;z=1.7+IF.near*.8;}
   lens.classList.toggle('mini',overlay);
   if(curX<-50){curX=tx;curY=ty;}
   curX=tx;curY=ty;lensL+=(L-lensL)*.35;lensZ+=(z-lensZ)*.35;
@@ -1329,21 +1567,40 @@ go(0);
 /* keep the second language picker and aria labels in sync with applyLang */
 const sel2=$('#langSel2');
 sel2.addEventListener('change',e=>{const b=document.querySelector('.site-top [data-lang="'+e.target.value+'"]');if(b)b.click();});
-new MutationObserver(()=>{sel2.value=document.documentElement.lang;labels();}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+new MutationObserver(()=>{sel2.value=document.documentElement.lang;labels();homeData();}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 sel2.value=document.documentElement.lang||'tr';
 
 /* outer buttons open things inside the cell stage: bring it into view first */
-$$('.site [data-gate],.site [data-cat]').forEach(b=>b.addEventListener('click',()=>$('#hucre').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})));
+$$('.site [data-gate],.site [data-cat]').filter(b=>!b.closest('#stage')).forEach(b=>b.addEventListener('click',()=>$('#stage').scrollIntoView({behavior:RM?'auto':'smooth',block:'center'})));
 
 /* reveal on scroll */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
 $$('[data-rv]').forEach(el=>io.observe(el));
 
-/* count-up stats in the cell section */
-const nums=$$('#pub .stats b').map(b=>({b,to:parseInt(b.textContent,10)||0}));
-nums.forEach(n=>{if(!RM)n.b.textContent='00';});
+/* count-up numbers */
+const nums=$$('.st-g b[data-n]').map(b=>({b,to:+b.dataset.n,pad:+(b.dataset.pad||0),suf:b.dataset.suf||''}));
+const fmt=(n,v)=>String(v).padStart(n.pad,'0')+n.suf;
+if(!RM)nums.forEach(n=>{n.b.textContent=fmt(n,0);});
 new IntersectionObserver((es,ob)=>{if(!es[0].isIntersecting)return;ob.disconnect();if(RM)return;const t0=performance.now();
- (function step(t){const k=Math.min(1,(t-t0)/1600),e=1-Math.pow(1-k,3);nums.forEach(n=>{n.b.textContent=String(Math.round(n.to*e)).padStart(2,'0');});if(k<1)requestAnimationFrame(step);})(t0);},{threshold:.4}).observe($('#stage'));
+ (function step(t){const k=Math.min(1,(t-t0)/1700),e=1-Math.pow(1-k,3);nums.forEach(n=>{n.b.textContent=fmt(n,Math.round(n.to*e));});if(k<1)requestAnimationFrame(step);})(t0);},{threshold:.35}).observe($('.st-g'));
+
+/* hero shrinks slightly as the page scrolls past it */
+const vh=$('#vh');let vhq=false;
+function vhShrink(){vhq=false;const r=vh.getBoundingClientRect(),p=Math.min(1,Math.max(0,-r.top/(r.height*.85)));
+ vh.style.transform=p>0?'scale('+(1-.075*p).toFixed(4)+')':'';vh.style.clipPath=p>0?'inset(0 round '+(p*28).toFixed(1)+'px)':'';}
+if(!RM){addEventListener('scroll',()=>{if(!vhq){vhq=true;requestAnimationFrame(vhShrink);}},{passive:true});vhShrink();}
+
+/* expertise cards and product axes from the shared catalogue data */
+const UA_IMG=['ortopedi','spor',null,null,null,null];
+const UA_IC=['<circle cx="12" cy="12" r="9"/><path d="M8 8.5c2 1 2 3 0 4M16 11.5c-2 1-2 3 0 4M9 12.5h6"/>','<circle cx="12" cy="12" r="9"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>','<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>','<rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 8v6"/>','<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>','<path d="M6 13c0-3 3-4 6-4s6 1 6 4-2 6-6 6-6-3-6-6z"/><circle cx="7" cy="6" r="1.6"/><circle cx="12" cy="4.5" r="1.6"/><circle cx="17" cy="6" r="1.6"/>'];
+function homeData(){
+ const D=window.IFD;if(!D)return;const L=(window.IF&&IF.lang)||'tr',CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en;
+ const g=$('#uaG');if(g){g.innerHTML='';CA.forEach((n,i)=>{const a=document.createElement('a');a.href='#hucre';a.className='ua-c'+(UA_IMG[i]?'':' noimg');a.setAttribute('data-rv','up');a.classList.add('in');
+  a.innerHTML=(UA_IMG[i]?'<img src="media/gorsel/'+UA_IMG[i]+'.jpg" alt="" loading="lazy" decoding="async">':'<svg class="ua-ic" viewBox="0 0 24 24" aria-hidden="true">'+UA_IC[i]+'</svg><span class="ua-tb">'+tr('ua_photo')+'</span>')+'<span class="ua-n">0'+(i+1)+'</span><span class="ua-x"><b></b><i aria-hidden="true">→</i></span>';
+  a.querySelector('b').textContent=n;g.appendChild(a);});}
+ const l=$('#hpL');if(l){l.innerHTML='';AX.forEach((n,i)=>{const c=D.PRODS.filter(p=>p.a===i).length;const li=document.createElement('li');li.innerHTML='<i>0'+(i+1)+'</i><b></b><span></span>';li.querySelector('b').textContent=n;li.querySelector('span').textContent=c+' '+tr('hp_n');l.appendChild(li);});}
+}
+homeData();
 
 /* back to top */
 const tt=$('#totop');addEventListener('scroll',()=>tt.classList.toggle('show',scrollY>560),{passive:true});
@@ -1510,16 +1767,16 @@ memMat.onBeforeCompile=sh=>{Object.assign(sh.uniforms,U,MU);
 #include <opaque_fragment>`);
  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\n'+SNOISE).replace('#include <beginnormal_vertex>',NORMAL_CODE).replace('#include <begin_vertex>','vec3 transformed=dispP;');};
 const memGeo=new THREE.SphereGeometry(1,64,64).rotateZ(Math.PI/2);
-const NUC_PUB=new THREE.Color('#2F6E9E'),NUC_PRO=new THREE.Color('#1F9AA2');
-const nucMat=new THREE.MeshPhysicalMaterial({color:NUC_PUB.clone(),roughness:0.22,metalness:0.05,clearcoat:1,clearcoatRoughness:0.1,iridescence:0.7,iridescenceIOR:1.3,envMapIntensity:1.1});
-const nlMat=new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0.15,clearcoat:1,emissive:new THREE.Color('#c6ecee'),emissiveIntensity:0.25});
+const NUC_PUB=new THREE.Color('#6A4A9E'),NUC_PRO=new THREE.Color('#5A55A8');
+const nucMat=new THREE.MeshPhysicalMaterial({color:NUC_PUB.clone(),roughness:0.22,metalness:0.05,clearcoat:1,clearcoatRoughness:0.12,iridescence:0.3,iridescenceIOR:1.3,envMapIntensity:1.0,sheen:.6,sheenColor:new THREE.Color('#C9B4F0')});
+const nlMat=new THREE.MeshPhysicalMaterial({color:'#3A2066',roughness:0.3,clearcoat:.8,emissive:new THREE.Color('#2A1450'),emissiveIntensity:0.2});
 const vesMat=new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0.32,clearcoat:0.6,envMapIntensity:1.0});
 const sph=new THREE.SphereGeometry(1,24,16);
 /* organelles: mitochondria (striped capsules), endoplasmic reticulum (ribbons around the nucleus), Golgi (stacked arcs) */
-const mitoTex=cvTex(128,32,(g,w,h)=>{g.fillStyle='#3E9FAE';g.fillRect(0,0,w,h);g.strokeStyle='rgba(226,247,250,.9)';g.lineWidth=3;for(let x=7;x<w;x+=13){g.beginPath();g.moveTo(x,5);g.quadraticCurveTo(x+6,h/2,x,h-5);g.stroke();}});
+const mitoTex=cvTex(128,32,(g,w,h)=>{g.fillStyle='#D2553A';g.fillRect(0,0,w,h);g.strokeStyle='rgba(252,232,204,.95)';g.lineWidth=3;for(let x=7;x<w;x+=13){g.beginPath();g.moveTo(x,5);g.quadraticCurveTo(x+6,h/2,x,h-5);g.stroke();}});
 const mitoMat=new THREE.MeshPhysicalMaterial({color:0xffffff,map:mitoTex,roughness:.34,clearcoat:.7,clearcoatRoughness:.2,envMapIntensity:1});
-const erMat=new THREE.MeshPhysicalMaterial({color:'#8CC6DD',roughness:.28,clearcoat:.6,emissive:new THREE.Color('#a9dbe9'),emissiveIntensity:.12});
-const golMat=new THREE.MeshPhysicalMaterial({color:'#2C7EA6',roughness:.3,clearcoat:.7,iridescence:.4,iridescenceIOR:1.3});
+const erMat=new THREE.MeshPhysicalMaterial({color:'#C48AD6',roughness:.3,clearcoat:.6,emissive:new THREE.Color('#E2BDEE'),emissiveIntensity:.1});
+const golMat=new THREE.MeshPhysicalMaterial({color:'#E2B03A',roughness:.32,clearcoat:.7,emissive:new THREE.Color('#7A5208'),emissiveIntensity:.12});
 const mitoGeo=new THREE.CapsuleGeometry(.048,.17,6,14);
 function makeOrg(){
  const org=new THREE.Group(),o3=new THREE.Object3D(),mpos=[];
@@ -1553,17 +1810,37 @@ function makeCell(){
 const A=makeCell(),B=makeCell();B.data=A.data;scene.add(A.g);scene.add(B.g);B.g.visible=false;
 
 const exo=[];
-[[.53,.22,-1.5,.11,1],[.92,.18,-2.5,.07,0],[.95,.78,.8,.09,1],[.58,.86,-1,.06,0],[.83,.62,1.6,.05,0],[.45,.62,-3,.05,0],[.78,.08,0.5,.045,0]].forEach(([fx,fy,z,s,glass],i)=>{
+[[.13,.22,-1.5,.11,1],[.9,.18,-2.5,.07,0],[.93,.8,.8,.09,1],[.08,.82,-1,.06,0],[.86,.56,1.6,.05,0],[.2,.6,-3,.05,0],[.74,.08,0.5,.045,0]].forEach(([fx,fy,z,s,glass],i)=>{
  const m=new THREE.Mesh(sph,vesMat);m.layers.enable(1);exo.push({m,fx,fy,z,s,ph:i*1.7});scene.add(m);});
 
+
+/* magnifier: under the lens the membrane is lifted; the interior is redrawn enlarged and sharp */
+const lensRT=new THREE.WebGLRenderTarget(4,4,{type:rt.texture.type,minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,generateMipmaps:false,samples:renderer.capabilities.isWebGL2?4:0});
+const lensMat=new THREE.ShaderMaterial({transparent:true,depthTest:false,depthWrite:false,
+ uniforms:{uTex:{value:lensRT.texture},uLC:{value:new THREE.Vector2()},uLR:{value:1},uCC:{value:new THREE.Vector2()},uCR:{value:1},uZ:{value:2},uA:{value:0},uCyto:{value:new THREE.Color('#EDEBF5')},uRimC:{value:new THREE.Color('#9CC9D6')}},
+ vertexShader:`void main(){gl_Position=vec4(position.xy,0.0,1.0);}`,
+ fragmentShader:`uniform sampler2D uTex;uniform vec2 uLC;uniform float uLR;uniform vec2 uCC;uniform float uCR;uniform float uZ;uniform float uA;uniform vec3 uCyto;uniform vec3 uRimC;
+ void main(){vec2 d=gl_FragCoord.xy-uLC;float r=length(d);if(r>uLR)discard;
+  vec2 src=uLC+d/uZ;float dc=length(src-uCC)/uCR;
+  float inside=1.0-smoothstep(0.93,0.99,dc);if(inside<0.002)discard;
+  vec4 sm=texture2D(uTex,d/(2.0*uLR)+0.5);
+  vec3 c=mix(uCyto*(1.0-0.08*dc*dc),sm.rgb,sm.a);
+  float rim=smoothstep(0.84,0.93,dc)*(1.0-smoothstep(0.95,0.99,dc));
+  c=mix(c,uRimC,rim*0.55);
+  gl_FragColor=vec4(c,inside*uA*smoothstep(uLR,uLR-1.5,r));
+  #include <tonemapping_fragment>
+  #include <colorspace_fragment>
+ }`});
+const lensScene=new THREE.Scene();{const q=new THREE.Mesh(new THREE.PlaneGeometry(2,2),lensMat);q.frustumCulled=false;lensScene.add(q);}
+let lensA=0;
 let W=1,H=1,vh=1,vw=1;const L={pub:{},pro:{}};
-function place(o,fx,fy,rf){const n=W<760;if(document.documentElement.dir==='rtl')fx=1-fx;o.fx=fx;o.fy=fy;o.rf=Math.min(rf,(n?.36:.27)*vw/vh);o.x=(fx-.5)*vw;o.y=(.5-fy)*vh;o.R=o.rf*vh;}
+function place(o,fx,fy,rf){const n=W<760;if(document.documentElement.dir==='rtl')fx=1-fx;o.fx=fx;o.fy=fy;o.rf=Math.min(rf,(n?.40:.34)*vw/vh);o.x=(fx-.5)*vw;o.y=(.5-fy)*vh;o.R=o.rf*vh;}
 function resize(){
  W=stage.clientWidth;H=stage.clientHeight;renderer.setSize(W,H,false);
  cam.aspect=W/H;cam.updateProjectionMatrix();
  vh=2*cam.position.z*Math.tan(THREE.MathUtils.degToRad(cam.fov/2));vw=vh*cam.aspect;
  const n=W<760;
- place(L.pub,n?.64:.70,n?.27:.48,n?.17:.30);
+ place(L.pub,.5,n?.42:.45,n?.32:.36);
  place(L.pro,n?.66:.74,n?.29:.42,n?.15:.23);
  const v=new THREE.Vector2();renderer.getDrawingBufferSize(v);const rw=Math.max(2,Math.round(v.x*RTS)),rh=Math.max(2,Math.round(v.y*RTS));rt.setSize(rw,rh);bgMat.uniforms.uRes.value.set(rw,rh);cpMat.uniforms.uRes.value.copy(v);MU.uFull.value.copy(v);
 }
@@ -1801,6 +2078,19 @@ function frame(){
 
  cam.layers.set(1);renderer.setRenderTarget(rt);renderer.render(scene,cam);
  cam.layers.set(0);renderer.setRenderTarget(null);renderer.render(scene,cam);
+
+ {const LZ=IF.lens,cr=aR/vh*H;let on=false;
+  if(LZ&&LZ.show&&!ptr.touch&&(IF.mode==='public'||IF.mode==='pro')&&!IF.overlay)on=Math.hypot(LZ.x-sc.x,LZ.y-sc.y)<cr*.98+LZ.L*.5;
+  lensA+=((on?1:0)-lensA)*.2;
+  if(lensA>.01&&LZ){
+   const pr=renderer.getPixelRatio(),Lp=Math.max(8,Math.round(LZ.L*pr)),vwid=LZ.L/LZ.z;
+   if(lensRT.width!==Lp)lensRT.setSize(Lp,Lp);
+   cam.setViewOffset(W,H,LZ.x-vwid/2,LZ.y-vwid/2,vwid,vwid);bg.visible=false;
+   cam.layers.set(1);renderer.setRenderTarget(lensRT);renderer.setClearColor(0x000000,0);renderer.clear();renderer.render(scene,cam);
+   renderer.setClearColor(0x000000,1);bg.visible=true;cam.clearViewOffset();cam.layers.set(0);renderer.setRenderTarget(null);
+   const u=lensMat.uniforms;u.uLC.value.set(LZ.x*pr,(H-LZ.y)*pr);u.uLR.value=LZ.L*pr/2;u.uCC.value.set(sc.x*pr,(H-sc.y)*pr);u.uCR.value=cr*pr;u.uZ.value=LZ.z;u.uA.value=lensA;
+   renderer.autoClear=false;renderer.render(lensScene,cam);renderer.autoClear=true;
+  }}
  if(!stage.classList.contains('gl-on'))stage.classList.add('gl-on');
 }
 requestAnimationFrame(frame);
