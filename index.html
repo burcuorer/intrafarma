@@ -830,6 +830,87 @@ html.stage-full .totop,html.stage-full .draft-chip,html.stage-full .oc{visibilit
 .oc-c{pointer-events:auto;cursor:default}
 .oc-c:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
 .oc{pointer-events:none}
+/* ---- v7: denetim düzeltmeleri — kontrast, gölge ölçeği, aralık ritmi, alt bilgi, hücre turu ---- */
+:root{--sh-1:0 1px 2px rgba(14,34,53,.05),0 6px 18px rgba(16,64,104,.07);--sh-2:0 2px 4px rgba(14,34,53,.05),0 16px 40px rgba(16,64,104,.12);--sh-3:0 4px 8px rgba(14,34,53,.06),0 30px 70px rgba(16,64,104,.18);--sp:clamp(72px,9vw,112px)}
+/* contrast */
+.band.dark2 p:not(.eyebrow){color:rgba(255,255,255,.94)}
+.band.dark2 .eyebrow,.band.dark .eyebrow{color:rgba(255,255,255,.86)}
+.band.dark2 .lb-f figcaption{color:rgba(255,255,255,.9)}
+.band.dark .hs-h p:not(.eyebrow){color:rgba(255,255,255,.9)}
+.hc-c.hi p{color:rgba(255,255,255,.95)}
+.ph{color:rgba(14,48,80,.86)}
+.ua-c.noimg{background:radial-gradient(70% 80% at 80% 10%,rgba(32,144,152,.3),transparent 70%),linear-gradient(160deg,#CFE3EA,#9FC3D1)}
+.ua-c.noimg::after{background:linear-gradient(180deg,rgba(14,34,53,0) 30%,rgba(14,42,68,.82) 100%)}
+.ua-c::after{background:linear-gradient(180deg,rgba(14,34,53,0) 36%,rgba(14,34,53,.8) 100%)}
+.ua-c b{text-shadow:0 1px 10px rgba(14,34,53,.35)}
+.bl-g article:nth-child(3) .bl-c{background:#1A7F87}
+.oc-c i{color:color-mix(in srgb,var(--oc) 38%,#0E2235)}
+.st-note,.gn-d,.ua-tb,.hp-3d,.ex-cap{font-size:11.5px}
+.eyebrow{font-size:11.5px}
+/* one shadow scale everywhere */
+.hc-c{box-shadow:var(--sh-1)}.hc-c:hover{box-shadow:var(--sh-2)}.hc-c.hi{box-shadow:var(--sh-2)}
+.ua-c{box-shadow:var(--sh-1);transition:box-shadow .4s,transform .4s cubic-bezier(.2,.7,.2,1)}.ua-c:hover{box-shadow:var(--sh-2);transform:translateY(-3px)}
+.hp-f,.lb-a{box-shadow:var(--sh-2)}
+.band.dark2 .lb-a{box-shadow:0 24px 60px rgba(4,20,36,.4)}
+.bl-g article,.ev-up,.ev-past{box-shadow:var(--sh-1)}.bl-g article:hover{box-shadow:var(--sh-2)}
+.pt-l{box-shadow:var(--sh-1)}
+.oc-c{box-shadow:var(--sh-1)}
+.home .stage{box-shadow:var(--sh-3)}
+.fq-l details[open]{background:linear-gradient(180deg,rgba(227,242,244,.5),transparent)}
+/* spacing rhythm: every block breathes by the same step */
+.hs,.cell-sec,.pt{padding-top:var(--sp)}
+.band,.cell-sec{padding-bottom:var(--sp)}
+.hc-sec{min-height:0;padding-top:calc(var(--sp) + 24px);padding-bottom:var(--sp)}
+.ua{padding-bottom:var(--sp)}
+.kw{margin-top:0}
+.gn{padding-bottom:calc(var(--sp) - 40px)}
+.pt{padding-top:calc(var(--sp) - 40px);padding-bottom:var(--sp);border-top:1px solid rgba(16,22,46,.07)}
+.hs-h{margin-bottom:clamp(32px,4vw,48px)}
+.cell-sec .hs-h{margin-bottom:36px}
+/* partner logos: dark-background logos sit in their own dark tile */
+.pt-l.dk{background:#1E2A38;border-color:#1E2A38}
+.pt-l.dk img{filter:grayscale(1) brightness(1.5);opacity:.9}
+/* replays are quicker than the first entrance */
+[data-rv].seen{transition-duration:.7s,.8s,.6s;transition-delay:calc(var(--i,0)*60ms)}
+.seen .wd>span,.seen.in .wd>span{transition-duration:.75s;transition-delay:calc(.05s + var(--w,0)*35ms)}
+.band::before{transition:clip-path 1.3s cubic-bezier(.16,1,.3,1),opacity .9s ease}
+/* scroll progress */
+.prog{position:fixed;left:0;top:0;z-index:150;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#104068,#17707A 55%,#209098);pointer-events:none}
+[dir=rtl] .prog{transform-origin:100% 50%}
+html.stage-full .prog{visibility:hidden}
+/* cell: hint as a quiet pill at the top, leader lines from cards to markers, tour */
+.anno.hint i,.anno.hint s{display:none}
+.anno.hint span{background:rgba(255,255,255,.86);border:1px solid rgba(16,22,46,.08);padding:6px 12px;border-radius:999px;box-shadow:var(--sh-1)}
+.ll{position:absolute;inset:0;z-index:4;width:100%;height:100%;pointer-events:none;overflow:visible;transition:opacity .5s}
+.ll path{fill:none;stroke-width:1;opacity:.5;stroke-dasharray:2 4;stroke-linecap:round;transition:opacity .6s,stroke-width .6s}
+.ll path.on{opacity:1;stroke-width:1.6;stroke-dasharray:none}
+.mk{width:24px;height:24px;font-size:10px;box-shadow:0 0 0 2px var(--oc),0 4px 12px rgba(16,34,53,.25)}
+.b-tour{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px 0 12px;border-radius:999px;border:1px solid rgba(16,64,104,.28);background:rgba(255,255,255,.8);color:var(--cobalt);font:500 14px var(--f-b);cursor:pointer;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:background .25s,color .25s,border-color .25s}
+.b-tour:hover,.b-tour.on{background:var(--cobalt);color:#fff;border-color:var(--cobalt)}
+.b-tour svg{width:18px;height:18px;fill:currentColor}
+.b-tour .i-stop,.b-tour.on .i-play{display:none}.b-tour.on .i-stop{display:block}
+.tour-bar{position:absolute;left:50%;bottom:86px;z-index:6;display:flex;gap:6px;transform:translateX(-50%);opacity:0;transition:opacity .4s;pointer-events:none}
+.tour-bar.on{opacity:1}
+.tour-bar i{width:26px;height:3px;border-radius:2px;background:rgba(16,64,104,.18);overflow:hidden}
+.tour-bar i::after{content:"";display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--cobalt)}
+@media (max-width:760px){.b-tour{display:none}}
+/* footer */
+.site-foot{display:block;padding:clamp(28px,4vw,44px) clamp(20px,3.4vw,44px) 20px;background:#0E2235;color:rgba(255,255,255,.78);border-radius:24px;font-size:14px}
+.sf-top{display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:28px 40px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.14)}
+.sf-brand .logo{display:block;height:26px;width:150px;filter:brightness(0) invert(1);opacity:.95}
+.sf-brand p{margin:14px 0 0;max-width:280px;line-height:1.55;color:rgba(255,255,255,.78)}
+.sf-col h4{margin:0 0 12px;font:500 11.5px var(--f-m);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+html:lang(ar) .sf-col h4{text-transform:none;letter-spacing:0}
+.sf-col a,.sf-col button{display:block;padding:5px 0;color:rgba(255,255,255,.9);text-decoration:none;background:none;border:0;font:inherit;cursor:pointer;text-align:start}
+.sf-col a:hover,.sf-col button:hover{color:#8FDCE0}
+.sf-soc{display:flex;gap:10px}
+.sf-soc a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.28);color:#fff;padding:0;transition:background .25s,color .25s,border-color .25s,transform .25s}
+.sf-soc a:hover{background:#fff;color:#0E2235;border-color:#fff;transform:translateY(-2px)}
+.sf-soc svg{width:18px;height:18px;fill:currentColor}
+.sf-bot{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-top:18px;font-size:12.5px;color:rgba(255,255,255,.68)}
+@media (max-width:900px){.sf-top{grid-template-columns:1fr 1fr}.sf-brand{grid-column:1/-1}}
+@media (max-width:600px){.sf-top{gap:24px 18px}}
+[dir=rtl] .b-tour .i-play{transform:scaleX(-1)}
 </style>
 <style>body{margin:0}</style></head><body>
 
@@ -928,6 +1009,7 @@ html.stage-full .totop,html.stage-full .draft-chip,html.stage-full .oc{visibilit
         <div class="btns">
           <button class="b-pri" type="button" data-gate data-magnet><span data-t="cta1"></span><span class="o"></span></button>
           <button class="b-link" type="button" data-cat data-magnet data-t="cta2"></button>
+          <button class="b-tour" type="button" id="tourBtn"><svg class="i-play" viewBox="0 0 18 18" aria-hidden="true"><path d="M6 3.800v10.400L14.500 9z"/></svg><svg class="i-stop" viewBox="0 0 18 18" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="1.500"/></svg><span id="tourLbl"></span></button>
         </div>
       </div>
       <div class="stats">
@@ -1227,9 +1309,20 @@ html.stage-full .totop,html.stage-full .draft-chip,html.stage-full .oc{visibilit
   </div>
 
   <footer class="site-foot" id="site-foot">
-    <div class="sf-l"><span class="logo" role="img" aria-label="Intrafarma"></span><span data-t="ft_rights"></span></div>
-    <nav class="sf-n" aria-label="Yasal"><a href="#sss" data-t="ft_sss"></a><a href="#" data-t="ft_kvkk"></a><a href="#" data-t="ft_cookie"></a><a href="#" data-t="ft_ae"></a></nav>
+    <div class="sf-top">
+      <div class="sf-brand"><span class="logo" role="img" aria-label="Intrafarma"></span><p data-t="ft_tag"></p></div>
+      <nav class="sf-col" aria-labelledby="sfM"><h4 id="sfM" data-t="ft_menu"></h4><a href="hakkimizda.html" data-t="nav1"></a><a href="#uzmanlik" data-t="nav2"></a><a href="#urunler" data-t="nav3"></a><a href="#bilim" data-t="nav4"></a><a href="#guncel" data-t="nav6"></a></nav>
+      <nav class="sf-col" aria-labelledby="sfL"><h4 id="sfL" data-t="ft_legal"></h4><a href="#sss" data-t="ft_sss"></a><a href="#" data-t="ft_kvkk"></a><a href="#" data-t="ft_cookie"></a><a href="#" data-t="ft_ae"></a></nav>
+      <div class="sf-col"><h4 data-t="ft_follow"></h4><div class="sf-soc">
+        <a href="https://www.instagram.com/intrafarma.official/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21 8.2c-.1-1.4-.4-2.700-1.400-3.700S17.300 3.100 15.800 3C14.400 2.900 9.600 2.900 8.200 3 6.700 3.100 5.400 3.400 4.400 4.400S3.100 6.700 3 8.200c-.1 1.400-.1 6.200 0 7.600.1 1.500.4 2.800 1.400 3.800s2.300 1.300 3.800 1.400c1.400.1 6.200.1 7.600 0 1.500-.1 2.800-.4 3.800-1.400s1.300-2.300 1.400-3.800c.1-1.400.1-6.200 0-7.600zm-2 9.100a3 3 0 0 1-1.700 1.700c-1.200.5-4 .4-5.300.4s-4.100.1-5.300-.4A3 3 0 0 1 5 17.300c-.5-1.200-.4-4-.4-5.300s-.1-4.100.4-5.300A3 3 0 0 1 6.700 5c1.200-.5 4-.4 5.300-.4s4.100-.1 5.300.4A3 3 0 0 1 19 6.700c.5 1.200.4 4 .4 5.300s.1 4.100-.4 5.300z"/></svg></a>
+        <a href="https://www.facebook.com/intrafarma.com.tr/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.500 21v-7.500h2.500l.4-3h-2.900V8.600c0-.9.200-1.500 1.500-1.500h1.500V4.400c-.3 0-1.200-.1-2.200-.1-2.200 0-3.800 1.400-3.800 3.900v2.300H8v3h2.500V21z"/></svg></a>
+        <a href="https://www.linkedin.com/company/intrafarma-ila-/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.900 8.700H4V20h2.900zM5.500 4a1.700 1.700 0 1 0 0 3.400A1.700 1.700 0 0 0 5.500 4zM20 13.500c0-3.300-1.800-5-4.200-5-1.700 0-2.500.9-3 1.600V8.700H10V20h2.900v-6.100c0-1.500.5-2.700 2-2.700s2.200 1.100 2.200 2.700V20H20z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCh5m38jB7y87zfRq7AktcEA" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.600 7.800a2.500 2.500 0 0 0-1.800-1.800C18.200 5.600 12 5.600 12 5.600s-6.200 0-7.800.4A2.500 2.500 0 0 0 2.400 7.800C2 9.400 2 12 2 12s0 2.600.4 4.200a2.500 2.500 0 0 0 1.800 1.800c1.600.4 7.800.4 7.800.4s6.200 0 7.800-.4a2.500 2.500 0 0 0 1.800-1.800c.4-1.600.4-4.200.4-4.200s0-2.600-.4-4.200zM10 15V9l5.200 3z"/></svg></a>
+      </div></div>
+    </div>
+    <div class="sf-bot"><span data-t="ft_rights"></span><span>intrafarma.com.tr</span></div>
   </footer>
+  <div class="prog" id="prog" aria-hidden="true"></div>
   <a class="totop" id="totop" href="#top" data-tl="totop"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 15V3M3.5 8.5 9 3l5.5 5.5"/></svg></a>
 
   <section class="sec">
@@ -1354,6 +1447,7 @@ for(const [l,o] of Object.entries({"tr": {"hc_ey": "/ Intrafarma", "hc_h": "Nas�
 for(const [l,o] of Object.entries({"tr": {"ox_nuc": "Genetik bilgiyi taşır; hücrenin onarım ve yenilenme programını yönetir.", "ox_mito": "Hücrenin enerji santrali; doku onarımının ihtiyaç duyduğu enerjiyi üretir.", "ox_er": "Protein ve lipit üretim hattı; çekirdeğin çevresini sarar.", "ox_golgi": "Proteinleri paketler, eksozom gibi veziküllerle hücre dışına gönderir.", "ex_cap": "Eksozomlar · hücreler arası mesaj"}, "en": {"ox_nuc": "Holds the genetic information and directs the cell's repair and renewal programme.", "ox_mito": "The cell's power plant, producing the energy tissue repair depends on.", "ox_er": "The production line for proteins and lipids, wrapped around the nucleus.", "ox_golgi": "Packages proteins and ships them out of the cell in vesicles such as exosomes.", "ex_cap": "Exosomes · messages between cells"}, "ar": {"ox_nuc": "تحمل المعلومات الوراثية وتدير برنامج الإصلاح والتجدد في الخلية.", "ox_mito": "محطة طاقة الخلية، تنتج الطاقة التي يحتاجها إصلاح الأنسجة.", "ox_er": "خط إنتاج البروتينات والدهون، يلتف حول النواة.", "ox_golgi": "يغلّف البروتينات ويرسلها خارج الخلية في حويصلات مثل الإكسوسومات.", "ex_cap": "الإكسوسومات · رسائل بين الخلايا"}, "it": {"ox_nuc": "Custodisce l'informazione genetica e dirige il programma di riparazione e rinnovamento della cellula.", "ox_mito": "La centrale energetica della cellula, che produce l'energia necessaria alla riparazione dei tessuti.", "ox_er": "La linea di produzione di proteine e lipidi, avvolta attorno al nucleo.", "ox_golgi": "Confeziona le proteine e le invia fuori dalla cellula in vescicole come gli esosomi.", "ex_cap": "Esosomi · messaggi tra cellule"}, "ru": {"ox_nuc": "Хранит генетическую информацию и управляет программой восстановления и обновления клетки.", "ox_mito": "Энергетическая станция клетки: вырабатывает энергию, необходимую для восстановления тканей.", "ox_er": "Конвейер синтеза белков и липидов, окружающий ядро.", "ox_golgi": "Упаковывает белки и отправляет их из клетки в пузырьках, например в экзосомах.", "ex_cap": "Экзосомы · сообщения между клетками"}, "ro": {"ox_nuc": "Păstrează informația genetică și coordonează programul de reparare și reînnoire al celulei.", "ox_mito": "Centrala energetică a celulei, care produce energia necesară reparării țesuturilor.", "ox_er": "Linia de producție a proteinelor și lipidelor, înfășurată în jurul nucleului.", "ox_golgi": "Împachetează proteinele și le trimite în afara celulei în vezicule precum exozomii.", "ex_cap": "Exozomi · mesaje între celule"}}))Object.assign(T[l],o);
 for(const [l,o] of Object.entries({"tr": {"o_ecm": "Hücre dışı matris", "o_gf": "Büyüme faktörleri", "ox_nuc": "Hücrenin yenilenme programını taşır; mezenkimal kök hücre tedavilerinin çıkış noktası.", "ox_golgi": "Proteinleri paketler; eksozomlar hücreden çıkıp komşu hücrelere mesaj taşır.", "ox_ecm": "Hücreyi saran kollajen ağı; dokunun iskeletini ve esnekliğini sağlar.", "ox_mito": "Hücrenin enerji santrali; metabolizmanın ve onarımın enerjisini üretir.", "ox_er": "Protein ve kollajen üretim hattı; kıkırdak hücreleri matrisi burada sentezler.", "ox_gf": "Zardaki reseptörler büyüme faktörlerini algılar; trombositten zengin plazma bu sinyalleri taşır.", "ot_nuc": "Hücresel tedaviler", "ot_golgi": "Eksozom", "ot_ecm": "Ortobiyolojikler", "ot_mito": "Biyoaktif beslenme", "ot_er": "Kondroblast", "ot_gf": "PRP"}, "en": {"o_ecm": "Extracellular matrix", "o_gf": "Growth factors", "ox_nuc": "Carries the cell's renewal programme; the starting point of mesenchymal stem cell therapies.", "ox_golgi": "Packages proteins; exosomes leave the cell and carry messages to neighbouring cells.", "ox_ecm": "The collagen network around the cell, giving tissue its structure and elasticity.", "ox_mito": "The cell's power plant, fuelling metabolism and repair.", "ox_er": "The production line for proteins and collagen, where cartilage cells build their matrix.", "ox_gf": "Membrane receptors sense growth factors; platelet-rich plasma carries these signals.", "ot_nuc": "Cell therapies", "ot_golgi": "Exosome", "ot_ecm": "Orthobiologics", "ot_mito": "Bioactive nutrition", "ot_er": "Chondroblast", "ot_gf": "PRP"}, "ar": {"o_ecm": "المصفوفة خارج الخلوية", "o_gf": "عوامل النمو", "ox_nuc": "تحمل برنامج تجدد الخلية؛ نقطة انطلاق علاجات الخلايا الجذعية الوسيطة.", "ox_golgi": "يغلّف البروتينات؛ تخرج الإكسوسومات من الخلية حاملةً الرسائل إلى الخلايا المجاورة.", "ox_ecm": "شبكة الكولاجين المحيطة بالخلية، تمنح النسيج بنيته ومرونته.", "ox_mito": "محطة طاقة الخلية، تغذي الاستقلاب والإصلاح.", "ox_er": "خط إنتاج البروتينات والكولاجين، حيث تبني خلايا الغضروف مصفوفتها.", "ox_gf": "تستشعر مستقبلات الغشاء عوامل النمو؛ وتحمل البلازما الغنية بالصفائح هذه الإشارات.", "ot_nuc": "العلاجات الخلوية", "ot_golgi": "الإكسوسوم", "ot_ecm": "المنتجات البيولوجية العظمية", "ot_mito": "التغذية النشطة حيويًا", "ot_er": "الخلايا الغضروفية", "ot_gf": "PRP"}, "it": {"o_ecm": "Matrice extracellulare", "o_gf": "Fattori di crescita", "ox_nuc": "Custodisce il programma di rinnovamento della cellula; il punto di partenza delle terapie con cellule staminali mesenchimali.", "ox_golgi": "Confeziona le proteine; gli esosomi lasciano la cellula e portano messaggi alle cellule vicine.", "ox_ecm": "La rete di collagene attorno alla cellula, che dà al tessuto struttura ed elasticità.", "ox_mito": "La centrale energetica della cellula, che alimenta metabolismo e riparazione.", "ox_er": "La linea di produzione di proteine e collagene, dove le cellule della cartilagine costruiscono la loro matrice.", "ox_gf": "I recettori di membrana percepiscono i fattori di crescita; il plasma ricco di piastrine trasporta questi segnali.", "ot_nuc": "Terapie cellulari", "ot_golgi": "Esosoma", "ot_ecm": "Ortobiologici", "ot_mito": "Nutrizione bioattiva", "ot_er": "Condroblasto", "ot_gf": "PRP"}, "ru": {"o_ecm": "Внеклеточный матрикс", "o_gf": "Факторы роста", "ox_nuc": "Хранит программу обновления клетки; отправная точка терапии мезенхимальными стволовыми клетками.", "ox_golgi": "Упаковывает белки; экзосомы покидают клетку и передают сигналы соседним клеткам.", "ox_ecm": "Коллагеновая сеть вокруг клетки, придающая ткани структуру и упругость.", "ox_mito": "Энергетическая станция клетки, питающая обмен веществ и восстановление.", "ox_er": "Конвейер синтеза белков и коллагена, где клетки хряща создают свой матрикс.", "ox_gf": "Рецепторы мембраны распознают факторы роста; богатая тромбоцитами плазма несёт эти сигналы.", "ot_nuc": "Клеточная терапия", "ot_golgi": "Экзосомы", "ot_ecm": "Ортобиологические продукты", "ot_mito": "Биоактивное питание", "ot_er": "Хондробласты", "ot_gf": "PRP"}, "ro": {"o_ecm": "Matricea extracelulară", "o_gf": "Factori de creștere", "ox_nuc": "Păstrează programul de reînnoire al celulei; punctul de plecare al terapiilor cu celule stem mezenchimale.", "ox_golgi": "Împachetează proteinele; exozomii părăsesc celula și duc mesaje celulelor vecine.", "ox_ecm": "Rețeaua de colagen din jurul celulei, care dă țesutului structură și elasticitate.", "ox_mito": "Centrala energetică a celulei, care alimentează metabolismul și repararea.", "ox_er": "Linia de producție a proteinelor și colagenului, unde celulele cartilajului își construiesc matricea.", "ox_gf": "Receptorii membranei detectează factorii de creștere; plasma bogată în trombocite transportă aceste semnale.", "ot_nuc": "Terapii celulare", "ot_golgi": "Exozomi", "ot_ecm": "Ortobiologice", "ot_mito": "Nutriție bioactivă", "ot_er": "Condroblaste", "ot_gf": "PRP"}}))Object.assign(T[l],o);
 for(const [l,o] of Object.entries({"tr": {"nav6": "Güncel", "gn_ey": "/ Güncel", "gn_h": "Son etkinlikler ve yazılar", "gn_all": "Tümünü gör", "gn_ev": "Etkinlik", "ft_sss": "Sıkça sorulan sorular", "pg_home": "Ana sayfa", "pgb_ey": "/ Bilim", "pgb_h": "Bilim ve danışma kurulu", "pgb_p": "Konuşmacı ve danışman hekimlerimiz, sık sorulan sorular ve endikasyonlar.", "pgb_cell": "Hücreyi keşfet", "pgg_ey": "/ Güncel", "pgg_h": "Etkinlikler ve yazılar", "pgg_p": "Kongreler, fuarlar ve bölgesel toplantılar; bilgilendirme yazıları, hekim röportajları ve makale özetleri."}, "en": {"nav6": "News", "gn_ey": "/ News", "gn_h": "Latest events and articles", "gn_all": "See all", "gn_ev": "Event", "ft_sss": "Frequently asked questions", "pg_home": "Home", "pgb_ey": "/ Science", "pgb_h": "Science and advisory board", "pgb_p": "Our speaker and advisory physicians, frequently asked questions and indications.", "pgb_cell": "Explore the cell", "pgg_ey": "/ News", "pgg_h": "Events and articles", "pgg_p": "Congresses, trade fairs and regional meetings; insights, physician interviews and article summaries."}, "ar": {"nav6": "المستجدات", "gn_ey": "/ المستجدات", "gn_h": "أحدث الفعاليات والمقالات", "gn_all": "عرض الكل", "gn_ev": "فعالية", "ft_sss": "الأسئلة الشائعة", "pg_home": "الرئيسية", "pgb_ey": "/ العلوم", "pgb_h": "العلوم والمجلس الاستشاري", "pgb_p": "أطباؤنا المتحدثون والمستشارون، والأسئلة الشائعة ودواعي الاستعمال.", "pgb_cell": "استكشف الخلية", "pgg_ey": "/ المستجدات", "pgg_h": "الفعاليات والمقالات", "pgg_p": "مؤتمرات ومعارض واجتماعات إقليمية؛ مقالات توعوية ومقابلات مع أطباء وملخصات أبحاث."}, "it": {"nav6": "Novità", "gn_ey": "/ Novità", "gn_h": "Ultimi eventi e articoli", "gn_all": "Vedi tutto", "gn_ev": "Evento", "ft_sss": "Domande frequenti", "pg_home": "Home", "pgb_ey": "/ Scienza", "pgb_h": "Scienza e comitato scientifico", "pgb_p": "I nostri medici relatori e consulenti, domande frequenti e indicazioni.", "pgb_cell": "Esplora la cellula", "pgg_ey": "/ Novità", "pgg_h": "Eventi e articoli", "pgg_p": "Congressi, fiere e incontri regionali; approfondimenti, interviste a medici e sintesi di articoli."}, "ru": {"nav6": "Новости", "gn_ey": "/ Новости", "gn_h": "Последние мероприятия и статьи", "gn_all": "Смотреть все", "gn_ev": "Мероприятие", "ft_sss": "Частые вопросы", "pg_home": "Главная", "pgb_ey": "/ Наука", "pgb_h": "Наука и научный совет", "pgb_p": "Наши врачи-спикеры и консультанты, частые вопросы и показания.", "pgb_cell": "Исследовать клетку", "pgg_ey": "/ Новости", "pgg_h": "Мероприятия и статьи", "pgg_p": "Конгрессы, выставки и региональные встречи; полезные статьи, интервью с врачами и обзоры публикаций."}, "ro": {"nav6": "Noutăți", "gn_ey": "/ Noutăți", "gn_h": "Cele mai recente evenimente și articole", "gn_all": "Vezi tot", "gn_ev": "Eveniment", "ft_sss": "Întrebări frecvente", "pg_home": "Acasă", "pgb_ey": "/ Știință", "pgb_h": "Știință și consiliul științific", "pgb_p": "Medicii noștri speakeri și consultanți, întrebări frecvente și indicații.", "pgb_cell": "Explorează celula", "pgg_ey": "/ Noutăți", "pgg_h": "Evenimente și articole", "pgg_p": "Congrese, târguri și întâlniri regionale; articole informative, interviuri cu medici și rezumate de articole."}}))Object.assign(T[l],o);
+for(const [l,o] of Object.entries({"tr": {"c_tour": "Hücre turu", "c_tour_stop": "Turu durdur", "ft_tag": "Rejeneratif tıp ve hücresel tedavi çözümleri.", "ft_menu": "Site", "ft_legal": "Yasal", "ft_follow": "Bizi izleyin", "prog": "Sayfa ilerlemesi"}, "en": {"c_tour": "Cell tour", "c_tour_stop": "Stop tour", "ft_tag": "Regenerative medicine and cell therapy solutions.", "ft_menu": "Site", "ft_legal": "Legal", "ft_follow": "Follow us", "prog": "Page progress"}, "ar": {"c_tour": "جولة في الخلية", "c_tour_stop": "إيقاف الجولة", "ft_tag": "حلول الطب التجديدي والعلاج الخلوي.", "ft_menu": "الموقع", "ft_legal": "قانوني", "ft_follow": "تابعونا", "prog": "تقدّم الصفحة"}, "it": {"c_tour": "Tour della cellula", "c_tour_stop": "Ferma il tour", "ft_tag": "Soluzioni di medicina rigenerativa e terapia cellulare.", "ft_menu": "Sito", "ft_legal": "Note legali", "ft_follow": "Seguici", "prog": "Avanzamento pagina"}, "ru": {"c_tour": "Тур по клетке", "c_tour_stop": "Остановить тур", "ft_tag": "Решения регенеративной медицины и клеточной терапии.", "ft_menu": "Сайт", "ft_legal": "Правовая информация", "ft_follow": "Мы в соцсетях", "prog": "Прогресс страницы"}, "ro": {"c_tour": "Turul celulei", "c_tour_stop": "Oprește turul", "ft_tag": "Soluții de medicină regenerativă și terapie celulară.", "ft_menu": "Site", "ft_legal": "Juridic", "ft_follow": "Urmăriți-ne", "prog": "Progresul paginii"}}))Object.assign(T[l],o);
 const IF=window.IF={mode:'public',p:0,ptr:{x:-999,y:-999,in:false,touch:false},W:0,H:0,near:0,cell:null,revealC:{x:0,y:0},revealR:0,ripples:[],reduce,cmpX:0,lang:(()=>{const q=new URLSearchParams(location.search).get('lang');if(q&&T[q])return q;try{const s=localStorage.getItem('if_lang');if(s&&T[s])return s;}catch(e){}return 'tr';})(),lens:null};
 IF.tr=k=>T[IF.lang][k]??T.en[k]??k;
 let tStart=0,magnet=null,zoomFrom=null,curX=-100,curY=-100,lensL=56,lensZ=1.7,lensPub=null,lensPro=null;
@@ -1673,6 +1767,15 @@ function dragTo(e){const r=stage.getBoundingClientRect();IF.cmpX=clamp(e.clientX
 $('#knob').addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){IF.cmpX=clamp(IF.cmpX+(e.key==='ArrowLeft'?-30:30),40,IF.W-40);applyCompare();e.preventDefault();}});
 
 /* loop */
+const TOURK=['o_nuc','o_golgi','o_ecm','o_mito','o_er','o_gf'],tourBtn=$('#tourBtn'),tourLbl=$('#tourLbl');
+const tourBar=document.createElement('div');tourBar.className='tour-bar';tourBar.setAttribute('aria-hidden','true');tourBar.innerHTML='<i></i>'.repeat(6);stage.appendChild(tourBar);
+function tourLabel(){tourLbl.textContent=IF.tr(IF.tour?'c_tour_stop':'c_tour');}
+function stopTour(){if(!IF.tour)return;IF.tour=null;IF.ptr.in=false;tourBtn.classList.remove('on');tourBar.classList.remove('on');tourLabel();}
+function startTour(){if(IF.mode!=='public')return;IF.tour={t0:performance.now(),mx:0};tourBtn.classList.add('on');tourBar.classList.add('on');tourLabel();}
+tourBtn.addEventListener('click',e=>{e.stopPropagation();IF.tour?stopTour():startTour();});
+stage.addEventListener('pointermove',e=>{if(!IF.tour||!e.isTrusted)return;IF.tour.mx+=Math.abs(e.movementX)+Math.abs(e.movementY);if(IF.tour.mx>140)stopTour();});
+stage.addEventListener('pointerdown',e=>{if(IF.tour&&!e.target.closest('#tourBtn'))stopTour();});
+new MutationObserver(tourLabel).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});tourLabel();
 function loop(t){
  if(IF.mode==='transition'){
   const p=clamp((t-tStart)/DUR);IF.p=p;
@@ -1685,13 +1788,19 @@ function loop(t){
  }
  syncLens();
  IF.overlay=!gate.hidden||!zoom.hidden||!cat.hidden;IF.zoomOpen=!zoom.hidden;IF.catOpen=!cat.hidden;
+ if(IF.tour){const T=IF.tour,O=IF.opos,el=Math.max(0,(t-T.t0)/1000),STEP=3.6,k=Math.floor(el/STEP);
+  if(k>=TOURK.length||IF.mode!=='public'||IF.overlay||!O)stopTour();
+  else{const a=O[TOURK[Math.max(0,k-1)]],b=O[TOURK[k]],u=clamp((el-k*STEP)/1.1),e=u*u*(3-2*u),w=Math.sin(el*1.6)*5;
+   const fx=k===0?IF.W/2:a.x,fy=k===0?IF.H*.2:a.y;
+   IF.ptr.x=fx+(b.x-fx)*e+w;IF.ptr.y=fy+(b.y-fy)*e+Math.cos(el*1.3)*4;IF.ptr.in=true;IF.ptr.touch=false;T.key=u>.55?TOURK[k]:(k>0&&u<.25?TOURK[k-1]:null);
+   tourBar.querySelectorAll('i').forEach((d,i)=>d.style.setProperty('--p',i<k?1:i===k?clamp((el-k*STEP)/STEP):0));}}
  const P=IF.ptr,show=P.in&&!P.touch;
  lens.style.opacity=show?1:0;
  if(show){
   const overlay=!gate.hidden||!zoom.hidden||!cat.hidden||IF.mode==='transition'||dragging;
   let tx=P.x,ty=P.y,L,z;
   if(overlay){L=18;z=1;}
-  else if(magnet){tx=P.x+(magnet.x-P.x)*.3;ty=P.y+(magnet.y-P.y)*.3;L=40;z=1.35;}
+  else if(magnet&&!IF.tour){tx=P.x+(magnet.x-P.x)*.3;ty=P.y+(magnet.y-P.y)*.3;L=40;z=1.35;}
   else{L=56+IF.near*104;z=1.7+IF.near*.8;}
   lens.classList.toggle('mini',overlay);
   if(curX<-50){curX=tx;curY=ty;}
@@ -1761,7 +1870,7 @@ sel2.value=document.documentElement.lang||'tr';
 /* reveal on scroll */
 const ioIn=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
 /* once an element has left the screen completely it resets, so coming back to a section plays it again */
-const ioOut=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting&&!RM)e.target.classList.remove('in');}),{threshold:0});
+const ioOut=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting&&!RM&&e.target.classList.contains('in')){e.target.classList.remove('in');e.target.classList.add('seen');}}),{threshold:0});
 const io={observe(el){ioIn.observe(el);ioOut.observe(el);}};
 $$('[data-rv]').forEach(el=>io.observe(el));
 
@@ -1822,6 +1931,10 @@ addEventListener('hashchange',()=>route(false));route(true);
 /* hovering or focusing a cell card lights up its marker on the cell */
 $$('.oc-c').forEach(c=>{const on=v=>{const m=document.querySelector('.mk[data-o="'+c.dataset.o+'"]');if(m)m.classList.toggle('hl',v);};
  c.addEventListener('mouseenter',()=>on(true));c.addEventListener('mouseleave',()=>on(false));c.addEventListener('focus',()=>on(true));c.addEventListener('blur',()=>on(false));});
+
+/* scroll progress */
+{const pg=$('#prog');let q=false;const up=()=>{q=false;const m=document.documentElement.scrollHeight-innerHeight;pg.style.transform='scaleX('+(m>0?Math.min(1,scrollY/m):0).toFixed(4)+')';};
+ addEventListener('scroll',()=>{if(!q){q=true;requestAnimationFrame(up);}},{passive:true});up();}
 
 /* back to top */
 const tt=$('#totop');addEventListener('scroll',()=>tt.classList.toggle('show',scrollY>560),{passive:true});
@@ -2074,6 +2187,10 @@ let ecmA=0,OPOS=null;
 const OCW=[...document.querySelectorAll('.oc')],OCC=[...document.querySelectorAll('.oc-c')];
 const MKK=['o_nuc','o_golgi','o_ecm','o_mito','o_er','o_gf'];
 const MK=MKK.map((k,i)=>{const d=document.createElement('div');d.className='mk';d.dataset.o=k;d.setAttribute('aria-hidden','true');d.textContent='0'+(i+1);stage.appendChild(d);return d;});
+const LL=document.createElementNS('http://www.w3.org/2000/svg','svg');LL.setAttribute('class','ll');LL.setAttribute('aria-hidden','true');stage.appendChild(LL);
+const LLC={o_nuc:'#6A4A9E',o_golgi:'#C7962A',o_ecm:'#B98452',o_mito:'#D2553A',o_er:'#A96FBE',o_gf:'#2FAE96'};
+const LLP=MKK.map(k=>{const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('stroke',LLC[k]);p.dataset.o=k;LL.appendChild(p);return p;});
+let llR=null,llN=0;
 const ANCH={hint:new THREE.Vector3(-.62,-.86,0),ecm:new THREE.Vector3(-.92,-.88,-.35),gf:new THREE.Vector3(.86,.66,.25)};
 let W=1,H=1,vh=1,vw=1;const L={pub:{},pro:{}};
 function place(o,fx,fy,rf){const n=W<760;if(document.documentElement.dir==='rtl')fx=1-fx;o.fx=fx;o.fy=fy;o.rf=Math.min(rf,(n?.40:.34)*vw/vh);o.x=(fx-.5)*vw;o.y=(.5-fy)*vh;o.R=o.rf*vh;}
@@ -2300,12 +2417,16 @@ function frame(){
   pos.c_hint=wp(ANCH.hint,A.g);pos.o_nuc=wp(OLOC.o_nuc,A.g);
   {let best=null;A.mpos.forEach(mp=>{const q=wp(mp,A.org);if(!best||q.x-q.y*.4>best.x-best.y*.4)best=q;});pos.o_mito=best;}
   pos.o_er=wp(A.anch.er,A.org);pos.o_golgi=wp(A.anch.golgi,A.org);pos.o_ecm=wp(ANCH.ecm,A.g);pos.o_gf=wp(ANCH.gf,A.g);
-  pos._nc=wp(A.nuc.position,A.g);pos._nr=.36*aR/vh*H;OPOS=pos;
+  pos._nc=wp(A.nuc.position,A.g);pos._nr=.36*aR/vh*H;OPOS=pos;IF.opos=pos;
   OLAB.forEach(el=>{const p=pos.c_hint;const txt=IF.tr('c_hint');const sp=el.lastChild;if(sp.textContent!==txt)sp.textContent=txt;
-   el.classList.add('l');el.style.opacity=(showA&&IF.mode==='public'&&IF.near<.15&&!IF.ptr.touch)?1:0;
-   el.style.transform='translate('+p.x.toFixed(1)+'px,'+(p.y-5).toFixed(1)+'px) translateX(-100%)';});
+   el.style.opacity=(showA&&IF.mode==='public'&&IF.near<.15&&!IF.ptr.touch&&!IF.tour)?1:0;
+   el.style.transform='translate('+(W/2).toFixed(1)+'px,22px) translateX('+(document.documentElement.dir==='rtl'?'50%':'-50%')+')';});
   const mkOn=showA&&IF.mode==='public'&&ecmA>.5;
-  MK.forEach(el=>{const p=pos[el.dataset.o];el.style.opacity=mkOn?1:0;el.style.transform='translate('+p.x.toFixed(1)+'px,'+p.y.toFixed(1)+'px) translate(-50%,-50%)';});}
+  MK.forEach(el=>{const p=pos[el.dataset.o];el.style.opacity=mkOn?1:0;el.style.transform='translate('+p.x.toFixed(1)+'px,'+p.y.toFixed(1)+'px) translate(-50%,-50%)';});
+  /* leader lines from each card to its marker */
+  const llOn=mkOn&&innerWidth>=1180;LL.style.opacity=llOn?1:0;
+  if(llOn){if(!(llN++%45)||!llR){const sr=stage.getBoundingClientRect();llR={};OCC.forEach(c=>{const r=c.getBoundingClientRect(),left=r.left+r.width/2<sr.left+sr.width/2;llR[c.dataset.o]={x:(left?r.right:r.left)-sr.left,y:r.top+24-sr.top,d:left?1:-1};});}
+   MKK.forEach((k,i)=>{const a=llR[k],p=pos[k];if(!a||!p)return;const mx=a.x+a.d*22;LLP[i].setAttribute('d','M'+a.x.toFixed(1)+' '+a.y.toFixed(1)+'H'+mx.toFixed(1)+'L'+p.x.toFixed(1)+' '+p.y.toFixed(1));});}}
  const isPro=IF.mode==='pro';
  [[an1,-1.12,'an1','an3'],[an2,0.98,'an2','an4']].forEach(([el,ang,a,b])=>{
   const p=toPx(ax+Math.cos(ang)*aR*1.02,ay-Math.sin(ang)*aR*1.02);
@@ -2329,7 +2450,7 @@ function frame(){
    renderer.autoClear=false;renderer.render(lensScene,cam);renderer.autoClear=true;
   }}
 
- {const on=IF.mode==='public'&&!cmp;ecmA+=((on?1:0)-ecmA)*(on?.03:.15);const vis=ecmA>.01;
+ {const on=IF.mode==='public'&&!cmp;ecmA+=((on?1:0)-ecmA)*(on?.06:.15);const vis=ecmA>.01;
   ECM.visible=vis;ecmMat.opacity=ecmA;GF.visible=vis;
   if(vis){for(let i=0;i<GFN;i++){const q=gfD[i],th=q.a+t*q.sp,sy=Math.sqrt(1-q.y*q.y),rr=q.r+.03*Math.sin(t*.8+q.a);
     dummy.position.set(Math.cos(th)*sy*rr,q.y*rr*.92,Math.sin(th)*sy*rr);dummy.scale.setScalar(q.s*ecmA);dummy.updateMatrix();GF.setMatrixAt(i,dummy.matrix);}
@@ -2339,8 +2460,10 @@ function frame(){
   let best=null;const LZ=IF.lens;
   if(LZ&&LZ.show&&!ptr.touch&&IF.mode==='public'&&OPOS&&ecmA>.5){const cr=aR/vh*H;
    if(Math.hypot(LZ.x-OPOS._nc.x,LZ.y-OPOS._nc.y)<OPOS._nr*.85)best='o_nuc';else if(Math.hypot(LZ.x-sc.x,LZ.y-sc.y)<cr*1.5){let bd=Math.max(90,LZ.L*.95);MKK.forEach(k=>{const p=OPOS[k];if(!p)return;const d=Math.hypot(p.x-LZ.x,p.y-LZ.y);if(d<bd){bd=d;best=k;}});}}
+  if(IF.tour)best=IF.tour.key||null;
   OCC.forEach(c=>{const o=c.dataset.o===best;if(c.classList.contains('on')!==o)c.classList.toggle('on',o);});
-  MK.forEach(m=>{const o=m.dataset.o===best;if(m.classList.contains('on')!==o)m.classList.toggle('on',o);});}
+  MK.forEach(m=>{const o=m.dataset.o===best;if(m.classList.contains('on')!==o)m.classList.toggle('on',o);});
+  LLP.forEach(m=>{const o=m.dataset.o===best;if(m.classList.contains('on')!==o)m.classList.toggle('on',o);});}
  if(!stage.classList.contains('gl-on'))stage.classList.add('gl-on');
 }
 requestAnimationFrame(frame);
