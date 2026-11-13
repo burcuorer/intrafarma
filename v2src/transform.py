@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""v1 prototipinden (../index.html) v2 kaynağını (app.html) üretir.
+"""v1 prototipinden (v1-index.html) v2 kaynağını (app.html) üretir.
 Her değişiklik birebir eşleşmeyle yapılır; eşleşme sayısı tutmazsa betik durur.
 Kullanım: python3 transform.py"""
 import io, os, re, sys, json, math
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, '..', 'index.html')
+SRC = os.path.join(HERE, 'v1-index.html')
 s = io.open(SRC, encoding='utf-8').read()
 LOG = []
 

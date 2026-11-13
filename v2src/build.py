@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""app.html'den /v2/ altına sayfaları ve ortak dosyaları üretir. Kullanım: python3 build.py"""
+"""app.html'den depo köküne (sabit adres) sayfaları ve ortak dosyaları üretir. Kullanım: python3 build.py"""
 import io, os, re, sys, shutil, hashlib, glob
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, '..', 'v2')
+OUT = os.path.join(HERE, '..')
 NM = '/tmp/claude-0/-home-claude/06ad3418-85a2-578d-a5ea-e5e40f6a3e32/scratchpad/i18n/fonts/node_modules'
-BASE = '../'
+BASE = ''
 s = io.open(os.path.join(HERE, 'app.html'), encoding='utf-8').read()
 
 PAGES = [  # dosya, sayfa kimliği, ilk başlık (dil seçilince JS günceller)
@@ -20,8 +20,9 @@ PAGES = [  # dosya, sayfa kimliği, ilk başlık (dil seçilince JS günceller)
 def need(c, m):
     if not c: sys.exit('DERLEME HATASI: ' + m)
 
-if os.path.isdir(OUT): shutil.rmtree(OUT)
-A = os.path.join(OUT, 'assets'); os.makedirs(os.path.join(A, 'fonts')); os.makedirs(os.path.join(A, 'vendor', 'addons', 'environments'))
+A = os.path.join(OUT, 'assets')
+if os.path.isdir(A): shutil.rmtree(A)
+os.makedirs(os.path.join(A, 'fonts')); os.makedirs(os.path.join(A, 'vendor', 'addons', 'environments'))
 def W(rel, txt):
     p = os.path.join(A, rel); io.open(p, 'w', encoding='utf-8', newline='\n').write(txt)
     return hashlib.sha1(txt.encode()).hexdigest()[:8]
@@ -75,5 +76,10 @@ for fn, pid, title in PAGES:
             '<script src="assets/app1.js?v=%s"></script>\n<script src="assets/app2.js?v=%s"></script>\n' % (h_1, h_2) +
             imap_txt + '\n' + cellmod + '\n</body></html>\n')
     io.open(os.path.join(OUT, fn), 'w', encoding='utf-8', newline='\n').write(html)
-tot = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(OUT) for f in fs)
+tot = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(A) for f in fs)
 print('v2 hazır: %d sayfa, %.1f MB, sayfa başına %.0f KB işaretleme' % (len(PAGES), tot / 1e6, len(body) / 1e3))
+
+# eski /v2/ adresi sabit adrese yönlenir
+os.makedirs(os.path.join(OUT, 'v2'), exist_ok=True)
+for fn, _, _ in PAGES:
+    io.open(os.path.join(OUT, 'v2', fn), 'w', encoding='utf-8').write('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Intrafarma</title><script>location.replace("../%s"+location.search+location.hash)</script><a href="../%s">Intrafarma</a>\n' % (fn, fn))
