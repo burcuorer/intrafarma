@@ -1337,6 +1337,9 @@ html:lang(ar) .uc-meta dt{text-transform:none;letter-spacing:0}
 .st-pt .pt-row{padding:28px 0}
 .pt-l.dk{background:rgba(30,42,56,.86);border-color:rgba(255,255,255,.12)}
 .hk-pt{position:relative}
+
+/* dar masaüstü: menü aralığı daralır, açılan dil şeridi menüye binmez */
+@media (max-width:1320px){.site-top .pub-nav{gap:20px}}
 </style>
 </head><body>
 
@@ -1760,18 +1763,22 @@ html:lang(ar) .uc-meta dt{text-transform:none;letter-spacing:0}
 </div>
 
 <p class="draft-chip" id="draftChip" role="status" hidden></p>
-<script>/* v2: sayfa adresleri. Her sayfanın kendi adresi var; bölümler arası geçiş bağlantıyla yapılır. */
+<script>/* v2: sayfa adresleri. GitHub'da .html dosyaları, WordPress'te sayfa bağlantıları (window.IF_URLS) kullanılır. */
 window.IFU=(function(){
  var page=document.documentElement.getAttribute('data-page')||'home';
  var AL=['ortopedi','spor-hekimligi','estetik','uroloji','kadin-sagligi','veteriner'];
  var AXS=['ortobiyolojikler','hucresel-tedaviler','rejeneratif-teknolojiler','biyoaktif-beslenme','ozel-cozumler'];
- var TRM={'ç':'c','ğ':'g','ı':'i','i̇':'i','ö':'o','ş':'s','ü':'u','â':'a','î':'i','û':'u'};
+ var U=window.IF_URLS||{home:'index.html',uzmanlik:'uzmanlik.html',urunler:'urunler.html',uretim:'uretim.html',bilim:'bilim.html',guncel:'guncel.html',iletisim:'iletisim.html',hakkimizda:'hakkimizda.html'};
+ var TRM={'ç':'c','ğ':'g','ı':'i','ö':'o','ş':'s','ü':'u','â':'a','î':'i','û':'u'};
  function slug(s){return String(s).toLocaleLowerCase('tr').replace(/[çğıöşüâîû]/g,function(c){return TRM[c]||c;}).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
- return {page:page,AL:AL,AXS:AXS,slug:slug,
-  home:function(){return 'index.html';},
-  alan:function(i){return 'uzmanlik.html'+(i>=0?'?alan='+AL[i]:'');},
-  ax:function(i){return 'urunler.html'+(i>=0?'?eksen='+AXS[i]:'');},
-  prod:function(p){return 'urunler.html?urun='+slug(p.n);}
+ function q(base,o){var u=base,k;for(k in o){if(o[k]!=null)u+=(u.indexOf('?')<0?'?':'&')+k+'='+encodeURIComponent(o[k]);}return u;}
+ /* bağlantı aynı sayfaya mı gidiyor (güzel bağlantı ya da ?page_id= biçimi) */
+ function same(href,key){try{var a=new URL(href,location.href),b=new URL(U[key],location.href);return a.origin===b.origin&&a.pathname===b.pathname&&(a.searchParams.get('page_id')||'')===(b.searchParams.get('page_id')||'');}catch(e){return false;}}
+ return {page:page,AL:AL,AXS:AXS,U:U,slug:slug,q:q,same:same,
+  home:function(){return U.home;},
+  alan:function(i){return i>=0?q(U.uzmanlik,{alan:AL[i]}):U.uzmanlik;},
+  ax:function(i){return i>=0?q(U.urunler,{eksen:AXS[i]}):U.urunler;},
+  prod:function(p){return q(U.urunler,{urun:slug(p.n)});}
  };
 })();
 
@@ -2427,7 +2434,7 @@ const UC={ax:-1,ca:-1,q:'',urun:-1};
 function ucRead(){const q=new URLSearchParams(location.search),PR=D2().PRODS;UC.ax=IFU.AXS.indexOf(q.get('eksen')||'');UC.ca=IFU.AL.indexOf(q.get('alan')||'');const u=q.get('urun');UC.urun=u?PR.findIndex(p=>IFU.slug(p.n)===u):-1;}
 function ucHref(o){const s=Object.assign({ax:UC.ax,ca:UC.ca,urun:-1},o||{}),q=new URLSearchParams();
  if(s.urun>=0)q.set('urun',IFU.slug(D2().PRODS[s.urun].n));else{if(s.ax>=0)q.set('eksen',IFU.AXS[s.ax]);if(s.ca>=0)q.set('alan',IFU.AL[s.ca]);}
- const t=q.toString();return 'urunler.html'+(t?'?'+t:'');}
+ const qo={};q.forEach((v,k)=>{qo[k]=v;});return IFU.q(IFU.U.urunler,qo);}
 function ucCard(p,i,L,AX){const AXC=IF.AXC||[];const open=!!p.open;
  return '<a class="uc-c" href="'+ucHref({urun:i})+'" style="--tc:'+(AXC[p.a]||'#17707A')+'"><span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
 function renderUC(){
@@ -2449,7 +2456,7 @@ function renderUC(){
   const q=UC.q.trim().toLocaleLowerCase(L);
   const list=PR.map((p,i)=>({p,i})).filter(({p})=>(UC.ax<0||p.a===UC.ax)&&(UC.ca<0||D.AXCA[p.a].includes(UC.ca))&&(!q||p.n.toLocaleLowerCase(L).includes(q)));
   $('#ucN').textContent=tr('cat_n').replace('{n}',list.length);
-  $('#ucG').innerHTML=list.length?list.map(({p,i})=>ucCard(p,i,L,AX)).join(''):'<div class="uc-empty"><p>'+esc2(tr('cat_empty'))+'</p><a class="b-sec" href="urunler.html">'+esc2(tr('all_prods'))+'</a></div>';
+  $('#ucG').innerHTML=list.length?list.map(({p,i})=>ucCard(p,i,L,AX)).join(''):'<div class="uc-empty"><p>'+esc2(tr('cat_empty'))+'</p><a class="b-sec" href="'+IFU.U.urunler+'">'+esc2(tr('all_prods'))+'</a></div>';
  }else{
   const p=PR[UC.urun],axn=AX[p.a],open=!!p.open;
   const areas=D.AXCA[p.a].map(i=>'<a href="'+IFU.alan(i)+'">'+esc2(CA[i])+'</a>').join('');
@@ -2469,8 +2476,8 @@ function renderUC(){
 function ucGo(href,push){history[push?'pushState':'replaceState']({ifuc:1},'',href);ucRead();renderUC();crumbs();titleSync();}
 if(P==='urunler'){
  ['ucEy','ucP'].forEach(id=>{const e=$('#'+id);if(e)e.removeAttribute('data-t');});
- document.addEventListener('click',e=>{const a=e.target.closest('a[href^="urunler.html"]');if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-  e.preventDefault();closeNav();ucGo(a.getAttribute('href'),true);scrollTo({top:0,behavior:'auto'});});
+ document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||!IFU.same(a.href,'urunler')||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+  e.preventDefault();closeNav();ucGo(a.href,true);scrollTo({top:0,behavior:'auto'});});
  $('#ucQ').addEventListener('input',e=>{UC.q=e.target.value;renderUC();});
  addEventListener('popstate',()=>{ucRead();renderUC();crumbs();titleSync();});
 }
@@ -2485,9 +2492,9 @@ function renderHK(){const g=$('#hkPt');if(!g||P!=='hakkimizda')return;const seen
 /* ---- sayfa yolu: her alt sayfada Ana sayfa › Bölüm › Ayrıntı ---- */
 function crumbs(){
  $$('.bc').forEach(n=>n.remove());if(!curView)return;
- const L=IF.lang||'tr',D=D2(),CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en,items=[[tr('pg_home'),'index.html']];
- if(P==='uzmanlik'){items.push([tr('nav2'),alanI>=0?'uzmanlik.html':null]);if(alanI>=0)items.push([CA[alanI],null]);}
- else if(P==='urunler'){const deep=UC.ax>=0||UC.urun>=0;items.push([tr('nav3'),deep?'urunler.html':null]);
+ const L=IF.lang||'tr',D=D2(),CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en,items=[[tr('pg_home'),IFU.U.home]];
+ if(P==='uzmanlik'){items.push([tr('nav2'),alanI>=0?IFU.U.uzmanlik:null]);if(alanI>=0)items.push([CA[alanI],null]);}
+ else if(P==='urunler'){const deep=UC.ax>=0||UC.urun>=0;items.push([tr('nav3'),deep?IFU.U.urunler:null]);
   if(UC.urun>=0){const p=D.PRODS[UC.urun];items.push([AX[p.a],ucHref({ax:p.a,ca:-1})]);items.push([p.n,null]);}else if(UC.ax>=0)items.push([AX[UC.ax],null]);}
  else items.push([tr({uretim:'nav_ur',hakkimizda:'nav1',bilim:'nav4',guncel:'nav6',iletisim:'nav5'}[P]),null]);
  const nav=document.createElement('nav');nav.className='bc';nav.setAttribute('aria-label',tr('bc'));const ol=document.createElement('ol');
@@ -2530,6 +2537,8 @@ function pgVideo(){const k=PGV[P];if(!k||!curView||!matchMedia('(min-width: 901p
  f.appendChild(v);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
 ucRead();v2route();v2refresh();pgVideo();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
+
+/* WordPress: gövdedeki .html bağlantıları sayfa adresleriyle değiştirilir (GitHub'da dokunulmaz) */
 
 labels();
 })();

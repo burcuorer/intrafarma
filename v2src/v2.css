@@ -315,3 +315,6 @@ html:lang(ar) .uc-meta dt{text-transform:none;letter-spacing:0}
 .st-pt .pt-row{padding:28px 0}
 .pt-l.dk{background:rgba(30,42,56,.86);border-color:rgba(255,255,255,.12)}
 .hk-pt{position:relative}
+
+/* dar masaüstü: menü aralığı daralır, açılan dil şeridi menüye binmez */
+@media (max-width:1320px){.site-top .pub-nav{gap:20px}}

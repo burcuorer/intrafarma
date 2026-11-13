@@ -22,7 +22,7 @@ const UC={ax:-1,ca:-1,q:'',urun:-1};
 function ucRead(){const q=new URLSearchParams(location.search),PR=D2().PRODS;UC.ax=IFU.AXS.indexOf(q.get('eksen')||'');UC.ca=IFU.AL.indexOf(q.get('alan')||'');const u=q.get('urun');UC.urun=u?PR.findIndex(p=>IFU.slug(p.n)===u):-1;}
 function ucHref(o){const s=Object.assign({ax:UC.ax,ca:UC.ca,urun:-1},o||{}),q=new URLSearchParams();
  if(s.urun>=0)q.set('urun',IFU.slug(D2().PRODS[s.urun].n));else{if(s.ax>=0)q.set('eksen',IFU.AXS[s.ax]);if(s.ca>=0)q.set('alan',IFU.AL[s.ca]);}
- const t=q.toString();return 'urunler.html'+(t?'?'+t:'');}
+ const qo={};q.forEach((v,k)=>{qo[k]=v;});return IFU.q(IFU.U.urunler,qo);}
 function ucCard(p,i,L,AX){const AXC=IF.AXC||[];const open=!!p.open;
  return '<a class="uc-c" href="'+ucHref({urun:i})+'" style="--tc:'+(AXC[p.a]||'#17707A')+'"><span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
 function renderUC(){
@@ -44,7 +44,7 @@ function renderUC(){
   const q=UC.q.trim().toLocaleLowerCase(L);
   const list=PR.map((p,i)=>({p,i})).filter(({p})=>(UC.ax<0||p.a===UC.ax)&&(UC.ca<0||D.AXCA[p.a].includes(UC.ca))&&(!q||p.n.toLocaleLowerCase(L).includes(q)));
   $('#ucN').textContent=tr('cat_n').replace('{n}',list.length);
-  $('#ucG').innerHTML=list.length?list.map(({p,i})=>ucCard(p,i,L,AX)).join(''):'<div class="uc-empty"><p>'+esc2(tr('cat_empty'))+'</p><a class="b-sec" href="urunler.html">'+esc2(tr('all_prods'))+'</a></div>';
+  $('#ucG').innerHTML=list.length?list.map(({p,i})=>ucCard(p,i,L,AX)).join(''):'<div class="uc-empty"><p>'+esc2(tr('cat_empty'))+'</p><a class="b-sec" href="'+IFU.U.urunler+'">'+esc2(tr('all_prods'))+'</a></div>';
  }else{
   const p=PR[UC.urun],axn=AX[p.a],open=!!p.open;
   const areas=D.AXCA[p.a].map(i=>'<a href="'+IFU.alan(i)+'">'+esc2(CA[i])+'</a>').join('');
@@ -64,8 +64,8 @@ function renderUC(){
 function ucGo(href,push){history[push?'pushState':'replaceState']({ifuc:1},'',href);ucRead();renderUC();crumbs();titleSync();}
 if(P==='urunler'){
  ['ucEy','ucP'].forEach(id=>{const e=$('#'+id);if(e)e.removeAttribute('data-t');});
- document.addEventListener('click',e=>{const a=e.target.closest('a[href^="urunler.html"]');if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-  e.preventDefault();closeNav();ucGo(a.getAttribute('href'),true);scrollTo({top:0,behavior:'auto'});});
+ document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||!IFU.same(a.href,'urunler')||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+  e.preventDefault();closeNav();ucGo(a.href,true);scrollTo({top:0,behavior:'auto'});});
  $('#ucQ').addEventListener('input',e=>{UC.q=e.target.value;renderUC();});
  addEventListener('popstate',()=>{ucRead();renderUC();crumbs();titleSync();});
 }
@@ -80,9 +80,9 @@ function renderHK(){const g=$('#hkPt');if(!g||P!=='hakkimizda')return;const seen
 /* ---- sayfa yolu: her alt sayfada Ana sayfa › Bölüm › Ayrıntı ---- */
 function crumbs(){
  $$('.bc').forEach(n=>n.remove());if(!curView)return;
- const L=IF.lang||'tr',D=D2(),CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en,items=[[tr('pg_home'),'index.html']];
- if(P==='uzmanlik'){items.push([tr('nav2'),alanI>=0?'uzmanlik.html':null]);if(alanI>=0)items.push([CA[alanI],null]);}
- else if(P==='urunler'){const deep=UC.ax>=0||UC.urun>=0;items.push([tr('nav3'),deep?'urunler.html':null]);
+ const L=IF.lang||'tr',D=D2(),CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en,items=[[tr('pg_home'),IFU.U.home]];
+ if(P==='uzmanlik'){items.push([tr('nav2'),alanI>=0?IFU.U.uzmanlik:null]);if(alanI>=0)items.push([CA[alanI],null]);}
+ else if(P==='urunler'){const deep=UC.ax>=0||UC.urun>=0;items.push([tr('nav3'),deep?IFU.U.urunler:null]);
   if(UC.urun>=0){const p=D.PRODS[UC.urun];items.push([AX[p.a],ucHref({ax:p.a,ca:-1})]);items.push([p.n,null]);}else if(UC.ax>=0)items.push([AX[UC.ax],null]);}
  else items.push([tr({uretim:'nav_ur',hakkimizda:'nav1',bilim:'nav4',guncel:'nav6',iletisim:'nav5'}[P]),null]);
  const nav=document.createElement('nav');nav.className='bc';nav.setAttribute('aria-label',tr('bc'));const ol=document.createElement('ol');
@@ -125,3 +125,5 @@ function pgVideo(){const k=PGV[P];if(!k||!curView||!matchMedia('(min-width: 901p
  f.appendChild(v);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
 ucRead();v2route();v2refresh();pgVideo();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
+
+/* WordPress: gövdedeki .html bağlantıları sayfa adresleriyle değiştirilir (GitHub'da dokunulmaz) */
