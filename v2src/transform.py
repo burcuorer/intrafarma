@@ -170,6 +170,25 @@ i0 = s.index('<section class="sec">'); i1 = s.index('<p class="draft-chip" id="d
 tail = s[i0:i1]; j = tail.rindex('</section>') + len('</section>')
 rep(tail[:j], '')
 
+# 8b) Pro hücresi: sol tarafa iki sade etiket daha (çizgi + nokta)
+rep('<div class="anno" id="an2"><i></i><s></s><span></span></div>',
+    '<div class="anno" id="an2"><i></i><s></s><span></span></div>\n    <div class="anno l" id="an5"><i></i><s></s><span></span></div>\n    <div class="anno l" id="an6"><i></i><s></s><span></span></div>')
+# 8c) hücre modülünde etiket yerleşimi
+rep("const an1=document.getElementById('an1'), an2=document.getElementById('an2');",
+               "const an1=document.getElementById('an1'), an2=document.getElementById('an2'), an5=document.getElementById('an5'), an6=document.getElementById('an6');")
+rep("[[an1,-1.12,'an1','an3'],[an2,0.98,'an2','an4']].forEach(([el,ang,a,b])=>{",
+               "[[an1,-1.12,'an1','an3'],[an2,0.98,'an2','an4'],[an5,2.35,'an1','an1'],[an6,-2.25,'an2','an2']].forEach(([el,ang,a,b])=>{const lf=el.classList.contains('l');")
+rep("const ok=showA&&p.x<W-210&&isPro;el.style.opacity=ok?1:0;\n  el.style.transform='translate('+p.x.toFixed(1)+'px,'+(p.y-5).toFixed(1)+'px)';});",
+               "const ok=showA&&(lf?p.x>230:p.x<W-210)&&isPro;el.style.opacity=ok?1:0;\n  el.style.transform='translate('+p.x.toFixed(1)+'px,'+(p.y-5).toFixed(1)+'px)'+(lf?' translate(-100%,0)':'');});")
+# 8d) sosyal medya: YouTube tanıtıcı adresi; İletişim'de ikon + platform adı
+rep('https://www.youtube.com/channel/UCh5m38jB7y87zfRq7AktcEA', 'https://www.youtube.com/@intrafarmasaglik', count=2)
+i0 = s.index('<div class="il-soc">'); i1 = s.index('</div>', i0)
+blk = s[i0:i1]
+for nm in ('Instagram', 'Facebook', 'LinkedIn', 'YouTube'):
+    blk = blk.replace('aria-label="%s">' % nm, 'aria-label="%s">' % nm, 1)
+    k = blk.index('aria-label="%s">' % nm); e = blk.index('</svg></a>', k)
+    blk = blk[:e] + '</svg><span>%s</span></a>' % nm + blk[e+len('</svg></a>'):]
+rep(s[i0:i1], blk)
 # 9) katmanlarda yazılı "Kapat" düğmesi
 rep('<button class="cat-x" id="catClose" type="button" aria-label="Kapat" data-magnet>×</button>',
     '<button class="cat-x ov-x" id="catClose" type="button" data-magnet><span data-t="close"></span><i aria-hidden="true">×</i></button>')

@@ -1331,16 +1331,28 @@ html:lang(ar) .uc-meta dt{text-transform:none;letter-spacing:0}
 /* ---- alt sayfa başlığı: solda metin, sağda dönen tek video ---- */
 .pg{padding-bottom:clamp(32px,4vw,48px)!important}
 .pg+.hs,.pg+.pg-sec,.pg+section{padding-top:clamp(32px,3.5vw,48px)!important}
-.pg.has-vid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:clamp(32px,5vw,72px);align-items:end}
-.pg-vid{position:relative;margin:0;border-radius:var(--r3);overflow:hidden;aspect-ratio:16/10;background:#D7E5EE;
- box-shadow:0 30px 72px rgba(16,64,104,.22),0 0 0 1px rgba(255,255,255,.5),0 0 120px rgba(32,144,152,.18);animation:pgFloat 9s var(--e1) infinite alternate}
-.pg-vid::before{content:"";position:absolute;inset:-40%;z-index:0;pointer-events:none;background:conic-gradient(from 200deg at 50% 50%,rgba(32,144,152,.0),rgba(32,144,152,.35),rgba(16,64,104,.0) 60%);animation:pgSpin 18s linear infinite;opacity:.5}
-.pg-vid video{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block;-webkit-mask-image:linear-gradient(180deg,#000 72%,rgba(0,0,0,.55));mask-image:linear-gradient(180deg,#000 72%,rgba(0,0,0,.55))}
-.pg-vid::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 0 0 1px rgba(255,255,255,.25);
- background:linear-gradient(165deg,rgba(255,255,255,.14),transparent 35%,transparent 70%,rgba(14,34,53,.28))}
-@keyframes pgFloat{from{transform:translateY(6px)}to{transform:translateY(-6px)}}
-@keyframes pgSpin{to{transform:rotate(360deg)}}
-@media (prefers-reduced-motion:reduce){.pg-vid,.pg-vid::before{animation:none}}
+.pg.has-vid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:clamp(40px,6vw,88px);align-items:center}
+.pg.has-vid>.pg-in,.pg.has-vid>div:first-child{align-self:center}
+.pg-vid{position:relative;margin:0;aspect-ratio:16/10;border-radius:var(--r3);isolation:isolate;animation:pgFloat 8s var(--e1) infinite alternate}
+/* arkada gezinen ışık lekesi: kutunun dışına taşar, videonun ardında kıpırdar */
+.pg-vid::before{content:"";position:absolute;inset:-12% -10% -18% -14%;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(48px);opacity:.9;
+ background:radial-gradient(45% 55% at 25% 70%,rgba(32,144,152,.55),transparent 70%),radial-gradient(40% 50% at 78% 22%,rgba(16,64,104,.42),transparent 70%);animation:pgGlow 11s var(--e1) infinite alternate}
+.pg-vid video{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;background:#D7E5EE;
+ box-shadow:0 36px 80px rgba(16,64,104,.28),0 0 0 1px rgba(255,255,255,.6)}
+/* ince cam kenarı ve 7 saniyede bir geçen ışık süpürmesi */
+.pg-vid::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 0 0 1px rgba(255,255,255,.28);
+ background:linear-gradient(165deg,rgba(255,255,255,.16),transparent 30%,transparent 65%,rgba(14,34,53,.3)),linear-gradient(115deg,transparent 42%,rgba(255,255,255,.28) 50%,transparent 58%);
+ background-size:100% 100%,260% 100%;background-position:0 0,120% 0;animation:pgSheen 7s var(--e1) infinite}
+/* köşede sade altyazı çipi */
+.pg-cap{position:absolute;z-index:3;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;height:32px;border-radius:var(--rf);
+ background:rgba(14,34,53,.72);color:#fff;font:500 var(--t1)/1 var(--f-m);letter-spacing:.04em;border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.pg-cap i{width:6px;height:6px;border-radius:50%;background:#8FDCE0;box-shadow:0 0 0 3px rgba(143,220,224,.25);animation:pgPulse 2.4s ease-in-out infinite}
+[dir=rtl] .pg-cap{left:auto;right:16px}
+@keyframes pgFloat{from{transform:translateY(8px)}to{transform:translateY(-8px)}}
+@keyframes pgGlow{from{transform:translate(-4%,3%) scale(1)}to{transform:translate(5%,-4%) scale(1.12)}}
+@keyframes pgSheen{0%,55%{background-position:0 0,120% 0}100%{background-position:0 0,-120% 0}}
+@keyframes pgPulse{0%,100%{box-shadow:0 0 0 3px rgba(143,220,224,.25)}50%{box-shadow:0 0 0 7px rgba(143,220,224,.08)}}
+@media (prefers-reduced-motion:reduce){.pg-vid,.pg-vid::before,.pg-vid::after,.pg-cap i{animation:none}}
 @media (max-width:900px){.pg.has-vid{display:block}.pg-vid{display:none}}
 
 /* ---- iş ortakları: renkli zemin üstünde buzlu cam kartlar ---- */
@@ -1426,6 +1438,50 @@ html.ck-on .draft-chip{display:none}
 .yt-ask .ck-b.ck-pri{background:#fff;color:var(--ink);border-color:#fff}
 .yt-ext{font:500 var(--t1)/1 var(--f-m);color:#8FDCE0}
 @media (max-width:640px){.yt-ask .yt-h{display:none}.yt-ask p{font-size:var(--t1)}}
+
+/* ---- alt sayfalar: başlıkta video sağda ise bir sonraki blokta görsel solda ---- */
+@media (min-width:641px){.hk-pos-in .hk-fig{order:-1}}
+.hk-fig{box-shadow:0 30px 72px rgba(16,64,104,.22),0 0 0 1px rgba(255,255,255,.5)}
+
+/* ---- orta koyulukta cam kutular (değerler, üretim adımları, kapanış kartları) ---- */
+.hk-g4 article,.ur-g article,.hk-card{
+ background:linear-gradient(180deg,rgba(24,58,90,.88),rgba(14,34,53,.86))!important;border:1px solid rgba(255,255,255,.14)!important;color:#fff;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 14px 36px rgba(16,64,104,.2)!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.hk-g4 h3,.ur-g h3,.hk-card b{color:#fff}
+.hk-g4 p,.ur-g p,.hk-card span{color:rgba(255,255,255,.78)}
+.ur-g i,.hk-card i{color:#8FDCE0}
+.hk-card:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 20px 48px rgba(16,64,104,.3)!important;transform:translateY(-3px)}
+
+/* ---- iş ortakları: koyulaşan zemin, ışık lekeleri, sırayla beliren logolar ---- */
+.hk-pt{padding-top:clamp(56px,7vw,88px);padding-bottom:clamp(56px,7vw,88px);margin-top:clamp(24px,3vw,40px);isolation:isolate;overflow:hidden;color:#fff}
+.hk-pt::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,#0E2235 0%,#104068 70%,#15606E 100%)}
+.hk-pt::after{content:"";position:absolute;inset:-20%;z-index:-1;pointer-events:none;filter:blur(60px);opacity:.75;
+ background:radial-gradient(30% 40% at 18% 30%,rgba(32,144,152,.55),transparent 70%),radial-gradient(28% 40% at 80% 75%,rgba(143,220,224,.3),transparent 70%),radial-gradient(22% 30% at 60% 15%,rgba(255,255,255,.12),transparent 70%);
+ animation:ptAmb 16s var(--e1) infinite alternate}
+@keyframes ptAmb{from{transform:translate(-3%,-2%) rotate(0deg)}to{transform:translate(3%,3%) rotate(6deg)}}
+.hk-pt .eyebrow{color:#8FDCE0}.hk-pt h2{color:#fff}
+.hk-ptg{gap:16px}
+.hk-ptg .pt-l{height:96px;border-radius:var(--r2);background:#fff;border:1px solid rgba(255,255,255,.9);
+ box-shadow:0 1px 0 rgba(255,255,255,.4),0 18px 40px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.08);
+ opacity:0;transform:translateY(20px) scale(.96);transition:opacity var(--d3) var(--e1),transform var(--d3) var(--e1),box-shadow var(--d2);transition-delay:calc(var(--i,0) * 45ms)}
+.hk-pt.in .hk-ptg .pt-l{opacity:1;transform:none}
+.hk-ptg .pt-l:hover,.hk-ptg .pt-l:focus-visible{transform:translateY(-5px) scale(1.02);box-shadow:0 1px 0 rgba(255,255,255,.5),0 26px 56px rgba(0,0,0,.36),0 0 0 4px rgba(143,220,224,.22)}
+.hk-ptg .pt-l.dk{background:rgba(30,42,56,.92)}
+@media (prefers-reduced-motion:reduce){.hk-pt::after{animation:none}.hk-ptg .pt-l{transition:none;opacity:1;transform:none}}
+
+/* ---- Pro hücresi: sol taraftaki sade etiketler ---- */
+.anno.l s{background:rgba(16,22,46,.35)}
+
+/* ---- İletişim: sosyal medya logo bağlantıları (koyu cam, ikon + ad) ---- */
+.il-soc{flex-wrap:wrap;gap:12px;margin-top:32px}
+.il-soc a{width:auto;height:var(--ctl);padding:0 18px 0 14px;border-radius:var(--rf);display:inline-flex;align-items:center;gap:10px;
+ background:linear-gradient(180deg,rgba(34,58,88,.96),rgba(14,34,53,.98));border:1px solid rgba(255,255,255,.14);color:#fff;font:500 var(--t2)/1 var(--f-b);text-decoration:none;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 24px rgba(14,34,53,.2);transition:background var(--d2) var(--e1),transform var(--d2) var(--e1)}
+.il-soc a:hover,.il-soc a:focus-visible{background:linear-gradient(180deg,rgba(24,88,140,.98),rgba(16,64,104,1));color:#fff;transform:translateY(-2px)}
+.il-soc svg{width:18px;height:18px}
+
+/* başlık bandının arka planı yalnızca kendi alanını kaplar; altındaki içeriği örtmez (İletişim kartları görünmüyordu) */
+.pg.band{position:relative}
 </style>
 </head><body>
 
@@ -1630,6 +1686,8 @@ html.ck-on .draft-chip{display:none}
 
     <div class="anno" id="an1"><i></i><s></s><span></span></div>
     <div class="anno" id="an2"><i></i><s></s><span></span></div>
+    <div class="anno l" id="an5"><i></i><s></s><span></span></div>
+    <div class="anno l" id="an6"><i></i><s></s><span></span></div>
 
     <div class="divider" id="divider" hidden>
       <span class="ln"></span>
@@ -1788,10 +1846,10 @@ html.ck-on .draft-chip{display:none}
     <section class="pg-sec">
       <div class="il-g"><div data-rv="up"><h3 data-t="il_a"></h3><p data-t="il_av"></p></div><div data-rv="up"><h3 data-t="il_t"></h3><p data-t="il_tv"></p></div><div data-rv="up"><h3 data-t="il_m"></h3><p data-t="il_mv"></p></div></div>
       <div class="il-soc">
-        <a href="https://www.instagram.com/intrafarma.official/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21 8.2c-.1-1.4-.4-2.700-1.400-3.700S17.300 3.100 15.800 3C14.400 2.900 9.600 2.900 8.200 3 6.700 3.100 5.400 3.400 4.400 4.400S3.100 6.700 3 8.200c-.1 1.400-.1 6.200 0 7.600.1 1.500.4 2.800 1.400 3.800s2.300 1.300 3.800 1.400c1.400.1 6.200.1 7.600 0 1.500-.1 2.800-.4 3.800-1.400s1.300-2.300 1.400-3.800c.1-1.400.1-6.200 0-7.600zm-2 9.100a3 3 0 0 1-1.700 1.700c-1.200.5-4 .4-5.300.4s-4.100.1-5.300-.4A3 3 0 0 1 5 17.300c-.5-1.200-.4-4-.4-5.300s-.1-4.100.4-5.300A3 3 0 0 1 6.700 5c1.200-.5 4-.4 5.300-.4s4.100-.1 5.300.4A3 3 0 0 1 19 6.700c.5 1.200.4 4 .4 5.300s.1 4.100-.4 5.300z"/></svg></a>
-        <a href="https://www.facebook.com/intrafarma.com.tr/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.500 21v-7.500h2.500l.4-3h-2.900V8.600c0-.9.200-1.500 1.500-1.500h1.500V4.400c-.3 0-1.200-.1-2.200-.1-2.200 0-3.800 1.400-3.800 3.900v2.300H8v3h2.500V21z"/></svg></a>
-        <a href="https://www.linkedin.com/company/intrafarma-ila-/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.900 8.700H4V20h2.900zM5.500 4a1.700 1.700 0 1 0 0 3.400A1.700 1.700 0 0 0 5.500 4zM20 13.500c0-3.300-1.800-5-4.200-5-1.700 0-2.500.9-3 1.600V8.700H10V20h2.900v-6.100c0-1.500.5-2.700 2-2.700s2.200 1.100 2.200 2.700V20H20z"/></svg></a>
-        <a href="https://www.youtube.com/channel/UCh5m38jB7y87zfRq7AktcEA" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.600 7.800a2.500 2.500 0 0 0-1.800-1.800C18.200 5.600 12 5.600 12 5.600s-6.200 0-7.800.4A2.500 2.500 0 0 0 2.400 7.800C2 9.400 2 12 2 12s0 2.600.4 4.200a2.500 2.500 0 0 0 1.800 1.800c1.600.4 7.800.4 7.800.4s6.200 0 7.800-.4a2.500 2.500 0 0 0 1.800-1.800c.4-1.600.4-4.200.4-4.200s0-2.600-.4-4.200zM10 15V9l5.200 3z"/></svg></a>
+        <a href="https://www.instagram.com/intrafarma.official/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21 8.2c-.1-1.4-.4-2.700-1.400-3.700S17.300 3.100 15.800 3C14.400 2.900 9.600 2.900 8.200 3 6.700 3.100 5.400 3.400 4.400 4.400S3.100 6.700 3 8.200c-.1 1.400-.1 6.200 0 7.600.1 1.500.4 2.800 1.400 3.800s2.300 1.300 3.800 1.400c1.400.1 6.200.1 7.600 0 1.500-.1 2.800-.4 3.800-1.400s1.300-2.300 1.400-3.800c.1-1.400.1-6.200 0-7.600zm-2 9.100a3 3 0 0 1-1.700 1.700c-1.200.5-4 .4-5.300.4s-4.100.1-5.300-.4A3 3 0 0 1 5 17.300c-.5-1.200-.4-4-.4-5.300s-.1-4.100.4-5.300A3 3 0 0 1 6.700 5c1.200-.5 4-.4 5.300-.4s4.100-.1 5.300.4A3 3 0 0 1 19 6.700c.5 1.200.4 4 .4 5.300s.1 4.100-.4 5.300z"/></svg><span>Instagram</span></a>
+        <a href="https://www.facebook.com/intrafarma.com.tr/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.500 21v-7.500h2.500l.4-3h-2.900V8.600c0-.9.200-1.500 1.500-1.500h1.500V4.400c-.3 0-1.200-.1-2.200-.1-2.200 0-3.800 1.400-3.800 3.900v2.300H8v3h2.500V21z"/></svg><span>Facebook</span></a>
+        <a href="https://www.linkedin.com/company/intrafarma-ila-/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.900 8.700H4V20h2.900zM5.500 4a1.700 1.700 0 1 0 0 3.400A1.700 1.700 0 0 0 5.500 4zM20 13.500c0-3.300-1.800-5-4.200-5-1.700 0-2.500.9-3 1.600V8.700H10V20h2.900v-6.100c0-1.500.5-2.700 2-2.700s2.200 1.100 2.200 2.700V20H20z"/></svg><span>LinkedIn</span></a>
+        <a href="https://www.youtube.com/@intrafarmasaglik" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.600 7.800a2.500 2.500 0 0 0-1.800-1.800C18.200 5.600 12 5.600 12 5.600s-6.200 0-7.800.4A2.500 2.500 0 0 0 2.400 7.800C2 9.400 2 12 2 12s0 2.600.4 4.200a2.500 2.500 0 0 0 1.800 1.800c1.600.4 7.800.4 7.800.4s6.200 0 7.800-.4a2.500 2.500 0 0 0 1.800-1.800c.4-1.600.4-4.200.4-4.200s0-2.600-.4-4.200zM10 15V9l5.200 3z"/></svg><span>YouTube</span></a>
       </div>
     </section>
     </div>
@@ -1837,7 +1895,7 @@ html.ck-on .draft-chip{display:none}
         <a href="https://www.instagram.com/intrafarma.official/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21 8.2c-.1-1.4-.4-2.700-1.400-3.700S17.300 3.100 15.800 3C14.400 2.900 9.600 2.900 8.200 3 6.700 3.100 5.400 3.400 4.400 4.400S3.100 6.700 3 8.200c-.1 1.400-.1 6.200 0 7.600.1 1.500.4 2.800 1.400 3.800s2.300 1.300 3.800 1.400c1.400.1 6.200.1 7.600 0 1.500-.1 2.800-.4 3.800-1.400s1.300-2.300 1.400-3.800c.1-1.400.1-6.200 0-7.600zm-2 9.100a3 3 0 0 1-1.700 1.700c-1.200.5-4 .4-5.300.4s-4.100.1-5.300-.4A3 3 0 0 1 5 17.300c-.5-1.200-.4-4-.4-5.300s-.1-4.100.4-5.300A3 3 0 0 1 6.700 5c1.200-.5 4-.4 5.300-.4s4.100-.1 5.300.4A3 3 0 0 1 19 6.700c.5 1.200.4 4 .4 5.300s.1 4.100-.4 5.300z"/></svg></a>
         <a href="https://www.facebook.com/intrafarma.com.tr/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.500 21v-7.500h2.500l.4-3h-2.900V8.600c0-.9.200-1.500 1.500-1.500h1.500V4.400c-.3 0-1.200-.1-2.200-.1-2.200 0-3.800 1.400-3.800 3.900v2.300H8v3h2.500V21z"/></svg></a>
         <a href="https://www.linkedin.com/company/intrafarma-ila-/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.900 8.700H4V20h2.900zM5.500 4a1.700 1.700 0 1 0 0 3.400A1.700 1.700 0 0 0 5.500 4zM20 13.500c0-3.300-1.800-5-4.200-5-1.700 0-2.500.9-3 1.600V8.700H10V20h2.900v-6.100c0-1.500.5-2.700 2-2.700s2.200 1.100 2.200 2.700V20H20z"/></svg></a>
-        <a href="https://www.youtube.com/channel/UCh5m38jB7y87zfRq7AktcEA" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.600 7.800a2.500 2.500 0 0 0-1.800-1.800C18.200 5.600 12 5.600 12 5.600s-6.200 0-7.800.4A2.500 2.500 0 0 0 2.400 7.800C2 9.400 2 12 2 12s0 2.600.4 4.200a2.500 2.500 0 0 0 1.800 1.800c1.600.4 7.800.4 7.800.4s6.200 0 7.800-.4a2.500 2.500 0 0 0 1.800-1.800c.4-1.600.4-4.200.4-4.200s0-2.600-.4-4.200zM10 15V9l5.200 3z"/></svg></a>
+        <a href="https://www.youtube.com/@intrafarmasaglik" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.600 7.800a2.500 2.500 0 0 0-1.800-1.800C18.200 5.600 12 5.600 12 5.600s-6.200 0-7.800.4A2.500 2.500 0 0 0 2.400 7.800C2 9.400 2 12 2 12s0 2.600.4 4.200a2.500 2.500 0 0 0 1.800 1.800c1.600.4 7.800.4 7.800.4s6.200 0 7.800-.4a2.500 2.500 0 0 0 1.800-1.800c.4-1.600.4-4.200.4-4.200s0-2.600-.4-4.200zM10 15V9l5.200 3z"/></svg></a>
       </div></div>
     </div>
     <div class="sf-bot"><span data-t="ft_rights"></span><span>intrafarma.com.tr</span></div>
@@ -2573,7 +2631,8 @@ function renderUZ(){const g=$('#uzG');if(!g||P!=='uzmanlik')return;g.innerHTML='
 /* ---- hakkımızda: iş ortakları logoları (kayan banttaki logoların tekil kopyası) ---- */
 function renderHK(){const g=$('#hkPt');if(!g||P!=='hakkimizda')return;const seen=new Set(),out=[];
  $$('#ptTrack .pt-l').forEach(l=>{if(l.getAttribute('aria-hidden')==='true')return;const im=l.querySelector('img');const k=im?im.getAttribute('src'):l.textContent;if(seen.has(k))return;seen.add(k);const c=l.cloneNode(true);c.removeAttribute('tabindex');out.push(c);});
- if(out.length){g.innerHTML='';out.forEach(c=>g.appendChild(c));}}
+ if(out.length){g.innerHTML='';out.forEach((c,i)=>{c.style.setProperty('--i',i);g.appendChild(c);});}
+ const sec=g.closest('.hk-pt');if(sec&&!sec.dataset.io){sec.dataset.io='1';new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){sec.classList.add('in');ob.disconnect();}},{rootMargin:'0px 0px -15% 0px'}).observe(sec);}}
 
 /* ---- sayfa yolu: her alt sayfada Ana sayfa › Bölüm › Ayrıntı ---- */
 function crumbs(){
@@ -2620,7 +2679,7 @@ function pgVideo(){const k=PGV[P];if(!k||!curView||!matchMedia('(min-width: 901p
  const B=(window.IF_BASE||'')+'media/'+k,f=document.createElement('figure'),v=document.createElement('video');f.className='pg-vid';f.setAttribute('aria-hidden','true');
  v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata';v.poster=B+'.jpg';
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){v.autoplay=true;v.src=B+'.mp4';}
- f.appendChild(v);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
+ f.appendChild(v);const cap=document.createElement('figcaption');cap.className='pg-cap';cap.innerHTML='<i></i><span data-t="'+({urunler:'v_cap4',uretim:'v_cap3',bilim:'v_cap1',guncel:'v_cap1'}[P]||'v_cap2')+'"></span>';f.appendChild(cap);cap.querySelector('span').innerHTML=tr(cap.querySelector('span').dataset.t);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
 ucRead();v2route();v2refresh();pgVideo();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
 
@@ -2778,7 +2837,7 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 const IF=window.IF, stage=document.getElementById('stage'), canvas=document.getElementById('gl');
 const OLAB=['c_hint'].map(k=>{const d=document.createElement('div');d.className='anno org'+(k==='c_hint'?' hint':'');d.setAttribute('aria-hidden','true');d.innerHTML='<i></i><s></s><span></span>';d.dataset.k=k;stage.appendChild(d);return d;});
 const OLOC={o_nuc:new THREE.Vector3(-.22,.27,.12)};
-const an1=document.getElementById('an1'), an2=document.getElementById('an2');
+const an1=document.getElementById('an1'), an2=document.getElementById('an2'), an5=document.getElementById('an5'), an6=document.getElementById('an6');
 const SPD=IF.reduce?0.2:1;
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
@@ -3254,11 +3313,11 @@ function frame(){
   if(llOn){if(!(llN++%45)||!llR){const sr=stage.getBoundingClientRect();llR={};OCC.forEach(c=>{const r=c.getBoundingClientRect(),left=r.left+r.width/2<sr.left+sr.width/2;llR[c.dataset.o]={x:(left?r.right:r.left)-sr.left,y:r.top+24-sr.top,d:left?1:-1};});}
    MKK.forEach((k,i)=>{const a=llR[k],p=pos[k];if(!a||!p)return;const mx=a.x+a.d*22;LLP[i].setAttribute('d','M'+a.x.toFixed(1)+' '+a.y.toFixed(1)+'H'+mx.toFixed(1)+'L'+p.x.toFixed(1)+' '+p.y.toFixed(1));});}}
  const isPro=IF.mode==='pro';
- [[an1,-1.12,'an1','an3'],[an2,0.98,'an2','an4']].forEach(([el,ang,a,b])=>{
+ [[an1,-1.12,'an1','an3'],[an2,0.98,'an2','an4'],[an5,2.35,'an1','an1'],[an6,-2.25,'an2','an2']].forEach(([el,ang,a,b])=>{const lf=el.classList.contains('l');
   const p=toPx(ax+Math.cos(ang)*aR*1.02,ay-Math.sin(ang)*aR*1.02);
   const txt=IF.tr(isPro?b:a);const sp=el.lastChild;if(sp.textContent!==txt)sp.textContent=txt;
-  const ok=showA&&p.x<W-210&&isPro;el.style.opacity=ok?1:0;
-  el.style.transform='translate('+p.x.toFixed(1)+'px,'+(p.y-5).toFixed(1)+'px)';});
+  const ok=showA&&(lf?p.x>230:p.x<W-210)&&isPro;el.style.opacity=ok?1:0;
+  el.style.transform='translate('+p.x.toFixed(1)+'px,'+(p.y-5).toFixed(1)+'px)'+(lf?' translate(-100%,0)':'');});
 
  cam.layers.set(1);renderer.setRenderTarget(rt);renderer.render(scene,cam);
  cam.layers.set(0);renderer.setRenderTarget(null);renderer.render(scene,cam);

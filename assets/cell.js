@@ -5,7 +5,7 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 const IF=window.IF, stage=document.getElementById('stage'), canvas=document.getElementById('gl');
 const OLAB=['c_hint'].map(k=>{const d=document.createElement('div');d.className='anno org'+(k==='c_hint'?' hint':'');d.setAttribute('aria-hidden','true');d.innerHTML='<i></i><s></s><span></span>';d.dataset.k=k;stage.appendChild(d);return d;});
 const OLOC={o_nuc:new THREE.Vector3(-.22,.27,.12)};
-const an1=document.getElementById('an1'), an2=document.getElementById('an2');
+const an1=document.getElementById('an1'), an2=document.getElementById('an2'), an5=document.getElementById('an5'), an6=document.getElementById('an6');
 const SPD=IF.reduce?0.2:1;
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
@@ -481,11 +481,11 @@ function frame(){
   if(llOn){if(!(llN++%45)||!llR){const sr=stage.getBoundingClientRect();llR={};OCC.forEach(c=>{const r=c.getBoundingClientRect(),left=r.left+r.width/2<sr.left+sr.width/2;llR[c.dataset.o]={x:(left?r.right:r.left)-sr.left,y:r.top+24-sr.top,d:left?1:-1};});}
    MKK.forEach((k,i)=>{const a=llR[k],p=pos[k];if(!a||!p)return;const mx=a.x+a.d*22;LLP[i].setAttribute('d','M'+a.x.toFixed(1)+' '+a.y.toFixed(1)+'H'+mx.toFixed(1)+'L'+p.x.toFixed(1)+' '+p.y.toFixed(1));});}}
  const isPro=IF.mode==='pro';
- [[an1,-1.12,'an1','an3'],[an2,0.98,'an2','an4']].forEach(([el,ang,a,b])=>{
+ [[an1,-1.12,'an1','an3'],[an2,0.98,'an2','an4'],[an5,2.35,'an1','an1'],[an6,-2.25,'an2','an2']].forEach(([el,ang,a,b])=>{const lf=el.classList.contains('l');
   const p=toPx(ax+Math.cos(ang)*aR*1.02,ay-Math.sin(ang)*aR*1.02);
   const txt=IF.tr(isPro?b:a);const sp=el.lastChild;if(sp.textContent!==txt)sp.textContent=txt;
-  const ok=showA&&p.x<W-210&&isPro;el.style.opacity=ok?1:0;
-  el.style.transform='translate('+p.x.toFixed(1)+'px,'+(p.y-5).toFixed(1)+'px)';});
+  const ok=showA&&(lf?p.x>230:p.x<W-210)&&isPro;el.style.opacity=ok?1:0;
+  el.style.transform='translate('+p.x.toFixed(1)+'px,'+(p.y-5).toFixed(1)+'px)'+(lf?' translate(-100%,0)':'');});
 
  cam.layers.set(1);renderer.setRenderTarget(rt);renderer.render(scene,cam);
  cam.layers.set(0);renderer.setRenderTarget(null);renderer.render(scene,cam);

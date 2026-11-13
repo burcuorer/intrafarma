@@ -224,7 +224,8 @@ function renderUZ(){const g=$('#uzG');if(!g||P!=='uzmanlik')return;g.innerHTML='
 /* ---- hakkımızda: iş ortakları logoları (kayan banttaki logoların tekil kopyası) ---- */
 function renderHK(){const g=$('#hkPt');if(!g||P!=='hakkimizda')return;const seen=new Set(),out=[];
  $$('#ptTrack .pt-l').forEach(l=>{if(l.getAttribute('aria-hidden')==='true')return;const im=l.querySelector('img');const k=im?im.getAttribute('src'):l.textContent;if(seen.has(k))return;seen.add(k);const c=l.cloneNode(true);c.removeAttribute('tabindex');out.push(c);});
- if(out.length){g.innerHTML='';out.forEach(c=>g.appendChild(c));}}
+ if(out.length){g.innerHTML='';out.forEach((c,i)=>{c.style.setProperty('--i',i);g.appendChild(c);});}
+ const sec=g.closest('.hk-pt');if(sec&&!sec.dataset.io){sec.dataset.io='1';new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){sec.classList.add('in');ob.disconnect();}},{rootMargin:'0px 0px -15% 0px'}).observe(sec);}}
 
 /* ---- sayfa yolu: her alt sayfada Ana sayfa › Bölüm › Ayrıntı ---- */
 function crumbs(){
@@ -271,7 +272,7 @@ function pgVideo(){const k=PGV[P];if(!k||!curView||!matchMedia('(min-width: 901p
  const B=(window.IF_BASE||'')+'media/'+k,f=document.createElement('figure'),v=document.createElement('video');f.className='pg-vid';f.setAttribute('aria-hidden','true');
  v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata';v.poster=B+'.jpg';
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){v.autoplay=true;v.src=B+'.mp4';}
- f.appendChild(v);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
+ f.appendChild(v);const cap=document.createElement('figcaption');cap.className='pg-cap';cap.innerHTML='<i></i><span data-t="'+({urunler:'v_cap4',uretim:'v_cap3',bilim:'v_cap1',guncel:'v_cap1'}[P]||'v_cap2')+'"></span>';f.appendChild(cap);cap.querySelector('span').innerHTML=tr(cap.querySelector('span').dataset.t);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
 ucRead();v2route();v2refresh();pgVideo();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
 
