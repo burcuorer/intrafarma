@@ -52,7 +52,7 @@ body{background:var(--bg-light);color:var(--ink);padding:0!important}
 .site-top.scrolled{background-color:rgba(246,247,251,.9);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 1px 0 rgba(16,22,46,.08)}
 html.stage-full .site-top{visibility:hidden}
 .logo-a{display:flex;align-items:center;height:var(--ctl);flex:none;border-radius:var(--r1)}
-.logo-a .logo{height:28px}
+.logo-a .logo{height:34px}
 .site-top .pub-nav{display:flex;align-items:center;gap:28px;margin-inline:auto;height:var(--ctl)}
 .site-top .nv-t,.site-top .pub-nav>a.nv-a{height:var(--ctl);display:inline-flex;align-items:center;padding:0;font:500 var(--t2)/1 var(--f-b);color:var(--ink-2);text-decoration:none}
 .site-top .nv.cur .nv-t,.site-top .pub-nav>a.nv-a.cur{color:var(--ink);box-shadow:inset 0 -2px 0 var(--teal)}
@@ -105,7 +105,7 @@ html.stage-full .site-top{visibility:hidden}
  .lsw-m button[aria-pressed=true]{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
  .hcp,.site-top .hcp{margin-inline-start:auto;padding:0 14px}
 }
-@media (max-width:640px){:root{--hdr:64px}.logo-a .logo{height:24px}.site-top .hcp{font-size:var(--t1);padding:0 12px}}
+@media (max-width:640px){:root{--hdr:64px}.logo-a .logo{height:28px}.site-top .hcp{font-size:var(--t1);padding:0 12px}}
 
 /* ---- sayfa yolu ---- */
 .pg{padding-top:calc(var(--hdr) + clamp(40px,6vw,72px))!important;padding-bottom:clamp(40px,5vw,64px)!important}
@@ -186,20 +186,24 @@ html.stage-full .site-top{visibility:hidden}
 
 /* ---- ürünler sayfası ---- */
 .uc{padding-bottom:var(--sp)}
-.uc-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+.uc-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;padding:16px 16px 0;margin:0 0 0;border-radius:var(--r2) var(--r2) 0 0;
+ background:linear-gradient(180deg,rgba(14,34,53,.86),rgba(14,34,53,.82));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-bottom:0}
 .uc-ax,.uc-ca{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.uc-ca{margin-bottom:24px}
-.uc-ca .lab{font:500 var(--t1)/1 var(--f-m);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-inline-end:4px}
+.uc-ca{padding:12px 16px 16px;margin-bottom:24px;border-radius:0 0 var(--r2) var(--r2);background:linear-gradient(180deg,rgba(14,34,53,.82),rgba(14,34,53,.78));
+ -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-top:1px solid rgba(255,255,255,.08);box-shadow:var(--sh-2)}
+.uc-ca .lab{font:500 var(--t1)/1 var(--f-m);letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-inline-end:8px;line-height:var(--ctl)}
 html:lang(ar) .uc-ca .lab{text-transform:none;letter-spacing:0}
-.uc .chip{display:inline-flex;align-items:center;height:var(--ctl);padding:0 16px;border-radius:var(--rf);border:1px solid rgba(16,22,46,.14);background:#fff;color:var(--ink);
+.uc .chip{display:inline-flex;align-items:center;height:var(--ctl);padding:0 16px;border-radius:var(--rf);border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#fff;
  font:500 var(--t2)/1 var(--f-b);text-decoration:none;transition:background-color var(--d1),border-color var(--d1),color var(--d1)}
-.uc .chip.sm{height:32px;padding:0 12px;font-size:var(--t1)}
-.uc .chip:hover{border-color:var(--cobalt);color:var(--cobalt)}
-.uc .chip[aria-current]{background:var(--ink);border-color:var(--ink);color:#fff}
-.uc-q{display:flex;align-items:center;gap:8px;height:var(--ctl);padding:0 16px;border-radius:var(--rf);border:1px solid rgba(16,22,46,.14);background:#fff;min-width:240px;box-sizing:border-box}
-.uc-q:focus-within{border-color:var(--cobalt)}
-.uc-q svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--ink-2);stroke-width:1.8;stroke-linecap:round}
-.uc-q input{border:0;outline:0;background:none;font:500 var(--t2)/1 var(--f-b);color:var(--ink);width:100%;min-width:0}
+.uc .chip.sm{height:var(--ctl);padding:0 14px;font-size:var(--t2)}
+.uc .chip:hover{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.16);color:#fff}
+.uc .chip[aria-current]{background:#fff!important;border-color:#fff!important;color:var(--ink)!important;box-shadow:0 4px 14px rgba(0,0,0,.25)!important}
+.uc-q{display:flex;align-items:center;gap:8px;height:var(--ctl);padding:0 16px;border-radius:var(--rf);border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);min-width:240px;box-sizing:border-box;margin-bottom:16px}
+.uc-q:focus-within{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.14)}
+.uc-q svg{width:16px;height:16px;flex:none;fill:none;stroke:rgba(255,255,255,.7);stroke-width:1.8;stroke-linecap:round}
+.uc-q input{border:0;outline:0;background:none;font:500 var(--t2)/1 var(--f-b);color:#fff;width:100%;min-width:0}
+.uc-q input::placeholder{color:rgba(255,255,255,.55)}
+.uc-ax{margin-bottom:16px}
 .uc-n{margin:0 0 16px;font:500 var(--t1)/1 var(--f-m);letter-spacing:.04em;color:var(--ink-2)}
 .uc-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:16px}
 .uc-c{position:relative;display:flex;flex-direction:column;gap:8px;min-height:168px;padding:20px 20px 16px;box-sizing:border-box;border-radius:var(--r2);background:#fff;border:1px solid rgba(16,22,46,.08);
@@ -290,8 +294,15 @@ html:lang(ar) .uc-meta dt{text-transform:none;letter-spacing:0}
 .band.dark .stage .pro .eyebrow,.band.dark .stage .gate .eyebrow,.band.dark .stage .cat .eyebrow,.band.dark .stage .zoom .eyebrow{color:#17707A}
 
 /* ---- birincil düğmeler koyu: Sağlık çalışanları, Siteye dön ---- */
-.site-top .hcp.lg,.site-top .hcp{background:var(--ink)!important;color:#fff!important;border:1px solid var(--ink)!important;box-shadow:0 6px 18px rgba(14,34,53,.18)}
-.site-top .hcp.lg:hover,.site-top .hcp:hover,.site-top .hcp:focus-visible{background:var(--cobalt)!important;border-color:var(--cobalt)!important}
+/* ---- koyu cam düğme: üst çubuk, kapı, birincil düğmeler, çerez bandı, seçili filtre ---- */
+.site-top .hcp.lg,.site-top .hcp,.b-pri,.g-go,.ck-b.ck-pri,.pro-top .hcp,.gate .hcp{
+ background:linear-gradient(180deg,rgba(34,58,88,.96),rgba(14,34,53,.98))!important;color:#fff!important;border:1px solid rgba(255,255,255,.14)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.25),0 8px 24px rgba(14,34,53,.22)!important;
+ -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background var(--d2) var(--e1),box-shadow var(--d2) var(--e1),transform var(--d2) var(--e1)}
+.site-top .hcp.lg:hover,.site-top .hcp:hover,.site-top .hcp:focus-visible,.b-pri:hover,.b-pri:focus-visible,.g-go:hover,.g-go:focus-visible,.ck-b.ck-pri:hover,.ck-b.ck-pri:focus-visible,.pro-top .hcp:hover,.gate .hcp:hover{
+ background:linear-gradient(180deg,rgba(24,88,140,.98),rgba(16,64,104,1))!important;border-color:rgba(255,255,255,.22)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(0,0,0,.25),0 12px 32px rgba(16,64,104,.32)!important}
+.uc-box.lock .b-pri{background:#fff!important;color:var(--ink)!important;border-color:rgba(16,22,46,.12)!important;box-shadow:var(--sh-1)!important}
 .pro-out.ghost{height:var(--ctl);padding:0 18px;background:var(--ink)!important;color:#fff!important;border:1px solid var(--ink)!important;box-shadow:0 6px 18px rgba(14,34,53,.18)}
 .pro-out.ghost:hover,.pro-out.ghost:focus-visible{background:var(--cobalt)!important;border-color:var(--cobalt)!important}
 
@@ -299,9 +310,15 @@ html:lang(ar) .uc-meta dt{text-transform:none;letter-spacing:0}
 .pg{padding-bottom:clamp(32px,4vw,48px)!important}
 .pg+.hs,.pg+.pg-sec,.pg+section{padding-top:clamp(32px,3.5vw,48px)!important}
 .pg.has-vid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:clamp(32px,5vw,72px);align-items:end}
-.pg-vid{position:relative;margin:0;border-radius:var(--r3);overflow:hidden;aspect-ratio:16/10;box-shadow:var(--sh-2);background:#D7E5EE}
-.pg-vid video{width:100%;height:100%;object-fit:cover;display:block}
-.pg-vid::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);background:linear-gradient(170deg,rgba(255,255,255,.06),rgba(14,34,53,.16))}
+.pg-vid{position:relative;margin:0;border-radius:var(--r3);overflow:hidden;aspect-ratio:16/10;background:#D7E5EE;
+ box-shadow:0 30px 72px rgba(16,64,104,.22),0 0 0 1px rgba(255,255,255,.5),0 0 120px rgba(32,144,152,.18);animation:pgFloat 9s var(--e1) infinite alternate}
+.pg-vid::before{content:"";position:absolute;inset:-40%;z-index:0;pointer-events:none;background:conic-gradient(from 200deg at 50% 50%,rgba(32,144,152,.0),rgba(32,144,152,.35),rgba(16,64,104,.0) 60%);animation:pgSpin 18s linear infinite;opacity:.5}
+.pg-vid video{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block;-webkit-mask-image:linear-gradient(180deg,#000 72%,rgba(0,0,0,.55));mask-image:linear-gradient(180deg,#000 72%,rgba(0,0,0,.55))}
+.pg-vid::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 0 0 1px rgba(255,255,255,.25);
+ background:linear-gradient(165deg,rgba(255,255,255,.14),transparent 35%,transparent 70%,rgba(14,34,53,.28))}
+@keyframes pgFloat{from{transform:translateY(6px)}to{transform:translateY(-6px)}}
+@keyframes pgSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.pg-vid,.pg-vid::before{animation:none}}
 @media (max-width:900px){.pg.has-vid{display:block}.pg-vid{display:none}}
 
 /* ---- iş ortakları: renkli zemin üstünde buzlu cam kartlar ---- */
