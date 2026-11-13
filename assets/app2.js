@@ -265,7 +265,14 @@ function lswSync(){const L=IF.lang||'tr';$('#lswCode').textContent=L.toUpperCase
 function v2refresh(){renderUC();renderUZ();renderHK();crumbs();lswSync();titleSync();}
 new MutationObserver(v2refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 
-ucRead();v2route();v2refresh();setTimeout(renderHK,1500);
+/* ---- alt sayfa başlığında dönen tek video (geniş ekran; hareket azaltılmışsa yalnız kapak görseli) ---- */
+const PGV={urunler:'hero-urun',uretim:'hero-uretim',bilim:'hero-bilim',uzmanlik:'hero-laboratuvar',hakkimizda:'hero-laboratuvar',guncel:'hero-bilim',iletisim:'hero-laboratuvar'};
+function pgVideo(){const k=PGV[P];if(!k||!curView||!matchMedia('(min-width: 901px)').matches)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
+ const B=(window.IF_BASE||'')+'media/'+k,f=document.createElement('figure'),v=document.createElement('video');f.className='pg-vid';f.setAttribute('aria-hidden','true');
+ v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata';v.poster=B+'.jpg';
+ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){v.autoplay=true;v.src=B+'.mp4';}
+ f.appendChild(v);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
+ucRead();v2route();v2refresh();pgVideo();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
 
 labels();

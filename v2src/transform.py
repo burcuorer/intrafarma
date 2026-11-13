@@ -198,6 +198,9 @@ n_media = len(re.findall(r'(src|poster)="media/', _body))
 s = s[:_b0] + re.sub(r'(src|poster)="media/', r'\1="{{BASE}}media/', _body) + s[_b1:]
 LOG.append('medya yolu: %d' % n_media)
 
+# Pro: hücre metne yaklaşır (sağda boş alan kalmasın)
+rep("place(L.pro,n?.66:.74,n?.29:.42,n?.15:.23);", "place(L.pro,n?.66:.63,n?.29:.44,n?.15:.23);")
+
 # ---------------------------------------------------------------- JS
 scripts = list(re.finditer(r'<script>(.*?)</script>', s, re.S))
 assert len(scripts) == 2

@@ -285,3 +285,33 @@ html:lang(ar) .uc-meta dt{text-transform:none;letter-spacing:0}
 
 /* sayfa başlığından sonraki ilk bölüm: iki boşluk üst üste binmesin */
 .pg+.hs,.pg+.pg-sec,.pg+section{padding-top:clamp(32px,4vw,56px)!important}
+
+/* ---- Pro ve katmanlar koyu bandın içinde ama açık zeminli: başlıklar okunur ---- */
+.band.dark .stage .pro .eyebrow,.band.dark .stage .gate .eyebrow,.band.dark .stage .cat .eyebrow,.band.dark .stage .zoom .eyebrow{color:#17707A}
+
+/* ---- birincil düğmeler koyu: Sağlık çalışanları, Siteye dön ---- */
+.site-top .hcp.lg,.site-top .hcp{background:var(--ink)!important;color:#fff!important;border:1px solid var(--ink)!important;box-shadow:0 6px 18px rgba(14,34,53,.18)}
+.site-top .hcp.lg:hover,.site-top .hcp:hover,.site-top .hcp:focus-visible{background:var(--cobalt)!important;border-color:var(--cobalt)!important}
+.pro-out.ghost{height:var(--ctl);padding:0 18px;background:var(--ink)!important;color:#fff!important;border:1px solid var(--ink)!important;box-shadow:0 6px 18px rgba(14,34,53,.18)}
+.pro-out.ghost:hover,.pro-out.ghost:focus-visible{background:var(--cobalt)!important;border-color:var(--cobalt)!important}
+
+/* ---- alt sayfa başlığı: solda metin, sağda dönen tek video ---- */
+.pg{padding-bottom:clamp(32px,4vw,48px)!important}
+.pg+.hs,.pg+.pg-sec,.pg+section{padding-top:clamp(32px,3.5vw,48px)!important}
+.pg.has-vid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:clamp(32px,5vw,72px);align-items:end}
+.pg-vid{position:relative;margin:0;border-radius:var(--r3);overflow:hidden;aspect-ratio:16/10;box-shadow:var(--sh-2);background:#D7E5EE}
+.pg-vid video{width:100%;height:100%;object-fit:cover;display:block}
+.pg-vid::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);background:linear-gradient(170deg,rgba(255,255,255,.06),rgba(14,34,53,.16))}
+@media (max-width:900px){.pg.has-vid{display:block}.pg-vid{display:none}}
+
+/* ---- iş ortakları: renkli zemin üstünde buzlu cam kartlar ---- */
+.st-pt .pt-row{position:relative;padding:24px 0;border-radius:var(--r3);isolation:isolate}
+.st-pt .pt-row::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;
+ background:radial-gradient(30% 120% at 12% 50%,rgba(32,144,152,.22),transparent 70%),radial-gradient(28% 120% at 55% 40%,rgba(16,64,104,.16),transparent 70%),radial-gradient(30% 120% at 92% 60%,rgba(32,144,152,.2),transparent 70%),linear-gradient(180deg,#EEF4F8,#E4EEF4)}
+.pt-l{background:#fff;border:1px solid rgba(255,255,255,1);
+ box-shadow:0 0 0 4px rgba(255,255,255,.38),0 0 0 5px rgba(32,144,152,.10),0 12px 30px rgba(16,64,104,.12),0 2px 6px rgba(16,64,104,.06);
+ transition:box-shadow var(--d2),transform var(--d2) var(--e1)}
+.pt-l:hover,.pt-l:focus-visible{box-shadow:0 0 0 4px rgba(255,255,255,.6),0 0 0 5px rgba(32,144,152,.22),0 18px 40px rgba(16,64,104,.18),0 2px 6px rgba(16,64,104,.08);transform:translateY(-3px)}
+.st-pt .pt-row{padding:28px 0}
+.pt-l.dk{background:rgba(30,42,56,.86);border-color:rgba(255,255,255,.12)}
+.hk-pt{position:relative}

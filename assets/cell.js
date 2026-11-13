@@ -253,7 +253,7 @@ function resize(){
  vh=2*cam.position.z*Math.tan(THREE.MathUtils.degToRad(cam.fov/2));vw=vh*cam.aspect;
  const n=W<760;
  place(L.pub,.5,n?.42:.45,n?.32:.36);
- place(L.pro,n?.66:.74,n?.29:.42,n?.15:.23);
+ place(L.pro,n?.66:.63,n?.29:.44,n?.15:.23);
  const v=new THREE.Vector2();renderer.getDrawingBufferSize(v);const rw=Math.max(2,Math.round(v.x*RTS)),rh=Math.max(2,Math.round(v.y*RTS));rt.setSize(rw,rh);bgMat.uniforms.uRes.value.set(rw,rh);cpMat.uniforms.uRes.value.copy(v);MU.uFull.value.copy(v);
 }
 new ResizeObserver(resize).observe(stage);resize();IF.relayout=resize;
