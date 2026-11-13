@@ -1,0 +1,49 @@
+{
+ "once": {
+  "yazı boyu": 24,
+  "köşe": 15,
+  "gölge": 61,
+  "renk (hex)": 66,
+  "süre": 33,
+  "eğri": 5,
+  "boşluk": 184,
+  "kırılma noktası": 9
+ },
+ "sonra": {
+  "yazı boyu": 6,
+  "köşe": 9,
+  "gölge": 32,
+  "renk (hex)": 48,
+  "süre": 23,
+  "eğri": 3,
+  "boşluk": 131,
+  "kırılma noktası": 3
+ },
+ "ortak gölgeye bağlanan": 30,
+ "birleşen renk": {
+  "#F6F7FB": "#FFF",
+  "#E8F4F5": "#E3F2F4",
+  "#E3EEF2": "#E3F2F4",
+  "#ECEEF4": "#E7EAF3",
+  "#F8F9FC": "#FFF",
+  "#DDF0EF": "#E3F2F4",
+  "#DDF3F2": "#E3F2F4",
+  "#2FA3A8": "#3FA9B0",
+  "#0C3352": "#0B2E4C",
+  "#CFE6EC": "#D3E6EE",
+  "#EAF5F6": "#E3F2F4",
+  "#C9E2EA": "#D3E6EE",
+  "#9FCBD6": "#9CCBD6",
+  "#DCECF1": "#E3F2F4",
+  "#EAF2F5": "#E3F2F4",
+  "#CFE2E9": "#D3E6EE",
+  "#E8EFF7": "#E7EAF3",
+  "#DCE7F1": "#E7EAF3",
+  "#CFE3EA": "#D3E6EE"
+ },
+ "kırılma noktaları": [
+  640,
+  900,
+  1180
+ ]
+}
