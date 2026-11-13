@@ -163,7 +163,7 @@ rep('<a class="b-link" href="#guncel" data-t="gn_all"></a>', '<a class="b-link" 
 rep('<a href="hakkimizda.html" data-t="nav1"></a><a href="#uzmanlik" data-t="nav2"></a><a href="#urunler" data-t="nav3"></a><a href="#bilim" data-t="nav4"></a><a href="#uretim" data-t="nav_ur"></a><a href="#guncel" data-t="nav6"></a><a href="#iletisim" data-t="nav5"></a></nav>',
     '<a href="index.html" data-t="pg_home"></a><a href="hakkimizda.html" data-t="nav1"></a><a href="uzmanlik.html" data-t="nav2"></a><a href="urunler.html" data-t="nav3"></a><a href="bilim.html" data-t="nav4"></a><a href="bilim.html#sss" data-t="ft_sss"></a><a href="uretim.html" data-t="nav_ur"></a><a href="guncel.html" data-t="nav6"></a><a href="iletisim.html" data-t="nav5"></a><button type="button" data-gate data-t="hcp"></button></nav>')
 rep('<a href="#sss" data-t="ft_sss"></a><a href="#" data-t="ft_kvkk"></a><a href="#" data-t="ft_cookie"></a><a href="#" data-t="ft_ae"></a>',
-    '<a aria-disabled="true" data-t="ft_kvkk"></a><a aria-disabled="true" data-t="ft_cookie"></a><a aria-disabled="true" data-t="ft_ae"></a>')
+    '<a aria-disabled="true" data-t="ft_kvkk"></a><button type="button" class="ck-open" data-t="ft_cookie"></button><a aria-disabled="true" data-t="ft_ae"></a>')
 
 # 8) alt bilginin altındaki tasarım notları (iki dünya tablosu, erişim katmanları, sonra eklenecekler, etkileşim dili)
 i0 = s.index('<section class="sec">'); i1 = s.index('<p class="draft-chip" id="draftChip"')
@@ -250,6 +250,8 @@ c2n = jrep(c2n, "'<img src=\"media/gorsel/'", "'<img src=\"'+(window.IF_BASE||''
 c2n = jrep(c2n, "addEventListener('hashchange',()=>route(false));route(true);", "")
 V2C2 = io.open(os.path.join(HERE, 'v2c2.js'), encoding='utf-8').read()
 c2n = jrep(c2n, "labels();\n})();", V2C2 + "\nlabels();\n})();")
+CONSENT = io.open(os.path.join(HERE, 'v2consent.js'), encoding='utf-8').read()
+c2n = c2n.rstrip() + '\n' + CONSENT
 for chk, src in (('c1', c1n), ('c2', c2n)):
     left = re.findall(r"""['"]#(?:alan-|uretim|iletisim|guncel|bilim|urunler|uzmanlik|top)\b""", src)
     if left: sys.exit('%s içinde eski # bağlantısı kaldı: %s' % (chk, left[:5]))

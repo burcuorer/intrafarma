@@ -69,7 +69,7 @@ shutil.copy(NM + '/three/LICENSE', os.path.join(A, 'vendor', 'THREE-LICENSE.txt'
 for fn, pid, title in PAGES:
     h = re.sub(r'<html lang="tr"[^>]*>', '<html lang="tr" data-page="%s">' % pid, head, count=1)
     need('data-page="%s"' % pid in h, 'html etiketi')
-    h = h.replace('</head>', '<title>%s</title>\n<link rel="stylesheet" href="assets/fonts.css?v=%s">\n<link rel="stylesheet" href="assets/app.css?v=%s">\n<script>window.IF_BASE=%r;</script>\n</head>' % (title, h_f, h_css, BASE))
+    h = h.replace('</head>', '<title>%s</title>\n<link rel="stylesheet" href="assets/fonts.css?v=%s">\n<link rel="stylesheet" href="assets/app.css?v=%s">\n<script>window.IF_BASE=%r;window.IF_CK={ga:\"G-DNHVY79BSW\",ads:\"\",live:[\"intrafarma.com.tr\",\"www.intrafarma.com.tr\"],log:\"\",policy:\"\"};</script>\n</head>' % (title, h_f, h_css, BASE))
     if '</head>' not in head:
         sys.exit('head kapanışı yok')
     html = (h + '<body>' + body +
