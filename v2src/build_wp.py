@@ -274,6 +274,82 @@ add_action('admin_notices', function () {
     }
 });
 
+/* ===================== Eski sayfaları yeni tasarıma yönlendirme =====================
+ * Eski temadan kalan sayfalar (Ürünlerimiz, /project/..., kategori sayfaları, İş Ortaklarımız...) silinmez;
+ * ziyaretçi bu adreslere gelirse yeni tasarımdaki karşılığına gönderilir.
+ * Ayar: Görünüm → Özelleştir → "Intrafarma · Yönlendirme". Yönetici eski sayfayı görmek isterse adrese ?eski=1 ekler.
+ */
+add_action('customize_register', function ($wpc) {
+    $wpc->add_section('intrafarma_rd', array('title' => 'Intrafarma · Yönlendirme', 'priority' => 161,
+        'description' => 'Eski temadan kalan sayfalara gelen ziyaretçiler yeni tasarımdaki karşılık gelen sayfaya gönderilir. Eski içerik silinmez. Yönetici olarak eski bir sayfayı görmek için adresin sonuna ?eski=1 ekleyin.'));
+    $wpc->add_setting('intrafarma_rd_on', array('default' => 1, 'sanitize_callback' => 'absint'));
+    $wpc->add_control('intrafarma_rd_on', array('section' => 'intrafarma_rd', 'type' => 'checkbox', 'label' => 'Eski sayfaları yeni tasarıma yönlendir'));
+    $wpc->add_setting('intrafarma_rd_301', array('default' => 0, 'sanitize_callback' => 'absint'));
+    $wpc->add_control('intrafarma_rd_301', array('section' => 'intrafarma_rd', 'type' => 'checkbox', 'label' => 'Kalıcı yönlendirme (301) — yalnızca canlı yayın günü açın; testte geçici (302) kalsın'));
+});
+
+function intrafarma_old_target() {
+    $U = intrafarma_urls();
+    $q = function ($base, $args) { return add_query_arg($args, $base); };
+    $path = trim(strtolower(rawurldecode((string) wp_parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))), '/');
+    $path = preg_replace('#^index\.php/?#', '', $path);
+    $seg = $path === '' ? array() : explode('/', $path);
+
+    // dil: /language/en/... → ana sayfa, İngilizce
+    if (isset($seg[0], $seg[1]) && $seg[0] === 'language' && preg_match('/^(en|ar|it|ru|ro|tr)$/', $seg[1])) { return $q($U['home'], array('lang' => $seg[1])); }
+
+    // tek ürün: /project/<slug>/
+    $prod = array('regenflex-kit-3' => 'regenflex-kit', 'regenflex-tm' => 'regenflex-t-m', 'eksozom-3' => 'eksozom', 'lipocell' => 'lipocell-mini', 'collygen-2' => 'collygen');
+    $known = array('regenflex-bio-plus','regenflex-starter','regenflex-kit','regenflex-t-m','inartro','easy-prp-kit','intra-prp','well-prp','eksozom','mezenkimal-kok-hucre','kondroblast','kondromembran','amniongraft','milliexo','lipocell-mini','milligraft','sw-abmc','osblass-sase','atrofit','nemact','intra-type-ii','collygen','konted-us','hip-safe','arthrys-regain','arthrys','innprost','innpeak');
+    $slug = '';
+    if (is_singular('project') || (isset($seg[0]) && $seg[0] === 'project' && isset($seg[1]))) {
+        $slug = is_singular('project') ? get_post_field('post_name', get_queried_object_id()) : $seg[1];
+        $slug = isset($prod[$slug]) ? $prod[$slug] : $slug;
+        return in_array($slug, $known, true) ? $q($U['urunler'], array('urun' => $slug)) : $U['urunler'];
+    }
+
+    // ürün kategorileri (eski portföy filtreleri) → eksen ya da klinik alan
+    $term = '';
+    if (is_tax() || is_category()) { $o = get_queried_object(); $term = $o && isset($o->slug) ? $o->slug : ''; }
+    elseif (count($seg) >= 2 && preg_match('/(categor|kategori|portfolio|project_|project-)/', $seg[0])) { $term = end($seg); }
+    if ($term !== '') {
+        $map = array('hucresel' => array('eksen' => 'hucresel-tedaviler'), 'ortobiyolojik' => array('eksen' => 'ortobiyolojikler'),
+            'biyoaktif' => array('eksen' => 'biyoaktif-beslenme'), 'gida' => array('eksen' => 'biyoaktif-beslenme'), 'kolajen' => array('eksen' => 'biyoaktif-beslenme'),
+            'rejeneratif' => array('eksen' => 'rejeneratif-teknolojiler'), 'ayristirma' => array('eksen' => 'rejeneratif-teknolojiler'),
+            'kadin' => array('alan' => 'kadin-sagligi'), 'ortopedi' => array('alan' => 'ortopedi'), 'travmatoloji' => array('alan' => 'ortopedi'),
+            'uroloji' => array('alan' => 'uroloji'), 'veteriner' => array('alan' => 'veteriner'), 'estetik' => array('alan' => 'estetik'), 'spor' => array('alan' => 'spor-hekimligi'));
+        foreach ($map as $k => $a) { if (strpos($term, $k) !== false) { return $q($U['urunler'], $a); } }
+        return $U['urunler'];
+    }
+
+    // bilinen eski sayfalar
+    $pages = array('urunlerimiz' => $U['urunler'], 'e-katalog' => $U['urunler'], 'urunler-2' => $U['urunler'],
+        'is-ortaklarimiz' => $U['hakkimizda'] . '#is-ortaklari', 'kurumsal' => $U['hakkimizda'],
+        'insan-kaynaklari' => $U['iletisim'], 'kariyer' => $U['iletisim'], 'e-bulten' => $U['guncel'], 'haberler' => $U['guncel'], 'blog' => $U['guncel'],
+        'homepage' => $U['home'], 'anasayfa' => $U['home']);
+    if (is_page()) { $pn = get_post_field('post_name', get_queried_object_id()); if (isset($pages[$pn])) { return $pages[$pn]; } }
+    if (isset($seg[0]) && isset($pages[$seg[0]])) { return $pages[$seg[0]]; }
+    if (isset($_GET['page_id']) && (int) $_GET['page_id'] === 8008) { return $U['urunler']; }
+    if (is_singular('post') || is_home() || is_archive()) { return $U['guncel']; }
+    return $U['home'];
+}
+
+add_action('template_redirect', function () {
+    if (!get_theme_mod('intrafarma_rd_on', 1)) { return; }
+    if (is_admin() || wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST) || is_feed() || is_robots() || is_preview() || is_customize_preview()) { return; }
+    if (function_exists('is_favicon') && is_favicon()) { return; }
+    if (isset($_GET['eski']) && current_user_can('edit_pages')) { return; }
+    if (intrafarma_view() !== '') { return; }           // yeni tasarım sayfası: dokunma
+    if (is_404() && preg_match('#\.(xml|txt|ico|png|jpe?g|webp|svg|pdf|css|js|map|woff2?)$#i', (string) wp_parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) { return; }
+    if (is_search()) { wp_safe_redirect(intrafarma_urls()['urunler'], 302); exit; }
+    $to = intrafarma_old_target();
+    if (!$to) { return; }
+    $here = (is_ssl() ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    if (untrailingslashit(strtok($to, '#')) === untrailingslashit($here)) { return; }
+    wp_safe_redirect($to, get_theme_mod('intrafarma_rd_301', 0) ? 301 : 302, 'Intrafarma');
+    exit;
+}, 1);
+
 /** Tasarım sayfasını basar */
 function intrafarma_render($page) {
     $body = file_get_contents(get_template_directory() . '/parts/body.html');
