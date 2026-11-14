@@ -43,7 +43,7 @@ function intrafarma_cms_set_defaults() {
 function intrafarma_cms_set() { $o = get_option('intrafarma_set'); return is_array($o) ? $o + intrafarma_cms_set_defaults() : intrafarma_cms_set_defaults(); }
 /** İş ortağı logosunun adresi: tema dosyası anahtarı ya da ortam kütüphanesi adresi */
 function intrafarma_partner_img($f) {
-    return preg_match('/^[a-z0-9-]+$/', (string) $f) ? intrafarma_uri() . '/media/ortaklar/' . $f . '.jpg' : (string) $f;
+    return preg_match('/^[a-z0-9-]+$/', (string) $f) ? intrafarma_uri() . '/media/ortaklar/' . $f . '.webp' : (string) $f;
 }
 
 /** "/wp-content/uploads/..." gibi site içi yolu tam adrese çevirir (alt klasöre kurulumda da çalışsın) */

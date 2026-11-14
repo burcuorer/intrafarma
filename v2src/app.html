@@ -1614,6 +1614,20 @@ html.ck-on .draft-chip{display:none}
  .uc .chip{flex:none}
  .uc-ax{width:100%}
 }
+
+/* ---- ürün kartları: görsel yoksa boşluk bırakma; alan sayfasında görsel küçük ve silik ---- */
+.uc-c:not(.has-img){min-height:0}
+.uc-c:not(.has-img) b{margin-bottom:14px}
+.al-cards .uc-c{min-height:0}
+.al-cards .uc-c.has-img{padding-inline-end:96px}
+.al-cards .uc-c .uc-ci{position:absolute;inset-inline-end:14px;top:50%;transform:translateY(-50%);width:68px;height:68px;aspect-ratio:auto;margin:0;padding:4px;
+ object-fit:contain;border-radius:var(--r1);background:#fff;opacity:.55;filter:saturate(.6);transition:opacity var(--d1),filter var(--d1)}
+.al-cards .uc-c:hover .uc-ci{opacity:1;filter:none}
+
+/* ---- iş ortağı logoları: temiz, şeffaf, renkli dosyalar; filtre yok ---- */
+.pt-l{padding:8px 12px}
+.pt-l img,.pt-l.dk img,.hk-ptg .pt-l img{width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;clip-path:none;filter:none;opacity:1;mix-blend-mode:normal;transition:transform var(--d2) var(--e2)}
+.pt-l:hover img,.pt-l:focus-visible img{transform:scale(1.04)}
 </style>
 </head><body>
 
@@ -2570,7 +2584,7 @@ const track=$('#ptTrack');
  const a=document.createElement(u?'a':'span');a.className='pt-l'+(dk?' dk':'');
  if(u){a.href=u;a.target='_blank';a.rel='noopener';}
  if(copy){a.setAttribute('aria-hidden','true');if(u)a.tabIndex=-1;}
- const im=new Image();im.src=/^(https?:)?\/\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.jpg';im.alt=copy?'':n;im.loading='lazy';im.decoding='async';a.appendChild(im);track.appendChild(a);}));
+ const im=new Image();im.src=/^(https?:)?\/\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.webp';im.alt=copy?'':n;im.loading='lazy';im.decoding='async';a.appendChild(im);track.appendChild(a);}));
 
 /* video hero: sequential silent clips, arrows, dots, pause */
 const vs=$$('.vh-v'),dots=$('#vhDots'),pp=$('#vhPP');let cur=0,playing=!RM,inView=true;

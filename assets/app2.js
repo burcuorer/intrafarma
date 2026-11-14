@@ -12,7 +12,7 @@ const track=$('#ptTrack');
  const a=document.createElement(u?'a':'span');a.className='pt-l'+(dk?' dk':'');
  if(u){a.href=u;a.target='_blank';a.rel='noopener';}
  if(copy){a.setAttribute('aria-hidden','true');if(u)a.tabIndex=-1;}
- const im=new Image();im.src=/^(https?:)?\/\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.jpg';im.alt=copy?'':n;im.loading='lazy';im.decoding='async';a.appendChild(im);track.appendChild(a);}));
+ const im=new Image();im.src=/^(https?:)?\/\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.webp';im.alt=copy?'':n;im.loading='lazy';im.decoding='async';a.appendChild(im);track.appendChild(a);}));
 
 /* video hero: sequential silent clips, arrows, dots, pause */
 const vs=$$('.vh-v'),dots=$('#vhDots'),pp=$('#vhPP');let cur=0,playing=!RM,inView=true;

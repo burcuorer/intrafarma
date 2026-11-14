@@ -272,7 +272,7 @@ nh_old = c2n[c2n.index("const nh=$('#nvHp');"):c2n.index("if(typeof renderAlan==
 c2n = jrep(c2n, nh_old, "const nh=$('#nvHp');if(nh){nh.innerHTML='';AX.forEach((n,i)=>{const a=document.createElement('a');a.href=IFU.ax(i);a.textContent=n;nh.appendChild(a);});const al=document.createElement('a');al.href=IFU.ax(-1);al.className='nv-all';al.textContent=tr('all_prods');nh.appendChild(al);}\n ")
 c2n = jrep(c2n, "li.textContent=p.n;ul.appendChild(li);", "const pa=document.createElement('a');pa.href=IFU.prod(p);pa.textContent=p.n;li.appendChild(pa);ul.appendChild(li);")
 c2n = jrep(c2n, "a.href='#alan-'+i;a.innerHTML='<span></span>", "a.href=IFU.alan(i);a.innerHTML='<span></span>")
-c2n = jrep(c2n, "im.src='media/ortaklar/'+f+'.jpg'", "im.src=/^(https?:)?\\/\\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.jpg'")
+c2n = jrep(c2n, "im.src='media/ortaklar/'+f+'.jpg'", "im.src=/^(https?:)?\\/\\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.webp'")
 # iş ortakları WordPress panelinden gelebilir
 c2n = jrep(c2n, "const PT=[[", "const PT=(window.IF_CMS&&Array.isArray(window.IF_CMS.partners)&&window.IF_CMS.partners.length&&window.IF_CMS.partners)||[[")
 c2n = jrep(c2n, "addEventListener('hashchange',()=>route(false));route(true);", "")
