@@ -604,5 +604,9 @@ html.ck-on .draft-chip{display:none}
 
 /* ---- iş ortağı logoları: temiz, şeffaf, renkli dosyalar; filtre yok ---- */
 .pt-l{padding:8px 12px}
-.pt-l img,.pt-l.dk img,.hk-ptg .pt-l img{width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;clip-path:none;filter:none;opacity:1;mix-blend-mode:normal;transition:transform var(--d2) var(--e2)}
-.pt-l:hover img,.pt-l:focus-visible img{transform:scale(1.04)}
+.pt-l img,.pt-l.dk img,.hk-ptg .pt-l img{width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;clip-path:none;mix-blend-mode:normal;
+ filter:grayscale(1) contrast(1.1);opacity:.8;transition:filter var(--d2) var(--e2),opacity var(--d2) var(--e2),transform var(--d2) var(--e2)}
+.pt-l.dk img{filter:grayscale(1) brightness(1.4);opacity:.9}
+/* üzerine gelince renkli */
+.pt-l:hover img,.pt-l:focus-visible img{filter:none;opacity:1;transform:scale(1.04)}
+@media (hover:none){.pt-l img{filter:none;opacity:1}}
