@@ -103,7 +103,8 @@
   "ax_p1": "Hastanın kendi hücrelerinden laboratuvar ortamında hazırlanan hücresel ürünler. Mezenkimal kök hücre, kondroblast ve eksozom gibi ileri tedavi seçenekleri bu eksende.",
   "ax_p2": "Yağ dokusu ve kemik iliği işleme sistemleri, doku greftleri ve hazırlık kitleri. Klinikte uygulanmak üzere tasarlanmış rejeneratif teknolojiler bu eksende.",
   "ax_p3": "Kolajen, glukozamin ve bitkisel ekstraktlar içeren takviye edici gıdalar. Eklem ve doku sağlığını beslenmeyle desteklemeye yönelik ürünler bu eksende.",
-  "ax_p4": "Üroloji ve kadın sağlığına yönelik, belirli ihtiyaçlar için geliştirilmiş özel ürünler bu eksende."
+  "ax_p4": "Üroloji ve kadın sağlığına yönelik, belirli ihtiyaçlar için geliştirilmiş özel ürünler bu eksende.",
+  "c_go": "Hücreyi canlandır"
  },
  "en": {
   "draft": "Test version · text, figures and images are samples",
@@ -209,7 +210,8 @@
   "ax_p1": "Cellular products prepared in the laboratory from the patient’s own cells. Advanced options such as mesenchymal stem cells, chondroblasts and exosomes sit on this axis.",
   "ax_p2": "Adipose tissue and bone marrow processing systems, tissue grafts and preparation kits. Regenerative technologies designed for use in the clinic sit on this axis.",
   "ax_p3": "Food supplements containing collagen, glucosamine and plant extracts. Products that support joint and tissue health through nutrition sit on this axis.",
-  "ax_p4": "Special products developed for specific needs in urology and women’s health sit on this axis."
+  "ax_p4": "Special products developed for specific needs in urology and women’s health sit on this axis.",
+  "c_go": "Bring the cell to life"
  },
  "ar": {
   "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -315,7 +317,8 @@
   "ax_p1": "منتجات خلوية تُحضّر في المختبر من خلايا المريض نفسه. في هذا المحور خيارات متقدمة مثل الخلايا الجذعية الوسيطة وأرومات الغضروف والإكسوسومات.",
   "ax_p2": "أنظمة معالجة النسيج الدهني ونخاع العظم وطعوم الأنسجة وأطقم التحضير. في هذا المحور التقنيات التجديدية المصممة للاستخدام في العيادة.",
   "ax_p3": "مكملات غذائية تحتوي على الكولاجين والجلوكوزامين والمستخلصات النباتية. في هذا المحور المنتجات التي تدعم صحة المفاصل والأنسجة عبر التغذية.",
-  "ax_p4": "في هذا المحور منتجات خاصة طُوّرت لاحتياجات محددة في طب المسالك البولية وصحة المرأة."
+  "ax_p4": "في هذا المحور منتجات خاصة طُوّرت لاحتياجات محددة في طب المسالك البولية وصحة المرأة.",
+  "c_go": "حرّك الخلية"
  },
  "it": {
   "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -421,7 +424,8 @@
   "ax_p1": "Prodotti cellulari preparati in laboratorio a partire dalle cellule del paziente. Su questo asse si trovano opzioni avanzate come cellule staminali mesenchimali, condroblasti ed esosomi.",
   "ax_p2": "Sistemi di processazione del tessuto adiposo e del midollo osseo, innesti tissutali e kit di preparazione. Su questo asse si trovano le tecnologie rigenerative progettate per l’uso in clinica.",
   "ax_p3": "Integratori alimentari con collagene, glucosamina ed estratti vegetali. Su questo asse si trovano i prodotti che sostengono la salute di articolazioni e tessuti attraverso la nutrizione.",
-  "ax_p4": "Su questo asse si trovano prodotti speciali sviluppati per esigenze specifiche in urologia e salute della donna."
+  "ax_p4": "Su questo asse si trovano prodotti speciali sviluppati per esigenze specifiche in urologia e salute della donna.",
+  "c_go": "Anima la cellula"
  },
  "ru": {
   "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -527,7 +531,8 @@
   "ax_p1": "Клеточные продукты, приготовленные в лаборатории из собственных клеток пациента. Здесь собраны передовые решения: мезенхимальные стволовые клетки, хондробласты и экзосомы.",
   "ax_p2": "Системы обработки жировой ткани и костного мозга, тканевые трансплантаты и наборы для подготовки. Здесь собраны регенеративные технологии для применения в клинике.",
   "ax_p3": "БАДы с коллагеном, глюкозамином и растительными экстрактами. Здесь собраны продукты, поддерживающие здоровье суставов и тканей через питание.",
-  "ax_p4": "Здесь собраны специальные продукты, разработанные для конкретных задач в урологии и женском здоровье."
+  "ax_p4": "Здесь собраны специальные продукты, разработанные для конкретных задач в урологии и женском здоровье.",
+  "c_go": "Оживить клетку"
  },
  "ro": {
   "draft": "Versiune de test · textele, cifrele și imaginile sunt exemple",
@@ -633,6 +638,7 @@
   "ax_p1": "Produse celulare preparate în laborator din propriile celule ale pacientului. Pe această axă se află opțiuni avansate precum celulele stem mezenchimale, condroblastele și exozomii.",
   "ax_p2": "Sisteme de procesare a țesutului adipos și a măduvei osoase, grefe tisulare și kituri de preparare. Pe această axă se află tehnologiile regenerative concepute pentru utilizare în clinică.",
   "ax_p3": "Suplimente alimentare cu colagen, glucozamină și extracte din plante. Pe această axă se află produsele care susțin sănătatea articulațiilor și a țesuturilor prin nutriție.",
-  "ax_p4": "Pe această axă se află produse speciale dezvoltate pentru nevoi specifice în urologie și sănătatea femeii."
+  "ax_p4": "Pe această axă se află produse speciale dezvoltate pentru nevoi specifice în urologie și sănătatea femeii.",
+  "c_go": "Animează celula"
  }
 }

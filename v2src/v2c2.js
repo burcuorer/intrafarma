@@ -65,7 +65,10 @@ function ucGo(href,push){history[push?'pushState':'replaceState']({ifuc:1},'',hr
 if(P==='urunler'){
  ['ucEy','ucP'].forEach(id=>{const e=$('#'+id);if(e)e.removeAttribute('data-t');});
  document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||!IFU.same(a.href,'urunler')||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-  e.preventDefault();closeNav();ucGo(a.href,true);scrollTo({top:0,behavior:'auto'});});
+  e.preventDefault();closeNav();
+  /* filtre düğmeleri (eksen, klinik alan) sayfayı yerinde bırakır; ürün açılınca ya da başka yerden gelinince başa dönülür */
+  const inFilter=!!a.closest('.uc-bar,.uc-ca,.uc-ax');const toProd=new URL(a.href).searchParams.has('urun');
+  ucGo(a.href,true);if(!inFilter||toProd)scrollTo({top:0,behavior:'auto'});});
  $('#ucQ').addEventListener('input',e=>{UC.q=e.target.value;renderUC();});
  addEventListener('popstate',()=>{ucRead();renderUC();crumbs();titleSync();});
 }

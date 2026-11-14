@@ -238,7 +238,12 @@ inj = 'for(const [l,o] of Object.entries(%s))Object.assign(T[l],o);\n' % json.du
 c1n = jrep(c1n, 'const IF=window.IF=', inj + 'const IF=window.IF=')
 c1n = jrep(c1n, "m.textContent=src.textContent;", "if(src.dataset.src)m.src=src.dataset.src;else m.textContent=src.textContent;")
 c1n = jrep(c1n, "new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){ob.disconnect();IF.loadCell();}},{rootMargin:'700px 0px'}).observe(document.getElementById('hucre'));",
-               "if(IFU.page==='home')new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){ob.disconnect();IF.loadCell();}},{rootMargin:'700px 0px'}).observe(document.getElementById('hucre'));")
+               "if(IFU.page==='home'){const _h=document.getElementById('hucre'),_st=document.getElementById('stage'),_c=navigator.connection;"
+               "if(_st&&(matchMedia('(max-width:760px)').matches||(_c&&_c.saveData))){"   # mobil: önce hafif görsel, 3B hücre dokununca yüklenir
+               "const f=document.createElement('div');f.className='cell-poster';f.innerHTML='<img src=\"'+(window.IF_BASE||'')+'media/cell-poster.webp\" alt=\"\" decoding=\"async\" loading=\"lazy\"><button type=\"button\" class=\"cell-go\"><span class=\"cg-ring\" aria-hidden=\"true\"></span><span data-t=\"c_go\">'+((T[IF.lang]||T.tr).c_go||'')+'</span></button>';_st.appendChild(f);"
+               "f.querySelector('button').addEventListener('click',()=>{f.classList.add('busy');IF.loadCell();});"
+               "new MutationObserver((m,o)=>{if(_st.classList.contains('gl-on')||_st.classList.contains('gl-off')){o.disconnect();f.classList.add('gone');setTimeout(()=>f.remove(),700);}}).observe(_st,{attributes:true,attributeFilter:['class']});"
+               "}else new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){ob.disconnect();IF.loadCell();}},{rootMargin:'700px 0px'}).observe(_h);}")
 # ziyaretçi kataloğu artık bir sayfa: eski tam ekran katman yalnızca Pro'da açılır
 c1n = jrep(c1n, "IF.openCatAx=i=>{openCat();if(IF.mode==='public'){CS.ax=i;CS.det=-1;renderCat();}};",
                "IF.openCatAx=i=>{if(IF.mode==='public')location.href=IFU.ax(i);};")
@@ -255,7 +260,8 @@ c1n = jrep(c1n, "if(location.hash!=='#pro')history.pushState({ifpro:1},'','#pro'
 V2C1 = io.open(os.path.join(HERE, 'v2c1.js'), encoding='utf-8').read()
 c1n = jrep(c1n, "resize();applyLang();\nrequestAnimationFrame(loop);\n})();", V2C1 + "\nresize();applyLang();\nrequestAnimationFrame(loop);\n})();")
 
-c2n = jrep(c2n, "const UA_IMG=['ortopedi','spor',null,null,null,null];", "const UA_IMG=[null,null,null,null,null,null];")
+c2n = jrep(c2n, "const UA_IMG=['ortopedi','spor',null,null,null,null];", "const UA_IMG=['ortopedi','spor-hekimligi','estetik','uroloji','kadin-sagligi','veteriner'];")
+c2n = jrep(c2n, "'<img src=\"media/gorsel/'+UA_IMG[i]+'.jpg\" alt=\"\" loading=\"lazy\" decoding=\"async\">'", "'<img src=\"'+(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp'+'\" alt=\"\" loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"755\">'")
 c2n = jrep(c2n, "'</svg><span class=\"ua-tb\">'+tr('ua_photo')+'</span>'", "'</svg>'")
 c2n = jrep(c2n, "a.href='#alan-'+i;a.className='ua-c'", "a.href=IFU.alan(i);a.className='ua-c'")
 c2n = jrep(c2n, "const li=document.createElement('li');li.innerHTML='<i>0'+(i+1)+'</i><b></b><span></span>';li.querySelector('b').textContent=n;li.querySelector('span').textContent=c+' '+tr('hp_n');",
@@ -269,11 +275,16 @@ c2n = jrep(c2n, "a.href='#alan-'+i;a.innerHTML='<span></span>", "a.href=IFU.alan
 c2n = jrep(c2n, "im.src='media/ortaklar/'+f+'.jpg'", "im.src=/^(https?:)?\\/\\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.jpg'")
 # iş ortakları WordPress panelinden gelebilir
 c2n = jrep(c2n, "const PT=[[", "const PT=(window.IF_CMS&&Array.isArray(window.IF_CMS.partners)&&window.IF_CMS.partners.length&&window.IF_CMS.partners)||[[")
-c2n = jrep(c2n, "'<img src=\"media/gorsel/'", "'<img src=\"'+(window.IF_BASE||'')+'media/gorsel/'")
 c2n = jrep(c2n, "addEventListener('hashchange',()=>route(false));route(true);", "")
 V2C2 = io.open(os.path.join(HERE, 'v2c2.js'), encoding='utf-8').read()
 # 8e) alan sayfası: her alanın kendi açıklaması (al_p0..5)
 c2n = jrep(c2n, " $('#alH').textContent=CA[alanI];", " $('#alH').textContent=CA[alanI];{const ap=$('#alH').nextElementSibling;if(ap&&ap.tagName==='P'){ap.removeAttribute('data-t');const t=tr('al_p'+alanI);ap.textContent=t&&t!=='al_p'+alanI?t:tr('ua_p');}}")
+# 8g) alt sayfalarda ana sayfa videoları indirilmesin (mobil veri)
+rep('<video class="vh-v on" muted playsinline preload="auto"', '<video class="vh-v on" muted playsinline preload="none"')
+c2n = jrep(c2n, ".observe($('#vh'));\ngo(0);", ".observe($('#vh'));\nif(!window.IFU||IFU.page==='home')go(0);")
+# 8f) alan sayfası: ürünler Ürünler sayfasındaki kartlarla
+c2n = jrep(c2n, "const h=document.createElement('h3');h.textContent='0'+(ax+1)+' · '+AX[ax];g.appendChild(h);const ul=document.createElement('ul');\n  D.PRODS.filter(p=>p.a===ax).forEach(p=>{const li=document.createElement('li');const pa=document.createElement('a');pa.href=IFU.prod(p);pa.textContent=p.n;li.appendChild(pa);ul.appendChild(li);});g.appendChild(ul);});",
+ "const h=document.createElement('h3');h.textContent='0'+(ax+1)+' · '+AX[ax];g.appendChild(h);const gr=document.createElement('div');gr.className='uc-g al-cards';\n  gr.innerHTML=D.PRODS.map((p,i)=>({p,i})).filter(o=>o.p.a===ax).map(o=>ucCard(o.p,o.i,L,AX)).join('');g.appendChild(gr);});")
 c2n = jrep(c2n, "labels();\n})();", V2C2 + "\nlabels();\n})();")
 CONSENT = io.open(os.path.join(HERE, 'v2consent.js'), encoding='utf-8').read()
 c2n = c2n.rstrip() + '\n' + CONSENT

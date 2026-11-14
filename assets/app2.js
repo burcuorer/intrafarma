@@ -38,7 +38,7 @@ $('#vhPrev').addEventListener('click',()=>go(cur-1,true));
 $('#vhNext').addEventListener('click',()=>go(cur+1,true));
 pp.addEventListener('click',()=>{playing=!playing;const v=vs[cur];if(playing){if(v.ended)go(cur+1);else{const p=v.play();if(p&&p.catch)p.catch(()=>{});}}else v.pause();labels();});
 new IntersectionObserver(es=>{inView=es[0].isIntersecting;const v=vs[cur];if(!inView)v.pause();else if(playing){const p=v.play();if(p&&p.catch)p.catch(()=>{});}},{threshold:.15}).observe($('#vh'));
-go(0);
+if(!window.IFU||IFU.page==='home')go(0);
 
 /* keep the second language picker and aria labels in sync with applyLang */
 const sel2=$('#langSel2');
@@ -72,12 +72,12 @@ function vhShrink(){vhq=false;const r=vh.getBoundingClientRect(),p=Math.min(1,Ma
 if(!RM){addEventListener('scroll',()=>{if(!vhq){vhq=true;requestAnimationFrame(vhShrink);}},{passive:true});vhShrink();}
 
 /* expertise cards and product axes from the shared catalogue data */
-const UA_IMG=[null,null,null,null,null,null];
+const UA_IMG=['ortopedi','spor-hekimligi','estetik','uroloji','kadin-sagligi','veteriner'];
 const UA_IC=['<circle cx="12" cy="12" r="9"/><path d="M8 8.5c2 1 2 3 0 4M16 11.5c-2 1-2 3 0 4M9 12.5h6"/>','<circle cx="12" cy="12" r="9"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>','<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>','<rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 8v6"/>','<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>','<path d="M6 13c0-3 3-4 6-4s6 1 6 4-2 6-6 6-6-3-6-6z"/><circle cx="7" cy="6" r="1.6"/><circle cx="12" cy="4.5" r="1.6"/><circle cx="17" cy="6" r="1.6"/>'];
 function homeData(){
  const D=window.IFD;if(!D)return;const L=(window.IF&&IF.lang)||'tr',CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en;
  const g=$('#uaG');if(g){const was=!!g.querySelector('.in');g.innerHTML='';CA.forEach((n,i)=>{const a=document.createElement('a');a.href=IFU.alan(i);a.className='ua-c'+(UA_IMG[i]?'':' noimg');a.setAttribute('data-rv',i%3===0?'left':i%3===2?'right':'up');a.style.setProperty('--i',i%3+Math.floor(i/3));if(was)a.classList.add('in');io.observe(a);
-  a.innerHTML=(UA_IMG[i]?'<img src="'+(window.IF_BASE||'')+'media/gorsel/'+UA_IMG[i]+'.jpg" alt="" loading="lazy" decoding="async">':'<svg class="ua-ic" viewBox="0 0 24 24" aria-hidden="true">'+UA_IC[i]+'</svg>')+'<span class="ua-n">0'+(i+1)+'</span><span class="ua-x"><b></b><i aria-hidden="true">→</i></span>';
+  a.innerHTML=(UA_IMG[i]?'<img src="'+(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp'+'" alt="" loading="lazy" decoding="async" width="800" height="755">':'<svg class="ua-ic" viewBox="0 0 24 24" aria-hidden="true">'+UA_IC[i]+'</svg>')+'<span class="ua-n">0'+(i+1)+'</span><span class="ua-x"><b></b><i aria-hidden="true">→</i></span>';
   a.querySelector('b').textContent=n;g.appendChild(a);});}
  const l=$('#hpL');if(l){const was=!!l.querySelector('.in');l.innerHTML='';AX.forEach((n,i)=>{const c=D.PRODS.filter(p=>p.a===i).length;const li=document.createElement('li');li.innerHTML='<a href="'+IFU.ax(i)+'"><i>0'+(i+1)+'</i><b></b><span aria-hidden="true">→</span></a>';li.querySelector('b').textContent=n;li.dataset.rv='up';li.style.setProperty('--i',i+2);if(was)li.classList.add('in');io.observe(li);l.appendChild(li);});}
  const nu=$('#nvUa');if(nu){nu.innerHTML='';CA.forEach((n,i)=>{const a=document.createElement('a');a.href=IFU.alan(i);a.textContent=n;nu.appendChild(a);});const al=document.createElement('a');al.href=IFU.alan(-1);al.className='nv-all';al.textContent=tr('all_areas');nu.appendChild(al);}
@@ -106,8 +106,8 @@ const VIEWS={bilim:'vBilim',kurul:'vBilim',sss:'vBilim',guncel:'vGuncel',etkinli
 var alanI=-1;
 function renderAlan(){const D=window.IFD;if(!D||alanI<0)return;const L=IF.lang||'tr',CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en;
  $('#alH').textContent=CA[alanI];{const ap=$('#alH').nextElementSibling;if(ap&&ap.tagName==='P'){ap.removeAttribute('data-t');const t=tr('al_p'+alanI);ap.textContent=t&&t!=='al_p'+alanI?t:tr('ua_p');}}const g=$('#alG');g.innerHTML='';
- D.AXCA.forEach((areas,ax)=>{if(!areas.includes(alanI))return;const h=document.createElement('h3');h.textContent='0'+(ax+1)+' · '+AX[ax];g.appendChild(h);const ul=document.createElement('ul');
-  D.PRODS.filter(p=>p.a===ax).forEach(p=>{const li=document.createElement('li');const pa=document.createElement('a');pa.href=IFU.prod(p);pa.textContent=p.n;li.appendChild(pa);ul.appendChild(li);});g.appendChild(ul);});
+ D.AXCA.forEach((areas,ax)=>{if(!areas.includes(alanI))return;const h=document.createElement('h3');h.textContent='0'+(ax+1)+' · '+AX[ax];g.appendChild(h);const gr=document.createElement('div');gr.className='uc-g al-cards';
+  gr.innerHTML=D.PRODS.map((p,i)=>({p,i})).filter(o=>o.p.a===ax).map(o=>ucCard(o.p,o.i,L,AX)).join('');g.appendChild(gr);});
  const o=$('#alO');o.innerHTML='';CA.forEach((n,i)=>{if(i===alanI)return;const a=document.createElement('a');a.href=IFU.alan(i);a.innerHTML='<span></span><i>0'+(i+1)+'</i>';a.firstChild.textContent=n;o.appendChild(a);});}
 function closeNav(){siteEl.classList.remove('nav-open');document.documentElement.classList.remove('nav-lock');$('#nvBurger').setAttribute('aria-expanded','false');$$('.nv.open').forEach(n=>{n.classList.remove('open');n.firstElementChild.setAttribute('aria-expanded','false');});}
 function route(first){const h=decodeURIComponent(location.hash.slice(1));if(h==='pro')return;closeNav();
@@ -214,7 +214,10 @@ function ucGo(href,push){history[push?'pushState':'replaceState']({ifuc:1},'',hr
 if(P==='urunler'){
  ['ucEy','ucP'].forEach(id=>{const e=$('#'+id);if(e)e.removeAttribute('data-t');});
  document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||!IFU.same(a.href,'urunler')||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-  e.preventDefault();closeNav();ucGo(a.href,true);scrollTo({top:0,behavior:'auto'});});
+  e.preventDefault();closeNav();
+  /* filtre düğmeleri (eksen, klinik alan) sayfayı yerinde bırakır; ürün açılınca ya da başka yerden gelinince başa dönülür */
+  const inFilter=!!a.closest('.uc-bar,.uc-ca,.uc-ax');const toProd=new URL(a.href).searchParams.has('urun');
+  ucGo(a.href,true);if(!inFilter||toProd)scrollTo({top:0,behavior:'auto'});});
  $('#ucQ').addEventListener('input',e=>{UC.q=e.target.value;renderUC();});
  addEventListener('popstate',()=>{ucRead();renderUC();crumbs();titleSync();});
 }
