@@ -8,7 +8,7 @@ window.IFU=(function(){
  function slug(s){return String(s).toLocaleLowerCase('tr').replace(/[çğıöşüâîû]/g,function(c){return TRM[c]||c;}).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
  function q(base,o){var u=base,k;for(k in o){if(o[k]!=null)u+=(u.indexOf('?')<0?'?':'&')+k+'='+encodeURIComponent(o[k]);}return u;}
  /* bağlantı aynı sayfaya mı gidiyor (güzel bağlantı ya da ?page_id= biçimi) */
- function same(href,key){try{var a=new URL(href,location.href),b=new URL(U[key],location.href);return a.origin===b.origin&&a.pathname===b.pathname&&(a.searchParams.get('page_id')||'')===(b.searchParams.get('page_id')||'');}catch(e){return false;}}
+ function same(href,key){try{var a=new URL(href,location.href),b=new URL(U[key],location.href);return a.origin===b.origin&&a.pathname.replace(/\/+$/,'')===b.pathname.replace(/\/+$/,'')&&(a.searchParams.get('page_id')||'')===(b.searchParams.get('page_id')||'')&&(a.searchParams.get('if_sayfa')||'')===(b.searchParams.get('if_sayfa')||'');}catch(e){return false;}}
  return {page:page,AL:AL,AXS:AXS,U:U,slug:slug,q:q,same:same,
   home:function(){return U.home;},
   alan:function(i){return i>=0?q(U.uzmanlik,{alan:AL[i]}):U.uzmanlik;},

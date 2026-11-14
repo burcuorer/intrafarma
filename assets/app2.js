@@ -6,13 +6,13 @@ const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const tr=k=>window.IF&&IF.tr?IF.tr(k):k;
 
 /* partners: logos from the current intrafarma.com.tr partners page */
-const PT=[['regenyal','Regenyal Laboratories','https://www.regenyal.eu'],['dual-trend','Dual Trend','https://www.dualtrend.it'],['emotec','Emotec','https://www.emotec.it'],['meika','Meika Group','https://www.meikagroup.com'],['neftis','Neftis Laboratorios','https://neftislaboratorios.com'],['helite','Helite','https://www.helite.com'],['hyjawe','Hyjawe Trades','https://www.hyjawe.com'],['alfagen','Alfagen','https://www.alfagen.net'],['apharma','Apharma','https://www.apharma.com.tr/tr'],['artsante','Artsante','https://www.artsante.com.tr'],['bnl-medikal','BNL Medikal','https://www.bnlmedikal.com',1],['cell-medical','Cell Medical',''],['gelsam','Gelsam İlaç & Medikal','https://www.gelsam.com'],['endorfinmed','Endorfinmed',''],['konted','Konted','https://www.kontedturkiye.com'],['neotec','Neotec Biotechnology','https://www.neotec.com.tr'],['ss-ilac','SS İlaç ve Sağlık Hizmetleri','https://www.ssilac.com'],['vefa','Vefa İlaç','https://vefailac.com.tr']];
+const PT=(window.IF_CMS&&Array.isArray(window.IF_CMS.partners)&&window.IF_CMS.partners.length&&window.IF_CMS.partners)||[['regenyal','Regenyal Laboratories','https://www.regenyal.eu'],['dual-trend','Dual Trend','https://www.dualtrend.it'],['emotec','Emotec','https://www.emotec.it'],['meika','Meika Group','https://www.meikagroup.com'],['neftis','Neftis Laboratorios','https://neftislaboratorios.com'],['helite','Helite','https://www.helite.com'],['hyjawe','Hyjawe Trades','https://www.hyjawe.com'],['alfagen','Alfagen','https://www.alfagen.net'],['apharma','Apharma','https://www.apharma.com.tr/tr'],['artsante','Artsante','https://www.artsante.com.tr'],['bnl-medikal','BNL Medikal','https://www.bnlmedikal.com',1],['cell-medical','Cell Medical',''],['gelsam','Gelsam İlaç & Medikal','https://www.gelsam.com'],['endorfinmed','Endorfinmed',''],['konted','Konted','https://www.kontedturkiye.com'],['neotec','Neotec Biotechnology','https://www.neotec.com.tr'],['ss-ilac','SS İlaç ve Sağlık Hizmetleri','https://www.ssilac.com'],['vefa','Vefa İlaç','https://vefailac.com.tr']];
 const track=$('#ptTrack');
 [0,1].forEach(copy=>PT.forEach(([f,n,u,dk])=>{
  const a=document.createElement(u?'a':'span');a.className='pt-l'+(dk?' dk':'');
  if(u){a.href=u;a.target='_blank';a.rel='noopener';}
  if(copy){a.setAttribute('aria-hidden','true');if(u)a.tabIndex=-1;}
- const im=new Image();im.src=(window.IF_BASE||'')+'media/ortaklar/'+f+'.jpg';im.alt=copy?'':n;im.loading='lazy';im.decoding='async';a.appendChild(im);track.appendChild(a);}));
+ const im=new Image();im.src=/^(https?:)?\/\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.jpg';im.alt=copy?'':n;im.loading='lazy';im.decoding='async';a.appendChild(im);track.appendChild(a);}));
 
 /* video hero: sequential silent clips, arrows, dots, pause */
 const vs=$$('.vh-v'),dots=$('#vhDots'),pp=$('#vhPP');let cur=0,playing=!RM,inView=true;
@@ -173,14 +173,14 @@ function ucHref(o){const s=Object.assign({ax:UC.ax,ca:UC.ca,urun:-1},o||{}),q=ne
  if(s.urun>=0)q.set('urun',IFU.slug(D2().PRODS[s.urun].n));else{if(s.ax>=0)q.set('eksen',IFU.AXS[s.ax]);if(s.ca>=0)q.set('alan',IFU.AL[s.ca]);}
  const qo={};q.forEach((v,k)=>{qo[k]=v;});return IFU.q(IFU.U.urunler,qo);}
 function ucCard(p,i,L,AX){const AXC=IF.AXC||[];const open=!!p.open;
- return '<a class="uc-c" href="'+ucHref({urun:i})+'" style="--tc:'+(AXC[p.a]||'#17707A')+'"><span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
+ return '<a class="uc-c'+(p.img?' has-img':'')+'" href="'+ucHref({urun:i})+'" style="--tc:'+(AXC[p.a]||'#17707A')+'">'+(p.img?'<img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy">':'')+'<span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
 function renderUC(){
  if(P!=='urunler')return;
  const L=IF.lang||'tr',D=D2(),AX=D.AX[L]||D.AX.en,CA=D.CA[L]||D.CA.en,PR=D.PRODS,AXC=IF.AXC||[];
  const det=UC.urun>=0;
  $('#ucBar').hidden=det;$('#ucCa').hidden=det;$('#ucN').hidden=det;$('#ucG').hidden=det;$('#ucD').hidden=!det;
  const h=$('#ucH'),ey=$('#ucEy'),pp=$('#ucP');
- if(det){const p=PR[UC.urun];h.textContent=p.n;ey.textContent='/ '+AX[p.a];pp.textContent=tr('d_lede').replace('{n}',p.n).replace('{a}',AX[p.a]);}
+ if(det){const p=PR[UC.urun];h.textContent=p.n;ey.textContent='/ '+AX[p.a];const ds=p.d&&(p.d[L]||p.d.en||p.d.tr);pp.textContent=ds||tr('d_lede').replace('{n}',p.n).replace('{a}',AX[p.a]);}
  else{h.textContent=UC.ax>=0?AX[UC.ax]:tr('nav3');ey.textContent=tr('hp_ey');pp.textContent=tr('uc_p');}
  if(!det){
   const ax=$('#ucAx');ax.innerHTML='';
@@ -200,7 +200,7 @@ function renderUC(){
   const more=PR.map((x,i)=>({x,i})).filter(o=>o.x.a===p.a&&o.i!==UC.urun);
   $('#ucD').innerHTML=
    '<a class="uc-back" href="'+ucHref({ax:p.a,ca:-1})+'"><i aria-hidden="true">←</i><span>'+esc2(axn)+'</span></a>'+
-   '<div class="uc-dg"><div class="uc-vis" style="--tc:'+(AXC[p.a]||'#17707A')+'"><small>0'+(p.a+1)+' · '+esc2(axn)+'</small><span>'+esc2(p.n)+'</span></div>'+
+   '<div class="uc-dg"><div class="uc-vis'+(p.img?' has-img':'')+'" style="--tc:'+(AXC[p.a]||'#17707A')+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="'+esc2(p.n)+'" loading="lazy">':'')+'<small>0'+(p.a+1)+' · '+esc2(axn)+'</small><span>'+esc2(p.n)+'</span></div>'+
    '<div class="uc-info"><dl class="uc-meta"><div><dt>'+esc2(tr('d_ax'))+'</dt><dd><a href="'+ucHref({ax:p.a,ca:-1})+'">0'+(p.a+1)+' '+esc2(axn)+'</a></dd></div>'+
    '<div><dt>'+esc2(tr('d_ca'))+'</dt><dd class="uc-areas">'+areas+'</dd></div><div><dt>'+esc2(tr('d_lang'))+'</dt><dd>TR · EN</dd></div></dl>'+
    (open?'<div class="uc-box open"><h2>'+tr('op_t')+'</h2><p>'+tr('op_b')+'</p></div>'
@@ -277,6 +277,13 @@ ucRead();v2route();v2refresh();pgVideo();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
 
 /* WordPress: gövdedeki .html bağlantıları sayfa adresleriyle değiştirilir (GitHub'da dokunulmaz) */
+
+/* ===== panelden gelen sosyal medya adresleri: boş bırakılan simge gizlenir ===== */
+(function(){const S=window.IF_CMS&&window.IF_CMS.set;if(!S)return;
+ [['Instagram','instagram'],['Facebook','facebook'],['LinkedIn','linkedin'],['YouTube','youtube']].forEach(([lab,k])=>{
+  if(!(k in S))return;
+  document.querySelectorAll('.il-soc a[aria-label="'+lab+'"],.site-foot a[aria-label="'+lab+'"]').forEach(a=>{if(S[k]){a.href=S[k];a.hidden=false;}else a.hidden=true;});});
+})();
 
 labels();
 })();

@@ -246,6 +246,8 @@ c1n = jrep(c1n, "function openCat(){if(IF.mode!=='public')return;", "function op
 # giriş kapısı tarayıcı geçmişine girer: geri tuşu kapıyı kapatır
 c1n = jrep(c1n, "function openGate(){if(IF.mode!=='public')return;setFull(true);gate.hidden=false;",
                "function openGate(){if(IF.mode!=='public')return;setFull(true);gate.hidden=false;if(!(history.state&&history.state.ifgate))history.pushState({ifgate:1},'');")
+# dil adresi: ?dil=en (Polylang'ın ?lang= parametresiyle çakışmasın); eski ?lang= de okunur
+c1n = jrep(c1n, "const q=new URLSearchParams(location.search).get('lang');", "const _sp=new URLSearchParams(location.search),q=_sp.get('dil')||_sp.get('lang')||window.IF_DIL;")
 c1n = jrep(c1n, "$('#gBack').addEventListener('click',hideGate);", "$('#gBack').addEventListener('click',()=>IF.closeGate());")
 c1n = jrep(c1n, "else if(!gate.hidden)hideGate();", "else if(!gate.hidden)IF.closeGate();")
 c1n = jrep(c1n, "if(location.hash!=='#pro')history.pushState({ifpro:1},'','#pro');", "if(location.hash!=='#pro')IF.pushPro();", count=2)
@@ -264,7 +266,9 @@ nh_old = c2n[c2n.index("const nh=$('#nvHp');"):c2n.index("if(typeof renderAlan==
 c2n = jrep(c2n, nh_old, "const nh=$('#nvHp');if(nh){nh.innerHTML='';AX.forEach((n,i)=>{const a=document.createElement('a');a.href=IFU.ax(i);a.textContent=n;nh.appendChild(a);});const al=document.createElement('a');al.href=IFU.ax(-1);al.className='nv-all';al.textContent=tr('all_prods');nh.appendChild(al);}\n ")
 c2n = jrep(c2n, "li.textContent=p.n;ul.appendChild(li);", "const pa=document.createElement('a');pa.href=IFU.prod(p);pa.textContent=p.n;li.appendChild(pa);ul.appendChild(li);")
 c2n = jrep(c2n, "a.href='#alan-'+i;a.innerHTML='<span></span>", "a.href=IFU.alan(i);a.innerHTML='<span></span>")
-c2n = jrep(c2n, "im.src='media/ortaklar/'", "im.src=(window.IF_BASE||'')+'media/ortaklar/'")
+c2n = jrep(c2n, "im.src='media/ortaklar/'+f+'.jpg'", "im.src=/^(https?:)?\\/\\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.jpg'")
+# iş ortakları WordPress panelinden gelebilir
+c2n = jrep(c2n, "const PT=[[", "const PT=(window.IF_CMS&&Array.isArray(window.IF_CMS.partners)&&window.IF_CMS.partners.length&&window.IF_CMS.partners)||[[")
 c2n = jrep(c2n, "'<img src=\"media/gorsel/'", "'<img src=\"'+(window.IF_BASE||'')+'media/gorsel/'")
 c2n = jrep(c2n, "addEventListener('hashchange',()=>route(false));route(true);", "")
 V2C2 = io.open(os.path.join(HERE, 'v2c2.js'), encoding='utf-8').read()

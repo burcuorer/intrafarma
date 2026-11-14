@@ -1,0 +1,54 @@
+.if-wrap{max-width:1100px}
+.if-lede{font-size:14px;color:#50575e;max-width:760px}
+.if-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin:18px 0 26px}
+.if-card{display:flex;flex-direction:column;gap:6px;padding:18px;background:#fff;border:1px solid #dcdcde;border-radius:10px;text-decoration:none;color:#1d2327;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.if-card:hover,.if-card:focus{border-color:#104068;box-shadow:0 6px 18px rgba(16,64,104,.14);color:#1d2327}
+.if-card .dashicons{font-size:26px;width:26px;height:26px;color:#104068}
+.if-card b{font-size:15px}.if-card span{color:#50575e;line-height:1.45}
+.if-pages{display:flex;flex-wrap:wrap;gap:8px 18px;margin:8px 0 22px}
+.if-help details{background:#fff;border:1px solid #dcdcde;border-radius:8px;margin:0 0 8px;padding:0 16px}
+.if-help summary{cursor:pointer;font-weight:600;padding:12px 0;font-size:14px}
+.if-help ol{margin:0 0 12px 18px}.if-help li{margin-bottom:6px}
+.if-ver{color:#8c8f94;margin-top:20px}
+.if-tabs{margin-bottom:0}
+.if-n{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:#104068;color:#fff;font-size:11px;line-height:18px;text-align:center}
+.if-bar{display:flex;flex-wrap:wrap;align-items:end;gap:12px;padding:14px 16px;background:#fff;border:1px solid #c3c4c7;border-top:0;margin-bottom:14px}
+.if-bar label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:12px}
+.if-bar .if-search{flex:1 1 280px}.if-bar .if-search input{width:100%}
+.if-count{color:#50575e;margin:8px 0}
+.if-tx td{vertical-align:top;padding:12px}
+.if-tx .if-ref{width:38%;color:#50575e}
+.if-tx .if-ref div{white-space:pre-wrap;line-height:1.5}
+.if-tx .if-ref small{display:block;margin-top:6px;color:#8c8f94}
+.if-tx textarea{width:100%;font-size:14px;line-height:1.5;resize:vertical}
+.if-tx tr.if-changed td:first-child{box-shadow:inset 3px 0 0 #209098}
+.if-row-meta{margin-top:4px;font-size:12px;color:#646970;min-height:4px}
+.if-badge{display:inline-block;padding:1px 8px;border-radius:9px;background:#e3f5f6;color:#17707a;font-weight:600}
+.if-hint{color:#8c8f94}
+.if-empty{padding:28px;background:#fff;border:1px dashed #c3c4c7;border-radius:8px}
+.if-save{position:sticky;bottom:0;z-index:5;margin:16px -8px 0;padding:12px 8px;background:rgba(240,240,241,.94);border-top:1px solid #dcdcde}
+.if-list{display:flex;flex-direction:column;gap:6px}
+.if-item{background:#fff;border:1px solid #dcdcde;border-radius:8px}
+.if-item[open]{border-color:#104068;box-shadow:0 4px 14px rgba(16,64,104,.1)}
+.if-item>summary{display:flex;align-items:center;gap:12px;padding:10px 14px;cursor:pointer;list-style:none}
+.if-item>summary::-webkit-details-marker{display:none}
+.if-item>summary::before{content:"▸";color:#8c8f94;width:10px}
+.if-item[open]>summary::before{content:"▾"}
+.if-title{font-weight:600;font-size:14px}.if-sub{color:#646970;font-size:12px}
+.if-tools{margin-left:auto;display:flex;align-items:center;gap:4px}
+.if-tools .button{min-width:30px;padding:0 6px}
+.if-thumb{width:64px;height:34px;display:grid;place-items:center;background:#f6f7f7;border-radius:4px;overflow:hidden}
+.if-thumb img{max-width:100%;max-height:100%;object-fit:contain}
+.if-body{padding:4px 16px 16px 36px;display:flex;flex-direction:column;gap:14px}
+.if-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;align-items:end}
+.if-grid label,.if-desc label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:12px}
+.if-grid input[type=text],.if-grid input[type=url],.if-grid select{width:100%;max-width:none}
+.if-grid .if-check{flex-direction:row;align-items:center;gap:6px;font-weight:400;font-size:13px;padding-bottom:6px}
+.if-desc{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.if-desc textarea{width:100%}
+.if-media{display:flex;gap:14px;align-items:center}
+.if-prev{width:132px;height:88px;display:grid;place-items:center;background:#f6f7f7;border:1px dashed #c3c4c7;border-radius:6px;overflow:hidden;color:#8c8f94;font-size:12px}
+.if-prev img{max-width:100%;max-height:100%;object-fit:contain}
+.if-more>summary{cursor:pointer;color:#2271b1;font-size:13px;margin-bottom:8px}
+.if-resetform{margin-top:18px}
+@media (max-width:782px){.if-tx .if-ref{width:auto}.if-tx tr{display:flex;flex-direction:column}.if-body{padding-left:16px}}
