@@ -272,6 +272,8 @@ c2n = jrep(c2n, "const PT=[[", "const PT=(window.IF_CMS&&Array.isArray(window.IF
 c2n = jrep(c2n, "'<img src=\"media/gorsel/'", "'<img src=\"'+(window.IF_BASE||'')+'media/gorsel/'")
 c2n = jrep(c2n, "addEventListener('hashchange',()=>route(false));route(true);", "")
 V2C2 = io.open(os.path.join(HERE, 'v2c2.js'), encoding='utf-8').read()
+# 8e) alan sayfası: her alanın kendi açıklaması (al_p0..5)
+c2n = jrep(c2n, " $('#alH').textContent=CA[alanI];", " $('#alH').textContent=CA[alanI];{const ap=$('#alH').nextElementSibling;if(ap&&ap.tagName==='P'){ap.removeAttribute('data-t');const t=tr('al_p'+alanI);ap.textContent=t&&t!=='al_p'+alanI?t:tr('ua_p');}}")
 c2n = jrep(c2n, "labels();\n})();", V2C2 + "\nlabels();\n})();")
 CONSENT = io.open(os.path.join(HERE, 'v2consent.js'), encoding='utf-8').read()
 c2n = c2n.rstrip() + '\n' + CONSENT

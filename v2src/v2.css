@@ -469,3 +469,27 @@ html.ck-on .draft-chip{display:none}
 .uc-c .uc-ci{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#fff;border-radius:var(--r1);margin-bottom:12px;padding:8px;box-sizing:border-box}
 .il-soc a[hidden],.site-foot a[hidden]{display:none}
 .il-g a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+
+/* ===== alt sayfa videosu: A — sağdan taşan, sola doğru eriyen tam alan video ===== */
+@media (min-width:901px){
+ .pg.has-vid{display:block;position:relative;isolation:isolate;overflow:hidden;min-height:clamp(560px,68vh,760px);
+  display:flex;align-items:center}
+ .pg.has-vid>.pg-in{position:relative;z-index:2;width:min(46%,640px);max-width:none;margin:0}
+ .pg.has-vid .pg-vid{position:absolute;z-index:0;top:0;right:0;bottom:0;left:auto;width:64%;height:auto;aspect-ratio:auto;margin:0;
+  border-radius:0;animation:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 14%,rgba(0,0,0,.85) 34%,#000 50%),linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) calc(var(--hdr) - 8px),#000 calc(var(--hdr) + 64px),#000 84%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 14%,rgba(0,0,0,.85) 34%,#000 50%),linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) calc(var(--hdr) - 8px),#000 calc(var(--hdr) + 64px),#000 84%,transparent 100%);mask-composite:intersect}
+ .pg.has-vid .pg-vid::before{display:none}
+ .pg.has-vid .pg-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:0;box-shadow:none;-webkit-mask-image:none;mask-image:none;
+  transform:scale(1.04);animation:pgDrift 24s ease-in-out infinite alternate}
+ /* sol kenarda hafif buğu: video yazıya doğru yumuşakça bulanıklaşır */
+ .pg.has-vid .pg-vid::after{content:"";position:absolute;inset:0;z-index:2;border-radius:0;box-shadow:none;animation:none;
+  background:linear-gradient(90deg,rgba(234,241,246,.55) 0%,rgba(234,241,246,.18) 22%,transparent 42%);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.7) 16%,transparent 40%);mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.7) 16%,transparent 40%)}
+ .pg.has-vid .pg-cap{left:auto;right:clamp(16px,3vw,40px);bottom:calc(16% + 24px)}
+ [dir=rtl] .pg.has-vid .pg-vid{right:auto;left:0;-webkit-mask-image:linear-gradient(270deg,transparent 0%,rgba(0,0,0,.35) 14%,rgba(0,0,0,.85) 34%,#000 50%),linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) calc(var(--hdr) - 8px),#000 calc(var(--hdr) + 64px),#000 84%,transparent 100%);mask-image:linear-gradient(270deg,transparent 0%,rgba(0,0,0,.35) 14%,rgba(0,0,0,.85) 34%,#000 50%),linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) calc(var(--hdr) - 8px),#000 calc(var(--hdr) + 64px),#000 84%,transparent 100%)}
+ [dir=rtl] .pg.has-vid .pg-cap{right:auto;left:clamp(16px,3vw,40px)}
+}
+@keyframes pgDrift{from{transform:scale(1.04) translateX(0)}to{transform:scale(1.08) translateX(-1.5%)}}
+@media (prefers-reduced-motion:reduce){.pg.has-vid .pg-vid video{animation:none}}

@@ -46,13 +46,18 @@ function intrafarma_partner_img($f) {
     return preg_match('/^[a-z0-9-]+$/', (string) $f) ? intrafarma_uri() . '/media/ortaklar/' . $f . '.jpg' : (string) $f;
 }
 
+/** "/wp-content/uploads/..." gibi site içi yolu tam adrese çevirir (alt klasöre kurulumda da çalışsın) */
+function intrafarma_media_url($u) {
+    $u = (string) $u;
+    if (strpos($u, '/wp-content/') === 0) { return content_url(substr($u, strlen('/wp-content'))); }
+    return $u;
+}
 /** Siteye gönderilen içerik (window.IF_CMS). Panelde hiçbir şey değişmemişse boş döner. */
 function intrafarma_cms_payload() {
     $out = array();
     $tx = array_filter(array_map(function ($a) { return is_array($a) ? array_filter($a, 'strlen') : array(); }, intrafarma_cms_tx()));
     if ($tx) { $out['tx'] = $tx; }
-    $p = get_option('intrafarma_prods');
-    if (is_array($p) && $p) { $out['prods'] = array_values($p); }
+    $out['prods'] = array_map(function ($p) { if (!empty($p['img'])) { $p['img'] = intrafarma_media_url($p['img']); } return $p; }, array_values(intrafarma_cms_prods()));
     $pt = get_option('intrafarma_partners');
     if (is_array($pt) && $pt) {
         $out['partners'] = array_values(array_map(function ($x) { return array($x['f'], $x['n'], isset($x['u']) ? $x['u'] : '', !empty($x['dk'])); }, $pt));
@@ -240,7 +245,7 @@ function intrafarma_prod_row($i, $p, $axes) {
     $h .= '<label>Kategori (eksen)<select data-f="a">';
     foreach ($axes as $ai => $an) { $h .= '<option value="' . (int) $ai . '"' . selected((int) $p['a'], $ai, false) . '>0' . ($ai + 1) . ' · ' . esc_html($an) . '</option>'; }
     $h .= '</select></label><label>Erişim<select data-f="open"><option value="0"' . selected(!empty($p['open']), false, false) . '>Yalnızca sağlık çalışanları</option><option value="1"' . selected(!empty($p['open']), true, false) . '>Herkese açık</option></select></label></div>';
-    $h .= '<div class="if-media"><div class="if-prev">' . ($p['img'] ? '<img src="' . esc_url($p['img']) . '" alt="">' : '<span>Görsel yok</span>') . '</div><div><input type="hidden" data-f="img" value="' . esc_attr($p['img']) . '"><button type="button" class="button if-pick">Görsel seç</button> <button type="button" class="button-link if-clear">Görseli kaldır</button><p class="description">İsteğe bağlı. Beyaz ya da şeffaf zeminli ürün fotoğrafı.</p></div></div>';
+    $h .= '<div class="if-media"><div class="if-prev">' . ($p['img'] ? '<img src="' . esc_url(intrafarma_media_url($p['img'])) . '" alt="">' : '<span>Görsel yok</span>') . '</div><div><input type="hidden" data-f="img" value="' . esc_attr($p['img']) . '"><button type="button" class="button if-pick">Görsel seç</button> <button type="button" class="button-link if-clear">Görseli kaldır</button><p class="description">İsteğe bağlı. Beyaz ya da şeffaf zeminli ürün fotoğrafı.</p></div></div>';
     $h .= '<div class="if-desc"><label>Açıklama (Türkçe)<textarea rows="2" data-f="d.tr">' . esc_textarea(isset($p['d']['tr']) ? $p['d']['tr'] : '') . '</textarea></label><label>Açıklama (English)<textarea rows="2" data-f="d.en">' . esc_textarea(isset($p['d']['en']) ? $p['d']['en'] : '') . '</textarea></label></div>';
     $h .= '<details class="if-more"><summary>Diğer dillerde açıklama</summary><div class="if-desc">';
     foreach (array('ar', 'it', 'ru', 'ro') as $l) { $h .= '<label>' . esc_html(INTRAFARMA_LANG_NAMES[$l]) . '<textarea rows="2" data-f="d.' . $l . '"' . ($l === 'ar' ? ' dir="rtl"' : '') . '>' . esc_textarea(isset($p['d'][$l]) ? $p['d'][$l] : '') . '</textarea></label>'; }

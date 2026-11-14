@@ -32,7 +32,7 @@ function renderUC(){
  $('#ucBar').hidden=det;$('#ucCa').hidden=det;$('#ucN').hidden=det;$('#ucG').hidden=det;$('#ucD').hidden=!det;
  const h=$('#ucH'),ey=$('#ucEy'),pp=$('#ucP');
  if(det){const p=PR[UC.urun];h.textContent=p.n;ey.textContent='/ '+AX[p.a];const ds=p.d&&(p.d[L]||p.d.en||p.d.tr);pp.textContent=ds||tr('d_lede').replace('{n}',p.n).replace('{a}',AX[p.a]);}
- else{h.textContent=UC.ax>=0?AX[UC.ax]:tr('nav3');ey.textContent=tr('hp_ey');pp.textContent=tr('uc_p');}
+ else{h.textContent=UC.ax>=0?AX[UC.ax]:tr('nav3');ey.textContent=tr('hp_ey');const axp=UC.ax>=0?tr('ax_p'+UC.ax):'';pp.textContent=axp&&axp!=='ax_p'+UC.ax?axp:tr('uc_p');}
  if(!det){
   const ax=$('#ucAx');ax.innerHTML='';
   const chip=(label,href,on,cls)=>{const a=document.createElement('a');a.href=href;a.className='chip'+(cls?' '+cls:'');a.textContent=label;if(on)a.setAttribute('aria-current','true');return a;};
@@ -135,3 +135,8 @@ if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decode
   if(!(k in S))return;
   document.querySelectorAll('.il-soc a[aria-label="'+lab+'"],.site-foot a[aria-label="'+lab+'"]').forEach(a=>{if(S[k]){a.href=S[k];a.hidden=false;}else a.hidden=true;});});
 })();
+
+/* ürün görseli yüklenemezse (dosya yoksa) renkli ad kutusuna dön */
+document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLImageElement))return;
+ if(im.classList.contains('uc-ci')){im.closest('.uc-c')&&im.closest('.uc-c').classList.remove('has-img');im.remove();}
+ else if(im.parentElement&&im.parentElement.classList.contains('uc-vis')){im.parentElement.classList.remove('has-img');im.remove();}},true);

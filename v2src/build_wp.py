@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """app.html'den WordPress teması (intrafarma-2026) üretir. Kullanım: python3 build_wp.py SURUM CIKTI_KLASORU"""
-import io, os, re, sys, shutil, hashlib
+import io, os, re, sys, shutil, hashlib, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 VER = sys.argv[1] if len(sys.argv) > 1 else '0.2.0'
 DEST = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, 'dist')
@@ -69,7 +69,19 @@ W('front-page.php', "<?php if (!defined('ABSPATH')) { exit; } intrafarma_render(
 CD = os.path.join(HERE, 'cms_defaults.json')
 need(os.path.exists(CD) and os.path.getmtime(CD) >= os.path.getmtime(os.path.join(HERE, 'app.html')), 'cms_defaults.json eski: önce dump_cms.js çalıştır')
 os.makedirs(os.path.join(OUT, 'data'), exist_ok=True)
-shutil.copy(CD, os.path.join(OUT, 'data', 'varsayilan.json'))
+_d = json.load(io.open(CD, encoding='utf-8'))
+_img = json.load(io.open(os.path.join(HERE, 'wp_urun_gorselleri.json'), encoding='utf-8'))
+def _slug(n):
+    n = n.replace('İ', 'i').replace('I', 'ı').lower()
+    for a_, b_ in zip('çğıöşüâîû', 'cgiosuaiu'): n = n.replace(a_, b_)
+    return re.sub(r'[^a-z0-9]+', '-', n).strip('-')
+_miss = []
+for _p in _d['prods']:
+    _k = _slug(_p['n'])
+    if _k in _img: _p['img'] = _img[_k]
+    else: _miss.append(_p['n'])
+if _miss: print('görseli olmayan ürün:', _miss)
+io.open(os.path.join(OUT, 'data', 'varsayilan.json'), 'w', encoding='utf-8').write(json.dumps(_d, ensure_ascii=False))
 for f in ['functions.php', 'sayfa.php', 'index.php', 'style.css', 'inc/icerik.php', 'inc/cerez.php', 'inc/yonlendirme.php', 'inc/admin.js', 'inc/admin.css']:
     need(os.path.exists(os.path.join(OUT, f)), 'eksik ' + f)
 tot = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(OUT) for f in fs)
