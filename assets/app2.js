@@ -172,8 +172,12 @@ function ucRead(){const q=new URLSearchParams(location.search),PR=D2().PRODS;UC.
 function ucHref(o){const s=Object.assign({ax:UC.ax,ca:UC.ca,urun:-1},o||{}),q=new URLSearchParams();
  if(s.urun>=0)q.set('urun',IFU.slug(D2().PRODS[s.urun].n));else{if(s.ax>=0)q.set('eksen',IFU.AXS[s.ax]);if(s.ca>=0)q.set('alan',IFU.AL[s.ca]);}
  const qo={};q.forEach((v,k)=>{qo[k]=v;});return IFU.q(IFU.U.urunler,qo);}
-function ucCard(p,i,L,AX){const AXC=IF.AXC||[];const open=!!p.open;
- return '<a class="uc-c'+(p.img?' has-img':'')+'" href="'+ucHref({urun:i})+'" style="--tc:'+(AXC[p.a]||'#17707A')+'">'+(p.img?'<img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy">':'')+'<span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
+function ucCard(p,i,L,AX){const AXC=IF.AXC||[],open=!!p.open,c=p.crop||{};
+ const num=(v,f,min,max)=>Number.isFinite(Number(v))&&v!==''?Math.max(min,Math.min(max,Number(v))):f;
+ const crop='--pack-x:'+num(c.x,50,0,100)+'%;--pack-y:'+num(c.y,45,0,100)+'%;--pack-zoom:'+num(c.zoom,1.65,1,3)+';';
+ const img=p.img?'<span class="uc-art" aria-hidden="true"><img class="uc-haze" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"><img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"></span>':'';
+ return '<a class="uc-c'+(p.img?' has-img':'')+'" href="'+ucHref({urun:i})+'" style="'+crop+'--card-delay:'+(-(i%7)*1.4)+'s;--tc:'+(AXC[p.a]||'#17707A')+'">'+img+'<span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
+
 function renderUC(){
  if(P!=='urunler')return;
  const L=IF.lang||'tr',D=D2(),AX=D.AX[L]||D.AX.en,CA=D.CA[L]||D.CA.en,PR=D.PRODS,AXC=IF.AXC||[];
@@ -207,7 +211,7 @@ function renderUC(){
         :'<div class="uc-box lock"><h2>'+tr('lk_t')+'</h2><p>'+tr('lk_b')+'</p><button type="button" class="b-pri" id="ucGate"><span>'+esc2(tr('cta1'))+'</span><span class="o"></span></button></div>')+
    '</div></div>'+
    (more.length?'<div class="uc-more"><h2>'+esc2(tr('uc_more'))+'</h2><div class="uc-g">'+more.map(o=>ucCard(o.x,o.i,L,AX)).join('')+'</div></div>':'');
-  const g=$('#ucGate');if(g)g.addEventListener('click',()=>{IF.after=/^Regenflex/.test(p.n)?p.n:'';IF.openGate();});
+  const g=$('#ucGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;IF.openGate();});
  }
 }
 function ucGo(href,push){history[push?'pushState':'replaceState']({ifuc:1},'',href);ucRead();renderUC();crumbs();titleSync();}
@@ -290,12 +294,31 @@ if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decode
 
 /* ürün görseli yüklenemezse (dosya yoksa) renkli ad kutusuna dön */
 document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLImageElement))return;
- if(im.classList.contains('uc-ci')){im.closest('.uc-c')&&im.closest('.uc-c').classList.remove('has-img');im.remove();}
+ if(im.classList.contains('uc-ci')){im.closest('.uc-c')&&im.closest('.uc-c').classList.remove('has-img');const art=im.closest('.uc-art');if(art)art.remove();else im.remove();}
  else if(im.parentElement&&im.parentElement.classList.contains('uc-vis')){im.parentElement.classList.remove('has-img');im.remove();}},true);
 
 /* ---- mobil menü: açılınca bulunulan bölüm açık gelir; menüdeki sağlık çalışanı girişi menüyü kapatır ---- */
 {const bg=$('#nvBurger');if(bg)bg.addEventListener('click',()=>{if(!siteEl.classList.contains('nav-open'))return;const c=$('.site-top .nv.cur');if(c&&!$('.site-top .nv.open')){c.classList.add('open');c.firstElementChild.setAttribute('aria-expanded','true');}const n=$('#pubNav');if(n)n.scrollTop=0;});
  const nh=$('.nv-hcp');if(nh)nh.addEventListener('click',()=>closeNav(),true);}
+
+
+/* Observe dynamically rendered cards once; do not animate off-screen or hidden tabs. */
+(function(){
+ const seen=new WeakSet(),visible=new Set();
+ const sync=()=>visible.forEach(el=>el.classList.toggle('motion-visible',!document.hidden));
+ const ob=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>{
+  if(isIntersecting)visible.add(target);else visible.delete(target);
+  target.classList.toggle('motion-visible',isIntersecting&&!document.hidden);
+ }),{rootMargin:'30px',threshold:0});
+ function scan(root){if(root.nodeType!==1)return;
+  const cards=root.matches('.uc-c')?[root]:[...root.querySelectorAll('.uc-c')];
+  cards.forEach(el=>{if(!seen.has(el)){seen.add(el);ob.observe(el);}});
+ }
+ scan(document.querySelector('.site'));
+ new MutationObserver(entries=>{entries.forEach(e=>e.addedNodes.forEach(scan));visible.forEach(el=>{if(!el.isConnected){visible.delete(el);ob.unobserve(el);}});}).observe(document.querySelector('.site'),{childList:true,subtree:true});
+ document.addEventListener('visibilitychange',sync);
+})();
+
 
 labels();
 })();
@@ -437,3 +460,4 @@ IF.ytInit=ytInit;IF.cookiePrefs=prefs;IF.consent=()=>S&&Object.assign({},S.c);
 ytInit();
 if(complete())google();else banner();
 })();
+

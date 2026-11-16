@@ -173,7 +173,9 @@ function openZoom(card){
  setTimeout(()=>{$('#zClose').focus({preventScroll:true});IF.setInds();},reduce?0:600);
 }
 function closeZoom(instant){
- if(zoom.hidden)return;zoom.classList.remove('open');
+ if(zoom.hidden)return;
+ if(!instant&&IF.mode==='pro'&&history.state&&history.state.ifproduct){history.back();return;}
+ zoom.classList.remove('open');
  if(instant||!zoomFrom){zoom.hidden=true;zoomFrom=null;return;}
  setRect(rectOf(zoomFrom));const f=zoomFrom;zoomFrom=null;setTimeout(()=>{zoom.hidden=true;f.focus({preventScroll:true});},reduce?0:560);
 }
@@ -248,7 +250,7 @@ function renderDet(p){
  '<div class="lockbox"><h5><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'+IF.tr('lk_t')+'</h5><p>'+IF.tr('lk_b')+'</p><button type="button" class="b-white" id="pGate" data-magnet>'+IF.tr('lk_cta')+'</button></div>')+
  '</div></div>';
  $('#pBack').addEventListener('click',()=>{CS.det=-1;renderCat();});
- const g=$('#pGate');if(g)g.addEventListener('click',()=>{IF.after=/^Regenflex/.test(p.n)?p.n:'';openGate();});
+ const g=$('#pGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;openGate();});
 }
 IF.openCatAx=i=>{if(IF.mode==='public')location.href=IFU.ax(i);};
 function openCat(){if(IF.mode==='public')location.href=IFU.ax(-1);return;IF.setFull&&IF.setFull(true);CS.mode='pub';CS.view='prod';CS.det=-1;showCat();}
@@ -261,13 +263,35 @@ function setHead(){
 }
 function openPro(view,opt){if(IF.mode!=='pro')return;
  $$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv===view));
+ if(!zoom.hidden)closeZoom(true);
+ if(history.state&&history.state.ifproduct)history.replaceState({ifpro:1},'','#pro');
  if(view==='home'){closeCat();return;}
  if(!zoom.hidden)closeZoom(true);
  CS.mode='pro';CS.view=view;CS.det=-1;CS.q='';$('#catQ').value='';CS.rqDone='';
+ if(view==='prod'&&!(opt&&opt.preserve)){CS.ax=-1;CS.ca=-1;}
  if(view==='docs')CS.dt=opt&&opt.dt!=null?opt.dt:-1;
  if(view==='req'&&opt&&opt.prod)CS.rqProd=opt.prod;
  showCat();}
-function openProProduct(n){closeCat(true);$$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv==='home'));const c=$('.card[data-k=k1t]');openZoom(c);$('#zTitle').innerHTML=esc(n)+(/^Regenflex/.test(n)?' <span>32 mg</span>':'');const p=PRODS.find(x=>x.n===n),t=$('.tile b[data-t=dd1]');if(p&&t)t.textContent=AX[IF.lang][p.a];}
+/* Product detail is a child of the Pro catalogue, including browser Back/Forward. */
+function openProProduct(n,fromHistory){
+ const p=PRODS.find(x=>x.n===n);if(!p||IF.mode!=='pro')return;
+ CS.mode='pro';CS.view='prod';closeCat(true);
+ $$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv==='prod'));
+ openZoom($('.card[data-k=k1t]'));
+ $('#zTitle').textContent=n;
+ const t=$('.tile b[data-t=dd1]');if(t)t.textContent=AX[IF.lang][p.a];
+ $('.z-in').scrollTop=0;$('#zTabs button').click();
+ let back=$('#zProducts');if(!back){back=document.createElement('button');back.id='zProducts';back.type='button';back.className='uc-back';back.dataset.t='all_prods';$('#zTitle').before(back);
+ back.addEventListener('click',()=>{closeZoom(true);history.replaceState({ifpro:1},'','#pro');openPro('prod');});}
+ back.textContent=IF.tr('all_prods');
+ if(!fromHistory)history.pushState({ifpro:1,ifproduct:n},'','#pro');
+}
+addEventListener('popstate',()=>{
+ if(IF.mode!=='pro'||location.hash!=='#pro')return;
+ if(history.state&&history.state.ifproduct)openProProduct(history.state.ifproduct,true);
+ else{closeZoom(true);CS.mode='pro';CS.view='prod';showCat();$$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv==='prod'));}
+});
+
 const DT=['ifu','tds','bro','cert','pub'];
 const DOCS=[['Regenflex Bio-Plus',0],['Regenflex Bio-Plus',1],['Regenflex Bio-Plus',2],['Regenflex Starter',0],['Regenflex T&M',0],['Intra PRP',0],['Easy PRP Kit',1],['Eksozom',1],['Kondromembran',0],['MILLIEXO',0],['MILLIEXO',2],['Lipocell-Mini',1],['d_cat',2],['d_cert1',3],['d_cert2',3],['1',4],['2',4],['3',4]];
 function docTitle(d){if(d[1]===4)return IF.tr('d_pubn').replace('{i}',d[0]);if(d[0].startsWith('d_'))return IF.tr(d[0]);return d[0]+' — '+IF.tr('dt_'+DT.at(d[1]));}
@@ -360,7 +384,7 @@ const go=()=>{const src=document.getElementById('cellMod');if(!src){addEventList
  setTimeout(()=>{const st=document.getElementById('stage');if(st&&!st.classList.contains('gl-on'))off('modul-yuklenemedi');},9000);};
 return ()=>{if(done)return;done=true;go();};})();
 if(IFU.page==='home'){const _h=document.getElementById('hucre'),_st=document.getElementById('stage'),_c=navigator.connection;if(_st&&(matchMedia('(max-width:760px)').matches||(_c&&_c.saveData))){const f=document.createElement('div');f.className='cell-poster';f.innerHTML='<img src="'+(window.IF_BASE||'')+'media/cell-poster.webp" alt="" decoding="async" loading="lazy"><button type="button" class="cell-go"><span class="cg-ring" aria-hidden="true"></span><span data-t="c_go">'+((T[IF.lang]||T.tr).c_go||'')+'</span></button>';_st.appendChild(f);f.querySelector('button').addEventListener('click',()=>{f.classList.add('busy');IF.loadCell();});new MutationObserver((m,o)=>{if(_st.classList.contains('gl-on')||_st.classList.contains('gl-off')){o.disconnect();f.classList.add('gone');setTimeout(()=>f.remove(),700);}}).observe(_st,{attributes:true,attributeFilter:['class']});}else new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){ob.disconnect();IF.loadCell();}},{rootMargin:'700px 0px'}).observe(_h);}
-function hideGate(){gate.hidden=true;if(IF.mode==='public'&&cat.hidden)setFull(false);}
+function hideGate(){IF.after='';gate.hidden=true;if(IF.mode==='public'&&cat.hidden)setFull(false);}
 addEventListener('popstate',()=>{if((IF.mode==='pro'||IF.mode==='transition')&&location.hash!=='#pro')goPublic(true);});
 
 /* gate */
@@ -391,7 +415,9 @@ function enterPro(){
  IF.mode='pro';IF.p=1;pro.hidden=false;bgPro.hidden=false;clip('none');pro.classList.add('in');
  pubUI.classList.add('leaving');pubUI.style.clipPath='';showPub(false);gate.hidden=true;divider.hidden=true;
  $('#cmp').classList.remove('on');rebuildLens();
- if(IF.after){const nm=IF.after;IF.after='';setTimeout(()=>{const c=$('.card[data-k=k1t]');if(c&&IF.mode==='pro'){openZoom(c);$('#zTitle').innerHTML=esc(nm)+' <span>32 mg</span>';}},900);}
+ const nm=IF.after;IF.after='';
+ if(nm){CS.ax=-1;CS.ca=-1;CS.q='';openProProduct(nm);}
+ else if(IFU.page==='urunler')openPro('prod');
 }
 function goPublic(fromPop){
  if(fromPop!==true&&location.hash==='#pro')history.replaceState(null,'',location.pathname+location.search);
@@ -491,7 +517,7 @@ function loop(t){
   if(S.telefon)T[l].il_tv='<a href="tel:'+escH(S.telefon.replace(/[^+\d]/g,''))+'">'+escH(S.telefon)+'</a>';
   if(S.eposta)T[l].il_mv='<a href="mailto:'+escH(S.eposta)+'">'+escH(S.eposta)+'</a>';});
  /* ürünler: [{n,a,open,img,d:{dil:açıklama}}] */
- if(Array.isArray(C.prods)&&C.prods.length){PRODS.length=0;C.prods.forEach(p=>{if(p&&p.n)PRODS.push({n:String(p.n),a:Math.max(0,Math.min(AXCA.length-1,+p.a||0)),open:!!p.open,img:p.img||'',d:p.d||{}});});}
+ if(Array.isArray(C.prods)&&C.prods.length){PRODS.length=0;C.prods.forEach(p=>{if(p&&p.n)PRODS.push({n:String(p.n),a:Math.max(0,Math.min(AXCA.length-1,+p.a||0)),open:!!p.open,img:p.img||'',d:p.d||{},crop:p.crop||{}});});}
 })();
 
 /* GitHub önizlemesi: panel yokken ürün görselleri window.IF_IMG eşlemesinden */
@@ -516,3 +542,4 @@ if(matchMedia('(hover: none)').matches){for(const L of Object.keys(T)){if(T[L].c
 resize();applyLang();
 requestAnimationFrame(loop);
 })();
+

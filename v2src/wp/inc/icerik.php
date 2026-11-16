@@ -239,13 +239,20 @@ function intrafarma_reset_form($action, $label) {
 
 /* ---------- Ürünler ---------- */
 function intrafarma_prod_row($i, $p, $axes) {
-    $p += array('n' => '', 'a' => 0, 'open' => false, 'img' => '', 'd' => array());
+    $p += array('n' => '', 'a' => 0, 'open' => false, 'img' => '', 'd' => array(), 'crop' => array());
     $h = '<details class="if-item"' . ($p['n'] === '' ? ' open' : '') . '><summary><span class="if-title">' . ($p['n'] !== '' ? esc_html($p['n']) : 'Yeni ürün') . '</span><span class="if-sub">' . esc_html(isset($axes[$p['a']]) ? $axes[$p['a']] : '') . '</span>' . intrafarma_row_tools() . '</summary><div class="if-body">';
     $h .= '<div class="if-grid"><label>Ürün adı<input type="text" class="if-name regular-text" data-f="n" value="' . esc_attr($p['n']) . '" required></label>';
     $h .= '<label>Kategori (eksen)<select data-f="a">';
     foreach ($axes as $ai => $an) { $h .= '<option value="' . (int) $ai . '"' . selected((int) $p['a'], $ai, false) . '>0' . ($ai + 1) . ' · ' . esc_html($an) . '</option>'; }
     $h .= '</select></label><label>Erişim<select data-f="open"><option value="0"' . selected(!empty($p['open']), false, false) . '>Yalnızca sağlık çalışanları</option><option value="1"' . selected(!empty($p['open']), true, false) . '>Herkese açık</option></select></label></div>';
     $h .= '<div class="if-media"><div class="if-prev">' . ($p['img'] ? '<img src="' . esc_url(intrafarma_media_url($p['img'])) . '" alt="">' : '<span>Görsel yok</span>') . '</div><div><input type="hidden" data-f="img" value="' . esc_attr($p['img']) . '"><button type="button" class="button if-pick">Görsel seç</button> <button type="button" class="button-link if-clear">Görseli kaldır</button><p class="description">İsteğe bağlı. Beyaz ya da şeffaf zeminli ürün fotoğrafı.</p></div></div>';
+    $crop = (array) $p['crop'];
+    $h .= '<div class="if-grid if-crop"><p class="description">Kart görseli: ambalaj adını kadraja almak için odak ve yakınlığı ayarlayın. Orijinal görsel değişmez.</p>';
+    foreach (array('x' => array('Yatay odak (%)', 50, 0, 100, 1), 'y' => array('Dikey odak (%)', 45, 0, 100, 1), 'zoom' => array('Yakınlık', 1.65, 1, 3, 0.05)) as $key => $cfg) {
+        $v = isset($crop[$key]) && is_numeric($crop[$key]) ? max($cfg[2], min($cfg[3], (float) $crop[$key])) : $cfg[1];
+        $h .= '<label>' . esc_html($cfg[0]) . '<input type="number" data-f="crop.' . esc_attr($key) . '" min="' . esc_attr($cfg[2]) . '" max="' . esc_attr($cfg[3]) . '" step="' . esc_attr($cfg[4]) . '" value="' . esc_attr($v) . '"></label>';
+    }
+    $h .= '</div>';
     $h .= '<div class="if-desc"><label>Açıklama (Türkçe)<textarea rows="2" data-f="d.tr">' . esc_textarea(isset($p['d']['tr']) ? $p['d']['tr'] : '') . '</textarea></label><label>Açıklama (English)<textarea rows="2" data-f="d.en">' . esc_textarea(isset($p['d']['en']) ? $p['d']['en'] : '') . '</textarea></label></div>';
     $h .= '<details class="if-more"><summary>Diğer dillerde açıklama</summary><div class="if-desc">';
     foreach (array('ar', 'it', 'ru', 'ro') as $l) { $h .= '<label>' . esc_html(INTRAFARMA_LANG_NAMES[$l]) . '<textarea rows="2" data-f="d.' . $l . '"' . ($l === 'ar' ? ' dir="rtl"' : '') . '>' . esc_textarea(isset($p['d'][$l]) ? $p['d'][$l] : '') . '</textarea></label>'; }
@@ -278,6 +285,11 @@ add_action('admin_post_intrafarma_save_prods', function () {
         $row = array('n' => $n, 'a' => max(0, min(4, isset($p['a']) ? (int) $p['a'] : 0)), 'open' => !empty($p['open']) && $p['open'] !== '0');
         $img = isset($p['img']) ? esc_url_raw($p['img']) : '';
         if ($img !== '') { $row['img'] = $img; }
+        $row['crop'] = array();
+        foreach (array('x' => array(50, 0, 100), 'y' => array(45, 0, 100), 'zoom' => array(1.65, 1, 3)) as $key => $cfg) {
+            $v = isset($p['crop'][$key]) && is_numeric($p['crop'][$key]) ? (float) $p['crop'][$key] : $cfg[0];
+            $row['crop'][$key] = max($cfg[1], min($cfg[2], $v));
+        }
         if ($d) { $row['d'] = $d; }
         $out[] = $row;
     }
@@ -376,3 +388,4 @@ add_action('admin_notices', function () {
     if (!intrafarma_is_design_page($post)) { return; }
     echo '<div class="notice notice-info"><p><b>Bu sayfanın tasarımı ve içeriği temadan gelir.</b> Buraya yazılan yazı sitede görünmez. Yazıları değiştirmek için <a href="' . esc_url(intrafarma_admin_url('intrafarma-metinler')) . '">Intrafarma → Metinler</a>\'i kullanın. Bu sayfayı silmeyin.</p></div>';
 });
+
