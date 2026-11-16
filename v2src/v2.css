@@ -865,3 +865,28 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
 .al-pro .hc-m{color:#244b5b;border-color:#92adb7;background:rgba(255,255,255,.45);transition:background 1s ease,box-shadow 1s ease}
 .al-pro .hc-m:hover,.al-pro .hc-m:focus-visible{color:#183846;background:#f7fbfc;border-color:#6d929e;box-shadow:0 8px 18px -12px rgba(37,78,91,.4)}
 .al-pro .hc-m:focus-visible{outline:2px solid #527b89;outline-offset:4px}
+
+/* Shared section surfaces: keep covers and footer independent. */
+.hk-pt{margin-top:0;color:var(--mist-ink)}
+.hk-pt::before{background:linear-gradient(180deg,#dcecef,#e3f2f4 100px,#e9f3f5)}
+.hk-pt::after{inset:0;background:linear-gradient(180deg,rgba(49,89,103,.16),transparent 48px);filter:none;opacity:1;animation:none}
+.hk-pt .eyebrow{color:#526f79}.hk-pt h2{color:var(--mist-ink)}
+.hk-ptg .pt-l{background:linear-gradient(155deg,#f7fbfc,#e6f1f3);border-color:#f7fbfc;box-shadow:var(--mist-shadow)}
+.hk-ptg .pt-l:hover,.hk-ptg .pt-l:focus-visible{transform:translateY(-3px);box-shadow:0 22px 36px -18px rgba(37,78,91,.38)}
+.hk-ptg .pt-l.dk{background:linear-gradient(155deg,#425a65,#2c424e)}
+.al-cards .uc-c,.al-side{background:#edf3f4;border-color:#d7e2e5;box-shadow:var(--mist-shadow)}
+.al-cards .uc-c .uc-art{mix-blend-mode:multiply}
+.al-cards .uc-c .uc-art .uc-ci{opacity:1}
+.al-cards .uc-c .uc-art::after{background:linear-gradient(90deg,#edf3f4,rgba(237,243,244,.7) 28%,transparent 64%),linear-gradient(0deg,#edf3f4,transparent 30%)}
+[dir=rtl] .al-cards .uc-c .uc-art::after{background:linear-gradient(270deg,#edf3f4,rgba(237,243,244,.7) 28%,transparent 64%),linear-gradient(0deg,#edf3f4,transparent 30%)}
+.hk-g4 article,.ur-g article,.hk-card{background:linear-gradient(155deg,#f7fbfc,#e3eef1)!important;border-color:#d7e2e5!important;color:var(--mist-ink);box-shadow:var(--mist-shadow)!important}
+.hk-g4 h3,.ur-g h3,.hk-card b{color:var(--mist-ink)}
+.hk-g4 p,.ur-g p,.hk-card span{color:#45616e}
+.ur-g i,.hk-card i{color:#6e8992}
+/* Pro overview remains scrollable when text and the four shortcuts exceed the stage. */
+.pro-ui{overflow-y:auto;overscroll-behavior:contain}
+.pro-top{flex-shrink:0}
+.pro-hero{flex:1 0 auto;padding-block:32px}
+.pro-ui>.cards{flex-shrink:0;padding:8px 0 20px;position:relative;z-index:2}
+.pro-ui>.cards .card{min-height:144px;background:linear-gradient(155deg,rgba(247,251,252,.97),rgba(227,238,241,.96));box-shadow:var(--mist-shadow)}
+@media(max-width:900px){.pro-hero{padding-block:24px}.pro-ui>.cards{gap:12px}.pro-ui>.cards .card{min-height:132px}.pro-nav{display:flex;flex-wrap:wrap}.pro-top{border-radius:24px;flex-wrap:wrap}.pro-nav button{padding:8px}}
