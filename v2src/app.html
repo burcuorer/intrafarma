@@ -1853,6 +1853,25 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
 #vUrunler:has(#ucD[hidden]) .uc-c .uc-art .uc-ci{opacity:1;mask-image:radial-gradient(ellipse 95% 100% at 65% 42%,#000 60%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 95% 100% at 65% 42%,#000 60%,transparent 100%)}
 #vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(90deg,#edf5f7 0,rgba(237,245,247,.7) 28%,transparent 64%),linear-gradient(0deg,#edf5f7,transparent 30%)}
 [dir=rtl] #vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(270deg,#edf5f7 0,rgba(237,245,247,.7) 28%,transparent 64%),linear-gradient(0deg,#edf5f7,transparent 30%)}
+
+/* Muted category tabs: category is still identified in text and editable in WordPress. */
+.uc-c{--category-tab:#83949e}
+.uc-c[data-axis="0"]{--category-tab:#81949f}
+.uc-c[data-axis="1"]{--category-tab:#9793a5}
+.uc-c[data-axis="2"]{--category-tab:#7f9997}
+.uc-c[data-axis="3"]{--category-tab:#9aa48f}
+.uc-c[data-axis="4"]{--category-tab:#aa9a8b}
+.uc-c::before,#vUrunler:has(#ucD[hidden]) .uc-c::before{inset:24px auto auto 0;width:5px;height:38px;border-radius:0 5px 5px 0;background:var(--category-tab)}
+[dir=rtl] .uc-c::before,[dir=rtl] #vUrunler:has(#ucD[hidden]) .uc-c::before{left:auto;right:0;border-radius:5px 0 0 5px}
+.uc-c .uc-t i{color:#526770}
+.uc-c{padding-inline-start:24px}
+#vUrunler:has(#ucD[hidden]) .uc-g{background:radial-gradient(ellipse at 90% 10%,rgba(130,151,153,.10),transparent 60%),#293c44}
+#vUrunler:has(#ucD[hidden]) .uc-c{background:#f1f3f3;border-color:#d4dddd;box-shadow:0 3px 10px rgba(9,19,24,.10)}
+#vUrunler:has(#ucD[hidden]) .uc-c:hover,#vUrunler:has(#ucD[hidden]) .uc-c:focus-visible{border-color:#9caeb2;box-shadow:0 8px 20px rgba(9,19,24,.15)}
+#vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(90deg,#f1f3f3 0,rgba(241,243,243,.7) 28%,transparent 64%),linear-gradient(0deg,#f1f3f3,transparent 30%)}
+[dir=rtl] #vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(270deg,#f1f3f3 0,rgba(241,243,243,.7) 28%,transparent 64%),linear-gradient(0deg,#f1f3f3,transparent 30%)}
+.uc-c .uc-go{color:#526d76}.uc-c .uc-acc::before{background:#ab976c}.uc-c .uc-acc.open::before{background:#7f9a91}
+.hp-f img[src*="portfolio-regenflex-studio"]{mix-blend-mode:normal;object-fit:contain;mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 60%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 60%,transparent 100%)}
 </style>
 </head><body>
 
@@ -2132,7 +2151,7 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
     
     <section class="hs hp band tint" id="urunler" aria-labelledby="hpH">
       <figure class="hp-f" data-rv="left">
-        <img src="{{BASE}}media/gorsel/portfolio-regenflex-kit.png" alt="" loading="lazy" decoding="async">
+        <img src="{{BASE}}media/gorsel/portfolio-regenflex-studio.jpg" alt="" loading="lazy" decoding="async">
       </figure>
       <div class="hp-t" data-rv="right">
         <p class="eyebrow" data-t="hp_ey"></p><h2 id="hpH" data-t="hp_h"></h2><p class="hp-p" data-t="hp_p"></p>
@@ -3009,7 +3028,7 @@ function ucCard(p,i,L,AX){const AXC=IF.AXC||[],open=!!p.open,c=p.crop||{};
  const num=(v,f,min,max)=>Number.isFinite(Number(v))&&v!==''?Math.max(min,Math.min(max,Number(v))):f;
  const crop='--pack-x:'+num(c.x,50,0,100)+'%;--pack-y:'+num(c.y,45,0,100)+'%;--pack-zoom:'+num(c.zoom,1.65,1,3)+';';
  const img=p.img?'<span class="uc-art" aria-hidden="true"><img class="uc-haze" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"><img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"></span>':'';
- return '<a class="uc-c'+(p.img?' has-img':'')+'" href="'+ucHref({urun:i})+'" style="'+crop+'--card-delay:'+(-(i%7)*1.4)+'s;--tc:'+(AXC[p.a]||'#17707A')+'">'+img+'<span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
+ return '<a class="uc-c'+(p.img?' has-img':'')+'" data-axis="'+p.a+'" href="'+ucHref({urun:i})+'" style="'+crop+'--card-delay:'+(-(i%7)*1.4)+'s;--tc:'+(AXC[p.a]||'#17707A')+'">'+img+'<span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
 
 function renderUC(){
  if(P!=='urunler')return;

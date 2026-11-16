@@ -831,3 +831,22 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
 #vUrunler:has(#ucD[hidden]) .uc-c .uc-art .uc-ci{opacity:1;mask-image:radial-gradient(ellipse 95% 100% at 65% 42%,#000 60%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 95% 100% at 65% 42%,#000 60%,transparent 100%)}
 #vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(90deg,#edf5f7 0,rgba(237,245,247,.7) 28%,transparent 64%),linear-gradient(0deg,#edf5f7,transparent 30%)}
 [dir=rtl] #vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(270deg,#edf5f7 0,rgba(237,245,247,.7) 28%,transparent 64%),linear-gradient(0deg,#edf5f7,transparent 30%)}
+
+/* Muted category tabs: category is still identified in text and editable in WordPress. */
+.uc-c{--category-tab:#83949e}
+.uc-c[data-axis="0"]{--category-tab:#81949f}
+.uc-c[data-axis="1"]{--category-tab:#9793a5}
+.uc-c[data-axis="2"]{--category-tab:#7f9997}
+.uc-c[data-axis="3"]{--category-tab:#9aa48f}
+.uc-c[data-axis="4"]{--category-tab:#aa9a8b}
+.uc-c::before,#vUrunler:has(#ucD[hidden]) .uc-c::before{inset:24px auto auto 0;width:5px;height:38px;border-radius:0 5px 5px 0;background:var(--category-tab)}
+[dir=rtl] .uc-c::before,[dir=rtl] #vUrunler:has(#ucD[hidden]) .uc-c::before{left:auto;right:0;border-radius:5px 0 0 5px}
+.uc-c .uc-t i{color:#526770}
+.uc-c{padding-inline-start:24px}
+#vUrunler:has(#ucD[hidden]) .uc-g{background:radial-gradient(ellipse at 90% 10%,rgba(130,151,153,.10),transparent 60%),#293c44}
+#vUrunler:has(#ucD[hidden]) .uc-c{background:#f1f3f3;border-color:#d4dddd;box-shadow:0 3px 10px rgba(9,19,24,.10)}
+#vUrunler:has(#ucD[hidden]) .uc-c:hover,#vUrunler:has(#ucD[hidden]) .uc-c:focus-visible{border-color:#9caeb2;box-shadow:0 8px 20px rgba(9,19,24,.15)}
+#vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(90deg,#f1f3f3 0,rgba(241,243,243,.7) 28%,transparent 64%),linear-gradient(0deg,#f1f3f3,transparent 30%)}
+[dir=rtl] #vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(270deg,#f1f3f3 0,rgba(241,243,243,.7) 28%,transparent 64%),linear-gradient(0deg,#f1f3f3,transparent 30%)}
+.uc-c .uc-go{color:#526d76}.uc-c .uc-acc::before{background:#ab976c}.uc-c .uc-acc.open::before{background:#7f9a91}
+.hp-f img[src*="portfolio-regenflex-studio"]{mix-blend-mode:normal;object-fit:contain;mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 60%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 60%,transparent 100%)}
