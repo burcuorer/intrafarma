@@ -293,6 +293,10 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
  if(im.classList.contains('uc-ci')){im.closest('.uc-c')&&im.closest('.uc-c').classList.remove('has-img');im.remove();}
  else if(im.parentElement&&im.parentElement.classList.contains('uc-vis')){im.parentElement.classList.remove('has-img');im.remove();}},true);
 
+/* ---- mobil menü: açılınca bulunulan bölüm açık gelir; menüdeki sağlık çalışanı girişi menüyü kapatır ---- */
+{const bg=$('#nvBurger');if(bg)bg.addEventListener('click',()=>{if(!siteEl.classList.contains('nav-open'))return;const c=$('.site-top .nv.cur');if(c&&!$('.site-top .nv.open')){c.classList.add('open');c.firstElementChild.setAttribute('aria-expanded','true');}const n=$('#pubNav');if(n)n.scrollTop=0;});
+ const nh=$('.nv-hcp');if(nh)nh.addEventListener('click',()=>closeNav(),true);}
+
 labels();
 })();
 

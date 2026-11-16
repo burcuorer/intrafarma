@@ -279,6 +279,8 @@ c2n = jrep(c2n, "addEventListener('hashchange',()=>route(false));route(true);", 
 V2C2 = io.open(os.path.join(HERE, 'v2c2.js'), encoding='utf-8').read()
 # 8e) alan sayfası: her alanın kendi açıklaması (al_p0..5)
 c2n = jrep(c2n, " $('#alH').textContent=CA[alanI];", " $('#alH').textContent=CA[alanI];{const ap=$('#alH').nextElementSibling;if(ap&&ap.tagName==='P'){ap.removeAttribute('data-t');const t=tr('al_p'+alanI);ap.textContent=t&&t!=='al_p'+alanI?t:tr('ua_p');}}")
+# 8h) mobil menü: sağlık çalışanı girişi menünün içinde de olsun
+rep('<div class="lsw-m" role="group" data-tl="d_lang">', '<button type="button" class="nv-hcp" data-gate data-t="hcp"></button><div class="lsw-m" role="group" data-tl="d_lang">')
 # 8g) alt sayfalarda ana sayfa videoları indirilmesin (mobil veri)
 rep('<video class="vh-v on" muted playsinline preload="auto"', '<video class="vh-v on" muted playsinline preload="none"')
 c2n = jrep(c2n, ".observe($('#vh'));\ngo(0);", ".observe($('#vh'));\nif(!window.IFU||IFU.page==='home')go(0);")
