@@ -170,3 +170,5 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
  document.addEventListener('visibilitychange',sync);
 })();
 
+
+if(window.IF_CMS&&IF_CMS.home_product_image){const img=document.querySelector('.hp-f img');if(img)img.src=IF_CMS.home_product_image;}

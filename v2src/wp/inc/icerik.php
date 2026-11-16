@@ -55,6 +55,8 @@ function intrafarma_media_url($u) {
 /** Siteye gönderilen içerik (window.IF_CMS). Panelde hiçbir şey değişmemişse boş döner. */
 function intrafarma_cms_payload() {
     $out = array();
+    $portfolio = get_theme_mod('intrafarma_home_product_image', '');
+    if ($portfolio) { $out['home_product_image'] = esc_url_raw(intrafarma_media_url($portfolio)); }
     $tx = array_filter(array_map(function ($a) { return is_array($a) ? array_filter($a, 'strlen') : array(); }, intrafarma_cms_tx()));
     if ($tx) { $out['tx'] = $tx; }
     $out['prods'] = array_map(function ($p) { if (!empty($p['img'])) { $p['img'] = intrafarma_media_url($p['img']); } return $p; }, array_values(intrafarma_cms_prods()));
@@ -389,3 +391,13 @@ add_action('admin_notices', function () {
     echo '<div class="notice notice-info"><p><b>Bu sayfanın tasarımı ve içeriği temadan gelir.</b> Buraya yazılan yazı sitede görünmez. Yazıları değiştirmek için <a href="' . esc_url(intrafarma_admin_url('intrafarma-metinler')) . '">Intrafarma → Metinler</a>\'i kullanın. Bu sayfayı silmeyin.</p></div>';
 });
 
+
+/* Home portfolio artwork remains replaceable without editing the template. */
+add_action('customize_register', function ($wp_customize) {
+    $wp_customize->add_section('intrafarma_portfolio', array('title' => 'Intrafarma · Ana sayfa ürün görseli', 'priority' => 35));
+    $wp_customize->add_setting('intrafarma_home_product_image', array('default' => '', 'sanitize_callback' => 'esc_url_raw', 'transport' => 'refresh'));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'intrafarma_home_product_image', array(
+        'label' => 'Ürün portföyü görseli', 'section' => 'intrafarma_portfolio',
+        'description' => 'Gerçek ürün görselinizi seçin. Boş bırakıldığında temadaki Regenflex Kit görseli kullanılır. Yatay, beyaz veya şeffaf zeminli görsel önerilir.'
+    )));
+});

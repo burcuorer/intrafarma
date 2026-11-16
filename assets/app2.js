@@ -75,6 +75,8 @@ if(!RM){addEventListener('scroll',()=>{if(!vhq){vhq=true;requestAnimationFrame(v
 const UA_IMG=['ortopedi','spor-hekimligi','estetik','uroloji','kadin-sagligi','veteriner'];
 const UA_IC=['<circle cx="12" cy="12" r="9"/><path d="M8 8.5c2 1 2 3 0 4M16 11.5c-2 1-2 3 0 4M9 12.5h6"/>','<circle cx="12" cy="12" r="9"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>','<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>','<rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 8v6"/>','<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>','<path d="M6 13c0-3 3-4 6-4s6 1 6 4-2 6-6 6-6-3-6-6z"/><circle cx="7" cy="6" r="1.6"/><circle cx="12" cy="4.5" r="1.6"/><circle cx="17" cy="6" r="1.6"/>'];
 function homeData(){
+ const portfolio=document.querySelector('.hp-f img');if(portfolio&&window.IF_CMS&&IF_CMS.home_product_image)portfolio.src=IF_CMS.home_product_image;
+
  const D=window.IFD;if(!D)return;const L=(window.IF&&IF.lang)||'tr',CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en;
  const g=$('#uaG');if(g){const was=!!g.querySelector('.in');g.innerHTML='';CA.forEach((n,i)=>{const a=document.createElement('a');a.href=IFU.alan(i);a.className='ua-c'+(UA_IMG[i]?'':' noimg');a.setAttribute('data-rv',i%3===0?'left':i%3===2?'right':'up');a.style.setProperty('--i',i%3+Math.floor(i/3));if(was)a.classList.add('in');io.observe(a);
   a.innerHTML=(UA_IMG[i]?'<img src="'+(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp'+'" alt="" loading="lazy" decoding="async" width="800" height="755">':'<svg class="ua-ic" viewBox="0 0 24 24" aria-hidden="true">'+UA_IC[i]+'</svg>')+'<span class="ua-n">0'+(i+1)+'</span><span class="ua-x"><b></b><i aria-hidden="true">→</i></span>';
