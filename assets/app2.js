@@ -200,7 +200,7 @@ function renderUC(){
   const more=PR.map((x,i)=>({x,i})).filter(o=>o.x.a===p.a&&o.i!==UC.urun);
   $('#ucD').innerHTML=
    '<a class="uc-back" href="'+ucHref({ax:p.a,ca:-1})+'"><i aria-hidden="true">←</i><span>'+esc2(axn)+'</span></a>'+
-   '<div class="uc-dg"><div class="uc-vis'+(p.img?' has-img':'')+'" style="--tc:'+(AXC[p.a]||'#17707A')+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="'+esc2(p.n)+'" loading="lazy">':'')+'<small>0'+(p.a+1)+' · '+esc2(axn)+'</small><span>'+esc2(p.n)+'</span></div>'+
+   '<div class="uc-dg"><div class="uc-vis'+(p.img?' has-img':'')+'" style="--tc:'+(AXC[p.a]||'#17707A')+(p.img?';--im:url(&quot;'+esc2(encodeURI(p.img))+'&quot;)':'')+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="'+esc2(p.n)+'" loading="lazy">':'')+'<small>0'+(p.a+1)+' · '+esc2(axn)+'</small><span>'+esc2(p.n)+'</span></div>'+
    '<div class="uc-info"><dl class="uc-meta"><div><dt>'+esc2(tr('d_ax'))+'</dt><dd><a href="'+ucHref({ax:p.a,ca:-1})+'">0'+(p.a+1)+' '+esc2(axn)+'</a></dd></div>'+
    '<div><dt>'+esc2(tr('d_ca'))+'</dt><dd class="uc-areas">'+areas+'</dd></div><div><dt>'+esc2(tr('d_lang'))+'</dt><dd>TR · EN</dd></div></dl>'+
    (open?'<div class="uc-box open"><h2>'+tr('op_t')+'</h2><p>'+tr('op_b')+'</p></div>'
@@ -271,8 +271,8 @@ new MutationObserver(v2refresh).observe(document.documentElement,{attributes:tru
 
 /* ---- alt sayfa başlığında dönen tek video (geniş ekran; hareket azaltılmışsa yalnız kapak görseli) ---- */
 const PGV={urunler:'hero-urun',uretim:'hero-uretim',bilim:'hero-bilim',uzmanlik:'hero-laboratuvar',hakkimizda:'hero-laboratuvar',guncel:'hero-bilim',iletisim:'hero-laboratuvar'};
-function pgVideo(){const k=PGV[P];if(!k||!curView||!matchMedia('(min-width: 901px)').matches)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
- const B=(window.IF_BASE||'')+'media/'+k,f=document.createElement('figure'),v=document.createElement('video');f.className='pg-vid';f.setAttribute('aria-hidden','true');
+function pgVideo(){const k=PGV[P];const mob=!matchMedia('(min-width: 901px)').matches,nc=navigator.connection;if(!k||!curView||(mob&&nc&&nc.saveData))return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
+ const B=(window.IF_BASE||'')+'media/'+(mob&&k==='hero-bilim'?'hero-laboratuvar':k),f=document.createElement('figure'),v=document.createElement('video');f.className='pg-vid';f.setAttribute('aria-hidden','true');
  v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata';v.poster=B+'.jpg';
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){v.autoplay=true;v.src=B+'.mp4';}
  f.appendChild(v);const cap=document.createElement('figcaption');cap.className='pg-cap';cap.innerHTML='<i></i><span data-t="'+({urunler:'v_cap4',uretim:'v_cap3',bilim:'v_cap1',guncel:'v_cap1'}[P]||'v_cap2')+'"></span>';f.appendChild(cap);cap.querySelector('span').innerHTML=tr(cap.querySelector('span').dataset.t);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}

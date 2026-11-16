@@ -5,6 +5,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..')
 NM = '/tmp/claude-0/-home-claude/06ad3418-85a2-578d-a5ea-e5e40f6a3e32/scratchpad/i18n/fonts/node_modules'
 BASE = ''
+# GitHub önizlemesinde ürün görselleri canlı sitedeki dosyalardan gelir (WordPress'te panelden yönetilir)
+import json as _json
+IFIMG = _json.dumps({k: 'https://www.intrafarma.com.tr' + v for k, v in _json.load(io.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'wp_urun_gorselleri.json'), encoding='utf-8')).items()}, ensure_ascii=False)
 s = io.open(os.path.join(HERE, 'app.html'), encoding='utf-8').read()
 
 PAGES = [  # dosya, sayfa kimliği, ilk başlık (dil seçilince JS günceller)
@@ -69,7 +72,7 @@ shutil.copy(NM + '/three/LICENSE', os.path.join(A, 'vendor', 'THREE-LICENSE.txt'
 for fn, pid, title in PAGES:
     h = re.sub(r'<html lang="tr"[^>]*>', '<html lang="tr" data-page="%s">' % pid, head, count=1)
     need('data-page="%s"' % pid in h, 'html etiketi')
-    h = h.replace('</head>', '<title>%s</title>\n<link rel="stylesheet" href="assets/fonts.css?v=%s">\n<link rel="stylesheet" href="assets/app.css?v=%s">\n<script>window.IF_BASE=%r;window.IF_CK={ga:\"G-DNHVY79BSW\",ads:\"\",live:[\"intrafarma.com.tr\",\"www.intrafarma.com.tr\"],log:\"\",policy:\"\"};</script>\n</head>' % (title, h_f, h_css, BASE))
+    h = h.replace('</head>', '<title>%s</title>\n<link rel="stylesheet" href="assets/fonts.css?v=%s">\n<link rel="stylesheet" href="assets/app.css?v=%s">\n<script>window.IF_BASE=%r;window.IF_IMG=__IFIMG__;window.IF_CK={ga:\"G-DNHVY79BSW\",ads:\"\",live:[\"intrafarma.com.tr\",\"www.intrafarma.com.tr\"],log:\"\",policy:\"\"};</script>\n</head>' % (title, h_f, h_css, BASE)).replace('__IFIMG__', IFIMG)
     if '</head>' not in head:
         sys.exit('head kapanışı yok')
     html = (h + '<body>' + body +

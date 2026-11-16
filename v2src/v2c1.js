@@ -18,6 +18,9 @@
  if(Array.isArray(C.prods)&&C.prods.length){PRODS.length=0;C.prods.forEach(p=>{if(p&&p.n)PRODS.push({n:String(p.n),a:Math.max(0,Math.min(AXCA.length-1,+p.a||0)),open:!!p.open,img:p.img||'',d:p.d||{}});});}
 })();
 
+/* GitHub önizlemesi: panel yokken ürün görselleri window.IF_IMG eşlemesinden */
+if(!window.IF_CMS&&window.IF_IMG&&window.IFU)PRODS.forEach(p=>{if(!p.img){const u=IF_IMG[IFU.slug(p.n)];if(u)p.img=u;}});
+
 /* ===== v2 (çekirdek): Pro işleyişi aynı; yalnızca çıkış yolları ve geri tuşu ===== */
 IF.openGate=openGate;IF.hideGate=hideGate;IF.goPublic=goPublic;IF.T=T;IF.AXC=AXC;IF.onLang=IF.onLang||[];
 /* giriş kapısı: Kapat, Esc, arka plana tıklama ve tarayıcının geri tuşu aynı şeyi yapar */
