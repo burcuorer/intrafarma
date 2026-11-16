@@ -1837,20 +1837,13 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
 @media(min-width:901px) and (prefers-reduced-motion:no-preference){.hp-f:hover img{transform:translateY(-4px) scale(1.015)}}
 @media(max-width:900px){.hp-f{aspect-ratio:1.35;max-width:600px;width:100%;margin-inline:auto}.hp.band{gap:20px;padding-top:48px}}
 
-/* Catalogue palette: scoped away from product detail and WordPress content fields. */
-#vUrunler:has(#ucD[hidden]){--catalog-bg:#102d3c;--catalog-ink:#e7f2f5;background:var(--catalog-bg)}
-#vUrunler:has(#ucD[hidden])>.pg{color:var(--catalog-ink)}
-#vUrunler:has(#ucD[hidden])>.pg::before{background:radial-gradient(ellipse at 85% 0,rgba(37,137,145,.19),transparent 65%),#102d3c;clip-path:none;opacity:1}
-#vUrunler:has(#ucD[hidden])>.pg h1{color:#f0f7f9}
-#vUrunler:has(#ucD[hidden])>.pg p{color:#bed4de}
-#vUrunler:has(#ucD[hidden]) .uc{padding-top:clamp(28px,4vw,48px);background:radial-gradient(ellipse at 95% 12%,rgba(30,125,133,.13),transparent 48%),#102d3c}
+/* Dark background belongs only to the product-card grid, never the page cover or filters. */
+#vUrunler:has(#ucD[hidden]) .uc-g{padding:24px;border-radius:24px;background:radial-gradient(ellipse at 95% 10%,rgba(30,125,133,.17),transparent 48%),#102d3c}
+#vUrunler:has(#ucD[hidden]) .uc-g .uc-empty p{color:#c3d9e2}
+#vUrunler:has(#ucD[hidden]) .uc-c:focus-visible{outline:3px solid #8bd9df;outline-offset:3px}
+@media(max-width:640px){#vUrunler:has(#ucD[hidden]) .uc-g{padding:14px;border-radius:18px}}
 #vUrunler:has(#ucD[hidden]) .uc-bar,#vUrunler:has(#ucD[hidden]) .uc-ca{background:#183b4b;border-color:#365765;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 #vUrunler:has(#ucD[hidden]) .uc-ca{border-top-color:#2c4d5c}
-#vUrunler:has(#ucD[hidden]) .uc .chip{background:#204555;border-color:#486775;color:#eaf3f6}
-#vUrunler:has(#ucD[hidden]) .uc .chip:hover{background:#2c5968;border-color:#82b9be}
-#vUrunler:has(#ucD[hidden]) .uc .chip[aria-current]{background:#dceff1!important;border-color:#dceff1!important;color:#102d3c!important;box-shadow:none!important}
-#vUrunler:has(#ucD[hidden]) .uc-q{background:#102e3d;border-color:#486775}
-#vUrunler:has(#ucD[hidden]) .uc-q input::placeholder{color:#b9d0da}
 #vUrunler:has(#ucD[hidden]) .uc-ca .lab,#vUrunler:has(#ucD[hidden]) .uc-n,#vUrunler:has(#ucD[hidden]) .uc-empty p{color:#c3d9e2}
 #vUrunler:has(#ucD[hidden]) .uc-c{background:#edf5f7;border:1px solid #cbdfe5;box-shadow:0 4px 14px rgba(3,17,26,.12)}
 #vUrunler:has(#ucD[hidden]) .uc-c::before{height:3px}
@@ -1860,8 +1853,6 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
 #vUrunler:has(#ucD[hidden]) .uc-c .uc-art .uc-ci{opacity:1;mask-image:radial-gradient(ellipse 95% 100% at 65% 42%,#000 60%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 95% 100% at 65% 42%,#000 60%,transparent 100%)}
 #vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(90deg,#edf5f7 0,rgba(237,245,247,.7) 28%,transparent 64%),linear-gradient(0deg,#edf5f7,transparent 30%)}
 [dir=rtl] #vUrunler:has(#ucD[hidden]) .uc-c .uc-art::after{background:linear-gradient(270deg,#edf5f7 0,rgba(237,245,247,.7) 28%,transparent 64%),linear-gradient(0deg,#edf5f7,transparent 30%)}
-#vUrunler:has(#ucD[hidden]) .uc .chip:focus-visible,#vUrunler:has(#ucD[hidden]) .uc-c:focus-visible{outline:3px solid #8bd9df;outline-offset:3px}
-#vUrunler:has(#ucD[hidden]) .uc-q:focus-within{outline:2px solid #8bd9df;outline-offset:2px}
 </style>
 </head><body>
 
