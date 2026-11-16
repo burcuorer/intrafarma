@@ -311,7 +311,7 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
   target.classList.toggle('motion-visible',isIntersecting&&!document.hidden);
  }),{rootMargin:'30px',threshold:0});
  function scan(root){if(root.nodeType!==1)return;
-  const cards=root.matches('.uc-c')?[root]:[...root.querySelectorAll('.uc-c')];
+  const cards=root.matches('.uc-c,.pcard,.ua-c')?[root]:[...root.querySelectorAll('.uc-c,.pcard,.ua-c')];
   cards.forEach(el=>{if(!seen.has(el)){seen.add(el);ob.observe(el);}});
  }
  scan(document.querySelector('.site'));
