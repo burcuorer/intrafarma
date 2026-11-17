@@ -233,6 +233,15 @@ def jrep(src, old, new, count=1):
     return src.replace(old, new)
 
 PRE = io.open(os.path.join(HERE, 'v2pre.js'), encoding='utf-8').read()
+# 8j) Drive fotoğraflarında bulunan, katalogda olmayan 11 ürün (grup önerisi; firma panelden düzeltir)
+_pk = "['Regenflex T&M',0],['İnartro',0],"
+_px = "['Regenflex T&M',0],['ArthroPlus Kit',0],['PlusFlex Kit',0],['İnartro',0],['Hyaluzen',0],['Hyaluaura',0],['Moveura',0],['Hyalint',0],['Synchro Forte',0],"
+_bk = "['Osblass Saşe',3],['Atrofit',3],['Nemact',3],"
+_bx = "['Osblass Saşe',3],['Atrofit',3],['Nemact',3],['NemPlus',3],['IMAG',3],['Aurmag',3],['Kaseon',3],"
+if _pk in c1:
+    c1n = jrep(c1n, _pk, _px); c1n = jrep(c1n, _bk, _bx)
+else:
+    c2n = jrep(c2n, _pk, _px); c2n = jrep(c2n, _bk, _bx)
 c1n = PRE + c1n
 keys = json.load(io.open(os.path.join(HERE, 'v2keys.json'), encoding='utf-8'))
 inj = 'for(const [l,o] of Object.entries(%s))Object.assign(T[l],o);\n' % json.dumps(keys, ensure_ascii=False)
