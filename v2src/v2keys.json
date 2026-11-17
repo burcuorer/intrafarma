@@ -105,7 +105,10 @@
   "ax_p3": "Kolajen, glukozamin ve bitkisel ekstraktlar içeren takviye edici gıdalar. Eklem ve doku sağlığını beslenmeyle desteklemeye yönelik ürünler bu eksende.",
   "ax_p4": "Üroloji ve kadın sağlığına yönelik, belirli ihtiyaçlar için geliştirilmiş özel ürünler bu eksende.",
   "c_go": "Hücreyi canlandır",
-  "g_note": "Beyanınız kaydedilmez; her girişte yeniden sorulur."
+  "g_note": "Beyanınız kaydedilmez; her girişte yeniden sorulur.",
+  "ur_f1": "Regenyal tesisi",
+  "ur_f2": "Laboratuvar ve üretim",
+  "ur_f3": "Ürün detayları"
  },
  "en": {
   "draft": "Test version · text, figures and images are samples",
@@ -213,7 +216,10 @@
   "ax_p3": "Food supplements containing collagen, glucosamine and plant extracts. Products that support joint and tissue health through nutrition sit on this axis.",
   "ax_p4": "Special products developed for specific needs in urology and women’s health sit on this axis.",
   "c_go": "Bring the cell to life",
-  "g_note": "Your declaration is not stored; you will be asked again on each visit."
+  "g_note": "Your declaration is not stored; you will be asked again on each visit.",
+  "ur_f1": "Regenyal facility",
+  "ur_f2": "Laboratory and production",
+  "ur_f3": "Product details"
  },
  "ar": {
   "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -321,7 +327,10 @@
   "ax_p3": "مكملات غذائية تحتوي على الكولاجين والجلوكوزامين والمستخلصات النباتية. في هذا المحور المنتجات التي تدعم صحة المفاصل والأنسجة عبر التغذية.",
   "ax_p4": "في هذا المحور منتجات خاصة طُوّرت لاحتياجات محددة في طب المسالك البولية وصحة المرأة.",
   "c_go": "حرّك الخلية",
-  "g_note": "لا يُحفظ إقرارك؛ سيُطلب منك مجددًا في كل زيارة."
+  "g_note": "لا يُحفظ إقرارك؛ سيُطلب منك مجددًا في كل زيارة.",
+  "ur_f1": "منشأة ريجينيال",
+  "ur_f2": "المختبر والإنتاج",
+  "ur_f3": "تفاصيل المنتج"
  },
  "it": {
   "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -429,7 +438,10 @@
   "ax_p3": "Integratori alimentari con collagene, glucosamina ed estratti vegetali. Su questo asse si trovano i prodotti che sostengono la salute di articolazioni e tessuti attraverso la nutrizione.",
   "ax_p4": "Su questo asse si trovano prodotti speciali sviluppati per esigenze specifiche in urologia e salute della donna.",
   "c_go": "Anima la cellula",
-  "g_note": "La dichiarazione non viene salvata; verrà richiesta a ogni accesso."
+  "g_note": "La dichiarazione non viene salvata; verrà richiesta a ogni accesso.",
+  "ur_f1": "Stabilimento Regenyal",
+  "ur_f2": "Laboratorio e produzione",
+  "ur_f3": "Dettagli del prodotto"
  },
  "ru": {
   "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -537,7 +549,10 @@
   "ax_p3": "БАДы с коллагеном, глюкозамином и растительными экстрактами. Здесь собраны продукты, поддерживающие здоровье суставов и тканей через питание.",
   "ax_p4": "Здесь собраны специальные продукты, разработанные для конкретных задач в урологии и женском здоровье.",
   "c_go": "Оживить клетку",
-  "g_note": "Заявление не сохраняется; оно запрашивается при каждом входе."
+  "g_note": "Заявление не сохраняется; оно запрашивается при каждом входе.",
+  "ur_f1": "Предприятие Regenyal",
+  "ur_f2": "Лаборатория и производство",
+  "ur_f3": "Детали продукции"
  },
  "ro": {
   "draft": "Versiune de test · textele, cifrele și imaginile sunt exemple",
@@ -645,6 +660,9 @@
   "ax_p3": "Suplimente alimentare cu colagen, glucozamină și extracte din plante. Pe această axă se află produsele care susțin sănătatea articulațiilor și a țesuturilor prin nutriție.",
   "ax_p4": "Pe această axă se află produse speciale dezvoltate pentru nevoi specifice în urologie și sănătatea femeii.",
   "c_go": "Animează celula",
-  "g_note": "Declarația nu este salvată; va fi solicitată la fiecare accesare."
+  "g_note": "Declarația nu este salvată; va fi solicitată la fiecare accesare.",
+  "ur_f1": "Unitatea Regenyal",
+  "ur_f2": "Laborator și producție",
+  "ur_f3": "Detalii de produs"
  }
 }

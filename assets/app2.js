@@ -1,4 +1,5 @@
 
+
 /* ana sayfa pilotu: video slaytı, ortaklar bandı, kaydırma animasyonları, sayaçlar, sayfa başı */
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -343,6 +344,11 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
 })();
 
 
+/* ---- üretim: her fotoğrafın üstünde küçük başlık; hafifçe yükselerek belirir ---- */
+{const uf=$('.ur-f');if(uf&&!uf.querySelector('figure'))[...uf.querySelectorAll(':scope>img')].forEach((im,i)=>{const f=document.createElement('figure');f.className='ur-ph';f.dataset.rv='up';f.style.setProperty('--i',i);
+ const c=document.createElement('figcaption');c.innerHTML='<i>0'+(i+1)+'</i><span data-t="ur_f'+(i+1)+'"></span>';c.lastChild.textContent=tr('ur_f'+(i+1));
+ im.removeAttribute('data-rv');im.classList.remove('in','seen');uf.insertBefore(f,im);f.appendChild(c);f.appendChild(im);io.observe(f);});}
+
 labels();
 })();
 
@@ -483,4 +489,5 @@ IF.ytInit=ytInit;IF.cookiePrefs=prefs;IF.consent=()=>S&&Object.assign({},S.c);
 ytInit();
 if(complete())google();else banner();
 })();
+
 

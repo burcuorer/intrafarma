@@ -1,0 +1,149 @@
+--- app_regen.html	2026-11-17 03:49:19.438322887 +0300
++++ app_committed.html	2026-11-17 03:49:08.026337423 +0300
+@@ -2261,7 +2261,7 @@
+     
+     <section class="hs hp band tint" id="urunler" aria-labelledby="hpH">
+       <figure class="hp-f" data-rv="left">
+-        <img src="{{BASE}}media/gorsel/urun.jpg" alt="" loading="lazy" decoding="async">
++        <img src="{{BASE}}media/gorsel/portfolio-regenflex-studio.jpg" alt="" loading="lazy" decoding="async">
+       </figure>
+       <div class="hp-t" data-rv="right">
+         <p class="eyebrow" data-t="hp_ey"></p><h2 id="hpH" data-t="hp_h"></h2><p class="hp-p" data-t="hp_p"></p>
+@@ -2336,7 +2336,7 @@
+     <section class="pg band ice" aria-labelledby="urH"><div class="pg-in" data-rv="rise"><a class="pg-back" href="index.html"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg><span data-t="pg_home"></span></a><p class="eyebrow" data-t="lb_ey"></p><h1 id="urH" data-t="lb_h"></h1><p data-t="lb_p"></p><div class="pg-act"><a class="hc-m" href="iletisim.html"><span data-t="lb_cta"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a></div></div></section>
+     <section class="pg-sec">
+       <div class="ur-g"><article data-rv="up"><i>01</i><h3 data-t="ur1"></h3><p data-t="ur_ph"></p></article><article data-rv="up"><i>02</i><h3 data-t="ur2"></h3><p data-t="ur_ph"></p></article><article data-rv="up"><i>03</i><h3 data-t="ur3"></h3><p data-t="ur_ph"></p></article></div>
+-      <div class="ur-f" data-rv="up"><img src="{{BASE}}media/gorsel/tesis.jpg" alt="" loading="lazy" decoding="async"><img src="{{BASE}}media/gorsel/uretim2.jpg" alt="" loading="lazy" decoding="async"></div>
++      <div class="ur-f"><img data-rv="up" src="{{BASE}}media/gorsel/regenyal-equipe.jpg" alt="Regenyal Laboratories, İtalya — tesis" width="1200" height="749" loading="lazy" decoding="async"><img data-rv="up" src="{{BASE}}media/gorsel/regenyal-laboratuvar.jpg" alt="Regenyal laboratuvarında üretim" width="1200" height="714" loading="lazy" decoding="async"><img data-rv="up" src="{{BASE}}media/gorsel/regenyal-siringhe.jpg" alt="Regenyal ürünlerinin yakın planı" width="1200" height="889" loading="lazy" decoding="async"></div>
+       <p class="ur-cap" data-t="lb_cap"></p>
+     </section>
+     </div>
+@@ -2582,7 +2582,9 @@
+  setTimeout(()=>{$('#zClose').focus({preventScroll:true});IF.setInds();},reduce?0:600);
+ }
+ function closeZoom(instant){
+- if(zoom.hidden)return;zoom.classList.remove('open');
++ if(zoom.hidden)return;
++ if(!instant&&IF.mode==='pro'&&history.state&&history.state.ifproduct){history.back();return;}
++ zoom.classList.remove('open');
+  if(instant||!zoomFrom){zoom.hidden=true;zoomFrom=null;return;}
+  setRect(rectOf(zoomFrom));const f=zoomFrom;zoomFrom=null;setTimeout(()=>{zoom.hidden=true;f.focus({preventScroll:true});},reduce?0:560);
+ }
+@@ -2642,7 +2644,11 @@
+  if(!list.length){catBody.innerHTML='<p class="cat-empty">'+IF.tr('cat_empty')+'</p>';return;}
+  const g=document.createElement('div');g.className='pgrid';
+  list.forEach((p,k)=>{const b=document.createElement('button');b.type='button';b.className='pcard';b.style.animationDelay=Math.min(k*28,420)+'ms';b.style.setProperty('--tc',AXC[p.a]);
+-  b.innerHTML='<span class="pthumb"><i>0'+(p.a+1)+'</i></span><b>'+esc(p.n)+'</b><span class="ax">'+esc(AX[L][p.a])+'</span><span class="acc'+(p.open||CS.mode==='pro'?' open':'')+'">'+IF.tr(CS.mode==='pro'?'cat_open':(p.open?'cat_pub':'cat_pro'))+'</span>';
++  const crop=p.crop||{},clamp=(v,d,min,max)=>Number.isFinite(Number(v))?Math.max(min,Math.min(max,Number(v))):d;
++  b.style.setProperty('--pack-x',clamp(crop.x,50,0,100)+'%');b.style.setProperty('--pack-y',clamp(crop.y,45,0,100)+'%');b.style.setProperty('--pack-zoom',clamp(crop.zoom,1.65,1,3));b.style.setProperty('--card-delay',-(k%7)*1.4+'s');
++  const art=p.img?'<img class="pack-haze" src="'+esc(p.img)+'" alt="" loading="lazy" decoding="async"><img class="pack-focus" src="'+esc(p.img)+'" alt="" loading="lazy" decoding="async">':'';
++  b.innerHTML='<span class="pthumb'+(p.img?' has-img':'')+'">'+art+'<i>0'+(p.a+1)+'</i></span><b>'+esc(p.n)+'</b><span class="ax">'+esc(AX[L][p.a])+'</span><span class="acc'+(p.open||CS.mode==='pro'?' open':'')+'">'+IF.tr(CS.mode==='pro'?'cat_open':(p.open?'cat_pub':'cat_pro'))+'</span>';
++  b.querySelectorAll('.pthumb img').forEach(img=>img.addEventListener('error',()=>{const thumb=b.querySelector('.pthumb');thumb.querySelectorAll('img').forEach(el=>el.remove());thumb.classList.remove('has-img');},{once:true}));
+   b.addEventListener('click',()=>{if(CS.mode==='pro'){openProProduct(p.n);return;}CS.det=p.i;renderCat();catBody.scrollTop=0;});g.appendChild(b);});
+  catBody.appendChild(g);
+  const n=document.createElement('p');n.className='cat-note';n.textContent=IF.tr('cat_n').replace('{n}',list.length)+' · '+IF.tr('cat_note');catBody.appendChild(n);
+@@ -2657,7 +2663,7 @@
+  '<div class="lockbox"><h5><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'+IF.tr('lk_t')+'</h5><p>'+IF.tr('lk_b')+'</p><button type="button" class="b-white" id="pGate" data-magnet>'+IF.tr('lk_cta')+'</button></div>')+
+  '</div></div>';
+  $('#pBack').addEventListener('click',()=>{CS.det=-1;renderCat();});
+- const g=$('#pGate');if(g)g.addEventListener('click',()=>{IF.after=/^Regenflex/.test(p.n)?p.n:'';openGate();});
++ const g=$('#pGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;openGate();});
+ }
+ IF.openCatAx=i=>{if(IF.mode==='public')location.href=IFU.ax(i);};
+ function openCat(){if(IF.mode==='public')location.href=IFU.ax(-1);return;IF.setFull&&IF.setFull(true);CS.mode='pub';CS.view='prod';CS.det=-1;showCat();}
+@@ -2670,13 +2676,35 @@
+ }
+ function openPro(view,opt){if(IF.mode!=='pro')return;
+  $$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv===view));
++ if(!zoom.hidden)closeZoom(true);
++ if(history.state&&history.state.ifproduct)history.replaceState({ifpro:1},'','#pro');
+  if(view==='home'){closeCat();return;}
+  if(!zoom.hidden)closeZoom(true);
+  CS.mode='pro';CS.view=view;CS.det=-1;CS.q='';$('#catQ').value='';CS.rqDone='';
++ if(view==='prod'&&!(opt&&opt.preserve)){CS.ax=-1;CS.ca=-1;}
+  if(view==='docs')CS.dt=opt&&opt.dt!=null?opt.dt:-1;
+  if(view==='req'&&opt&&opt.prod)CS.rqProd=opt.prod;
+  showCat();}
+-function openProProduct(n){closeCat(true);$$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv==='home'));const c=$('.card[data-k=k1t]');openZoom(c);$('#zTitle').innerHTML=esc(n)+(/^Regenflex/.test(n)?' <span>32 mg</span>':'');const p=PRODS.find(x=>x.n===n),t=$('.tile b[data-t=dd1]');if(p&&t)t.textContent=AX[IF.lang][p.a];}
++/* Product detail is a child of the Pro catalogue, including browser Back/Forward. */
++function openProProduct(n,fromHistory){
++ const p=PRODS.find(x=>x.n===n);if(!p||IF.mode!=='pro')return;
++ CS.mode='pro';CS.view='prod';closeCat(true);
++ $$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv==='prod'));
++ openZoom($('.card[data-k=k1t]'));
++ $('#zTitle').textContent=n;
++ const t=$('.tile b[data-t=dd1]');if(t)t.textContent=AX[IF.lang][p.a];
++ $('.z-in').scrollTop=0;$('#zTabs button').click();
++ let back=$('#zProducts');if(!back){back=document.createElement('button');back.id='zProducts';back.type='button';back.className='uc-back';back.dataset.t='all_prods';$('#zTitle').before(back);
++ back.addEventListener('click',()=>{closeZoom(true);history.replaceState({ifpro:1},'','#pro');openPro('prod');});}
++ back.textContent=IF.tr('all_prods');
++ if(!fromHistory)history.pushState({ifpro:1,ifproduct:n},'','#pro');
++}
++addEventListener('popstate',()=>{
++ if(IF.mode!=='pro'||location.hash!=='#pro')return;
++ if(history.state&&history.state.ifproduct)openProProduct(history.state.ifproduct,true);
++ else{closeZoom(true);CS.mode='pro';CS.view='prod';showCat();$$('#proNav button').forEach(b=>b.classList.toggle('on',b.dataset.pv==='prod'));}
++});
++
+ const DT=['ifu','tds','bro','cert','pub'];
+ const DOCS=[['Regenflex Bio-Plus',0],['Regenflex Bio-Plus',1],['Regenflex Bio-Plus',2],['Regenflex Starter',0],['Regenflex T&M',0],['Intra PRP',0],['Easy PRP Kit',1],['Eksozom',1],['Kondromembran',0],['MILLIEXO',0],['MILLIEXO',2],['Lipocell-Mini',1],['d_cat',2],['d_cert1',3],['d_cert2',3],['1',4],['2',4],['3',4]];
+ function docTitle(d){if(d[1]===4)return IF.tr('d_pubn').replace('{i}',d[0]);if(d[0].startsWith('d_'))return IF.tr(d[0]);return d[0]+' — '+IF.tr('dt_'+DT.at(d[1]));}
+@@ -2769,7 +2797,7 @@
+  setTimeout(()=>{const st=document.getElementById('stage');if(st&&!st.classList.contains('gl-on'))off('modul-yuklenemedi');},9000);};
+ return ()=>{if(done)return;done=true;go();};})();
+ if(IFU.page==='home'){const _h=document.getElementById('hucre'),_st=document.getElementById('stage'),_c=navigator.connection;if(_st&&(matchMedia('(max-width:760px)').matches||(_c&&_c.saveData))){const f=document.createElement('div');f.className='cell-poster';f.innerHTML='<img src="'+(window.IF_BASE||'')+'media/cell-poster.webp" alt="" decoding="async" loading="lazy"><button type="button" class="cell-go"><span class="cg-ring" aria-hidden="true"></span><span data-t="c_go">'+((T[IF.lang]||T.tr).c_go||'')+'</span></button>';_st.appendChild(f);f.querySelector('button').addEventListener('click',()=>{f.classList.add('busy');IF.loadCell();});new MutationObserver((m,o)=>{if(_st.classList.contains('gl-on')||_st.classList.contains('gl-off')){o.disconnect();f.classList.add('gone');setTimeout(()=>f.remove(),700);}}).observe(_st,{attributes:true,attributeFilter:['class']});}else new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){ob.disconnect();IF.loadCell();}},{rootMargin:'700px 0px'}).observe(_h);}
+-function hideGate(){gate.hidden=true;if(IF.mode==='public'&&cat.hidden)setFull(false);}
++function hideGate(){IF.after='';gate.hidden=true;if(IF.mode==='public'&&cat.hidden)setFull(false);}
+ addEventListener('popstate',()=>{if((IF.mode==='pro'||IF.mode==='transition')&&location.hash!=='#pro')goPublic(true);});
+ 
+ /* gate */
+@@ -2800,7 +2828,9 @@
+  IF.mode='pro';IF.p=1;pro.hidden=false;bgPro.hidden=false;clip('none');pro.classList.add('in');
+  pubUI.classList.add('leaving');pubUI.style.clipPath='';showPub(false);gate.hidden=true;divider.hidden=true;
+  $('#cmp').classList.remove('on');rebuildLens();
+- if(IF.after){const nm=IF.after;IF.after='';setTimeout(()=>{const c=$('.card[data-k=k1t]');if(c&&IF.mode==='pro'){openZoom(c);$('#zTitle').innerHTML=esc(nm)+' <span>32 mg</span>';}},900);}
++ const nm=IF.after;IF.after='';
++ if(nm){CS.ax=-1;CS.ca=-1;CS.q='';openProProduct(nm);}
++ else if(IFU.page==='urunler')openPro('prod');
+ }
+ function goPublic(fromPop){
+  if(fromPop!==true&&location.hash==='#pro')history.replaceState(null,'',location.pathname+location.search);
+@@ -2922,13 +2952,14 @@
+ if(matchMedia('(hover: none)').matches){for(const L of Object.keys(T)){if(T[L].c_lede_t)T[L].c_lede=T[L].c_lede_t;if(T[L].c_hint_t)T[L].c_hint=T[L].c_hint_t;}}
+ {const f=applyLang;applyLang=function(){f.apply(this,arguments);for(const fn of IF.onLang){try{fn();}catch(e){console.error(e);}}};}
+ 
+-
+ resize();applyLang();
+ requestAnimationFrame(loop);
+ })();
++
+ </script>
+ 
+ <script>
++
+ /* ana sayfa pilotu: video slaytı, ortaklar bandı, kaydırma animasyonları, sayaçlar, sayfa başı */
+ (()=>{
+ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+@@ -3005,6 +3036,8 @@
+ const UA_IMG=['ortopedi','spor-hekimligi','estetik','uroloji','kadin-sagligi','veteriner'];
+ const UA_IC=['<circle cx="12" cy="12" r="9"/><path d="M8 8.5c2 1 2 3 0 4M16 11.5c-2 1-2 3 0 4M9 12.5h6"/>','<circle cx="12" cy="12" r="9"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>','<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>','<rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 8v6"/>','<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>','<path d="M6 13c0-3 3-4 6-4s6 1 6 4-2 6-6 6-6-3-6-6z"/><circle cx="7" cy="6" r="1.6"/><circle cx="12" cy="4.5" r="1.6"/><circle cx="17" cy="6" r="1.6"/>'];
+ function homeData(){
++ const portfolio=document.querySelector('.hp-f img');if(portfolio&&window.IF_CMS&&IF_CMS.home_product_image)portfolio.src=IF_CMS.home_product_image;
++
+  const D=window.IFD;if(!D)return;const L=(window.IF&&IF.lang)||'tr',CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en;
+  const g=$('#uaG');if(g){const was=!!g.querySelector('.in');g.innerHTML='';CA.forEach((n,i)=>{const a=document.createElement('a');a.href=IFU.alan(i);a.className='ua-c'+(UA_IMG[i]?'':' noimg');a.setAttribute('data-rv',i%3===0?'left':i%3===2?'right':'up');a.style.setProperty('--i',i%3+Math.floor(i/3));if(was)a.classList.add('in');io.observe(a);
+   a.innerHTML=(UA_IMG[i]?'<img src="'+(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp'+'" alt="" loading="lazy" decoding="async" width="800" height="755">':'<svg class="ua-ic" viewBox="0 0 24 24" aria-hidden="true">'+UA_IC[i]+'</svg>')+'<span class="ua-n">0'+(i+1)+'</span><span class="ua-x"><b></b><i aria-hidden="true">→</i></span>';
+@@ -3413,6 +3444,8 @@
+ ytInit();
+ if(complete())google();else banner();
+ })();
++
++
+ </script>
+ 
+ <script type="importmap">
+@@ -3944,3 +3977,4 @@
+ </script>
+ 
+ </body></html>
++

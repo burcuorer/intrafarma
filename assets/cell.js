@@ -12,7 +12,7 @@ const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 const lerp=(a,b,t)=>a+(b-a)*t;
 
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});
-let DPR=Math.min(window.devicePixelRatio||1,1);renderer.setPixelRatio(DPR);
+let DPR=Math.min(window.devicePixelRatio||1,1.5);renderer.setPixelRatio(DPR);
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 
@@ -44,11 +44,11 @@ const bgMat=new THREE.ShaderMaterial({
   return (a*0.9+b*0.65+cs*0.3)*(1.0+pl*1.6);
  }
  vec3 pubCol(vec2 uv,vec2 px,float pl){
-  vec3 c=mix(vec3(0.972,0.976,0.988),vec3(0.925,0.945,0.965),clamp(1.0-uv.y*0.9,0.0,1.0)*0.6);
+  vec3 c=mix(vec3(0.905,0.945,0.962),vec3(0.775,0.875,0.915),clamp(1.0-uv.y*0.9,0.0,1.0)*0.75);
   float f=fbm(uv*2.2+vec2(uTime*0.02,-uTime*0.015));
-  c=mix(c,vec3(0.76,0.88,0.93),smoothstep(0.85,0.05,distance(uv*vec2(uRes.x/uRes.y,1.0),vec2(0.88*uRes.x/uRes.y,0.92)))*0.6*(0.55+0.45*f));
+  c=mix(c,vec3(0.56,0.80,0.89),smoothstep(0.85,0.05,distance(uv*vec2(uRes.x/uRes.y,1.0),vec2(0.88*uRes.x/uRes.y,0.92)))*0.66*(0.55+0.45*f));
   float dc=distance(px,uCell)/uRes.y;
-  c=mix(c,vec3(0.56,0.75,0.84),smoothstep(0.62,0.06,dc)*0.58*(0.8+0.2*f));
+  c=mix(c,vec3(0.33,0.63,0.78),smoothstep(0.62,0.06,dc)*0.66*(0.8+0.2*f));
   c+=waves(uv,f,f*0.7,pl)*0.03*vec3(0.9,1.0,1.0);
   c+=pl*0.025;
   return c;}

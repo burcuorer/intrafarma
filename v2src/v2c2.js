@@ -166,7 +166,7 @@ if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decode
 
 /* ürün görseli yüklenemezse (dosya yoksa) renkli ad kutusuna dön */
 document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLImageElement))return;
- if(im.classList.contains('uc-ci')){im.closest('.uc-c')&&im.closest('.uc-c').classList.remove('has-img');im.remove();}
+ if(im.classList.contains('uc-ci')){im.closest('.uc-c')&&im.closest('.uc-c').classList.remove('has-img');const art=im.closest('.uc-art');if(art)art.remove();else im.remove();}
  else if(im.parentElement&&im.parentElement.classList.contains('uc-vis')){im.parentElement.classList.remove('has-img');im.remove();}},true);
 
 /* ---- mobil menü: açılınca bulunulan bölüm açık gelir; menüdeki sağlık çalışanı girişi menüyü kapatır ---- */
@@ -192,4 +192,7 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
 })();
 
 
-if(window.IF_CMS&&IF_CMS.home_product_image){const img=document.querySelector('.hp-f img');if(img)img.src=IF_CMS.home_product_image;}
+/* ---- üretim: her fotoğrafın üstünde küçük başlık; hafifçe yükselerek belirir ---- */
+{const uf=$('.ur-f');if(uf&&!uf.querySelector('figure'))[...uf.querySelectorAll(':scope>img')].forEach((im,i)=>{const f=document.createElement('figure');f.className='ur-ph';f.dataset.rv='up';f.style.setProperty('--i',i);
+ const c=document.createElement('figcaption');c.innerHTML='<i>0'+(i+1)+'</i><span data-t="ur_f'+(i+1)+'"></span>';c.lastChild.textContent=tr('ur_f'+(i+1));
+ im.removeAttribute('data-rv');im.classList.remove('in','seen');uf.insertBefore(f,im);f.appendChild(c);f.appendChild(im);io.observe(f);});}

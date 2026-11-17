@@ -1,3 +1,4 @@
+import sys
 #!/usr/bin/env python3
 """v1 prototipinden (v1-index.html) v2 kaynağını (app.html) üretir.
 Her değişiklik birebir eşleşmeyle yapılır; eşleşme sayısı tutmazsa betik durur.
@@ -281,6 +282,11 @@ V2C2 = io.open(os.path.join(HERE, 'v2c2.js'), encoding='utf-8').read()
 c2n = jrep(c2n, " $('#alH').textContent=CA[alanI];", " $('#alH').textContent=CA[alanI];{const ap=$('#alH').nextElementSibling;if(ap&&ap.tagName==='P'){ap.removeAttribute('data-t');const t=tr('al_p'+alanI);ap.textContent=t&&t!=='al_p'+alanI?t:tr('ua_p');}}")
 # 8h) mobil menü: sağlık çalışanı girişi menünün içinde de olsun
 rep('<div class="lsw-m" role="group" data-tl="d_lang">', '<button type="button" class="nv-hcp" data-gate data-t="hcp"></button><div class="lsw-m" role="group" data-tl="d_lang">')
+# 8i) hücre: retina ekranlarda daha net (çözünürlük sınırı 1 → 1.5; yavaş cihazda kendiliğinden düşer), zemin bir kademe koyu ve canlı
+rep("let DPR=Math.min(window.devicePixelRatio||1,1);", "let DPR=Math.min(window.devicePixelRatio||1,1.5);")
+rep("vec3 c=mix(vec3(0.972,0.976,0.988),vec3(0.925,0.945,0.965),clamp(1.0-uv.y*0.9,0.0,1.0)*0.6);", "vec3 c=mix(vec3(0.905,0.945,0.962),vec3(0.775,0.875,0.915),clamp(1.0-uv.y*0.9,0.0,1.0)*0.75);")
+rep("c=mix(c,vec3(0.76,0.88,0.93),smoothstep(0.85,0.05,distance(uv*vec2(uRes.x/uRes.y,1.0),vec2(0.88*uRes.x/uRes.y,0.92)))*0.6*(0.55+0.45*f));", "c=mix(c,vec3(0.56,0.80,0.89),smoothstep(0.85,0.05,distance(uv*vec2(uRes.x/uRes.y,1.0),vec2(0.88*uRes.x/uRes.y,0.92)))*0.66*(0.55+0.45*f));")
+rep("c=mix(c,vec3(0.56,0.75,0.84),smoothstep(0.62,0.06,dc)*0.58*(0.8+0.2*f));", "c=mix(c,vec3(0.33,0.63,0.78),smoothstep(0.62,0.06,dc)*0.66*(0.8+0.2*f));")
 # 8g) alt sayfalarda ana sayfa videoları indirilmesin (mobil veri)
 rep('<video class="vh-v on" muted playsinline preload="auto"', '<video class="vh-v on" muted playsinline preload="none"')
 c2n = jrep(c2n, ".observe($('#vh'));\ngo(0);", ".observe($('#vh'));\nif(!window.IFU||IFU.page==='home')go(0);")
@@ -421,4 +427,13 @@ json.dump(R,io.open(os.path.join(HERE,'norm_report.json'),'w',encoding='utf-8'),
 LOG.append('ölçek: '+', '.join('%s %s→%s' % (k,R['once'][k],R['sonra'][k]) for k in R['once']))
 
 io.open(os.path.join(HERE, 'app.html'), 'w', encoding='utf-8').write(s)
+# Elle yapılan düzeltmeler (17.11): app.html üzerinde doğrudan yapılan değişiklikler burada yeniden uygulanır.
+# Yama tutmazsa durur; o zaman app.html'e elle bakılmalı, üzerine yazılmamalı.
+import subprocess
+_pf = os.path.join(HERE, 'el-duzeltmeleri.patch')
+if os.path.exists(_pf):
+    _r = subprocess.run(['patch', '--no-backup-if-mismatch', '-s', '-p0', os.path.join(HERE, 'app.html'), _pf], capture_output=True, text=True)
+    if _r.returncode != 0:
+        sys.exit('EL DÜZELTMELERİ UYGULANAMADI:\n' + _r.stdout + _r.stderr)
+    LOG.append('el düzeltmeleri uygulandı')
 print('app.html yazıldı', len(s), '|', '; '.join(LOG))
