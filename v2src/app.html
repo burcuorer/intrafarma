@@ -2189,6 +2189,8 @@ html.stage-full #site-foot{visibility:hidden}
 .cat-body .pgrid{background:radial-gradient(ellipse at 10% 0%,rgba(33,115,128,.28),transparent 60%),linear-gradient(145deg,#28414c,#183440);padding:clamp(14px,1.6vw,22px);border-radius:var(--r3);gap:14px}
 .cat-body .pgrid .pcard{border-color:rgba(255,255,255,.14)}
 @media (max-width:640px){.cat-body .pgrid{padding:10px;gap:8px}}
+/* hücre bölümü: daha kısa sahne */
+@media (min-width:901px){.home .stage{height:clamp(560px,70vh,640px)}}
 </style>
 </head><body>
 
@@ -3741,12 +3743,12 @@ const bgMat=new THREE.ShaderMaterial({
   return (a*0.9+b*0.65+cs*0.3)*(1.0+pl*1.6);
  }
  vec3 pubCol(vec2 uv,vec2 px,float pl){
-  vec3 c=mix(vec3(0.905,0.945,0.962),vec3(0.775,0.875,0.915),clamp(1.0-uv.y*0.9,0.0,1.0)*0.75);
+  vec3 c=mix(vec3(0.600,0.745,0.800),vec3(0.330,0.520,0.610),clamp(1.0-uv.y*0.9,0.0,1.0)*0.85);
   float f=fbm(uv*2.2+vec2(uTime*0.02,-uTime*0.015));
-  c=mix(c,vec3(0.56,0.80,0.89),smoothstep(0.85,0.05,distance(uv*vec2(uRes.x/uRes.y,1.0),vec2(0.88*uRes.x/uRes.y,0.92)))*0.66*(0.55+0.45*f));
+  c=mix(c,vec3(0.42,0.66,0.76),smoothstep(0.85,0.05,distance(uv*vec2(uRes.x/uRes.y,1.0),vec2(0.88*uRes.x/uRes.y,0.92)))*0.6*(0.55+0.45*f));
   float dc=distance(px,uCell)/uRes.y;
-  c=mix(c,vec3(0.33,0.63,0.78),smoothstep(0.62,0.06,dc)*0.66*(0.8+0.2*f));
-  c+=waves(uv,f,f*0.7,pl)*0.03*vec3(0.9,1.0,1.0);
+  c=mix(c,vec3(0.62,0.80,0.88),smoothstep(0.55,0.04,dc)*0.55*(0.8+0.2*f));
+  c+=waves(uv,f,f*0.7,pl)*0.11*vec3(0.80,0.97,1.0);
   c+=pl*0.025;
   return c;}
  vec3 proCol(vec2 uv,float pl){

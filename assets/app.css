@@ -2186,3 +2186,5 @@ html.stage-full #site-foot{visibility:hidden}
 .cat-body .pgrid{background:radial-gradient(ellipse at 10% 0%,rgba(33,115,128,.28),transparent 60%),linear-gradient(145deg,#28414c,#183440);padding:clamp(14px,1.6vw,22px);border-radius:var(--r3);gap:14px}
 .cat-body .pgrid .pcard{border-color:rgba(255,255,255,.14)}
 @media (max-width:640px){.cat-body .pgrid{padding:10px;gap:8px}}
+/* hücre bölümü: daha kısa sahne */
+@media (min-width:901px){.home .stage{height:clamp(560px,70vh,640px)}}
