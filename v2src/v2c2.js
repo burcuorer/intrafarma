@@ -196,3 +196,25 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
 {const uf=$('.ur-f');if(uf&&!uf.querySelector('figure'))[...uf.querySelectorAll(':scope>img')].forEach((im,i)=>{const f=document.createElement('figure');f.className='ur-ph';f.dataset.rv='up';f.style.setProperty('--i',i);
  const c=document.createElement('figcaption');c.innerHTML='<i>0'+(i+1)+'</i><span data-t="ur_f'+(i+1)+'"></span>';c.lastChild.textContent=tr('ur_f'+(i+1));
  im.removeAttribute('data-rv');im.classList.remove('in','seen');uf.insertBefore(f,im);f.appendChild(c);f.appendChild(im);io.observe(f);});}
+
+/* ---- örnek içerik (sunum için): yer tutucuların yerine örnek metin ve "Örnektir" işaretli görseller.
+        Tüm metinler dil anahtarıdır; WordPress'te Intrafarma → Metinler ekranından değiştirilir. ---- */
+{const T2=k=>{const v=tr(k);return v===k?'':v;},sp=(k,tagName,cls)=>'<'+(tagName||'span')+(cls?' class="'+cls+'"':'')+' data-t="'+k+'">'+T2(k)+'</'+(tagName||'span')+'>';
+ const tag=k=>'<em class="ornek" data-t="'+(k||'ornek')+'">'+T2(k||'ornek')+'</em>';
+ const AV='<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="45" r="20"/><path d="M17 121c2-27 19-41 43-41s41 14 43 41z"/><path class="c" d="M47 81l13 17 13-17"/></svg>';
+ const note='<p class="mk-note"><i aria-hidden="true"></i>'+sp('ornek_note')+'</p>';
+ const put=(sel,html)=>{const p=$(sel);if(!p)return;const d=document.createElement('div');d.className='orn-b';d.innerHTML=html;p.replaceWith(d);d.querySelectorAll('[data-rv]').forEach(e=>io.observe(e));};
+ const B=window.IF_BASE||'';
+ /* bilim: danışma kurulu */
+ put('#kurul .pend-card',sp('bk_lede','p','mk-lede')+'<div class="bk-g mk-bk">'+[1,2,3,4].map(i=>'<figure data-rv="up" style="--i:'+(i-1)+'"><div class="mk-av a'+i+'">'+AV+tag()+'</div><figcaption>'+sp('bk'+i+'_n','b')+sp('bk'+i+'_r','span')+sp('bk'+i+'_d','small')+'</figcaption></figure>').join('')+'</div>'+note);
+ /* bilim: sık sorulan sorular */
+ $$('#sss .fq-l details').forEach((d,i)=>{const a=d.querySelector('p');if(a&&T2('fq_a'+(i+1))){a.dataset.t='fq_a'+(i+1);a.innerHTML=T2('fq_a'+(i+1));}});
+ /* güncel: etkinlikler */
+ put('#etkinlikler .pend-card','<div class="mk-ev">'+[1,2,3].map(i=>'<article data-rv="up" style="--i:'+(i-1)+'">'+sp('ev'+i+'_d','time')+'<div>'+sp('ev'+i+'_t','b')+sp('ev'+i+'_p','small')+'</div>'+tag()+'</article>').join('')+'</div><a class="hc-m mk-cta" href="'+IFU.U.iletisim+'">'+sp('ev_cta')+'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>');
+ /* güncel: yazılar */
+ put('#blog .pend-card','<div class="bl-g mk-bl">'+[1,2,3].map(i=>'<article data-rv="up" style="--i:'+(i-1)+'"><div class="mk-cov c'+i+'">'+tag('ornek_img')+sp('bl_c'+i,'span','bl-c')+'</div>'+sp('bl'+i+'_t','h3')+sp('bl'+i+'_p','p')+'<footer>'+sp('bl'+i+'_m','small')+'<span class="mk-more">'+sp('bl_read')+' →</span></footer></article>').join('')+'</div>'+note);
+ /* hakkımızda: medya ve basın */
+ put('.hk-med .pend-card','<div class="mk-md"><figure class="mk-film" data-rv="up"><img src="'+B+'media/gorsel/regenyal-laboratuvar.jpg" alt="" loading="lazy" decoding="async"><span class="mk-play" aria-hidden="true"></span>'+tag()+'<figcaption>'+sp('md_film','b')+sp('md_film_p','span')+'</figcaption></figure><ul class="mk-press">'+[1,2,3].map(i=>'<li data-rv="up" style="--i:'+i+'">'+sp('md'+i+'_s','small')+sp('md'+i+'_t','b')+sp('md'+i+'_d','time')+tag()+'</li>').join('')+'</ul></div>'+note);
+ /* üretim: adım açıklamaları */
+ $$('.ur-g article p').forEach((a,i)=>{if(T2('ur_p'+(i+1))){a.dataset.t='ur_p'+(i+1);a.textContent=T2('ur_p'+(i+1));}});
+}
