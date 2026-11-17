@@ -3,7 +3,7 @@
 const P=IFU.page,D2=()=>window.IFD;
 const esc2=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const VMAP={uzmanlik:'vUzmanlik',urunler:'vUrunler',uretim:'vUretim',bilim:'vBilim',guncel:'vGuncel',iletisim:'vIletisim',hakkimizda:'vHakkimizda'};
-const SEC={uzmanlik:'uzmanlik',urunler:'urunler',uretim:'kurumsal',hakkimizda:'kurumsal',bilim:'bilim',guncel:'guncel',iletisim:'iletisim'};
+const SEC={uzmanlik:'urunler',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'kurumsal',iletisim:'iletisim'};
 let curView='';
 document.documentElement.classList.add('v2');
 
@@ -65,7 +65,7 @@ function renderUC(){
   const g=$('#ucGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;IF.openGate();});
  }
 }
-function ucGo(href,push){history[push?'pushState':'replaceState']({ifuc:1},'',href);ucRead();renderUC();crumbs();titleSync();}
+function ucGo(href,push){history[push?'pushState':'replaceState']({ifuc:1},'',href);ucRead();renderUC();crumbs();titleSync();pgMode();}
 if(P==='urunler'){
  ['ucEy','ucP'].forEach(id=>{const e=$('#'+id);if(e)e.removeAttribute('data-t');});
  document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||!IFU.same(a.href,'urunler')||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
@@ -74,7 +74,7 @@ if(P==='urunler'){
   const inFilter=!!a.closest('.uc-bar,.uc-ca,.uc-ax');const toProd=new URL(a.href).searchParams.has('urun');
   ucGo(a.href,true);if(!inFilter||toProd)scrollTo({top:0,behavior:'auto'});});
  $('#ucQ').addEventListener('input',e=>{UC.q=e.target.value;renderUC();});
- addEventListener('popstate',()=>{ucRead();renderUC();crumbs();titleSync();});
+ addEventListener('popstate',()=>{ucRead();renderUC();crumbs();titleSync();pgMode();});
 }
 
 /* ---- uzmanlık genel bakış: ana sayfadaki altı kartın aynısı ---- */
@@ -147,12 +147,14 @@ new MutationObserver(v2refresh).observe(document.documentElement,{attributes:tru
 
 /* ---- alt sayfa başlığında dönen tek video (geniş ekran; hareket azaltılmışsa yalnız kapak görseli) ---- */
 const PGV={urunler:'hero-urun',uretim:'hero-uretim',bilim:'hero-bilim',uzmanlik:'hero-laboratuvar',hakkimizda:'hero-laboratuvar',guncel:'hero-bilim',iletisim:'hero-laboratuvar'};
+/* başlık boyu: büyük video yalnız Hakkımızda ve Üretim'de; ürün ayrıntısında video yok (ürünün kendi görseli hemen altta) */
+function pgMode(){const pg=curView&&$('#'+curView+' .pg');if(!pg)return;pg.classList.toggle('pg-tall',P==='hakkimizda'||P==='uretim');pg.classList.toggle('pg-det',P==='urunler'&&UC.urun>=0);}
 function pgVideo(){const k=PGV[P];const mob=!matchMedia('(min-width: 901px)').matches,nc=navigator.connection;if(!k||!curView||(mob&&nc&&nc.saveData))return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
  const B=(window.IF_BASE||'')+'media/'+(mob&&k==='hero-bilim'?'hero-laboratuvar':k),f=document.createElement('figure'),v=document.createElement('video');f.className='pg-vid';f.setAttribute('aria-hidden','true');
  v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata';v.poster=B+'.jpg';
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){v.autoplay=true;v.src=B+'.mp4';}
  f.appendChild(v);const cap=document.createElement('figcaption');cap.className='pg-cap';cap.innerHTML='<i></i><span data-t="'+({urunler:'v_cap4',uretim:'v_cap3',bilim:'v_cap1',guncel:'v_cap1'}[P]||'v_cap2')+'"></span>';f.appendChild(cap);cap.querySelector('span').innerHTML=tr(cap.querySelector('span').dataset.t);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
-ucRead();v2route();v2refresh();pgVideo();setTimeout(renderHK,1500);
+ucRead();v2route();v2refresh();pgVideo();pgMode();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
 
 /* WordPress: gövdedeki .html bağlantıları sayfa adresleriyle değiştirilir (GitHub'da dokunulmaz) */

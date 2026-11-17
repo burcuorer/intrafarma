@@ -53,11 +53,11 @@ LANGS = [('tr','TR'),('en','EN'),('ar','AR'),('it','IT'),('ru','RU'),('ro','RO')
 lang_btns = ''.join('<button type="button" data-lang="%s" lang="%s">%s</button>' % (c, c, t) for c, t in LANGS)
 nav_new = ('<nav class="pub-nav" id="pubNav" aria-label="Menü">\n'
  '        <a class="nv-home" href="index.html" data-t="pg_home"></a>\n'
- '        <div class="nv" data-sec="kurumsal"><button type="button" class="nv-t" aria-expanded="false" data-t="nav_kur"></button><div class="nv-m"><a href="hakkimizda.html" data-t="nav1"></a><a href="uretim.html" data-t="nav_ur"></a><a href="hakkimizda.html#is-ortaklari" data-t="nav_ort"></a></div></div>\n'
- '        <div class="nv" data-sec="uzmanlik"><button type="button" class="nv-t" aria-expanded="false" data-t="nav2"></button><div class="nv-m" id="nvUa"></div></div>\n'
- '        <div class="nv" data-sec="urunler"><button type="button" class="nv-t" aria-expanded="false" data-t="nav3"></button><div class="nv-m" id="nvHp"></div></div>\n'
- '        <div class="nv" data-sec="bilim"><button type="button" class="nv-t" aria-expanded="false" data-t="nav4"></button><div class="nv-m"><a href="bilim.html" data-t="ov"></a><a href="index.html#hucre" data-t="nav_cell"></a><a href="bilim.html#kurul" data-t="nav_kurul"></a><a href="bilim.html#sss" data-t="ft_sss"></a></div></div>\n'
- '        <a class="nv-a" href="guncel.html" data-sec="guncel" data-t="nav6"></a><a class="nv-a" href="iletisim.html" data-sec="iletisim" data-t="nav5"></a>\n'
+ '        <div class="nv nv-2" data-sec="urunler"><button type="button" class="nv-t" aria-expanded="false" data-t="nav3"></button><div class="nv-m"><div class="nv-c"><span class="nv-h" data-t="nv_alan"></span><div class="nv-l" id="nvUa"></div></div><div class="nv-c"><span class="nv-h" data-t="nv_grup"></span><div class="nv-l" id="nvHp"></div></div></div></div>\n'
+ '        <a class="nv-a" href="uretim.html" data-sec="uretim" data-t="nav_ozel"></a>\n'
+ '        <div class="nv" data-sec="bilim"><button type="button" class="nv-t" aria-expanded="false" data-t="nav4"></button><div class="nv-m"><a href="bilim.html" data-t="ov"></a><a href="bilim.html#kurul" data-t="nav_kurul"></a><a href="bilim.html#sss" data-t="ft_sss"></a></div></div>\n'
+ '        <div class="nv" data-sec="kurumsal"><button type="button" class="nv-t" aria-expanded="false" data-t="nav1"></button><div class="nv-m"><a href="hakkimizda.html" data-t="nv_sirket"></a><a href="hakkimizda.html#is-ortaklari" data-t="nav_ort"></a><a href="guncel.html" data-t="nav6"></a></div></div>\n'
+ '        <a class="nv-a" href="iletisim.html" data-sec="iletisim" data-t="nav5"></a>\n'
  '        <div class="lsw-m" role="group" data-tl="d_lang">' + lang_btns + '</div>\n'
  '      </nav>')
 rep(nav_old, nav_new)

@@ -1101,3 +1101,42 @@ html:lang(ar) .ur-ph figcaption{letter-spacing:0;text-transform:none}
 }
 .mk-bl footer small,.mk-more{white-space:nowrap}
 @media (max-width:640px){.mk-bl footer{flex-wrap:wrap;gap:2px 10px}.mk-note{align-items:flex-start;margin-top:16px;padding-inline-end:56px}.mk-note i{margin-top:5px}}
+
+/* ===== sadeleştirme turu: menü beş başlık, kısa alt sayfa başlığı, tek bölüm ritmi ===== */
+/* Ürünler menüsü: iki giriş yolu tek çatı altında (klinik alan / ürün grubu) */
+.nv-c{display:flex;flex-direction:column;min-width:0}
+.nv-l{display:flex;flex-direction:column}
+.nv-h{padding:6px 12px 8px;font:600 11px/1.2 var(--f-b);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3,#6B7890)}
+@media (min-width:901px){
+ .site-top .nv-2 .nv-m{flex-direction:row;gap:8px;min-width:0;padding:12px 10px 10px}
+ .site-top .nv-2 .nv-c{min-width:210px}
+ .site-top .nv-2 .nv-c+.nv-c{border-inline-start:1px solid rgba(16,22,46,.08);padding-inline-start:8px}
+}
+.site.nav-open .site-top .nv-2.open .nv-m{flex-direction:column}
+.site.nav-open .site-top .nv-h{padding:10px 0 4px 14px}
+
+/* alt sayfa başlığı: büyük video yalnız Hakkımızda ve Üretim'de (pg-tall); diğerlerinde yarı boy */
+@media (min-width:901px){
+ .pg.has-vid:not(.pg-tall){height:auto;min-height:clamp(320px,25vw,380px);padding-top:calc(var(--hdr) + 28px)!important;padding-bottom:36px!important}
+ .pg.has-vid:not(.pg-tall) .pg-cap{bottom:28px}
+ .pg.has-vid:not(.pg-tall) .pg-vid{width:58%}
+ /* ürün ayrıntısı: video yok; ürünün kendi görseli hemen altta */
+ .pg.has-vid.pg-det{min-height:0;padding-bottom:20px!important}
+ .pg.has-vid.pg-det>.pg-in{width:min(100%,900px)}
+ .pg.pg-det+.hs{padding-top:28px}
+}
+.pg.pg-det .pg-vid{display:none!important}
+
+/* bölüm aralıkları: alt sayfalar ana sayfa ile aynı ritim (120 → en çok 88) */
+@media (min-width:641px){
+ :root{--sp:clamp(56px,6vw,88px)}
+ .view .hs{padding-top:var(--sp)}
+ .view .pg+.hs,.view .pg+section{padding-top:clamp(36px,4vw,48px)}
+ .view .hs.band{padding-bottom:var(--sp)}
+}
+/* SSS: başlık solda, sorular sağda; sağdaki boşluk kapanır */
+@media (min-width:1000px){
+ .fq{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.5fr);column-gap:clamp(40px,6vw,96px);align-items:start}
+ .fq>.hs-h{position:sticky;top:calc(var(--hdr) + 24px);margin-bottom:0}
+ .fq .fq-l{max-width:none}
+}

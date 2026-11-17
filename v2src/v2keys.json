@@ -162,7 +162,11 @@
   "md3_d": "Haziran 2025",
   "ur_p1": "İhtiyacı birlikte tanımlar, etken bileşenleri ve dozu belirleriz. Formül, hedef pazarın mevzuatına göre hazırlanır.",
   "ur_p2": "Üretim, sertifikalı ortak tesislerimizde temiz oda koşullarında yapılır. Her parti kalite kontrolden geçer ve kayıt altına alınır.",
-  "ur_p3": "Ambalaj tasarımı, etiket ve kullanım talimatı markanıza göre hazırlanır; ürün sevkiyata hazır teslim edilir."
+  "ur_p3": "Ambalaj tasarımı, etiket ve kullanım talimatı markanıza göre hazırlanır; ürün sevkiyata hazır teslim edilir.",
+  "nv_alan": "Klinik alana göre",
+  "nv_grup": "Ürün grubuna göre",
+  "nav_ozel": "Özel üretim",
+  "nv_sirket": "Şirket"
  },
  "en": {
   "draft": "Test version · text, figures and images are samples",
@@ -327,7 +331,11 @@
   "md3_d": "June 2025",
   "ur_p1": "We define the need together and set the active ingredients and dosage. The formula is prepared for the regulations of the target market.",
   "ur_p2": "Production takes place in clean rooms at our certified partner facilities. Every batch passes quality control and is recorded.",
-  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship."
+  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship.",
+  "nv_alan": "By clinical area",
+  "nv_grup": "By product group",
+  "nav_ozel": "Private label",
+  "nv_sirket": "Company"
  },
  "ar": {
   "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -492,7 +500,11 @@
   "md3_d": "June 2025",
   "ur_p1": "We define the need together and set the active ingredients and dosage. The formula is prepared for the regulations of the target market.",
   "ur_p2": "Production takes place in clean rooms at our certified partner facilities. Every batch passes quality control and is recorded.",
-  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship."
+  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship.",
+  "nv_alan": "حسب المجال السريري",
+  "nv_grup": "حسب مجموعة المنتجات",
+  "nav_ozel": "التصنيع الخاص",
+  "nv_sirket": "الشركة"
  },
  "it": {
   "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -657,7 +669,11 @@
   "md3_d": "June 2025",
   "ur_p1": "We define the need together and set the active ingredients and dosage. The formula is prepared for the regulations of the target market.",
   "ur_p2": "Production takes place in clean rooms at our certified partner facilities. Every batch passes quality control and is recorded.",
-  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship."
+  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship.",
+  "nv_alan": "Per area clinica",
+  "nv_grup": "Per gruppo di prodotti",
+  "nav_ozel": "Produzione conto terzi",
+  "nv_sirket": "Azienda"
  },
  "ru": {
   "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -822,7 +838,11 @@
   "md3_d": "June 2025",
   "ur_p1": "We define the need together and set the active ingredients and dosage. The formula is prepared for the regulations of the target market.",
   "ur_p2": "Production takes place in clean rooms at our certified partner facilities. Every batch passes quality control and is recorded.",
-  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship."
+  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship.",
+  "nv_alan": "По клинической области",
+  "nv_grup": "По группе продуктов",
+  "nav_ozel": "Контрактное производство",
+  "nv_sirket": "Компания"
  },
  "ro": {
   "draft": "Versiune de test · textele, cifrele și imaginile sunt exemple",
@@ -987,6 +1007,10 @@
   "md3_d": "June 2025",
   "ur_p1": "We define the need together and set the active ingredients and dosage. The formula is prepared for the regulations of the target market.",
   "ur_p2": "Production takes place in clean rooms at our certified partner facilities. Every batch passes quality control and is recorded.",
-  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship."
+  "ur_p3": "Packaging design, labelling and instructions for use are prepared for your brand; the product is delivered ready to ship.",
+  "nv_alan": "După domeniul clinic",
+  "nv_grup": "După grupa de produse",
+  "nav_ozel": "Producție marcă proprie",
+  "nv_sirket": "Compania"
  }
 }
