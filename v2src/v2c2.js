@@ -80,10 +80,31 @@ if(P==='urunler'){
 /* ---- uzmanlık genel bakış: ana sayfadaki altı kartın aynısı ---- */
 function renderUZ(){const g=$('#uzG');if(!g||P!=='uzmanlik')return;g.innerHTML='';$$('#uaG .ua-c').forEach(c=>{const k=c.cloneNode(true);k.removeAttribute('data-rv');k.classList.add('in');g.appendChild(k);});}
 /* ---- hakkımızda: iş ortakları logoları (kayan banttaki logoların tekil kopyası) ---- */
-function renderHK(){const g=$('#hkPt');if(!g||P!=='hakkimizda')return;const seen=new Set(),out=[];
- $$('#ptTrack .pt-l').forEach(l=>{if(l.getAttribute('aria-hidden')==='true')return;const im=l.querySelector('img');const k=im?im.getAttribute('src'):l.textContent;if(seen.has(k))return;seen.add(k);const c=l.cloneNode(true);c.removeAttribute('tabindex');out.push(c);});
- if(out.length){g.innerHTML='';out.forEach((c,i)=>{c.style.setProperty('--i',i);g.appendChild(c);});}
- const sec=g.closest('.hk-pt');if(sec&&!sec.dataset.io){sec.dataset.io='1';new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){sec.classList.add('in');ob.disconnect();}},{rootMargin:'0px 0px -15% 0px'}).observe(sec);}}
+function renderHK(){
+ const g=$('#hkPt');if(!g||P!=='hakkimizda')return;
+ const seen=new Set(),out=[];
+ $$('#ptTrack .pt-l').forEach(l=>{if(l.getAttribute('aria-hidden')==='true')return;const im=l.querySelector('img'),key=im?im.getAttribute('src'):l.textContent;if(seen.has(key))return;seen.add(key);const c=l.cloneNode(true);c.removeAttribute('tabindex');out.push(c);});
+ if(!out.length)return;
+ if(g._filmObserver)g._filmObserver.disconnect();
+ g.innerHTML='';g.classList.add('hk-film');
+ const control=document.createElement('button');control.type='button';control.className='film-control';control.setAttribute('aria-pressed','false');
+ const label=()=>{const stopped=g.classList.contains('is-paused');control.textContent=IF.lang==='tr'?(stopped?'Hareketi sürdür':'Hareketi durdur'):(stopped?'Resume motion':'Pause motion');control.setAttribute('aria-pressed',String(stopped));};
+ control.onclick=()=>{g.classList.toggle('is-paused');label();};label();g.appendChild(control);
+ const size=Math.ceil(out.length/3);
+ for(let row=0;row<3;row++){
+  const items=out.slice(row*size,(row+1)*size);if(!items.length)continue;
+  const rail=document.createElement('div');rail.className='film-rail';
+  const belt=document.createElement('div');belt.className='film-track';belt.style.setProperty('--film-duration',(100+row*12)+'s');
+  for(let copy=0;copy<2;copy++){const group=document.createElement('div');group.className='film-group';
+   if(copy){group.setAttribute('aria-hidden','true');}
+   items.forEach(item=>{const c=item.cloneNode(true);if(copy){c.tabIndex=-1;const im=c.querySelector('img');if(im)im.alt='';}group.appendChild(c);});belt.appendChild(group);}
+  rail.appendChild(belt);g.appendChild(rail);
+ }
+ const sync=()=>g.classList.toggle('film-active',g.dataset.inview==='true'&&!document.hidden);
+ g._filmObserver=new IntersectionObserver(es=>{g.dataset.inview=String(es[0].isIntersecting);sync();},{threshold:.05});g._filmObserver.observe(g);
+ if(!g.dataset.visibilityBound){document.addEventListener('visibilitychange',sync);g.dataset.visibilityBound='1';}
+ const sec=g.closest('.hk-pt');if(sec)sec.classList.add('in');
+}
 
 /* ---- sayfa yolu: her alt sayfada Ana sayfa › Bölüm › Ayrıntı ---- */
 function crumbs(){

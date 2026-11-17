@@ -1919,6 +1919,53 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
 .al-g>h3::after{background:rgba(196,213,218,.22)}
 .al-g .uc-c:focus-visible{outline:3px solid #b7cdd2;outline-offset:3px}
 @media(max-width:640px){.al-g{padding:14px;border-radius:18px}.al-g .al-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Full-width product sections and quiet, shared dark information panels. */
+.al{grid-template-columns:minmax(0,1fr);gap:32px}
+.al-side{position:static}
+#alO{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}
+.al-side a{height:100%;align-items:center}
+.al-g .al-cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.uc-c{overflow:hidden}
+.al-pro,.hk-pos-in,.hk-g4 article,.ur-g article{
+ background:linear-gradient(145deg,#28414c,#183440)!important;
+ color:#f2f7f8;border:1px solid #42606b!important;
+ box-shadow:0 18px 32px -22px rgba(20,43,54,.4)!important}
+.al-pro b,.hk-pos h2,.hk-pos h2 em,.hk-g4 h3,.ur-g h3{color:#f2f7f8}
+.al-pro p,.hk-pos .hk-lead,.hk-g4 p,.ur-g p{color:#c9d9df}
+.hk-pos .eyebrow,.ur-g i{color:#b2cbd3}
+.al-pro .hc-m{background:rgba(255,255,255,.06);color:#f2f7f8;border-color:#a0b9c2}
+.al-pro .hc-m:hover,.al-pro .hc-m:focus-visible{background:#f2f7f8;color:#183440}
+.hk-pos-in{padding:clamp(24px,3vw,40px);border-radius:24px}
+.hk-val{padding-bottom:clamp(48px,6vw,80px)}
+.hk-val .hs-h{margin-bottom:32px}
+.hk-g4 article{padding:28px}
+.ur-f{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:28px}
+.ur-f img{aspect-ratio:4/3;height:auto;transition:opacity 1.4s ease,transform 1.8s cubic-bezier(.16,1,.3,1)}
+.ur-f img[data-rv]{filter:none;transform:translateY(28px) scale(.985)}
+.ur-f img[data-rv].in{transform:none;opacity:1}
+#vUrunler:has(#ucD[hidden]) .uc-n{color:#526770}
+@media(max-width:1100px){.al-g .al-cards{grid-template-columns:repeat(3,minmax(0,1fr))}#alO{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.al-g .al-cards{grid-template-columns:repeat(2,minmax(0,1fr))}#alO{grid-template-columns:repeat(2,minmax(0,1fr))}.ur-f{grid-template-columns:1fr}.hk-g4 article{padding:24px}}
+@media(max-width:420px){.al-g .al-cards{grid-template-columns:1fr}}
+
+/* Three slow film strips. Transform-only motion; no carousel dependency. */
+.hk-ptg.hk-film{display:block;position:relative;overflow:hidden;padding:4px 0 28px}
+.film-control{display:block;margin:0 0 20px auto;padding:9px 16px;border:1px solid #91aeb7;border-radius:999px;background:rgba(255,255,255,.5);color:#365563;font:inherit;font-size:13px}
+.film-rail{overflow:hidden;padding:8px 0 20px;mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
+.film-track{display:flex;width:max-content;animation:partnerFilm var(--film-duration,100s) linear infinite paused}
+.film-group{display:flex;gap:16px;padding-inline-end:16px;flex-shrink:0}
+.hk-film .pt-l{flex:0 0 clamp(150px,15vw,210px);width:clamp(150px,15vw,210px);height:100px;opacity:1;transform:none}
+.hk-film.film-active .film-track{animation-play-state:running}
+.hk-film.is-paused .film-track,.hk-film:hover .film-track,.hk-film .film-rail:focus-within .film-track{animation-play-state:paused}
+@keyframes partnerFilm{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){
+ .film-control{display:none}.film-track{animation:none;width:auto}.film-group{flex-wrap:wrap;justify-content:center;width:100%;padding:0}
+ .film-group[aria-hidden=true]{display:none}.film-rail{mask-image:none}
+ .ur-f img[data-rv]{transform:none;opacity:1;transition:none}
+}
+
+.ur-f img:nth-child(2){transition-delay:.12s}.ur-f img:nth-child(3){transition-delay:.24s}
 </style>
 </head><body>
 
@@ -2273,7 +2320,7 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
     <section class="pg band ice" aria-labelledby="urH"><div class="pg-in" data-rv="rise"><a class="pg-back" href="index.html"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg><span data-t="pg_home"></span></a><p class="eyebrow" data-t="lb_ey"></p><h1 id="urH" data-t="lb_h"></h1><p data-t="lb_p"></p><div class="pg-act"><a class="hc-m" href="iletisim.html"><span data-t="lb_cta"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a></div></div></section>
     <section class="pg-sec">
       <div class="ur-g"><article data-rv="up"><i>01</i><h3 data-t="ur1"></h3><p data-t="ur_ph"></p></article><article data-rv="up"><i>02</i><h3 data-t="ur2"></h3><p data-t="ur_ph"></p></article><article data-rv="up"><i>03</i><h3 data-t="ur3"></h3><p data-t="ur_ph"></p></article></div>
-      <div class="ur-f" data-rv="up"><img src="{{BASE}}media/gorsel/tesis.jpg" alt="" loading="lazy" decoding="async"><img src="{{BASE}}media/gorsel/uretim2.jpg" alt="" loading="lazy" decoding="async"></div>
+      <div class="ur-f"><img data-rv="up" src="media/gorsel/regenyal-equipe.jpg" alt="Regenyal Laboratories, İtalya — tesis" width="1200" height="749" loading="lazy" decoding="async"><img data-rv="up" src="media/gorsel/regenyal-laboratuvar.jpg" alt="Regenyal laboratuvarında üretim" width="1200" height="714" loading="lazy" decoding="async"><img data-rv="up" src="media/gorsel/regenyal-siringhe.jpg" alt="Regenyal ürünlerinin yakın planı" width="1200" height="889" loading="lazy" decoding="async"></div>
       <p class="ur-cap" data-t="lb_cap"></p>
     </section>
     </div>
@@ -2898,7 +2945,7 @@ requestAnimationFrame(loop);
 <script>
 /* ana sayfa pilotu: video slaytı, ortaklar bandı, kaydırma animasyonları, sayaçlar, sayfa başı */
 (()=>{
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const $=s=>document.querySelector(s),$=s=>[...document.querySelectorAll(s)];
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const tr=k=>window.IF&&IF.tr?IF.tr(k):k;
 
@@ -2912,11 +2959,11 @@ const track=$('#ptTrack');
  const im=new Image();im.src=/^(https?:)?\/\//.test(f)||f.charAt(0)==='/'?f:(window.IF_BASE||'')+'media/ortaklar/'+f+'.webp';im.alt=copy?'':n;im.loading='lazy';im.decoding='async';a.appendChild(im);track.appendChild(a);}));
 
 /* video hero: sequential silent clips, arrows, dots, pause */
-const vs=$$('.vh-v'),dots=$('#vhDots'),pp=$('#vhPP');let cur=0,playing=!RM,inView=true;
+const vs=$('.vh-v'),dots=$('#vhDots'),pp=$('#vhPP');let cur=0,playing=!RM,inView=true;
 vs.forEach((v,k)=>{const b=document.createElement('button');b.type='button';b.addEventListener('click',()=>go(k,true));dots.appendChild(b);
  v.addEventListener('ended',()=>{if(playing&&k===cur)go(cur+1);});});
 function labels(){
- $$('[data-tl]').forEach(el=>el.setAttribute('aria-label',tr(el.dataset.tl)));
+ $('[data-tl]').forEach(el=>el.setAttribute('aria-label',tr(el.dataset.tl)));
  [...dots.children].forEach((b,k)=>{b.setAttribute('aria-label',tr('v_slide')+' '+(k+1));b.classList.toggle('on',k===cur);b.setAttribute('aria-current',k===cur?'true':'false');});
  pp.setAttribute('aria-label',tr(playing?'v_pause':'v_play'));pp.classList.toggle('paused',!playing);
  $('#vhCap').textContent=tr(vs[cur].dataset.cap);$('#vhNum').textContent=String(cur+1).padStart(2,'0')+' / '+String(vs.length).padStart(2,'0');
@@ -2950,10 +2997,10 @@ const ioIn=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.tar
 /* once an element has left the screen completely it resets, so coming back to a section plays it again */
 const ioOut=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting&&!RM&&e.target.classList.contains('in')){e.target.classList.remove('in');e.target.classList.add('seen');}}),{threshold:0});
 const io={observe(el){ioIn.observe(el);ioOut.observe(el);}};
-$$('[data-rv]').forEach(el=>io.observe(el));
+$('[data-rv]').forEach(el=>io.observe(el));
 
 /* count-up numbers */
-const nums=$$('.st-g b[data-n]').map(b=>({b,to:+b.dataset.n,pad:+(b.dataset.pad||0),suf:b.dataset.suf||''}));
+const nums=$('.st-g b[data-n]').map(b=>({b,to:+b.dataset.n,pad:+(b.dataset.pad||0),suf:b.dataset.suf||''}));
 const fmt=(n,v)=>String(v).padStart(n.pad,'0')+n.suf;
 if(!RM)nums.forEach(n=>{n.b.textContent=fmt(n,0);});
 let cRun=0;
@@ -2988,16 +3035,16 @@ homeData();
 
 
 /* v3: staggered children, headings rising word by word, colour bands opening while scrolling */
-[['.hc','.hc-c'],['.st-g','div'],['.bl-g','article'],['.bk-g','figure'],['.fq-l','details'],['.ev-up ul','li']].forEach(([p,c])=>$$(p).forEach(par=>[...par.children].forEach((el,i)=>{if(!el.matches(c))return;if(!el.dataset.rv){el.dataset.rv='up';io.observe(el);}el.style.setProperty('--i',i);})));
+[['.hc','.hc-c'],['.st-g','div'],['.bl-g','article'],['.bk-g','figure'],['.fq-l','details'],['.ev-up ul','li']].forEach(([p,c])=>$(p).forEach(par=>[...par.children].forEach((el,i)=>{if(!el.matches(c))return;if(!el.dataset.rv){el.dataset.rv='up';io.observe(el);}el.style.setProperty('--i',i);})));
 const WSEL='.hs-h h2,.st-h h2,.hp-t h2,.lb-t h2,.pt-head h2,.pg h1';
-function splitWords(){if(RM)return;$$(WSEL).forEach(h=>{if(h.querySelector('.wd'))return;let n=0;
+function splitWords(){if(RM)return;$(WSEL).forEach(h=>{if(h.querySelector('.wd'))return;let n=0;
  const walk=node=>[...node.childNodes].forEach(ch=>{if(ch.nodeType===3){const fr=document.createDocumentFragment();ch.textContent.split(/(\s+)/).forEach(p=>{if(!p)return;if(/^\s+$/.test(p)){fr.appendChild(document.createTextNode(p));return;}const w=document.createElement('span');w.className='wd';const x=document.createElement('span');x.textContent=p;x.style.setProperty('--w',n++);w.appendChild(x);fr.appendChild(w);});ch.replaceWith(fr);}else if(ch.nodeType===1)walk(ch);});
  walk(h);});}
 splitWords();
 const bio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('bin');}),{threshold:0,rootMargin:'0px 0px -22% 0px'});
 const bioOut=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting&&!RM)e.target.classList.remove('bin');}),{threshold:0});
-$$('.band').forEach(b=>bioOut.observe(b));
-$$('.band').forEach(b=>bio.observe(b));
+$('.band').forEach(b=>bioOut.observe(b));
+$('.band').forEach(b=>bio.observe(b));
 
 
 /* tabs: Bilim (#bilim, #sss) and Güncel (#guncel, #etkinlikler, #blog) are pages of their own; everything else is the home page */
@@ -3008,28 +3055,28 @@ function renderAlan(){const D=window.IFD;if(!D||alanI<0)return;const L=IF.lang||
  D.AXCA.forEach((areas,ax)=>{if(!areas.includes(alanI))return;const h=document.createElement('h3');h.textContent='0'+(ax+1)+' · '+AX[ax];g.appendChild(h);const gr=document.createElement('div');gr.className='uc-g al-cards';
   gr.innerHTML=D.PRODS.map((p,i)=>({p,i})).filter(o=>o.p.a===ax).map(o=>ucCard(o.p,o.i,L,AX)).join('');g.appendChild(gr);});
  const o=$('#alO');o.innerHTML='';CA.forEach((n,i)=>{if(i===alanI)return;const a=document.createElement('a');a.href=IFU.alan(i);a.innerHTML='<span></span><i>0'+(i+1)+'</i>';a.firstChild.textContent=n;o.appendChild(a);});}
-function closeNav(){siteEl.classList.remove('nav-open');document.documentElement.classList.remove('nav-lock');$('#nvBurger').setAttribute('aria-expanded','false');$$('.nv.open').forEach(n=>{n.classList.remove('open');n.firstElementChild.setAttribute('aria-expanded','false');});}
+function closeNav(){siteEl.classList.remove('nav-open');document.documentElement.classList.remove('nav-lock');$('#nvBurger').setAttribute('aria-expanded','false');$('.nv.open').forEach(n=>{n.classList.remove('open');n.firstElementChild.setAttribute('aria-expanded','false');});}
 function route(first){const h=decodeURIComponent(location.hash.slice(1));if(h==='pro')return;closeNav();
  const am=/^alan-(\d)$/.exec(h);let v=VIEWS[h]||'';if(am&&+am[1]<6){v='vAlan';alanI=+am[1];renderAlan();}
- const was=siteEl.classList.contains('on-view')?($$('.view').find(x=>!x.hidden)||{}).id:'';
- $$('.view').forEach(x=>{x.hidden=x.id!==v;});siteEl.classList.toggle('on-view',!!v);
- $$('.site-top .pub-nav a[data-nav]').forEach(a=>{const on=a.dataset.nav===v;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ const was=siteEl.classList.contains('on-view')?($('.view').find(x=>!x.hidden)||{}).id:'';
+ $('.view').forEach(x=>{x.hidden=x.id!==v;});siteEl.classList.toggle('on-view',!!v);
+ $('.site-top .pub-nav a[data-nav]').forEach(a=>{const on=a.dataset.nav===v;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  const tgt=h&&!PAGEH[h]&&!am?document.getElementById(h):null;
  if(v||was){requestAnimationFrame(()=>{if(tgt)tgt.scrollIntoView({behavior:'auto',block:'start'});else scrollTo({top:siteEl.getBoundingClientRect().top+scrollY-12,behavior:'auto'});});}
- if(v){$$('#'+v+' [data-rv]').forEach(el=>el.classList.remove('in'));}
+ if(v){$('#'+v+' [data-rv]').forEach(el=>el.classList.remove('in'));}
 }
 
 /* menus: click opens on touch, the burger opens the full menu on small screens */
-$$('.nv-t').forEach(t=>t.addEventListener('click',e=>{const n=t.parentElement,o=!n.classList.contains('open');$$('.nv.open').forEach(x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');});n.classList.toggle('open',o);t.setAttribute('aria-expanded',o);e.stopPropagation();}));
-document.addEventListener('click',e=>{if(!e.target.closest('.nv'))$$('.nv.open').forEach(x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');});});
+$('.nv-t').forEach(t=>t.addEventListener('click',e=>{const n=t.parentElement,o=!n.classList.contains('open');$('.nv.open').forEach(x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');});n.classList.toggle('open',o);t.setAttribute('aria-expanded',o);e.stopPropagation();}));
+document.addEventListener('click',e=>{if(!e.target.closest('.nv'))$('.nv.open').forEach(x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');});});
 $('#nvBurger').addEventListener('click',()=>{const o=!siteEl.classList.contains('nav-open');if(!o){closeNav();return;}siteEl.classList.add('nav-open');document.documentElement.classList.add('nav-lock');$('#nvBurger').setAttribute('aria-expanded','true');});
 $('#pubNav').addEventListener('click',e=>{if(e.target.closest('a,[data-cat]'))closeNav();});
 addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
 /* Güncel filters */
-$$('#gnF button').forEach(b=>b.addEventListener('click',()=>{const f=b.dataset.f;$$('#gnF button').forEach(x=>x.setAttribute('aria-pressed',x===b));
- $$('#vGuncel [data-k]').forEach(el=>{const k=el.dataset.k;el.hidden=!(f==='all'||k===f||(k==='bl'&&f!=='ev'));});}));
+$('#gnF button').forEach(b=>b.addEventListener('click',()=>{const f=b.dataset.f;$('#gnF button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+ $('#vGuncel [data-k]').forEach(el=>{const k=el.dataset.k;el.hidden=!(f==='all'||k===f||(k==='bl'&&f!=='ev'));});}));
 /* cell on phones and tablets: numbered tabs and a swipeable strip, in step with the markers on the cell */
-{const tabs=$('#ocTabs'),strip=$('#ocs'),cards=$$('#ocs .oc-c');
+{const tabs=$('#ocTabs'),strip=$('#ocs'),cards=$('#ocs .oc-c');
  const go=k=>{const c=cards.find(x=>x.dataset.o===k);if(c&&innerWidth<1180)strip.scrollTo({left:c.offsetLeft-(strip.clientWidth-c.offsetWidth)/2,behavior:RM?'auto':'smooth'});};
  cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.dataset.o=c.dataset.o;b.textContent='0'+(i+1);b.setAttribute('aria-label',c.querySelector('b').textContent||('0'+(i+1)));b.addEventListener('click',()=>go(c.dataset.o));tabs.appendChild(b);});
  const act=k=>{IF.mobKey=k;[...tabs.children].forEach(b=>b.classList.toggle('on',b.dataset.o===k));if(innerWidth<1180)cards.forEach(c=>c.classList.toggle('on',c.dataset.o===k));};
@@ -3037,7 +3084,7 @@ $$('#gnF button').forEach(b=>b.addEventListener('click',()=>{const f=b.dataset.f
  $('#stage').addEventListener('click',e=>{const m=e.target.closest('.mk');if(m)go(m.dataset.o);});
  if(innerWidth<1180)act('o_nuc');}
 /* hovering or focusing a cell card lights up its marker on the cell */
-$$('.oc-c').forEach(c=>{const on=v=>{const m=document.querySelector('.mk[data-o="'+c.dataset.o+'"]');if(m)m.classList.toggle('hl',v);};
+$('.oc-c').forEach(c=>{const on=v=>{const m=document.querySelector('.mk[data-o="'+c.dataset.o+'"]');if(m)m.classList.toggle('hl',v);};
  c.addEventListener('mouseenter',()=>on(true));c.addEventListener('mouseleave',()=>on(false));c.addEventListener('focus',()=>on(true));c.addEventListener('blur',()=>on(false));});
 
 /* scroll progress */
@@ -3059,10 +3106,10 @@ function v2route(){
  let v=VMAP[P]||'';
  if(P==='uzmanlik'){const a=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');alanI=a;if(a>=0){v='vAlan';renderAlan();}}
  curView=v;
- $$('.view').forEach(x=>{x.hidden=x.id!==v;});
+ $('.view').forEach(x=>{x.hidden=x.id!==v;});
  siteEl.classList.toggle('on-view',!!v);
  const sec=SEC[P]||'';
- $$('.site-top [data-sec]').forEach(n=>{const on=n.dataset.sec===sec;n.classList.toggle('cur',on);const t=n.matches('a')?n:n.querySelector('.nv-t');if(t){if(on)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');}});
+ $('.site-top [data-sec]').forEach(n=>{const on=n.dataset.sec===sec;n.classList.toggle('cur',on);const t=n.matches('a')?n:n.querySelector('.nv-t');if(t){if(on)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');}});
 }
 
 /* ---- ürünler sayfası: eksen, klinik alan ve arama; ürün ayrıntısı aynı sayfada, her durumun kendi adresi var ---- */
@@ -3126,16 +3173,37 @@ if(P==='urunler'){
 }
 
 /* ---- uzmanlık genel bakış: ana sayfadaki altı kartın aynısı ---- */
-function renderUZ(){const g=$('#uzG');if(!g||P!=='uzmanlik')return;g.innerHTML='';$$('#uaG .ua-c').forEach(c=>{const k=c.cloneNode(true);k.removeAttribute('data-rv');k.classList.add('in');g.appendChild(k);});}
+function renderUZ(){const g=$('#uzG');if(!g||P!=='uzmanlik')return;g.innerHTML='';$('#uaG .ua-c').forEach(c=>{const k=c.cloneNode(true);k.removeAttribute('data-rv');k.classList.add('in');g.appendChild(k);});}
 /* ---- hakkımızda: iş ortakları logoları (kayan banttaki logoların tekil kopyası) ---- */
-function renderHK(){const g=$('#hkPt');if(!g||P!=='hakkimizda')return;const seen=new Set(),out=[];
- $$('#ptTrack .pt-l').forEach(l=>{if(l.getAttribute('aria-hidden')==='true')return;const im=l.querySelector('img');const k=im?im.getAttribute('src'):l.textContent;if(seen.has(k))return;seen.add(k);const c=l.cloneNode(true);c.removeAttribute('tabindex');out.push(c);});
- if(out.length){g.innerHTML='';out.forEach((c,i)=>{c.style.setProperty('--i',i);g.appendChild(c);});}
- const sec=g.closest('.hk-pt');if(sec&&!sec.dataset.io){sec.dataset.io='1';new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){sec.classList.add('in');ob.disconnect();}},{rootMargin:'0px 0px -15% 0px'}).observe(sec);}}
+function renderHK(){
+ const g=$('#hkPt');if(!g||P!=='hakkimizda')return;
+ const seen=new Set(),out=[];
+ $('#ptTrack .pt-l').forEach(l=>{if(l.getAttribute('aria-hidden')==='true')return;const im=l.querySelector('img'),key=im?im.getAttribute('src'):l.textContent;if(seen.has(key))return;seen.add(key);const c=l.cloneNode(true);c.removeAttribute('tabindex');out.push(c);});
+ if(!out.length)return;
+ if(g._filmObserver)g._filmObserver.disconnect();
+ g.innerHTML='';g.classList.add('hk-film');
+ const control=document.createElement('button');control.type='button';control.className='film-control';control.setAttribute('aria-pressed','false');
+ const label=()=>{const stopped=g.classList.contains('is-paused');control.textContent=IF.lang==='tr'?(stopped?'Hareketi sürdür':'Hareketi durdur'):(stopped?'Resume motion':'Pause motion');control.setAttribute('aria-pressed',String(stopped));};
+ control.onclick=()=>{g.classList.toggle('is-paused');label();};label();g.appendChild(control);
+ const size=Math.ceil(out.length/3);
+ for(let row=0;row<3;row++){
+  const items=out.slice(row*size,(row+1)*size);if(!items.length)continue;
+  const rail=document.createElement('div');rail.className='film-rail';
+  const belt=document.createElement('div');belt.className='film-track';belt.style.setProperty('--film-duration',(100+row*12)+'s');
+  for(let copy=0;copy<2;copy++){const group=document.createElement('div');group.className='film-group';
+   if(copy){group.setAttribute('aria-hidden','true');}
+   items.forEach(item=>{const c=item.cloneNode(true);if(copy){c.tabIndex=-1;const im=c.querySelector('img');if(im)im.alt='';}group.appendChild(c);});belt.appendChild(group);}
+  rail.appendChild(belt);g.appendChild(rail);
+ }
+ const sync=()=>g.classList.toggle('film-active',g.dataset.inview==='true'&&!document.hidden);
+ g._filmObserver=new IntersectionObserver(es=>{g.dataset.inview=String(es[0].isIntersecting);sync();},{threshold:.05});g._filmObserver.observe(g);
+ if(!g.dataset.visibilityBound){document.addEventListener('visibilitychange',sync);g.dataset.visibilityBound='1';}
+ const sec=g.closest('.hk-pt');if(sec)sec.classList.add('in');
+}
 
 /* ---- sayfa yolu: her alt sayfada Ana sayfa › Bölüm › Ayrıntı ---- */
 function crumbs(){
- $$('.bc').forEach(n=>n.remove());if(!curView)return;
+ $('.bc').forEach(n=>n.remove());if(!curView)return;
  const L=IF.lang||'tr',D=D2(),CA=D.CA[L]||D.CA.en,AX=D.AX[L]||D.AX.en,items=[[tr('pg_home'),IFU.U.home]];
  if(P==='uzmanlik'){items.push([tr('nav2'),alanI>=0?IFU.U.uzmanlik:null]);if(alanI>=0)items.push([CA[alanI],null]);}
  else if(P==='urunler'){const deep=UC.ax>=0||UC.urun>=0;items.push([tr('nav3'),deep?IFU.U.urunler:null]);
@@ -3163,10 +3231,10 @@ lsw.addEventListener('mouseleave',()=>{if(matchMedia('(hover: hover)').matches)l
 lsw.addEventListener('focusout',e=>{if(!lsw.contains(e.relatedTarget))lswSet(false);});
 document.addEventListener('click',e=>{if(!e.target.closest('#lsw'))lswSet(false);});
 addEventListener('keydown',e=>{if(e.key==='Escape')lswSet(false);});
-$$('#lswOpts [data-lang]').forEach(b=>b.addEventListener('click',()=>{lswSet(false);lswC.focus({preventScroll:true});}));
+$('#lswOpts [data-lang]').forEach(b=>b.addEventListener('click',()=>{lswSet(false);lswC.focus({preventScroll:true});}));
 function lswSync(){const L=IF.lang||'tr';$('#lswCode').textContent=L.toUpperCase();
- $$('#lswOpts [data-lang]').forEach(b=>{b.hidden=b.dataset.lang===L;});
- $$('.lsw-m [data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===L));}
+ $('#lswOpts [data-lang]').forEach(b=>{b.hidden=b.dataset.lang===L;});
+ $('.lsw-m [data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===L));}
 
 /* ---- dil değişince yeniden çiz (homeData ile aynı sinyal, ondan sonra çalışır) ---- */
 function v2refresh(){renderUC();renderUZ();renderHK();crumbs();lswSync();titleSync();}
