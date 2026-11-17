@@ -242,6 +242,8 @@ if _pk in c1:
     c1n = jrep(c1n, _pk, _px); c1n = jrep(c1n, _bk, _bx)
 else:
     c2n = jrep(c2n, _pk, _px); c2n = jrep(c2n, _bk, _bx)
+# 8k) ana sayfa sayaçları: ürün ve iş ortağı sayısı elle değil, katalogdan ve logo listesinden
+c2n = jrep(c2n, "const nums=$$('.st-g b[data-n]')", "{const _P=(window.IFD&&IFD.PRODS)||[],_s=$$('.st-g b[data-n]'),_o=new Set($$('#ptTrack .pt-l').map(a=>a.getAttribute('href')||(a.querySelector('img')||{}).src));if(_s[1]&&_P.length){_s[1].dataset.n=_P.length;_s[1].textContent=_P.length;}if(_s[2]&&_o.size){_s[2].dataset.n=_o.size;_s[2].textContent=_o.size;}}\nconst nums=$$('.st-g b[data-n]')")
 c1n = PRE + c1n
 keys = json.load(io.open(os.path.join(HERE, 'v2keys.json'), encoding='utf-8'))
 inj = 'for(const [l,o] of Object.entries(%s))Object.assign(T[l],o);\n' % json.dumps(keys, ensure_ascii=False)

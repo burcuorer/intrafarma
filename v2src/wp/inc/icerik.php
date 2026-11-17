@@ -49,6 +49,8 @@ function intrafarma_partner_img($f) {
 /** "/wp-content/uploads/..." gibi site içi yolu tam adrese çevirir (alt klasöre kurulumda da çalışsın) */
 function intrafarma_media_url($u) {
     $u = (string) $u;
+    // temanın kendi görselleri: tema klasörü başka adla yüklenmiş olsa da doğru adrese gider
+    if (strpos($u, '/wp-content/themes/intrafarma-2026/') === 0) { return get_template_directory_uri() . '/' . substr($u, strlen('/wp-content/themes/intrafarma-2026/')); }
     if (strpos($u, '/wp-content/') === 0) { return content_url(substr($u, strlen('/wp-content'))); }
     return $u;
 }

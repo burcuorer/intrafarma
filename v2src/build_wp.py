@@ -75,6 +75,11 @@ def _slug(n):
     n = n.replace('İ', 'i').replace('I', 'ı').lower()
     for a_, b_ in zip('çğıöşüâîû', 'cgiosuaiu'): n = n.replace(a_, b_)
     return re.sub(r'[^a-z0-9]+', '-', n).strip('-')
+# stüdyo fotoğrafları (media/urun) varsayılan ürün görseli olur; firma panelden değiştirir ya da kaldırır
+_ud = os.path.join(os.path.dirname(HERE), 'media', 'urun')
+if os.path.isdir(_ud):
+    for _f in os.listdir(_ud):
+        if _f.endswith('.webp'): _img[_f[:-5]] = '/wp-content/themes/intrafarma-2026/media/urun/' + _f
 _miss = []
 for _p in _d['prods']:
     _k = _slug(_p['n'])

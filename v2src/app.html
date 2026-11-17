@@ -2172,6 +2172,23 @@ html:lang(ar) .ur-ph figcaption{letter-spacing:0;text-transform:none}
 .orn-b a.mk-h,.mk-ev a,.mk-press a{color:inherit;text-decoration:none}
 .orn-b a.mk-h:hover h3,.mk-ev a:hover b,.mk-press a:hover b{color:var(--cobalt);text-decoration:underline;text-underline-offset:3px}
 a.mk-film-a{display:block;color:inherit;text-decoration:none;border-radius:var(--r2)}
+
+/* ===== 18 Kasım düzeltmeleri ===== */
+/* Hakkımızda iş ortakları: bantlar sırayla sola, sağa, sola akar (bir devamlılık) */
+.hk-film .film-rail:nth-child(even) .film-track{animation-direction:reverse}
+/* ana sayfa iş ortakları bandı: Hakkımızda'daki koyu zemin */
+.st-pt .pt-row{-webkit-mask-image:none;mask-image:none;overflow:hidden}
+.st-pt .pt-row::before{background:radial-gradient(ellipse at 10% 30%,rgba(33,115,128,.3),transparent 65%),linear-gradient(145deg,#28414c,#183440)!important}
+.st-pt .pt-row::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;background:linear-gradient(90deg,#24404b,rgba(36,64,75,0) 9%,rgba(26,54,66,0) 91%,#1a3642)}
+.st-pt .pt-l{border-color:rgba(255,255,255,.12)}
+/* sağlık çalışanı penceresi ve Pro alanı açıkken footer üstte görünmesin (Safari katman sırası) */
+.site{z-index:1}
+#site-foot{position:relative;z-index:0}
+html.stage-full #site-foot{visibility:hidden}
+/* Pro ürün kütüphanesi: açık renk kartlar koyu zeminde, herkese açık alandaki gibi */
+.cat-body .pgrid{background:radial-gradient(ellipse at 10% 0%,rgba(33,115,128,.28),transparent 60%),linear-gradient(145deg,#28414c,#183440);padding:clamp(14px,1.6vw,22px);border-radius:var(--r3);gap:14px}
+.cat-body .pgrid .pcard{border-color:rgba(255,255,255,.14)}
+@media (max-width:640px){.cat-body .pgrid{padding:10px;gap:8px}}
 </style>
 </head><body>
 
@@ -3207,6 +3224,7 @@ const io={observe(el){ioIn.observe(el);ioOut.observe(el);}};
 $$('[data-rv]').forEach(el=>io.observe(el));
 
 /* count-up numbers */
+{const _P=(window.IFD&&IFD.PRODS)||[],_s=$$('.st-g b[data-n]'),_o=new Set($$('#ptTrack .pt-l').map(a=>a.getAttribute('href')||(a.querySelector('img')||{}).src));if(_s[1]&&_P.length){_s[1].dataset.n=_P.length;_s[1].textContent=_P.length;}if(_s[2]&&_o.size){_s[2].dataset.n=_o.size;_s[2].textContent=_o.size;}}
 const nums=$$('.st-g b[data-n]').map(b=>({b,to:+b.dataset.n,pad:+(b.dataset.pad||0),suf:b.dataset.suf||''}));
 const fmt=(n,v)=>String(v).padStart(n.pad,'0')+n.suf;
 if(!RM)nums.forEach(n=>{n.b.textContent=fmt(n,0);});

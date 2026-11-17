@@ -7,7 +7,13 @@ NM = '/tmp/claude-0/-home-claude/06ad3418-85a2-578d-a5ea-e5e40f6a3e32/scratchpad
 BASE = ''
 # GitHub önizlemesinde ürün görselleri canlı sitedeki dosyalardan gelir (WordPress'te panelden yönetilir)
 import json as _json
-IFIMG = _json.dumps({k: 'https://www.intrafarma.com.tr' + v for k, v in _json.load(io.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'wp_urun_gorselleri.json'), encoding='utf-8')).items()}, ensure_ascii=False)
+_IMG0 = {k: 'https://www.intrafarma.com.tr' + v for k, v in _json.load(io.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'wp_urun_gorselleri.json'), encoding='utf-8')).items()}
+# Drive'daki stüdyo fotoğraflarından kırpılan ürün görselleri (media/urun/<adres>.webp) eskilerinin yerine geçer
+_UDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media', 'urun')
+if os.path.isdir(_UDIR):
+    for _f in sorted(os.listdir(_UDIR)):
+        if _f.endswith('.webp'): _IMG0[_f[:-5]] = 'media/urun/' + _f
+IFIMG = _json.dumps(_IMG0, ensure_ascii=False)
 s = io.open(os.path.join(HERE, 'app.html'), encoding='utf-8').read()
 
 PAGES = [  # dosya, sayfa kimliği, ilk başlık (dil seçilince JS günceller)

@@ -57,6 +57,7 @@ const io={observe(el){ioIn.observe(el);ioOut.observe(el);}};
 $$('[data-rv]').forEach(el=>io.observe(el));
 
 /* count-up numbers */
+{const _P=(window.IFD&&IFD.PRODS)||[],_s=$$('.st-g b[data-n]'),_o=new Set($$('#ptTrack .pt-l').map(a=>a.getAttribute('href')||(a.querySelector('img')||{}).src));if(_s[1]&&_P.length){_s[1].dataset.n=_P.length;_s[1].textContent=_P.length;}if(_s[2]&&_o.size){_s[2].dataset.n=_o.size;_s[2].textContent=_o.size;}}
 const nums=$$('.st-g b[data-n]').map(b=>({b,to:+b.dataset.n,pad:+(b.dataset.pad||0),suf:b.dataset.suf||''}));
 const fmt=(n,v)=>String(v).padStart(n.pad,'0')+n.suf;
 if(!RM)nums.forEach(n=>{n.b.textContent=fmt(n,0);});
