@@ -52,3 +52,6 @@
 .if-more>summary{cursor:pointer;color:#2271b1;font-size:13px;margin-bottom:8px}
 .if-resetform{margin-top:18px}
 @media (max-width:782px){.if-tx .if-ref{width:auto}.if-tx tr{display:flex;flex-direction:column}.if-body{padding-left:16px}}
+
+/* bölüm görselleri: kaldır bağlantısı düğmeyle aynı hizada */
+.if-media .button-link.if-clear{vertical-align:middle;margin-inline-start:8px;line-height:30px}

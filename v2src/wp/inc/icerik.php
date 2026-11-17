@@ -66,6 +66,8 @@ function intrafarma_cms_payload() {
     }
     $s = get_option('intrafarma_set');
     if (is_array($s)) { $out['set'] = $s; }
+    $o = get_option('intrafarma_orn');
+    if (is_array($o) && $o) { $out['orn'] = intrafarma_orn_public($o); }
     return $out;
 }
 
@@ -76,6 +78,7 @@ add_action('admin_menu', function () {
     add_submenu_page('intrafarma', 'Metinler', 'Metinler', INTRAFARMA_CAP, 'intrafarma-metinler', 'intrafarma_admin_tx');
     add_submenu_page('intrafarma', 'Ürünler', 'Ürünler', INTRAFARMA_CAP, 'intrafarma-urunler', 'intrafarma_admin_prods');
     add_submenu_page('intrafarma', 'İş ortakları', 'İş ortakları', INTRAFARMA_CAP, 'intrafarma-ortaklar', 'intrafarma_admin_partners');
+    add_submenu_page('intrafarma', 'Bölüm görselleri', 'Bölüm görselleri', INTRAFARMA_CAP, 'intrafarma-bolumler', 'intrafarma_admin_orn');
     add_submenu_page('intrafarma', 'İletişim ve sosyal medya', 'İletişim ve sosyal medya', INTRAFARMA_CAP, 'intrafarma-iletisim', 'intrafarma_admin_set');
 });
 add_action('admin_enqueue_scripts', function ($hook) {
@@ -110,6 +113,7 @@ function intrafarma_admin_home() {
         array('intrafarma-metinler', 'Metinler', 'Sitedeki tüm başlık, paragraf ve düğme yazıları. Altı dilin her biri ayrı düzenlenir.', 'dashicons-editor-textcolor'),
         array('intrafarma-urunler', 'Ürünler', 'Ürün ekleme, silme, sıralama; ad, kategori, görsel ve açıklama.', 'dashicons-products'),
         array('intrafarma-ortaklar', 'İş ortakları', 'Ana sayfa ve Hakkımızda\'daki logo şeridi: logo, ad ve web adresi.', 'dashicons-groups'),
+        array('intrafarma-bolumler', 'Bölüm görselleri', 'Danışma kurulu fotoğrafları, yazı kapakları, tanıtım filmi; kart sayıları ve "Örnektir" etiketi.', 'dashicons-format-gallery'),
         array('intrafarma-iletisim', 'İletişim ve sosyal medya', 'Adres, telefon, e-posta ve sosyal medya bağlantıları.', 'dashicons-location'),
     );
     echo '<div class="if-cards">';
@@ -342,6 +346,93 @@ add_action('admin_post_intrafarma_save_partners', function () {
 add_action('admin_post_intrafarma_reset_partners', function () {
     intrafarma_admin_guard('intrafarma_reset_partners'); delete_option('intrafarma_partners');
     intrafarma_admin_back('intrafarma-ortaklar', array('kayit' => 'sifir'));
+});
+
+/* ---------- Bölüm görselleri ----------
+ * Bilim, Güncel ve Hakkımızda sayfalarındaki kart bölümleri: kaç kart görüneceği, fotoğraflar, bağlantılar
+ * ve "Örnektir" etiketi. Kartların yazıları Metinler ekranından değişir (bk1_n, ev1_t, bl1_t, md1_t ...).
+ */
+define('INTRAFARMA_ORN', array(
+    'kurul' => array('Danışma kurulu', 'Bilim sayfası', 4, true, false, 'Hekim fotoğrafı'),
+    'etkinlik' => array('Etkinlikler', 'Güncel sayfası', 3, false, true, ''),
+    'yazi' => array('Yazılar', 'Güncel sayfası', 3, true, true, 'Kapak görseli'),
+    'basin' => array('Basında biz', 'Hakkımızda sayfası', 3, false, true, ''),
+));
+function intrafarma_orn_get() { $o = get_option('intrafarma_orn'); return is_array($o) ? $o : array(); }
+/** Siteye giden biçim: yalnızca dolu alanlar, adresler tam halde */
+function intrafarma_orn_public($o) {
+    $out = array('tag' => !isset($o['tag']) || !empty($o['tag']));
+    foreach (INTRAFARMA_ORN as $k => $d) {
+        if (isset($o['n_' . $k]) && $o['n_' . $k] !== '') { $out['n_' . $k] = (int) $o['n_' . $k]; }
+        $rows = isset($o[$k]) && is_array($o[$k]) ? $o[$k] : array();
+        $out[$k] = array_values(array_map(function ($r) {
+            return array('img' => !empty($r['img']) ? esc_url_raw(intrafarma_media_url($r['img'])) : '', 'url' => !empty($r['url']) ? esc_url_raw($r['url']) : '');
+        }, array_slice($rows, 0, $d[2])));
+    }
+    if (!empty($o['film']) && is_array($o['film'])) {
+        $out['film'] = array('img' => !empty($o['film']['img']) ? esc_url_raw(intrafarma_media_url($o['film']['img'])) : '', 'url' => !empty($o['film']['url']) ? esc_url_raw($o['film']['url']) : '');
+    }
+    return $out;
+}
+function intrafarma_orn_media($name, $val, $label) {
+    $val = (string) $val;
+    return '<div class="if-media"><div class="if-prev">' . ($val ? '<img src="' . esc_url(intrafarma_media_url($val)) . '" alt="">' : '<span>Görsel yok</span>') . '</div><div><input type="hidden" name="' . esc_attr($name) . '" value="' . esc_attr($val) . '"><button type="button" class="button if-pick">' . esc_html($label) . ' seç</button> <button type="button" class="button-link if-clear">Kaldır</button></div></div>';
+}
+function intrafarma_admin_orn() {
+    $o = intrafarma_orn_get();
+    $tagOn = !isset($o['tag']) || !empty($o['tag']);
+    intrafarma_admin_head('Bölüm görselleri', 'Bilim, Güncel ve Hakkımızda sayfalarındaki kart bölümleri. Kartların yazılarını Metinler ekranından, fotoğraflarını, bağlantılarını ve sayılarını buradan değiştirirsiniz.');
+    echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '" class="if-form">';
+    wp_nonce_field('intrafarma_save_orn');
+    echo '<input type="hidden" name="action" value="intrafarma_save_orn">';
+    echo '<h2>"Örnektir" etiketi</h2><p><label><input type="checkbox" name="orn[tag]" value="1"' . checked($tagOn, true, false) . '> Kartlarda "Örnektir" etiketini ve bölüm altındaki örnek notunu göster</label></p><p class="description">Gerçek isimleri, fotoğrafları ve yazıları girdikten sonra bu kutunun işaretini kaldırın.</p>';
+    foreach (INTRAFARMA_ORN as $k => $d) {
+        list($title, $where, $max, $hasImg, $hasUrl, $imgLabel) = $d;
+        $cnt = isset($o['n_' . $k]) && $o['n_' . $k] !== '' ? (int) $o['n_' . $k] : $max;
+        echo '<h2>' . esc_html($title) . ' <span class="if-sub">· ' . esc_html($where) . '</span></h2><table class="form-table"><tbody>';
+        echo '<tr><th><label for="if_n_' . $k . '">Görünen kart sayısı</label></th><td><select id="if_n_' . $k . '" name="orn[n_' . $k . ']">';
+        for ($i = 0; $i <= $max; $i++) { echo '<option value="' . $i . '"' . selected($cnt, $i, false) . '>' . ($i ? $i : 'Hiçbiri (bölümde "Hazırlanıyor" yazar)') . '</option>'; }
+        echo '</select><p class="description">Kartlar sırayla gösterilir: 2 seçerseniz 1. ve 2. kart görünür. En çok ' . $max . ' kart.</p></td></tr>';
+        if ($hasImg || $hasUrl) {
+            for ($i = 1; $i <= $max; $i++) {
+                $r = isset($o[$k][$i - 1]) && is_array($o[$k][$i - 1]) ? $o[$k][$i - 1] : array();
+                echo '<tr><th>' . $i . '. kart</th><td>';
+                if ($hasImg) { echo intrafarma_orn_media('orn[' . $k . '][' . ($i - 1) . '][img]', isset($r['img']) ? $r['img'] : '', $imgLabel); }
+                if ($hasUrl) { echo '<p><label>Bağlantı <input type="url" class="large-text" name="orn[' . $k . '][' . ($i - 1) . '][url]" value="' . esc_attr(isset($r['url']) ? $r['url'] : '') . '" placeholder="https://"></label></p>'; }
+                echo '</td></tr>';
+            }
+        }
+        echo '</tbody></table>';
+    }
+    $f = isset($o['film']) && is_array($o['film']) ? $o['film'] : array();
+    echo '<h2>Tanıtım filmi <span class="if-sub">· Hakkımızda sayfası</span></h2><table class="form-table"><tbody><tr><th>Kapak görseli</th><td>' . intrafarma_orn_media('orn[film][img]', isset($f['img']) ? $f['img'] : '', 'Kapak') . '<p class="description">Boşsa laboratuvar fotoğrafı görünür.</p></td></tr>';
+    echo '<tr><th><label for="if_film">Film adresi</label></th><td><input id="if_film" type="url" class="large-text" name="orn[film][url]" value="' . esc_attr(isset($f['url']) ? $f['url'] : '') . '" placeholder="https://www.youtube.com/watch?v=..."><p class="description">Kapağa tıklanınca bu adres yeni sekmede açılır.</p></td></tr></tbody></table>';
+    echo '<div class="if-save"><button class="button button-primary button-hero">Kaydet</button></div></form>';
+    intrafarma_reset_form('intrafarma_reset_orn', 'Bölüm görsellerini ilk haline döndür');
+    echo '</div>';
+}
+add_action('admin_post_intrafarma_save_orn', function () {
+    intrafarma_admin_guard('intrafarma_save_orn');
+    $in = isset($_POST['orn']) && is_array($_POST['orn']) ? wp_unslash($_POST['orn']) : array();
+    $clean = function ($u) { $u = trim((string) $u); return $u === '' ? '' : esc_url_raw($u); };
+    $out = array('tag' => !empty($in['tag']));
+    foreach (INTRAFARMA_ORN as $k => $d) {
+        $out['n_' . $k] = isset($in['n_' . $k]) ? max(0, min($d[2], (int) $in['n_' . $k])) : $d[2];
+        $rows = array();
+        for ($i = 0; $i < $d[2]; $i++) {
+            $r = isset($in[$k][$i]) && is_array($in[$k][$i]) ? $in[$k][$i] : array();
+            $rows[] = array('img' => $d[3] && isset($r['img']) ? $clean($r['img']) : '', 'url' => $d[4] && isset($r['url']) ? $clean($r['url']) : '');
+        }
+        $out[$k] = $rows;
+    }
+    $f = isset($in['film']) && is_array($in['film']) ? $in['film'] : array();
+    $out['film'] = array('img' => isset($f['img']) ? $clean($f['img']) : '', 'url' => isset($f['url']) ? $clean($f['url']) : '');
+    update_option('intrafarma_orn', $out);
+    intrafarma_admin_back('intrafarma-bolumler', array('kayit' => 1));
+});
+add_action('admin_post_intrafarma_reset_orn', function () {
+    intrafarma_admin_guard('intrafarma_reset_orn'); delete_option('intrafarma_orn');
+    intrafarma_admin_back('intrafarma-bolumler', array('kayit' => 'sifir'));
 });
 
 /* ---------- İletişim ve sosyal medya ---------- */

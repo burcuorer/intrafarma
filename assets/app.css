@@ -2159,3 +2159,13 @@ html:lang(ar) .ur-ph figcaption{letter-spacing:0;text-transform:none}
  .fq>.hs-h{position:sticky;top:calc(var(--hdr) + 24px);margin-bottom:0}
  .fq .fq-l{max-width:none}
 }
+
+/* ===== bölüm görselleri (WordPress'ten): gerçek fotoğraf, bağlantı, etiketsiz görünüm ===== */
+.mk-av.has-img{display:block;background:#dfe8ee}
+.mk-av.has-img img,.mk-cov.has-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mk-cov.has-img::after{display:none}
+.mk-bl article{position:relative}
+.bl-c:empty{display:none}
+.orn-b a.mk-h,.mk-ev a,.mk-press a{color:inherit;text-decoration:none}
+.orn-b a.mk-h:hover h3,.mk-ev a:hover b,.mk-press a:hover b{color:var(--cobalt);text-decoration:underline;text-underline-offset:3px}
+a.mk-film-a{display:block;color:inherit;text-decoration:none;border-radius:var(--r2)}

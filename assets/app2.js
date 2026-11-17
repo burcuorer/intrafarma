@@ -354,21 +354,28 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
 /* ---- örnek içerik (sunum için): yer tutucuların yerine örnek metin ve "Örnektir" işaretli görseller.
         Tüm metinler dil anahtarıdır; WordPress'te Intrafarma → Metinler ekranından değiştirilir. ---- */
 {const T2=k=>{const v=tr(k);return v===k?'':v;},sp=(k,tagName,cls)=>'<'+(tagName||'span')+(cls?' class="'+cls+'"':'')+' data-t="'+k+'">'+T2(k)+'</'+(tagName||'span')+'>';
- const tag=k=>'<em class="ornek" data-t="'+(k||'ornek')+'">'+T2(k||'ornek')+'</em>';
+ /* WordPress → Intrafarma → Bölüm görselleri: kart sayıları, fotoğraflar, bağlantılar, "Örnektir" etiketi */
+ const O=(window.IF_CMS&&window.IF_CMS.orn)||{},ON=O.tag!==false;
+ const n=(k,max)=>{const v=parseInt(O['n_'+k],10);return Array.from({length:isNaN(v)?max:Math.max(0,Math.min(max,v))},(_,i)=>i+1);};
+ const at=(arr,i)=>(Array.isArray(arr)&&arr[i-1])||{};
+ const safe=u=>{u=String(u||'').trim();return u&&(/^https?:\/\//i.test(u)||!/^[a-z][a-z0-9+.-]*:/i.test(u))?esc2(u):'';};
+ const tag=k=>ON?'<em class="ornek" data-t="'+(k||'ornek')+'">'+T2(k||'ornek')+'</em>':'';
  const AV='<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="45" r="20"/><path d="M17 121c2-27 19-41 43-41s41 14 43 41z"/><path class="c" d="M47 81l13 17 13-17"/></svg>';
- const note='<p class="mk-note"><i aria-hidden="true"></i>'+sp('ornek_note')+'</p>';
- const put=(sel,html)=>{const p=$(sel);if(!p)return;const d=document.createElement('div');d.className='orn-b';d.innerHTML=html;p.replaceWith(d);d.querySelectorAll('[data-rv]').forEach(e=>io.observe(e));};
+ const note=ON?'<p class="mk-note"><i aria-hidden="true"></i>'+sp('ornek_note')+'</p>':'';
+ const img=u=>'<img src="'+safe(u)+'" alt="" loading="lazy" decoding="async">';
+ const lnk=(u,inner,cls)=>safe(u)?'<a'+(cls?' class="'+cls+'"':'')+' href="'+safe(u)+'" target="_blank" rel="noopener">'+inner+'</a>':inner;
+ const put=(sel,html,count)=>{const p=$(sel);if(!p||!count)return;const d=document.createElement('div');d.className='orn-b'+(ON?'':' orn-off');d.innerHTML=html;p.replaceWith(d);d.querySelectorAll('[data-rv]').forEach(e=>io.observe(e));};
  const B=window.IF_BASE||'';
  /* bilim: danışma kurulu */
- put('#kurul .pend-card',sp('bk_lede','p','mk-lede')+'<div class="bk-g mk-bk">'+[1,2,3,4].map(i=>'<figure data-rv="up" style="--i:'+(i-1)+'"><div class="mk-av a'+i+'">'+AV+tag()+'</div><figcaption>'+sp('bk'+i+'_n','b')+sp('bk'+i+'_r','span')+sp('bk'+i+'_d','small')+'</figcaption></figure>').join('')+'</div>'+note);
+ {const L=n('kurul',4);put('#kurul .pend-card',sp('bk_lede','p','mk-lede')+'<div class="bk-g mk-bk">'+L.map((i,j)=>{const ph=at(O.kurul,i).img;return '<figure data-rv="up" style="--i:'+j+'"><div class="mk-av a'+i+(ph?' has-img':'')+'">'+(ph?img(ph):AV)+tag()+'</div><figcaption>'+sp('bk'+i+'_n','b')+sp('bk'+i+'_r','span')+sp('bk'+i+'_d','small')+'</figcaption></figure>';}).join('')+'</div>'+note,L.length);}
  /* bilim: sık sorulan sorular */
  $$('#sss .fq-l details').forEach((d,i)=>{const a=d.querySelector('p');if(a&&T2('fq_a'+(i+1))){a.dataset.t='fq_a'+(i+1);a.innerHTML=T2('fq_a'+(i+1));}});
  /* güncel: etkinlikler */
- put('#etkinlikler .pend-card','<div class="mk-ev">'+[1,2,3].map(i=>'<article data-rv="up" style="--i:'+(i-1)+'">'+sp('ev'+i+'_d','time')+'<div>'+sp('ev'+i+'_t','b')+sp('ev'+i+'_p','small')+'</div>'+tag()+'</article>').join('')+'</div><a class="hc-m mk-cta" href="'+IFU.U.iletisim+'">'+sp('ev_cta')+'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>');
+ {const L=n('etkinlik',3);put('#etkinlikler .pend-card','<div class="mk-ev">'+L.map((i,j)=>'<article data-rv="up" style="--i:'+j+'">'+sp('ev'+i+'_d','time')+'<div>'+lnk(at(O.etkinlik,i).url,sp('ev'+i+'_t','b'))+sp('ev'+i+'_p','small')+'</div>'+tag()+'</article>').join('')+'</div><a class="hc-m mk-cta" href="'+IFU.U.iletisim+'">'+sp('ev_cta')+'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>',L.length);}
  /* güncel: yazılar */
- put('#blog .pend-card','<div class="bl-g mk-bl">'+[1,2,3].map(i=>'<article data-rv="up" style="--i:'+(i-1)+'"><div class="mk-cov c'+i+'">'+tag('ornek_img')+sp('bl_c'+i,'span','bl-c')+'</div>'+sp('bl'+i+'_t','h3')+sp('bl'+i+'_p','p')+'<footer>'+sp('bl'+i+'_m','small')+'<span class="mk-more">'+sp('bl_read')+' →</span></footer></article>').join('')+'</div>'+note);
+ {const L=n('yazi',3);put('#blog .pend-card','<div class="bl-g mk-bl">'+L.map((i,j)=>{const x=at(O.yazi,i);return '<article data-rv="up" style="--i:'+j+'"><div class="mk-cov c'+i+(x.img?' has-img':'')+'">'+(x.img?img(x.img):'')+tag(x.img?'ornek':'ornek_img')+sp('bl_c'+i,'span','bl-c')+'</div>'+lnk(x.url,sp('bl'+i+'_t','h3'),'mk-h')+sp('bl'+i+'_p','p')+'<footer>'+sp('bl'+i+'_m','small')+lnk(x.url,'<span class="mk-more">'+sp('bl_read')+' →</span>')+'</footer></article>';}).join('')+'</div>'+note,L.length);}
  /* hakkımızda: medya ve basın */
- put('.hk-med .pend-card','<div class="mk-md"><figure class="mk-film" data-rv="up"><img src="'+B+'media/gorsel/regenyal-laboratuvar.jpg" alt="" loading="lazy" decoding="async"><span class="mk-play" aria-hidden="true"></span>'+tag()+'<figcaption>'+sp('md_film','b')+sp('md_film_p','span')+'</figcaption></figure><ul class="mk-press">'+[1,2,3].map(i=>'<li data-rv="up" style="--i:'+i+'">'+sp('md'+i+'_s','small')+sp('md'+i+'_t','b')+sp('md'+i+'_d','time')+tag()+'</li>').join('')+'</ul></div>'+note);
+ {const L=n('basin',3),F=O.film||{};put('.hk-med .pend-card','<div class="mk-md">'+lnk(F.url,'<figure class="mk-film" data-rv="up">'+img(F.img||B+'media/gorsel/regenyal-laboratuvar.jpg')+'<span class="mk-play" aria-hidden="true"></span>'+tag()+'<figcaption>'+sp('md_film','b')+sp('md_film_p','span')+'</figcaption></figure>','mk-film-a')+(L.length?'<ul class="mk-press">'+L.map((i,j)=>'<li data-rv="up" style="--i:'+(j+1)+'">'+sp('md'+i+'_s','small')+lnk(at(O.basin,i).url,sp('md'+i+'_t','b'))+sp('md'+i+'_d','time')+tag()+'</li>').join('')+'</ul>':'')+'</div>'+note,1);}
  /* üretim: adım açıklamaları */
  $$('.ur-g article p').forEach((a,i)=>{if(T2('ur_p'+(i+1))){a.dataset.t='ur_p'+(i+1);a.textContent=T2('ur_p'+(i+1));}});
 }
