@@ -1963,3 +1963,19 @@ html.nav-lock .draft-chip,html.nav-lock .totop{display:none}
 }
 
 .ur-f img:nth-child(2){transition-delay:.12s}.ur-f img:nth-child(3){transition-delay:.24s}
+
+/* Contrast hierarchy: light introduction, dark actions and partner stage. */
+.hk-pos-in{background:transparent!important;border:0!important;box-shadow:none!important;padding:0;border-radius:0;color:#183846}
+.hk-pos h2,.hk-pos h2 em{color:#183846}
+.hk-pos .hk-lead{color:#45616e}
+.hk-pos .eyebrow{color:#526f79}
+.hk-card{background:linear-gradient(145deg,#28414c,#183440)!important;border-color:#42606b!important;color:#f2f7f8;box-shadow:0 18px 32px -22px rgba(20,43,54,.4)!important}
+.hk-card b{color:#f2f7f8}.hk-card span{color:#c9d9df}.hk-card i{color:#b2dadd}
+.hk-pt{color:#f2f7f8}
+.hk-pt::before{background:radial-gradient(ellipse at 10% 30%,rgba(33,115,128,.3),transparent 65%),linear-gradient(145deg,#28414c,#183440)}
+.hk-pt::after{background:linear-gradient(180deg,rgba(6,25,35,.18),transparent 48px)}
+.hk-pt h2{color:#f2f7f8}.hk-pt .eyebrow{color:#b2cbd3}
+.hk-ptg .pt-l{background:#fff;border-color:#fff;box-shadow:0 14px 24px -16px rgba(0,12,20,.65)}
+.hk-ptg .pt-l.dk{background:linear-gradient(155deg,#425a65,#2c424e);border-color:#8aa4af}
+.hk-pt .film-control{background:rgba(255,255,255,.06);border-color:#8aa8b4;color:#f2f7f8}
+.hk-pt .film-control:hover,.hk-pt .film-control:focus-visible{background:rgba(255,255,255,.15)}
