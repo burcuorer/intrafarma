@@ -182,7 +182,9 @@
   "s_ok": "Numune talebiniz alındı ({r}). En kısa sürede e-postayla dönüş yapacağız.",
   "m_ok": "Talebiniz alındı ({r}). Belgeleri {e} adresine göndereceğiz.",
   "pv_note": "(Önizleme: gerçek gönderim yapılmaz.)",
-  "rq_fail": "Talep gönderilemedi. Lütfen biraz sonra tekrar deneyin ya da info@intrafarma.com.tr adresine yazın."
+  "rq_fail": "Talep gönderilemedi. Lütfen biraz sonra tekrar deneyin ya da info@intrafarma.com.tr adresine yazın.",
+  "cat_pro_s": "Pro alanında",
+  "cat_pub_s": "Herkese açık"
  },
  "en": {
   "draft": "Test version · text, figures and images are samples",
@@ -367,7 +369,9 @@
   "s_ok": "Your sample request has been received ({r}). We will reply by email shortly.",
   "m_ok": "Request received ({r}). We will send the documents to {e}.",
   "pv_note": "(Preview: nothing is sent.)",
-  "rq_fail": "The request could not be sent. Please try again later or write to info@intrafarma.com.tr."
+  "rq_fail": "The request could not be sent. Please try again later or write to info@intrafarma.com.tr.",
+  "cat_pro_s": "In Pro area",
+  "cat_pub_s": "Public"
  },
  "ar": {
   "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -552,7 +556,9 @@
   "s_ok": "تم استلام طلب العينة ({r}). سنرد عبر البريد الإلكتروني قريبًا.",
   "m_ok": "تم استلام الطلب ({r}). سنرسل المستندات إلى {e}.",
   "pv_note": "(معاينة: لا يتم إرسال أي شيء.)",
-  "rq_fail": "تعذر إرسال الطلب. يرجى المحاولة لاحقًا أو مراسلة info@intrafarma.com.tr."
+  "rq_fail": "تعذر إرسال الطلب. يرجى المحاولة لاحقًا أو مراسلة info@intrafarma.com.tr.",
+  "cat_pro_s": "في منطقة Pro",
+  "cat_pub_s": "متاح للجميع"
  },
  "it": {
   "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -737,7 +743,9 @@
   "s_ok": "Richiesta di campione ricevuta ({r}). Ti risponderemo via email a breve.",
   "m_ok": "Richiesta ricevuta ({r}). Invieremo i documenti a {e}.",
   "pv_note": "(Anteprima: non viene inviato nulla.)",
-  "rq_fail": "Impossibile inviare la richiesta. Riprova più tardi o scrivi a info@intrafarma.com.tr."
+  "rq_fail": "Impossibile inviare la richiesta. Riprova più tardi o scrivi a info@intrafarma.com.tr.",
+  "cat_pro_s": "Area Pro",
+  "cat_pub_s": "Pubblico"
  },
  "ru": {
   "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -922,7 +930,9 @@
   "s_ok": "Запрос образца получен ({r}). Мы скоро ответим по электронной почте.",
   "m_ok": "Запрос получен ({r}). Мы отправим документы на {e}.",
   "pv_note": "(Предпросмотр: ничего не отправляется.)",
-  "rq_fail": "Не удалось отправить запрос. Повторите позже или напишите на info@intrafarma.com.tr."
+  "rq_fail": "Не удалось отправить запрос. Повторите позже или напишите на info@intrafarma.com.tr.",
+  "cat_pro_s": "В разделе Pro",
+  "cat_pub_s": "Общедоступно"
  },
  "ro": {
   "draft": "Versiune de test · textele, cifrele și imaginile sunt exemple",
@@ -1107,6 +1117,8 @@
   "s_ok": "Cererea de mostră a fost primită ({r}). Vă răspundem în curând prin e-mail.",
   "m_ok": "Cerere primită ({r}). Vom trimite documentele la {e}.",
   "pv_note": "(Previzualizare: nu se trimite nimic.)",
-  "rq_fail": "Cererea nu a putut fi trimisă. Încercați mai târziu sau scrieți la info@intrafarma.com.tr."
+  "rq_fail": "Cererea nu a putut fi trimisă. Încercați mai târziu sau scrieți la info@intrafarma.com.tr.",
+  "cat_pro_s": "În zona Pro",
+  "cat_pub_s": "Public"
  }
 }

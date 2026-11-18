@@ -27,7 +27,7 @@ function ucCard(p,i,L,AX){const AXC=IF.AXC||[],open=!!p.open,c=p.crop||{};
  const num=(v,f,min,max)=>Number.isFinite(Number(v))&&v!==''?Math.max(min,Math.min(max,Number(v))):f;
  const crop='--pack-x:'+num(c.x,50,0,100)+'%;--pack-y:'+num(c.y,45,0,100)+'%;--pack-zoom:'+num(c.zoom,1.65,1,3)+';';
  const img=p.img?'<span class="uc-art" aria-hidden="true"><img class="uc-haze" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"><img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"></span>':'';
- return '<a class="uc-c'+(p.img?' has-img':'')+'" data-axis="'+p.a+'" href="'+ucHref({urun:i})+'" style="'+crop+'--card-delay:'+(-(i%7)*1.4)+'s;--tc:'+(AXC[p.a]||'#17707A')+'">'+img+'<span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="uc-go" aria-hidden="true">→</span></a>';}
+ return '<a class="uc-c'+(p.img?' has-img':'')+'" data-axis="'+p.a+'" href="'+ucHref({urun:i})+'" style="'+crop+'--card-delay:'+(-(i%7)*1.4)+'s;--tc:'+(AXC[p.a]||'#17707A')+'">'+img+'<span class="uc-t"><i>0'+(p.a+1)+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'"><span class="l">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="s">'+esc2(tr(open?'cat_pub_s':'cat_pro_s'))+'</span></span><span class="uc-go" aria-hidden="true">→</span></a>';}
 
 function renderUC(){
  if(P!=='urunler')return;
@@ -153,7 +153,7 @@ function pgVideo(){const k=PGV[P];const mob=!matchMedia('(min-width: 901px)').ma
  const B=(window.IF_BASE||'')+'media/'+(mob&&k==='hero-bilim'?'hero-laboratuvar':k),f=document.createElement('figure'),v=document.createElement('video');f.className='pg-vid';f.setAttribute('aria-hidden','true');
  v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata';v.poster=B+'.jpg';
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){v.autoplay=true;v.src=B+'.mp4';}
- f.appendChild(v);const cap=document.createElement('figcaption');cap.className='pg-cap';cap.innerHTML='<i></i><span data-t="'+({urunler:'v_cap4',uretim:'v_cap3',bilim:'v_cap1',guncel:'v_cap1'}[P]||'v_cap2')+'"></span>';f.appendChild(cap);cap.querySelector('span').innerHTML=tr(cap.querySelector('span').dataset.t);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
+ f.appendChild(v);const cap=document.createElement('figcaption');cap.className='pg-cap';cap.innerHTML='<i></i><span data-t="'+(mob&&k==='hero-bilim'?'v_cap2':({urunler:'v_cap4',uretim:'v_cap3',bilim:'v_cap1',guncel:'v_cap1'}[P]||'v_cap2'))+'"></span>';f.appendChild(cap);cap.querySelector('span').innerHTML=tr(cap.querySelector('span').dataset.t);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
 ucRead();v2route();v2refresh();pgVideo();pgMode();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
 
@@ -268,3 +268,6 @@ function ucExtra(p,L){const u=pTx(p,'u',L),f=pLines(pTx(p,'f',L)),vb=vidBox(p,'u
 {const O2=(window.IF_CMS&&window.IF_CMS.orn)||{},al=Array.isArray(O2.alan)?O2.alan:[],ur=Array.isArray(O2.uretim)?O2.uretim:[],K=['ortopedi','spor-hekimligi','estetik','uroloji','kadin-sagligi','veteriner'];
  const sw=()=>{$$('img[src*="media/alan/"]').forEach(im=>{const m=im.getAttribute('src').match(/media\/alan\/([a-z-]+)\.webp/);const i=m?K.indexOf(m[1]):-1;if(i>=0&&al[i])im.src=al[i];});$$('.ur-f img').forEach((im,i)=>{if(ur[i])im.src=ur[i];});};
  if(al.some(Boolean)||ur.some(Boolean)){sw();if(IF.onLang)IF.onLang.push(sw);}}
+
+/* telefonda "Test sürümü" etiketi yalnız sayfanın başında görünür */
+if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const d=document.querySelector('.draft-chip');if(d)d.classList.toggle('dc-hide',scrollY>140);},{passive:true});}
