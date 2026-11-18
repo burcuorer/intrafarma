@@ -55,3 +55,29 @@
 
 /* bölüm görselleri: kaldır bağlantısı düğmeyle aynı hizada */
 .if-media .button-link.if-clear{vertical-align:middle;margin-inline-start:8px;line-height:30px}
+
+/* ürün düzenleyicisi: beş bölüm */
+.if-prod .if-h{margin:22px 0 8px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#1d3b4a;border-top:1px solid #e2e6ea;padding-top:14px}
+.if-prod .if-h:first-child{border-top:0;margin-top:4px;padding-top:0}
+.if-prod .if-h small{font-weight:400;text-transform:none;letter-spacing:0;color:#6b7890}
+.if-cas{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 0;padding:10px 12px;border:1px solid #e2e6ea;border-radius:6px}
+.if-cas legend{padding:0 4px;font-weight:600}
+.if-cas .description{flex-basis:100%;margin:2px 0 0}
+.if-file{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.if-file .if-url{flex:1 1 280px;min-width:0}
+.if-tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.if-tabs .button.on{background:#1d3b4a;border-color:#1d3b4a;color:#fff}
+.if-lang label{display:block;margin-bottom:12px;font-weight:600}
+.if-lang label small{font-weight:400;color:#6b7890;margin-inline-start:6px}
+.if-lang textarea{display:block;width:100%;margin-top:4px;font-weight:400}
+.if-docs{display:flex;flex-direction:column;gap:8px}
+.if-doc{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 10px;background:#f6f8f9;border:1px solid #e2e6ea;border-radius:6px}
+.if-doc .regular-text{flex:1 1 220px}
+.if-doc .if-file{flex:2 1 320px}
+/* talepler */
+.if-talep td{vertical-align:top}
+.if-talep tr.if-new td:first-child{box-shadow:inset 3px 0 0 #1f8f98}
+.if-st{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.if-st.yeni{background:#e2f3f4;color:#14646c}
+.if-st.yanit{background:#eef0f2;color:#5b6573}
+.if-warn{color:#b32d2e}

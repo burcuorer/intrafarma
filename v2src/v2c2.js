@@ -46,12 +46,12 @@ function renderUC(){
   ca.appendChild(chip(tr('cat_all'),ucHref({ca:-1}),UC.ca<0,'sm'));
   CA.forEach((n,i)=>ca.appendChild(chip(n,ucHref({ca:i}),UC.ca===i,'sm')));
   const q=UC.q.trim().toLocaleLowerCase(L);
-  const list=PR.map((p,i)=>({p,i})).filter(({p})=>(UC.ax<0||p.a===UC.ax)&&(UC.ca<0||D.AXCA[p.a].includes(UC.ca))&&(!q||p.n.toLocaleLowerCase(L).includes(q)));
+  const list=PR.map((p,i)=>({p,i})).filter(({p})=>(UC.ax<0||p.a===UC.ax)&&(UC.ca<0||pCA(p).includes(UC.ca))&&(!q||p.n.toLocaleLowerCase(L).includes(q)));
   $('#ucN').textContent=tr('cat_n').replace('{n}',list.length);
   $('#ucG').innerHTML=list.length?list.map(({p,i})=>ucCard(p,i,L,AX)).join(''):'<div class="uc-empty"><p>'+esc2(tr('cat_empty'))+'</p><a class="b-sec" href="'+IFU.U.urunler+'">'+esc2(tr('all_prods'))+'</a></div>';
  }else{
   const p=PR[UC.urun],axn=AX[p.a],open=!!p.open;
-  const areas=D.AXCA[p.a].map(i=>'<a href="'+IFU.alan(i)+'">'+esc2(CA[i])+'</a>').join('');
+  const areas=pCA(p).map(i=>'<a href="'+IFU.alan(i)+'">'+esc2(CA[i])+'</a>').join('');
   const more=PR.map((x,i)=>({x,i})).filter(o=>o.x.a===p.a&&o.i!==UC.urun);
   $('#ucD').innerHTML=
    '<a class="uc-back" href="'+ucHref({ax:p.a,ca:-1})+'"><i aria-hidden="true">←</i><span>'+esc2(axn)+'</span></a>'+
@@ -62,7 +62,7 @@ function renderUC(){
         :'<div class="uc-box lock"><h2>'+tr('lk_t')+'</h2><p>'+tr('lk_b')+'</p><button type="button" class="b-pri" id="ucGate"><span>'+esc2(tr('cta1'))+'</span><span class="o"></span></button></div>')+
    '</div></div>'+
    (more.length?'<div class="uc-more"><h2>'+esc2(tr('uc_more'))+'</h2><div class="uc-g">'+more.map(o=>ucCard(o.x,o.i,L,AX)).join('')+'</div></div>':'');
-  const g=$('#ucGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;IF.openGate();});
+  const g=$('#ucGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;IF.openGate();});ucExtra(p,L);
  }
 }
 function ucGo(href,push){history[push?'pushState':'replaceState']({ifuc:1},'',href);ucRead();renderUC();crumbs();titleSync();pgMode();}
@@ -227,3 +227,44 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
  /* üretim: adım açıklamaları */
  $$('.ur-g article p').forEach((a,i)=>{if(T2('ur_p'+(i+1))){a.dataset.t='ur_p'+(i+1);a.textContent=T2('ur_p'+(i+1));}});
 }
+
+/* ===== Ürün sayfası ekleri (panelden): uzun açıklama, öne çıkanlar, video; Pro: fotoğraf, teknik bilgi, belgeler ===== */
+function pTx(p,k,L){const o=p&&p[k]||{};return String(o[L]||o.en||o.tr||'').trim();}
+function pParas(t){return t?t.split(/\n\s*\n/).map(x=>'<p>'+esc2(x.trim()).replace(/\n/g,'<br>')+'</p>').join(''):'';}
+function pLines(t){return t?t.split('\n').map(x=>x.replace(/^\s*[-•*]\s*/,'').trim()).filter(Boolean):[];}
+function pRows(t){return pLines(t).map(x=>{const i=x.indexOf(':');return i>0?[x.slice(0,i).trim(),x.slice(i+1).trim()]:['',x];});}
+function pVid(u){u=String(u||'').trim();if(!u)return null;let m=u.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([\w-]{6,})/i);if(m)return {k:'yt',src:'https://www.youtube-nocookie.com/embed/'+m[1]+'?autoplay=1&rel=0&modestbranding=1'};
+ m=u.match(/vimeo\.com\/(?:video\/)?(\d+)/i);if(m)return {k:'vm',src:'https://player.vimeo.com/video/'+m[1]+'?autoplay=1&dnt=1'};return /^(https?:)?\/\/|^\//i.test(u)?{k:'mp4',src:u}:null;}
+function vidBox(p,cls){const v=pVid(p.v);if(!v)return '';const im=p.img?' style="--im:url(&quot;'+esc2(encodeURI(p.img))+'&quot;)"':'';
+ return '<div class="'+cls+(p.img?' has-img':'')+'"'+im+' data-vk="'+v.k+'" data-vs="'+esc2(v.src)+'"><button type="button" class="vplay"><i aria-hidden="true"></i><span data-t="ux_play">'+esc2(tr('ux_play'))+'</span></button>'+(v.k==='mp4'?'':'<small data-t="ux_vnote">'+esc2(tr('ux_vnote'))+'</small>')+'</div>';}
+document.addEventListener('click',e=>{const b=e.target.closest('.vplay');if(!b)return;const box=b.parentElement,k=box.dataset.vk,src=box.dataset.vs;
+ box.innerHTML=k==='mp4'?'<video controls autoplay playsinline src="'+esc2(src)+'"></video>':'<iframe src="'+esc2(src)+'" title="Video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>';box.classList.add('on');});
+function ucExtra(p,L){const u=pTx(p,'u',L),f=pLines(pTx(p,'f',L)),vb=vidBox(p,'ux-vid');if(!u&&!f.length&&!vb)return;
+ const s=document.createElement('section');s.className='ux'+(vb?'':' nov');
+ s.innerHTML='<div class="ux-txt">'+(u?'<h2 data-t="ux_about">'+esc2(tr('ux_about'))+'</h2>'+pParas(u):'')+(f.length?'<h3 data-t="ux_feat">'+esc2(tr('ux_feat'))+'</h3><ul class="ux-feat">'+f.map(x=>'<li>'+esc2(x)+'</li>').join('')+'</ul>':'')+'</div>'+(vb?'<div class="ux-v"><h3 data-t="ux_vid">'+esc2(tr('ux_vid'))+'</h3>'+vb+'</div>':'');
+ const dg=$('#ucD .uc-dg');if(dg)dg.after(s);}
+/* Pro ürün sayfası: örnek (Regenflex) kartın yerine ürünün kendi bilgileri */
+{let ORIG=null;const Q=s=>document.querySelector(s);
+ const keep=()=>{if(ORIG)return;ORIG={tiles:Q('#zoom .tiles').innerHTML,docs:Q('#zoom .docs').innerHTML,pub:Q('#zoom [data-pane="2"]').innerHTML,lede:Q('#zoom .z-lede').innerHTML};};
+ window.proRestore=()=>{if(!ORIG)return;Q('#zoom .tiles').innerHTML=ORIG.tiles;Q('#zoom .docs').innerHTML=ORIG.docs;Q('#zoom [data-pane="2"]').innerHTML=ORIG.pub;const l=Q('#zoom .z-lede');l.innerHTML=ORIG.lede;l.dataset.t='z_lede';
+  const tg=Q('#zoom .z-body>.tag');if(tg)tg.hidden=false;const st=Q('#zoom .pstage');st.classList.remove('has-ph');st.querySelectorAll('.pph').forEach(x=>x.remove());window.IF_CUR='';};
+ window.proExtra=p=>{keep();const L=IF.lang||'tr',D=window.IFD,AX=(D.AX[L]||D.AX.en),CA=(D.CA[L]||D.CA.en);window.IF_CUR=p.n;
+  const ds=pTx(p,'d',L)||pTx(p,'u',L).split(/\n\s*\n/)[0];const l=Q('#zoom .z-lede');if(ds){l.textContent=ds;delete l.dataset.t;}
+  const real=!!(pTx(p,'t',L)||(p.docs&&p.docs.length)||pTx(p,'u',L));const tg=Q('#zoom .z-body>.tag');if(tg)tg.hidden=real;
+  const st=Q('#zoom .pstage');st.querySelectorAll('.pph').forEach(x=>x.remove());
+  if(p.img||p.v){const ph=document.createElement('div');ph.className='pph';ph.innerHTML=(p.img?'<img src="'+esc2(p.img)+'" alt="'+esc2(p.n)+'">':'')+vidBox(p,'pph-v');st.appendChild(ph);st.classList.add('has-ph');}else st.classList.remove('has-ph');
+  const T=(k,v,acc)=>'<div class="tile'+(acc?' acc':'')+'"><span>'+esc2(k)+'</span><b>'+esc2(v)+'</b></div>';
+  const rows=pRows(pTx(p,'t',L));
+  Q('#zoom .tiles').innerHTML=T(tr('dt1'),AX[p.a])+T(tr('d_ca'),pCA(p).map(i=>CA[i]).join(', '))+T(tr('dt4'),p.open?tr('z_open'):tr('dd4'),true)+(rows.length?rows.map(r=>T(r[0]||tr('tab1'),r[1])).join(''):T(tr('tab1'),tr('z_notech')));
+  const docs=(p.docs||[]).filter(d=>d&&d.n),DTN=['ifu','tds','bro','cert','pub'];
+  const li=d=>'<li><span class="fi">PDF</span><div><b>'+esc2(d.n)+'</b><small>'+esc2(tr('dt_'+DTN[+d.ty||0]))+'</small></div>'+(d.url?'<a class="gbtn lt" href="'+esc2(d.url)+'" target="_blank" rel="noopener">'+esc2(tr('d_dl'))+'</a>':'<button class="gbtn lt" type="button" data-mailjump>'+esc2(tr('d_get'))+'</button>')+'</li>';
+  const nd=docs.filter(d=>+d.ty!==4),pd=docs.filter(d=>+d.ty===4);
+  Q('#zoom .docs').innerHTML=nd.length?nd.map(li).join(''):'<li class="none"><div><b>'+esc2(tr('z_nodoc'))+'</b></div></li>';
+  if(pd.length)Q('#zoom [data-pane="2"]').innerHTML='<ul class="docs">'+pd.map(li).join('')+'</ul>';
+  if(window.IF&&IF.setInds)IF.setInds();};
+}
+
+/* Bölüm görselleri (panel): klinik alan görselleri ve üretim fotoğrafları */
+{const O2=(window.IF_CMS&&window.IF_CMS.orn)||{},al=Array.isArray(O2.alan)?O2.alan:[],ur=Array.isArray(O2.uretim)?O2.uretim:[],K=['ortopedi','spor-hekimligi','estetik','uroloji','kadin-sagligi','veteriner'];
+ const sw=()=>{$$('img[src*="media/alan/"]').forEach(im=>{const m=im.getAttribute('src').match(/media\/alan\/([a-z-]+)\.webp/);const i=m?K.indexOf(m[1]):-1;if(i>=0&&al[i])im.src=al[i];});$$('.ur-f img').forEach((im,i)=>{if(ur[i])im.src=ur[i];});};
+ if(al.some(Boolean)||ur.some(Boolean)){sw();if(IF.onLang)IF.onLang.push(sw);}}

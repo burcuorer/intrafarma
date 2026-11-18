@@ -244,6 +244,11 @@ else:
     c2n = jrep(c2n, _pk, _px); c2n = jrep(c2n, _bk, _bx)
 # 8k) ana sayfa sayaçları: ürün ve iş ortağı sayısı elle değil, katalogdan ve logo listesinden
 c2n = jrep(c2n, "const nums=$$('.st-g b[data-n]')", "{const _P=(window.IFD&&IFD.PRODS)||[],_s=$$('.st-g b[data-n]'),_o=new Set($$('#ptTrack .pt-l').map(a=>a.getAttribute('href')||(a.querySelector('img')||{}).src));if(_s[1]&&_P.length){_s[1].dataset.n=_P.length;_s[1].textContent=_P.length;}if(_s[2]&&_o.size){_s[2].dataset.n=_o.size;_s[2].textContent=_o.size;}}\nconst nums=$$('.st-g b[data-n]')")
+# 8m) ürüne özel klinik alanlar (p.ca), ürün sayfası ekleri, Pro ürün sayfası, ürün belgeleri
+c1n = jrep(c1n, "window.IFD={AX,CA,PRODS,AXCA};", "window.IFD={AX,CA,PRODS,AXCA};window.pCA=p=>(p&&Array.isArray(p.ca)&&p.ca.length?p.ca:AXCA[p.a]||[]);")
+c1n = jrep(c1n, "AXCA[p.a].includes(CS.ca)", "pCA(p).includes(CS.ca)")
+c1n = jrep(c1n, "cas=AXCA[p.a].map(", "cas=pCA(p).map(")
+c1n = jrep(c1n, "function openZoom(card){", "function openZoom(card){if(window.proRestore)proRestore();")
 c1n = PRE + c1n
 keys = json.load(io.open(os.path.join(HERE, 'v2keys.json'), encoding='utf-8'))
 inj = 'for(const [l,o] of Object.entries(%s))Object.assign(T[l],o);\n' % json.dumps(keys, ensure_ascii=False)
@@ -305,7 +310,8 @@ rep('<video class="vh-v on" muted playsinline preload="auto"', '<video class="vh
 c2n = jrep(c2n, ".observe($('#vh'));\ngo(0);", ".observe($('#vh'));\nif(!window.IFU||IFU.page==='home')go(0);")
 # 8f) alan sayfası: ürünler Ürünler sayfasındaki kartlarla
 c2n = jrep(c2n, "const h=document.createElement('h3');h.textContent='0'+(ax+1)+' · '+AX[ax];g.appendChild(h);const ul=document.createElement('ul');\n  D.PRODS.filter(p=>p.a===ax).forEach(p=>{const li=document.createElement('li');const pa=document.createElement('a');pa.href=IFU.prod(p);pa.textContent=p.n;li.appendChild(pa);ul.appendChild(li);});g.appendChild(ul);});",
- "const h=document.createElement('h3');h.textContent='0'+(ax+1)+' · '+AX[ax];g.appendChild(h);const gr=document.createElement('div');gr.className='uc-g al-cards';\n  gr.innerHTML=D.PRODS.map((p,i)=>({p,i})).filter(o=>o.p.a===ax).map(o=>ucCard(o.p,o.i,L,AX)).join('');g.appendChild(gr);});")
+ "const h=document.createElement('h3');h.textContent='0'+(ax+1)+' · '+AX[ax];g.appendChild(h);const gr=document.createElement('div');gr.className='uc-g al-cards';\n  gr.innerHTML=D.PRODS.map((p,i)=>({p,i})).filter(o=>o.p.a===ax&&pCA(o.p).includes(alanI)).map(o=>ucCard(o.p,o.i,L,AX)).join('');g.appendChild(gr);});")
+c2n = jrep(c2n, "D.AXCA.forEach((areas,ax)=>{if(!areas.includes(alanI))return;", "D.AXCA.forEach((areas,ax)=>{if(!D.PRODS.some(p=>p.a===ax&&pCA(p).includes(alanI)))return;")
 c2n = jrep(c2n, "labels();\n})();", V2C2 + "\nlabels();\n})();")
 CONSENT = io.open(os.path.join(HERE, 'v2consent.js'), encoding='utf-8').read()
 c2n = c2n.rstrip() + '\n' + CONSENT
@@ -449,4 +455,26 @@ if os.path.exists(_pf):
     if _r.returncode != 0:
         sys.exit('EL DÜZELTMELERİ UYGULANAMADI:\n' + _r.stdout + _r.stderr)
     LOG.append('el düzeltmeleri uygulandı')
+# yamadan SONRA: yamanın değiştirdiği bölgelere dokunan ekler (Pro ürün sayfası ve belge kütüphanesi)
+_POST = [
+    (" if(!fromHistory)history.pushState({ifpro:1,ifproduct:n},'','#pro');", " if(window.proExtra)proExtra(p);\n if(!fromHistory)history.pushState({ifpro:1,ifproduct:n},'','#pro');"),
+    ("const DOCS=[", "let DOCS=["),
+    ("function renderDocs(){", "function renderDocs(){if(window.IF_DOCS&&IF_DOCS.length)DOCS=IF_DOCS;"),
+    ("function docTitle(d){", "function docTitle(d){if(d.length>2)return d[0];"),
+    # talepler: formlar IF_SEND ile gönderilir (WordPress'te e-posta + panel kaydı)
+    ("""<label class="fld2" for="sQty"><span data-t="s_qty"></span><select id="sQty"><option>1</option><option>2</option><option>5</option><option>10</option></select></label>""",
+     """<label class="fld2" for="sQty"><span data-t="s_qty"></span><select id="sQty"><option>1</option><option>2</option><option>5</option><option>10</option></select></label><label class="fld2 full" for="sMail"><span data-t="rq_mail"></span><input id="sMail" type="email" autocomplete="email" data-tp="m_ph"></label><label class="chk full" for="sKvkk"><input type="checkbox" id="sKvkk"><span data-t="rq_kvkk"></span></label>"""),
+    ("""$('#sErr').textContent='';const ok=$('#sOk');ok.textContent=IF.tr('s_ok');ok.hidden=false;});""",
+     """const sm=$('#sMail').value.trim();if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(sm)){$('#sErr').textContent=IF.tr('e_mail');$('#sOk').hidden=true;return;}if(!$('#sKvkk').checked){$('#sErr').textContent=IF.tr('e_kvkk');$('#sOk').hidden=true;return;}$('#sErr').textContent='';IF_SEND({tur:'numune',urun:window.IF_CUR||$('#zTitle').textContent,kurum:$('#sOrg').value,adet:$('#sQty').value,eposta:sm,onay:1}).then(r=>{const ok=$('#sOk');ok.textContent=IF_OKTX('s_ok',r);ok.hidden=false;},()=>{$('#sErr').textContent=IF.tr('rq_fail');});});"""),
+    ("""$('#mErr').textContent='';const ok=$('#mOk');ok.textContent=IF.tr('m_ok').replace('{e}',v);ok.hidden=false;""",
+     """$('#mErr').textContent='';IF_SEND({tur:'belge',urun:window.IF_CUR||'',eposta:v,onay:1,bulten:$('#zNews').checked?1:0}).then(r=>{const ok=$('#mOk');ok.textContent=IF_OKTX('m_ok',r,v);ok.hidden=false;},()=>{$('#mErr').textContent=IF.tr('rq_fail');});"""),
+    ("""CS.rqProd=$('#rqP').value;CS.rqDone='IF-2026-'+String(140+Math.floor(Math.random()*60)).padStart(4,'0');renderCat();const o=$('.rqok');if(o)o.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'});});""",
+     """CS.rqProd=$('#rqP').value;$('#rqE').textContent='';IF_SEND({tur:['numune','teklif','bilgi'][CS.rqT]||'bilgi',urun:CS.rqProd,kurum:$('#rqO').value,ad:$('#rqN').value,unvan:$('#rqR').value,tel:$('#rqTel').value,eposta:$('#rqM').value.trim(),adet:$('#rqQ').value,not:$('#rqMsg').value,onay:1}).then(r=>{CS.rqDone=r.ref+(r.demo?' · '+IF.tr('pv_note'):'');renderCat();const o=$('.rqok');if(o)o.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'});},()=>{$('#rqE').textContent=IF.tr('rq_fail');});});"""),
+    ("<span class=\"ty\">'+IF.tr('dt_'+DT.at(o.d[1]))+'</span>'", "<span class=\"ty\">'+IF.tr('dt_'+DT.at(o.d[1]))+'</span>'+(o.d[2]?'<a class=\"dl\" href=\"'+esc(o.d[2])+'\" target=\"_blank\" rel=\"noopener\">'+IF.tr('d_dl')+'</a>':'')"),
+]
+_ap = os.path.join(HERE, 'app.html'); _h = io.open(_ap, encoding='utf-8').read()
+for _a, _b in _POST:
+    if _h.count(_a) != 1: sys.exit('SON EK EŞLEŞMEDİ (' + str(_h.count(_a)) + '): ' + _a)
+    _h = _h.replace(_a, _b)
+io.open(_ap, 'w', encoding='utf-8').write(_h)
 print('app.html yazıldı', len(s), '|', '; '.join(LOG))

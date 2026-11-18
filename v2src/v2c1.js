@@ -15,7 +15,7 @@
   if(S.telefon)T[l].il_tv='<a href="tel:'+escH(S.telefon.replace(/[^+\d]/g,''))+'">'+escH(S.telefon)+'</a>';
   if(S.eposta)T[l].il_mv='<a href="mailto:'+escH(S.eposta)+'">'+escH(S.eposta)+'</a>';});
  /* ürünler: [{n,a,open,img,d:{dil:açıklama}}] */
- if(Array.isArray(C.prods)&&C.prods.length){PRODS.length=0;C.prods.forEach(p=>{if(p&&p.n)PRODS.push({n:String(p.n),a:Math.max(0,Math.min(AXCA.length-1,+p.a||0)),open:!!p.open,img:p.img||'',d:p.d||{},crop:p.crop||{}});});}
+ if(Array.isArray(C.prods)&&C.prods.length){PRODS.length=0;C.prods.forEach(p=>{if(p&&p.n)PRODS.push({n:String(p.n),a:Math.max(0,Math.min(AXCA.length-1,+p.a||0)),open:!!p.open,img:p.img||'',d:p.d||{},crop:p.crop||{},u:p.u||{},f:p.f||{},t:p.t||{},v:p.v||'',ca:Array.isArray(p.ca)?p.ca.map(Number).filter(x=>x>=0&&x<6):[],docs:Array.isArray(p.docs)?p.docs:[]});});}
 })();
 
 /* GitHub önizlemesi: panel yokken ürün görselleri window.IF_IMG eşlemesinden */
@@ -37,3 +37,12 @@ if(location.hash==='#pro')history.replaceState(null,'',location.pathname+locatio
 if(matchMedia('(hover: none)').matches){for(const L of Object.keys(T)){if(T[L].c_lede_t)T[L].c_lede=T[L].c_lede_t;if(T[L].c_hint_t)T[L].c_hint=T[L].c_hint_t;}}
 {const f=applyLang;applyLang=function(){f.apply(this,arguments);for(const fn of IF.onLang){try{fn();}catch(e){console.error(e);}}};}
 
+
+/* Pro belge kütüphanesi: panelde ürünlere eklenen belgelerden oluşur ([başlık, tür, dosya]) */
+{const D=[];(window.IFD?IFD.PRODS:[]).forEach(p=>(p.docs||[]).forEach(d=>{if(d&&d.n)D.push([p.n+' — '+d.n,Math.max(0,Math.min(4,+d.ty||0)),d.url||'']);}));window.IF_DOCS=D;}
+/* Talep gönderimi: WordPress'te kaydedilir ve e-postayla firmaya gider (window.IF_API). Önizlemede gönderim yapılmaz. */
+window.IF_SEND=d=>{const w=window.IF&&IF.mode==='pro'?document.getElementById('whoProf'):null,wp=w?w.textContent.split(' · '):[];
+ d=Object.assign({meslek:(wp[0]||'').trim(),ulke:(wp[1]||'').trim(),dil:(window.IF&&IF.lang)||'tr',sayfa:location.pathname,web:''},d);
+ if(!window.IF_API)return new Promise(r=>setTimeout(()=>r({ok:true,ref:'IF-ÖRNEK',demo:1}),350));
+ return fetch(window.IF_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(r=>r.ok?r.json():Promise.reject(r.status));};
+window.IF_OKTX=(k,r,e)=>{let t=IF.tr(k).replace('{r}',r&&r.ref||'').replace('{e}',e||'');if(r&&r.demo)t+=' '+IF.tr('pv_note');return t;};

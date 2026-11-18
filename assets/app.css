@@ -2188,3 +2188,40 @@ html.stage-full #site-foot{visibility:hidden}
 @media (max-width:640px){.cat-body .pgrid{padding:10px;gap:8px}}
 /* hücre bölümü: daha kısa sahne */
 @media (min-width:901px){.home .stage{height:clamp(560px,70vh,640px)}}
+
+/* ===== ürün sayfası ekleri: açıklama, öne çıkanlar, video ===== */
+.ux{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:start;margin-top:clamp(36px,4.5vw,64px);padding-top:clamp(28px,3.5vw,44px);border-top:1px solid var(--line,rgba(16,22,46,.1))}
+.ux.nov{grid-template-columns:minmax(0,760px)}
+.ux h2{font-size:var(--t5,24px);margin:0 0 14px;letter-spacing:-.01em}
+.ux h3{font-size:15px;font-weight:600;margin:24px 0 10px;color:var(--ink-2,#3b4658)}
+.ux .ux-v h3{margin-top:0}
+.ux-txt p{margin:0 0 12px;line-height:1.65;color:var(--ink-2,#3b4658);max-width:68ch}
+.ux-feat{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ux-feat li{position:relative;padding-inline-start:26px;line-height:1.5}
+.ux-feat li::before{content:"";position:absolute;inset-inline-start:2px;top:.45em;width:14px;height:8px;border-inline-start:2px solid var(--teal,#17707A);border-bottom:2px solid var(--teal,#17707A);transform:rotate(-45deg)}
+.ux-vid,.pph-v{position:relative;aspect-ratio:16/9;border-radius:var(--r3,18px);overflow:hidden;background:linear-gradient(145deg,#28414c,#183440);display:grid;place-items:center;isolation:isolate}
+.ux-vid.has-img::before,.pph-v.has-img::before{content:"";position:absolute;inset:-20px;z-index:-1;background:var(--im) center/cover;filter:blur(18px) brightness(.55)}
+.ux-vid.on,.pph-v.on{background:#000}
+.ux-vid iframe,.ux-vid video,.pph-v iframe,.pph-v video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vplay{display:inline-flex;align-items:center;gap:12px;padding:12px 22px 12px 14px;border-radius:999px;border:0;background:rgba(255,255,255,.94);color:#10162e;font:600 15px/1 var(--f-b);cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .25s}
+.vplay:hover{transform:scale(1.04)}
+.vplay i{width:34px;height:34px;border-radius:50%;background:var(--teal,#17707A);position:relative}
+.vplay i::after{content:"";position:absolute;left:13px;top:10px;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.ux-vid small,.pph-v small{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:12px;color:rgba(255,255,255,.78)}
+@media (max-width:900px){.ux{grid-template-columns:1fr}}
+/* Pro ürün sayfası: ürünün kendi fotoğrafı (örnek 3D model yerine) */
+.pstage.has-ph #prodCv,.pstage.has-ph .ptl,.pstage.has-ph .pseg,.pstage.has-ph .pspin,.pstage.has-ph .pglow,.pstage.has-ph .pshadow{display:none}
+.pph{position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:clamp(14px,2vw,22px);background:radial-gradient(ellipse at 50% 35%,#f4f7f9,#dfe7ec)}
+.pph img{flex:1 1 auto;min-height:0;width:100%;object-fit:contain;border-radius:12px}
+.pph .pph-v{flex:0 0 auto}
+.docs li.none{background:transparent;border-style:dashed}
+.docs a.gbtn{text-decoration:none}
+.dlist .dl{margin-inline-start:8px;font-size:13px;font-weight:600;color:var(--teal,#17707A);text-decoration:none;white-space:nowrap}
+.dlist .dl:hover{text-decoration:underline}
+/* Pro: video fotoğrafın üstünde bir düğme; basınca tüm alanı kaplar */
+.pph .pph-v{position:absolute;inset:0;aspect-ratio:auto;border-radius:0;background:transparent;display:flex;align-items:flex-end;justify-content:center;padding-bottom:22px}
+.pph .pph-v.has-img::before{display:none}
+.pph .pph-v small{display:none}
+.pph .pph-v.on{background:#000;padding:0;z-index:2}
+.pph:not(:has(img)) .pph-v{background:linear-gradient(145deg,#28414c,#183440);align-items:center}
+.docs a.gbtn{display:inline-flex;align-items:center;justify-content:center;width:auto;height:auto;min-height:34px;padding:0 16px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap}

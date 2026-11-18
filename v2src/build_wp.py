@@ -87,7 +87,7 @@ for _p in _d['prods']:
     else: _miss.append(_p['n'])
 if _miss: print('görseli olmayan ürün:', _miss)
 io.open(os.path.join(OUT, 'data', 'varsayilan.json'), 'w', encoding='utf-8').write(json.dumps(_d, ensure_ascii=False))
-for f in ['functions.php', 'sayfa.php', 'index.php', 'style.css', 'inc/icerik.php', 'inc/cerez.php', 'inc/yonlendirme.php', 'inc/admin.js', 'inc/admin.css']:
+for f in ['functions.php', 'sayfa.php', 'index.php', 'style.css', 'inc/icerik.php', 'inc/cerez.php', 'inc/yonlendirme.php', 'inc/talep.php', 'inc/admin.js', 'inc/admin.css']:
     need(os.path.exists(os.path.join(OUT, f)), 'eksik ' + f)
 tot = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(OUT) for f in fs)
 print('tema %s hazır: %.1f MB, %d sayfa bağlantısı' % (VER, tot / 1e6, n))

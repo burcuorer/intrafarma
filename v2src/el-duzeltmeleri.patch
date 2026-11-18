@@ -108,22 +108,6 @@
  }
  function goPublic(fromPop){
   if(fromPop!==true&&location.hash==='#pro')history.replaceState(null,'',location.pathname+location.search);
-@@ -2922,13 +2952,14 @@
- if(matchMedia('(hover: none)').matches){for(const L of Object.keys(T)){if(T[L].c_lede_t)T[L].c_lede=T[L].c_lede_t;if(T[L].c_hint_t)T[L].c_hint=T[L].c_hint_t;}}
- {const f=applyLang;applyLang=function(){f.apply(this,arguments);for(const fn of IF.onLang){try{fn();}catch(e){console.error(e);}}};}
- 
--
- resize();applyLang();
- requestAnimationFrame(loop);
- })();
-+
- </script>
- 
- <script>
-+
- /* ana sayfa pilotu: video slaytı, ortaklar bandı, kaydırma animasyonları, sayaçlar, sayfa başı */
- (()=>{
- const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 @@ -3005,6 +3036,8 @@
  const UA_IMG=['ortopedi','spor-hekimligi','estetik','uroloji','kadin-sagligi','veteriner'];
  const UA_IC=['<circle cx="12" cy="12" r="9"/><path d="M8 8.5c2 1 2 3 0 4M16 11.5c-2 1-2 3 0 4M9 12.5h6"/>','<circle cx="12" cy="12" r="9"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>','<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>','<rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 8v6"/>','<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>','<path d="M6 13c0-3 3-4 6-4s6 1 6 4-2 6-6 6-6-3-6-6z"/><circle cx="7" cy="6" r="1.6"/><circle cx="12" cy="4.5" r="1.6"/><circle cx="17" cy="6" r="1.6"/>'];

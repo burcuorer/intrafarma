@@ -35,10 +35,36 @@
           var k = String($(this).data('f')), v = this.type === 'checkbox' ? this.checked : $(this).val();
           if (k.indexOf('.') > 0) { var p = k.split('.'); o[p[0]] = o[p[0]] || {}; o[p[0]][p[1]] = v; } else { o[k] = v; }
         });
+        var ca = []; $(this).find('[data-ca]').each(function () { if (this.checked) { ca.push(+$(this).data('ca')); } }); if ($(this).find('[data-ca]').length) { o.ca = ca; }
+        var docs = []; $(this).find('.if-doc').each(function () { var d = {}; $(this).find('[data-df]').each(function () { d[$(this).data('df')] = $(this).val(); }); docs.push(d); });
+        if ($(this).find('.if-docs').length) { o.docs = docs; }
         rows.push(o);
       });
       form.find('input[name=json]').val(JSON.stringify(rows));
     });
+  });
+
+  // ürün: dil sekmeleri
+  $(document).on('click', '.if-tabs button', function (e) {
+    e.preventDefault(); var b = $(this), body = b.closest('.if-body'), l = b.data('lang');
+    b.addClass('on').siblings().removeClass('on');
+    body.find('.if-lang').each(function () { this.hidden = $(this).data('lang') !== l; });
+  });
+  // ürün: belgeler
+  $(document).on('click', '.if-dadd', function (e) {
+    e.preventDefault(); var tpl = document.querySelector('template.if-dtpl'); if (!tpl) { return; }
+    var el = tpl.content.firstElementChild.cloneNode(true); $(this).closest('.if-body').find('.if-docs').append(el); $(el).find('input').first().trigger('focus');
+  });
+  $(document).on('click', '.if-ddel', function (e) {
+    e.preventDefault(); var r = $(this).closest('.if-doc'); var n = r.find('[data-df=n]').val() || 'Bu belge';
+    if (window.confirm('"' + n + '" kaldırılsın mı? Kaydet\'e basana kadar kalıcı olmaz.')) { r.remove(); }
+  });
+  // dosya seçici: PDF ya da video
+  $(document).on('click', '.if-pickf', function (e) {
+    e.preventDefault(); var box = $(this).closest('.if-file'), type = $(this).data('type');
+    var frame = wp.media({ title: type === 'video' ? 'Video seç ya da yükle' : 'PDF seç ya da yükle', button: { text: 'Bunu kullan' }, library: { type: type }, multiple: false });
+    frame.on('select', function () { var a = frame.state().get('selection').first().toJSON(); box.find('.if-url').val(a.url).trigger('change'); });
+    frame.open();
   });
 
   // görsel seçici (WordPress ortam kütüphanesi)

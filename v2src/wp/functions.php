@@ -96,7 +96,7 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('intrafarma-app', $u . '/assets/app.css', array('intrafarma-fonts'), INTRAFARMA_VER);
     wp_enqueue_script('intrafarma-app1', $u . '/assets/app1.js', array(), INTRAFARMA_VER, true);
     wp_enqueue_script('intrafarma-app2', $u . '/assets/app2.js', array('intrafarma-app1'), INTRAFARMA_VER, true);
-    $js = 'window.IF_BASE=' . wp_json_encode($u . '/') . ';window.IF_URLS=' . wp_json_encode(intrafarma_urls())
+    $js = 'window.IF_API=' . wp_json_encode(rest_url('intrafarma/v1/talep'), JSON_UNESCAPED_SLASHES) . ';window.IF_BASE=' . wp_json_encode($u . '/') . ';window.IF_URLS=' . wp_json_encode(intrafarma_urls())
         . ';window.IF_CK=' . wp_json_encode(intrafarma_ck_config(), JSON_UNESCAPED_SLASHES) . ';';
     $cms = intrafarma_cms_payload();
     $sg = intrafarma_segments();
@@ -189,6 +189,7 @@ function intrafarma_purge_cache() {
 require get_template_directory() . '/inc/cerez.php';
 require get_template_directory() . '/inc/icerik.php';
 require get_template_directory() . '/inc/yonlendirme.php';
+require get_template_directory() . '/inc/talep.php';
 
 /** Tasarım sayfasını basar */
 function intrafarma_render($page) {
