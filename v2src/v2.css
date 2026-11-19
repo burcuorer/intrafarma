@@ -1632,3 +1632,57 @@ html[data-page=hakkimizda] #vHakkimizda>.hs.hk-pt{padding-bottom:40px!important}
 html[data-page=hakkimizda] .hk-ptg,html[data-page=hakkimizda] .hk-ptg .film-rail:last-child{margin-bottom:0!important;padding-bottom:0!important}
 html[data-page=hakkimizda] .hk-ptg .film-rail{margin:0!important}
 html[data-page=hakkimizda] .hk-ptg{display:grid;gap:10px}
+
+/* =====================================================================
+   ÜRÜN KARTLARI · yatay, kompakt (20.11): solda ürünün tamamı (kırpma yok,
+   marka okunur), sağda ad ve erişim. Satırda en fazla 3 kart.
+   ===================================================================== */
+@media (min-width:0px){
+ html .uc-g,html .al-g .al-cards{gap:10px!important}
+ html .uc-c,html .uc-c.has-img,html .al-cards .uc-c,html .al-cards .uc-c.has-img{
+  display:grid!important;grid-template-columns:116px minmax(0,1fr) auto;grid-template-rows:1fr auto auto 1fr;column-gap:14px;row-gap:3px;
+  min-height:0!important;height:104px;padding:8px 14px 8px 8px!important;background:#f4f7f8!important;background-image:none!important;align-items:center;overflow:hidden}
+ html .uc-c .uc-art,html .uc-c.has-img .uc-art,html .al-cards .uc-c.has-img .uc-art{
+  grid-column:1;grid-row:1/5;position:relative!important;inset:auto!important;width:116px!important;height:88px!important;border-radius:10px;
+  background:#e9eef1;overflow:hidden;-webkit-mask-image:none!important;mask-image:none!important;mix-blend-mode:normal!important;order:0}
+ html .uc-c .uc-art .uc-ci,html .al-cards .uc-c .uc-art .uc-ci{position:absolute;inset:0;width:100%!important;height:100%!important;
+  object-fit:contain!important;object-position:50% 50%!important;transform:none!important;animation:none!important;opacity:1!important;filter:none!important;padding:4px;box-sizing:border-box}
+ html .uc-c .uc-haze,html .uc-c .uc-art::after{display:none!important}
+ html .uc-c .uc-t,html .uc-c>b,html .uc-c .uc-acc{grid-column:2;max-width:none!important;padding:0!important;margin:0}
+ html .uc-c .uc-t{grid-row:2;font-size:10.5px!important;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block!important;-webkit-line-clamp:unset}
+ html .al-cards .uc-c .uc-t{display:none!important}
+ html .uc-c>b,html .uc-c.has-img>b{grid-row:3;font-size:15.5px!important;line-height:1.22}
+ html .al-cards .uc-c>b{grid-row:2}
+ html .uc-c .uc-acc{grid-row:4;align-self:start;font-size:12px!important}
+ html .al-cards .uc-c .uc-acc{grid-row:3}
+ html .uc-c .uc-go{grid-column:3;grid-row:1/5;position:static!important;align-self:center}
+ html .uc-c::before,html .uc-c.has-img::before,html #vUrunler:has(#ucD[hidden]) .uc-c::before,html #vUrunler:has(#ucD[hidden]) .uc-c.has-img::before{display:none!important}
+ /* görseli olmayan ürün: aynı kutuda sade simge */
+ html .uc-c:not(.has-img){grid-template-columns:116px minmax(0,1fr) auto}
+ html .uc-c:not(.has-img)::after{content:"";grid-column:1;grid-row:1/5;width:116px;height:88px;border-radius:10px;
+  background:#e9eef1 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%231F8F98' stroke-width='3' stroke-linecap='round' opacity='.4'%3E%3Cpath d='M20 6c0 14 24 14 24 26S20 44 20 58'/%3E%3Cpath d='M44 6c0 14-24 14-24 26s24 12 24 26'/%3E%3Cpath d='M24 14h16M23 50h18M28 32h8'/%3E%3C/svg%3E") 50% 50%/34px no-repeat}
+ html .uc-c:hover{background:#fff!important}
+ /* grup başlıkları ve koyu kutu daha sıkı */
+ html .al-g{padding:18px!important}
+ html .al-g h3,html .al-g .al-h{margin:14px 0 8px!important}
+ html .al-g h3:first-child,html .al-g .al-h:first-child{margin-top:0!important}
+ html #vAlan .hs.al{padding-top:28px!important}
+ html #vAlan .hs.al h2{font-size:clamp(22px,2.2vw,28px)!important;margin-bottom:14px!important}
+}
+@media (min-width:0px){
+ html .uc-c:not(.has-img),html .al-cards .uc-c:not(.has-img){display:grid!important;grid-template-columns:116px minmax(0,1fr) auto!important;
+  height:104px!important;min-height:0!important;padding:8px 14px 8px 8px!important;background:#f4f7f8!important;background-image:none!important}
+ html .uc-c:not(.has-img) .uc-t,html .uc-c:not(.has-img)>b,html .uc-c:not(.has-img) .uc-acc{padding:0!important}
+ html .uc-c:not(.has-img)::before,html #vUrunler:has(#ucD[hidden]) .uc-c:not(.has-img)::before{display:none!important}
+ html .uc-c .uc-t i{margin-inline-end:5px}
+ html .uc-c>b{margin-bottom:2px!important}
+}
+
+html .uc-c .uc-t{margin-bottom:1px!important}
+@media (max-width:640px){
+ html .uc-g,html .al-g .al-cards{grid-template-columns:1fr!important}
+ html .uc-c,html .uc-c.has-img,html .uc-c:not(.has-img),html .al-cards .uc-c,html .al-cards .uc-c.has-img,html .al-cards .uc-c:not(.has-img){grid-template-columns:92px minmax(0,1fr) auto!important;height:84px!important;padding:6px 12px 6px 6px!important;column-gap:12px}
+ html .uc-c .uc-art,html .uc-c.has-img .uc-art,html .al-cards .uc-c.has-img .uc-art,html .uc-c:not(.has-img)::after{width:92px!important;height:72px!important}
+ html .uc-c>b,html .uc-c.has-img>b{font-size:15px!important}
+}
+html .uc-c .uc-t,html .uc-c.has-img .uc-t,html .uc-c:not(.has-img) .uc-t{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;-webkit-line-clamp:unset!important;margin-bottom:3px!important}
