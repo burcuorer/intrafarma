@@ -2552,3 +2552,42 @@ section[id],div[id=yayinlar],.if-fm{scroll-margin-top:calc(var(--hdr) + 20px)}
 /* rakamlar → kurul → özel üretim arası boşluklar */
 html[data-page=home] .hs.st{padding-bottom:calc(var(--sp)*.35)!important}
 html[data-page=home] .kr{padding-top:calc(var(--sp)*.45)!important;padding-bottom:calc(var(--sp)*.45)!important}
+
+/* =====================================================================
+   ÖLÇÜ KURALLARI (20.11): alt sayfa başlıkları, alan kartları, ürün kartları
+   tek bir ölçüye bağlandı; hiçbiri ekranı tek başına kaplamaz
+   ===================================================================== */
+/* alt sayfa başlık bandı: başlık en fazla 46 px, sağda video ya da alan fotoğrafı aynı yükseklikte */
+@media (min-width:901px){
+ .pg{padding-top:calc(var(--hdr) + 22px)!important;padding-bottom:28px!important;min-height:0!important}
+ .pg h1{font-size:clamp(32px,3.3vw,46px)!important;line-height:1.06!important}
+ .pg .pg-in>p:not(.eyebrow){font-size:17px;line-height:1.5;max-width:56ch}
+ .pg .eyebrow{margin-bottom:8px}
+ .pg-back,.bc{margin-bottom:12px}
+}
+.al-hero{display:none!important}
+.pg.al-ph .pg-vid img.al-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.pg.al-ph .pg-vid video{display:none}
+
+/* uzmanlık alanları sayfası: kartlar ana sayfadakiyle aynı ölçüde */
+@media (min-width:641px){
+ .uz-g{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+ .uz-g .ua-c{height:168px!important}
+ .uz-g .ua-c .ua-t,.uz-g .ua-c b{font-size:19px!important;line-height:1.15}
+}
+@media (min-width:1101px){.uz-g{grid-template-columns:repeat(6,minmax(0,1fr))!important}.uz-g .ua-c{height:176px!important}.uz-g .ua-c .ua-t,.uz-g .ua-c b{font-size:16px!important}}
+
+/* ürün kartları: hepsi aynı ölçü — 140 px görsel alanı + ad + erişim; görseli olmayan kartta aynı boyda sade alan */
+@media (min-width:641px){
+ .uc-c.has-img .uc-art,.al-cards .uc-c.has-img .uc-art{height:140px!important}
+ .uc-c.has-img::before,#vUrunler:has(#ucD[hidden]) .uc-c.has-img::before{inset:148px auto auto 0!important;height:28px!important}
+ .uc-c:not(.has-img),.al-cards .uc-c:not(.has-img){min-height:0!important;padding:154px 0 16px!important;gap:8px;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%20fill%3D%27none%27%20stroke%3D%27%231F8F98%27%20stroke-width%3D%273%27%20stroke-linecap%3D%27round%27%20opacity%3D%27.32%27%3E%3Cpath%20d%3D%27M20%206c0%2014%2024%2014%2024%2026S20%2044%2020%2058%27/%3E%3Cpath%20d%3D%27M44%206c0%2014-24%2014-24%2026s24%2012%2024%2026%27/%3E%3Cpath%20d%3D%27M24%2014h16M23%2050h18M28%2032h8%27/%3E%3C/svg%3E"),linear-gradient(160deg,#e8eff2 0%,#d5e1e7 100%)!important;background-size:52px 52px,100% 140px!important;background-position:50% 44px,0 0!important;background-repeat:no-repeat!important;background-color:#f3f7f8}
+ .uc-c:not(.has-img) .uc-t,.uc-c:not(.has-img)>b,.uc-c:not(.has-img) .uc-acc{max-width:none!important;padding-inline:22px 18px}
+ .uc-c:not(.has-img)::before,#vUrunler:has(#ucD[hidden]) .uc-c:not(.has-img)::before{inset:148px auto auto 0!important;width:5px;height:28px!important}
+ .uc-c>b,.uc-c.has-img>b{font-size:17px!important;line-height:1.25}
+ .uc-g,.al-g .al-cards{gap:14px!important;align-items:stretch}
+}
+/* ürün filtreleri daha sıkı */
+.uc-ax .chip,.uc-ca .chip{font-size:14px;padding:6px 13px;min-height:34px}
+.uc-ax{margin-bottom:10px}

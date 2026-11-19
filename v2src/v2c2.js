@@ -324,12 +324,16 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
  const L=ln(S.katalog_tr,'kat_tr')+ln(S.katalog_en,'kat_en');
  k.innerHTML='<div class="kat-c lg"><span class="fi">PDF</span><div><b data-t="kat_h">'+esc2(tr('kat_h'))+'</b><small data-t="kat_p">'+esc2(tr('kat_p'))+'</small></div><div class="kat-b">'+(L||'<small class="kat-soon" data-t="kat_soon">'+esc2(tr('kat_soon'))+'</small>')+'</div></div>';}}
 
-/* uzmanlık alanı sayfası: üstte alanın büyük fotoğrafı (panelde Bölüm görselleri → Klinik alan görselleri) */
-{const fig=document.createElement('figure');fig.className='al-hero';fig.hidden=true;const pg=$('#vAlan .pg');if(pg)pg.after(fig);
- const draw=()=>{const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');if(i<0){fig.hidden=true;return;}
-  const O=(window.IF_CMS&&IF_CMS.orn)||{},u=(Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp':'');
-  fig.hidden=!u;if(u&&fig.dataset.u!==u){fig.dataset.u=u;fig.innerHTML='<img src="'+esc2(u)+'" alt="" decoding="async">';}};
- draw();addEventListener('popstate',draw);}
+/* uzmanlık alanı sayfası: başlık bandının sağındaki videonun yerine alanın fotoğrafı (Bölüm görselleri → Klinik alan görselleri) */
+{const draw=()=>{const pg=$('#vAlan .pg');if(!pg)return;const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');
+  const O=(window.IF_CMS&&IF_CMS.orn)||{},u=i<0?'':((Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp':''));
+  pg.classList.toggle('al-ph',!!u);let f=pg.querySelector('.pg-vid');
+  if(!u)return;
+  if(!f){f=document.createElement('figure');f.className='pg-vid';f.setAttribute('aria-hidden','true');pg.appendChild(f);pg.classList.add('has-vid');}
+  if(f.dataset.u===u)return;f.dataset.u=u;f.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}v.remove();});
+  const old=f.querySelector('img.al-img');if(old)old.remove();const im=document.createElement('img');im.className='al-img';im.alt='';im.decoding='async';im.src=u;f.insertBefore(im,f.firstChild);
+  const cap=f.querySelector('.pg-cap span');if(cap){cap.removeAttribute('data-t');cap.textContent=(IFD.CA[IF.lang||'tr']||IFD.CA.en)[i]||'';}};
+ draw();setTimeout(draw,400);setTimeout(draw,1500);addEventListener('popstate',()=>setTimeout(draw,50));IF.onLang.push(()=>setTimeout(draw,30));}
 
 /* formlar: iletişim, bayilik başvurusu, iş birliği başvurusu → WordPress Talepler + e-posta (otomatik yanıt yok) */
 $$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const m=f.querySelector('.if-fm-m'),d={tur:f.dataset.tur};
