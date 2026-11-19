@@ -2484,6 +2484,33 @@ html[data-page=home] .kr{padding-top:calc(var(--sp)*.75)}
 @media (max-width:900px){.hp-f.kb-on{aspect-ratio:4/3!important;height:auto!important;min-height:0}}
 @media (max-width:640px){.hp-f.kb-on .kb-tx{padding:40px 18px 18px}.hp-f.kb-on img{object-position:50% 30%}}
 @media (min-width:1101px){html.nv-c4 .site-top .nv-t::after{display:none}html.nv-c4 .site-top .nv-t{gap:0}html.nv-c4 .site-top{gap:10px}}
+
+/* ---- ana sayfa · üçüncü tur: hücre ve rakamlar daha kısa, etkisi aynı ---- */
+@media (min-width:901px){
+ /* hücre: başlık solda, açıklama sağda; sahne daha alçak */
+ html[data-page=home] #hucre .hs-h{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(28px,4vw,56px);align-items:end;max-width:none}
+ html[data-page=home] #hucre .hs-h .eyebrow{grid-column:1/-1}
+ html[data-page=home] #hucre .hs-h p{margin:0;max-width:60ch}
+ html[data-page=home] #hucre .stage{height:clamp(420px,54vh,470px)!important}
+ /* rakamlar: başlık ve sayılar tek satırda */
+ html[data-page=home] .st-in{display:grid;grid-template-columns:minmax(200px,3fr) minmax(0,9fr);column-gap:clamp(24px,3vw,40px);align-items:center}
+ html[data-page=home] .st-in .st-h{margin:0!important}
+}
+html[data-page=home] .st-g{margin-top:0!important;gap:12px}
+html[data-page=home] .st-g>div{padding:14px 16px!important}
+html[data-page=home] .st-g b{font-size:clamp(28px,2.8vw,40px)!important;line-height:1.05}
+/* iş ortakları: ince şerit */
+html[data-page=home] .st-pt{margin-top:clamp(20px,2.4vw,32px)!important;padding-top:clamp(16px,2vw,24px)!important}
+html[data-page=home] .st-pt .pt-head{margin-bottom:12px!important}
+html[data-page=home] .st-pt #ptH{font-size:clamp(20px,1.9vw,26px)}
+html[data-page=home] .pt-row{padding-block:12px!important}
+html[data-page=home] .pt-l{height:68px!important}
+/* iş ortakları başlığı: kelime animasyonunun tetikleyicisi yoktu, başlık görünmüyordu */
+html .st-pt .pt-head .wd>span{transform:none!important}
+html[data-page=home] .st-pt .pt-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+html[data-page=home] .st-pt .pt-head .eyebrow{margin:0}
+html[data-page=home] .kr{padding-top:calc(var(--sp)*.6)}
+html[data-page=home] .st-pt .pt-head .eyebrow{display:none}
 </style>
 </head><body>
 
