@@ -21,8 +21,8 @@ PAGES = [  # dosya, sayfa kimliği, ilk başlık (dil seçilince JS günceller)
  ('uzmanlik.html', 'uzmanlik', 'Uzmanlık · Intrafarma'),
  ('urunler.html', 'urunler', 'Ürünler · Intrafarma'),
  ('uretim.html', 'uretim', 'Üretim ve özel marka · Intrafarma'),
- ('bilim.html', 'bilim', 'Bilim · Intrafarma'),
- ('guncel.html', 'guncel', 'Güncel · Intrafarma'),
+ ('bilim.html', 'bilim', 'Bilimsel platform · Intrafarma'),
+ ('guncel.html', 'guncel', 'Medya · Intrafarma'),
  ('iletisim.html', 'iletisim', 'İletişim · Intrafarma'),
  ('hakkimizda.html', 'hakkimizda', 'Hakkımızda · Intrafarma'),
 ]

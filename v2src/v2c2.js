@@ -221,7 +221,7 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
  /* güncel: etkinlikler */
  {const L=n('etkinlik',3);put('#etkinlikler .pend-card','<div class="mk-ev">'+L.map((i,j)=>'<article data-rv="up" style="--i:'+j+'">'+sp('ev'+i+'_d','time')+'<div>'+lnk(at(O.etkinlik,i).url,sp('ev'+i+'_t','b'))+sp('ev'+i+'_p','small')+'</div>'+tag()+'</article>').join('')+'</div><a class="hc-m mk-cta" href="'+IFU.U.iletisim+'">'+sp('ev_cta')+'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a>',L.length);}
  /* güncel: yazılar */
- {const L=n('yazi',3);put('#blog .pend-card','<div class="bl-g mk-bl">'+L.map((i,j)=>{const x=at(O.yazi,i);return '<article data-rv="up" style="--i:'+j+'"><div class="mk-cov c'+i+(x.img?' has-img':'')+'">'+(x.img?img(x.img):'')+tag(x.img?'ornek':'ornek_img')+sp('bl_c'+i,'span','bl-c')+'</div>'+lnk(x.url,sp('bl'+i+'_t','h3'),'mk-h')+sp('bl'+i+'_p','p')+'<footer>'+sp('bl'+i+'_m','small')+lnk(x.url,'<span class="mk-more">'+sp('bl_read')+' →</span>')+'</footer></article>';}).join('')+'</div>'+note,L.length);}
+ {const L=n('yazi',3);put('#yayinlar .pend-card','<div class="bl-g mk-bl">'+L.map((i,j)=>{const x=at(O.yazi,i);return '<article data-rv="up" style="--i:'+j+'"><div class="mk-cov c'+i+(x.img?' has-img':'')+'">'+(x.img?img(x.img):'')+tag(x.img?'ornek':'ornek_img')+sp('bl_c'+i,'span','bl-c')+'</div>'+lnk(x.url,sp('bl'+i+'_t','h3'),'mk-h')+sp('bl'+i+'_p','p')+'<footer>'+sp('bl'+i+'_m','small')+lnk(x.url,'<span class="mk-more">'+sp('bl_read')+' →</span>')+'</footer></article>';}).join('')+'</div>'+note,L.length);}
  /* hakkımızda: medya ve basın */
  {const L=n('basin',3),F=O.film||{};put('.hk-med .pend-card','<div class="mk-md">'+lnk(F.url,'<figure class="mk-film" data-rv="up">'+img(F.img||B+'media/gorsel/regenyal-laboratuvar.jpg')+'<span class="mk-play" aria-hidden="true"></span>'+tag()+'<figcaption>'+sp('md_film','b')+sp('md_film_p','span')+'</figcaption></figure>','mk-film-a')+(L.length?'<ul class="mk-press">'+L.map((i,j)=>'<li data-rv="up" style="--i:'+(j+1)+'">'+sp('md'+i+'_s','small')+lnk(at(O.basin,i).url,sp('md'+i+'_t','b'))+sp('md'+i+'_d','time')+tag()+'</li>').join('')+'</ul>':'')+'</div>'+note,1);}
  /* üretim: adım açıklamaları */
@@ -271,3 +271,69 @@ function ucExtra(p,L){const u=pTx(p,'u',L),f=pLines(pTx(p,'f',L)),vb=vidBox(p,'u
 
 /* telefonda "Test sürümü" etiketi yalnız sayfanın başında görünür */
 if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const d=document.querySelector('.draft-chip');if(d)d.classList.toggle('dc-hide',scrollY>140);},{passive:true});}
+
+/* ===================== Revize 1 (19.11): firmanın yorumlarına göre eklenenler ===================== */
+/* site araması: sağ üstteki büyüteç ya da "/" tuşu; ürün, ürün grubu ve uzmanlık alanı arar */
+{const D=window.IFD;const box=document.createElement('div');box.className='srch-o';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-labelledby','srchL');
+ box.innerHTML='<div class="srch-p"><label class="srch-f" id="srchL"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg><input type="search" id="srchQ" autocomplete="off" enterkeyhint="search"></label><button type="button" class="srch-x" data-tl="close"><span aria-hidden="true">×</span></button><div class="srch-r" id="srchR"></div></div>';
+ document.body.appendChild(box);
+ const q=box.querySelector('input'),R=box.querySelector('.srch-r'),btn=$('#nvSrch');let back=null;
+ const norm=s=>String(s).toLocaleLowerCase('tr').replace(/ı/g,'i').normalize('NFD').replace(/[̀-ͯ]/g,'');
+ function run(){const L=IF.lang||'tr',v=norm(q.value.trim()),AXl=D.AX[L]||D.AX.en,CAl=D.CA[L]||D.CA.en;q.placeholder=tr('srch_ph');q.setAttribute('aria-label',tr('srch'));
+  if(!v){R.innerHTML='';return;}
+  const P=D.PRODS.filter(p=>norm(p.n).includes(v)||norm(AXl[p.a]||'').includes(v)).slice(0,9),G=AXl.map((n,i)=>({n,i})).filter(o=>norm(o.n).includes(v)),A=CAl.map((n,i)=>({n,i})).filter(o=>norm(o.n).includes(v));
+  let h='';
+  if(P.length)h+='<h3>'+esc2(tr('nav3'))+'</h3><ul class="srch-p1">'+P.map(p=>'<li><a href="'+esc2(IFU.prod(p))+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="" loading="lazy">':'<i aria-hidden="true"></i>')+'<b>'+esc2(p.n)+'</b><small>'+esc2(AXl[p.a]||'')+'</small></a></li>').join('')+'</ul>';
+  if(G.length)h+='<h3>'+esc2(tr('srch_g'))+'</h3><ul class="srch-p2">'+G.map(o=>'<li><a href="'+esc2(IFU.ax(o.i))+'">'+esc2(o.n)+'</a></li>').join('')+'</ul>';
+  if(A.length)h+='<h3>'+esc2(tr('n_uzm'))+'</h3><ul class="srch-p2">'+A.map(o=>'<li><a href="'+esc2(IFU.alan(o.i))+'">'+esc2(o.n)+'</a></li>').join('')+'</ul>';
+  R.innerHTML=h||'<p class="srch-0">'+esc2(tr('srch_none'))+'</p>';}
+ function open(){back=document.activeElement;box.hidden=false;document.documentElement.classList.add('srch-on');run();setTimeout(()=>q.focus(),30);}
+ function close(){if(box.hidden)return;box.hidden=true;document.documentElement.classList.remove('srch-on');if(back&&back.focus)back.focus();}
+ q.addEventListener('input',run);box.querySelector('.srch-x').addEventListener('click',close);box.addEventListener('click',e=>{if(e.target===box)close();});
+ q.addEventListener('keydown',e=>{if(e.key==='Enter'){const a=R.querySelector('a');if(a){e.preventDefault();location.href=a.href;}}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close();else if(e.key==='/'&&box.hidden&&!/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'')&&!document.documentElement.classList.contains('pro-on')){e.preventDefault();open();}});
+ if(btn){btn.addEventListener('click',open);btn.setAttribute('aria-label',tr('srch'));}
+ $$('[data-srch]').forEach(x=>x.addEventListener('click',()=>{const st=document.querySelector('.site');if(st&&st.classList.contains('nav-open')){const bg=$('#nvBurger');if(bg)bg.click();}open();}));
+ IF.onLang.push(()=>{if(btn)btn.setAttribute('aria-label',tr('srch'));if(!box.hidden)run();});}
+
+/* ana sayfa: premium kitler reklam bandı (panelde ürünün "premium bant" kutusu işaretli olanlar) */
+{const S=$('#kbS'),Dt=$('#kbDots');if(S&&window.IFD){const K=IFD.PRODS.filter(p=>p.pr);let cur=0,tm=null;
+ if(!K.length)$('#premium').hidden=true;
+ function draw(){const L=IF.lang||'tr',AXl=IFD.AX[L]||IFD.AX.en;
+  S.innerHTML=K.map((p,i)=>'<a class="kb-c'+(i===cur?' on':'')+'" href="'+esc2(IFU.prod(p))+'"'+(i===cur?'':' tabindex="-1" aria-hidden="true"')+'><span class="kb-im">'+(p.img?'<img src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async">':'')+'</span><span class="kb-tx"><small>'+esc2(AXl[p.a]||'')+'</small><b>'+esc2(p.n)+'</b><span class="kb-go">'+esc2(tr('kb_go'))+' →</span></span></a>').join('');
+  Dt.innerHTML=K.length>1?K.map((p,i)=>'<button type="button" aria-label="'+esc2(p.n)+'" aria-pressed="'+(i===cur)+'"></button>').join(''):'';
+  Dt.querySelectorAll('button').forEach((b,i)=>b.addEventListener('click',()=>{go(i);stop();}));}
+ function go(i){cur=(i+K.length)%K.length;S.querySelectorAll('.kb-c').forEach((c,j)=>{const on=j===cur;c.classList.toggle('on',on);if(on){c.removeAttribute('tabindex');c.removeAttribute('aria-hidden');}else{c.setAttribute('tabindex','-1');c.setAttribute('aria-hidden','true');}});Dt.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',j===cur));}
+ function play(){if(matchMedia('(prefers-reduced-motion: reduce)').matches||K.length<2||tm)return;tm=setInterval(()=>go(cur+1),5200);}
+ function stop(){clearInterval(tm);tm=null;}
+ draw();play();S.addEventListener('mouseenter',stop);S.addEventListener('mouseleave',play);S.addEventListener('focusin',stop);
+ IF.onLang.push(draw);}}
+
+/* ana sayfa: bilimsel danışma kurulundan bir kesit (Bölüm görselleri → Danışma kurulu ile aynı veriler) */
+{const g=$('#krG');if(g){const O=(window.IF_CMS&&IF_CMS.orn)||{},ON=O.tag!==false,v=parseInt(O.n_kurul,10),N=isNaN(v)?4:Math.max(0,Math.min(4,v));
+ const AV='<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="45" r="20"/><path d="M17 121c2-27 19-41 43-41s41 14 43 41z"/><path class="c" d="M47 81l13 17 13-17"/></svg>';
+ if(!N)$('#kurul-ozet').hidden=true;
+ g.innerHTML=Array.from({length:N},(_,j)=>{const i=j+1,ph=(Array.isArray(O.kurul)&&O.kurul[j]||{}).img;return '<figure data-rv="up" style="--i:'+j+'"><div class="mk-av a'+i+(ph?' has-img':'')+'">'+(ph?'<img src="'+esc2(ph)+'" alt="" loading="lazy" decoding="async">':AV)+(ON?'<em class="ornek" data-t="ornek">'+esc2(tr('ornek'))+'</em>':'')+'</div><figcaption><b data-t="bk'+i+'_n">'+esc2(tr('bk'+i+'_n'))+'</b><span data-t="bk'+i+'_r">'+esc2(tr('bk'+i+'_r'))+'</span></figcaption></figure>';}).join('');
+ g.querySelectorAll('[data-rv]').forEach(e=>io.observe(e));}}
+
+/* Pro: ürün kataloğu yalnızca Pro alanında indirilir (WordPress → İletişim ve sosyal medya → Ürün kataloğu) */
+{const k=$('#katDl');if(k){const S=(window.IF_CMS&&IF_CMS.set)||{},ok=u=>/^(https?:)?\/\/|^\//i.test(String(u||''));
+ const ln=(u,key)=>ok(u)?'<a class="gbtn lt" href="'+esc2(u)+'" target="_blank" rel="noopener" download><span data-t="'+key+'">'+esc2(tr(key))+'</span></a>':'';
+ const L=ln(S.katalog_tr,'kat_tr')+ln(S.katalog_en,'kat_en');
+ k.innerHTML='<div class="kat-c lg"><span class="fi">PDF</span><div><b data-t="kat_h">'+esc2(tr('kat_h'))+'</b><small data-t="kat_p">'+esc2(tr('kat_p'))+'</small></div><div class="kat-b">'+(L||'<small class="kat-soon" data-t="kat_soon">'+esc2(tr('kat_soon'))+'</small>')+'</div></div>';}}
+
+/* uzmanlık alanı sayfası: üstte alanın büyük fotoğrafı (panelde Bölüm görselleri → Klinik alan görselleri) */
+{const fig=document.createElement('figure');fig.className='al-hero';fig.hidden=true;const pg=$('#vAlan .pg');if(pg)pg.after(fig);
+ const draw=()=>{const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');if(i<0){fig.hidden=true;return;}
+  const O=(window.IF_CMS&&IF_CMS.orn)||{},u=(Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp':'');
+  fig.hidden=!u;if(u&&fig.dataset.u!==u){fig.dataset.u=u;fig.innerHTML='<img src="'+esc2(u)+'" alt="" decoding="async">';}};
+ draw();addEventListener('popstate',draw);}
+
+/* formlar: iletişim, bayilik başvurusu, iş birliği başvurusu → WordPress Talepler + e-posta (otomatik yanıt yok) */
+$$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const m=f.querySelector('.if-fm-m'),d={tur:f.dataset.tur};
+ let bad=null;f.querySelectorAll('input,textarea').forEach(x=>{if(x.type==='checkbox')return;const v=x.value.trim();x.classList.remove('err');if(x.required&&!v){x.classList.add('err');bad=bad||x;}d[x.name]=v;});
+ const em=f.querySelector('input[type=email]');if(em&&em.value&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em.value.trim())){em.classList.add('err');bad=bad||em;}
+ m.classList.remove('ok');if(bad){m.textContent=tr('f_req');bad.focus();return;}
+ if(!f.querySelector('input[name=onay]').checked){m.textContent=tr('e_kvkk');return;}
+ d.onay=1;const b=f.querySelector('button[type=submit]');b.disabled=true;m.textContent='…';
+ IF_SEND(d).then(r=>{m.classList.add('ok');m.textContent=IF_OKTX('f_ok',r);f.querySelectorAll('input:not([type=checkbox]),textarea').forEach(x=>{if(x.name!=='web')x.value='';});},()=>{m.textContent=tr('rq_fail');}).finally(()=>{b.disabled=false;});}));

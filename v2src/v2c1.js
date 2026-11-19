@@ -15,7 +15,7 @@
   if(S.telefon)T[l].il_tv='<a href="tel:'+escH(S.telefon.replace(/[^+\d]/g,''))+'">'+escH(S.telefon)+'</a>';
   if(S.eposta)T[l].il_mv='<a href="mailto:'+escH(S.eposta)+'">'+escH(S.eposta)+'</a>';});
  /* ürünler: [{n,a,open,img,d:{dil:açıklama}}] */
- if(Array.isArray(C.prods)&&C.prods.length){PRODS.length=0;C.prods.forEach(p=>{if(p&&p.n)PRODS.push({n:String(p.n),a:Math.max(0,Math.min(AXCA.length-1,+p.a||0)),open:!!p.open,img:p.img||'',d:p.d||{},crop:p.crop||{},u:p.u||{},f:p.f||{},t:p.t||{},v:p.v||'',ca:Array.isArray(p.ca)?p.ca.map(Number).filter(x=>x>=0&&x<6):[],docs:Array.isArray(p.docs)?p.docs:[]});});}
+ if(Array.isArray(C.prods)&&C.prods.length){PRODS.length=0;C.prods.forEach(p=>{if(p&&p.n)PRODS.push({n:String(p.n),a:Math.max(0,Math.min(AXCA.length-1,+p.a||0)),open:!!p.open,img:p.img||'',d:p.d||{},crop:p.crop||{},u:p.u||{},f:p.f||{},t:p.t||{},v:p.v||'',ca:Array.isArray(p.ca)?p.ca.map(Number).filter(x=>x>=0&&x<6):[],docs:Array.isArray(p.docs)?p.docs:[],pr:!!p.pr});});}
 })();
 
 /* GitHub önizlemesi: panel yokken ürün görselleri window.IF_IMG eşlemesinden */

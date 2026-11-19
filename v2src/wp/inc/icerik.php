@@ -36,7 +36,7 @@ function intrafarma_cms_partners() {
     $d = intrafarma_cms_defaults(); return $d['partners'];
 }
 function intrafarma_cms_set_defaults() {
-    return array('adres' => '', 'telefon' => '', 'eposta' => '',
+    return array('adres' => '', 'telefon' => '', 'eposta' => '', 'katalog_tr' => '', 'katalog_en' => '',
         'instagram' => 'https://www.instagram.com/intrafarma.official/', 'facebook' => 'https://www.facebook.com/intrafarma.com.tr/',
         'linkedin' => 'https://www.linkedin.com/company/intrafarma-ila-/', 'youtube' => 'https://www.youtube.com/@intrafarmasaglik');
 }
@@ -67,7 +67,7 @@ function intrafarma_cms_payload() {
         $out['partners'] = array_values(array_map(function ($x) { return array($x['f'], $x['n'], isset($x['u']) ? $x['u'] : '', !empty($x['dk'])); }, $pt));
     }
     $s = get_option('intrafarma_set');
-    if (is_array($s)) { $out['set'] = $s; }
+    if (is_array($s)) { foreach (array('katalog_tr', 'katalog_en') as $kk) { if (!empty($s[$kk])) { $s[$kk] = intrafarma_media_url($s[$kk]); } } $out['set'] = $s; }
     $o = get_option('intrafarma_orn');
     if (is_array($o) && $o) { $out['orn'] = intrafarma_orn_public($o); }
     return $out;
@@ -248,6 +248,8 @@ function intrafarma_reset_form($action, $label) {
 
 /* ---------- Ürünler ---------- */
 define('INTRAFARMA_DOC_TYPES', array('Kullanım talimatı (IFU)', 'Teknik bilgi formu', 'Broşür', 'Sertifika', 'Yayın'));
+/** ürün grubu sayısı (Metinler → ax_0 … ax_9 ile adları değişir) */
+if (!defined('INTRAFARMA_AX_N')) { define('INTRAFARMA_AX_N', 10); }
 function intrafarma_ca_names() { $o = array(); for ($i = 0; $i < 6; $i++) { $o[$i] = intrafarma_cms_text('tr', 'ca_' . $i); } return $o; }
 function intrafarma_doc_row($x) {
     $x += array('n' => '', 'ty' => 0, 'url' => '');
@@ -258,14 +260,14 @@ function intrafarma_doc_row($x) {
     return $h;
 }
 function intrafarma_prod_row($i, $p, $axes) {
-    $p += array('n' => '', 'a' => 0, 'open' => false, 'img' => '', 'd' => array(), 'u' => array(), 'f' => array(), 't' => array(), 'v' => '', 'ca' => array(), 'docs' => array(), 'crop' => array());
+    $p += array('n' => '', 'a' => 0, 'open' => false, 'pr' => false, 'img' => '', 'd' => array(), 'u' => array(), 'f' => array(), 't' => array(), 'v' => '', 'ca' => array(), 'docs' => array(), 'crop' => array());
     $L = INTRAFARMA_LANG_NAMES;
     $h = '<details class="if-item if-prod"' . ($p['n'] === '' ? ' open' : '') . '><summary><span class="if-thumb">' . ($p['img'] ? '<img src="' . esc_url(intrafarma_media_url($p['img'])) . '" alt="">' : '') . '</span><span class="if-title">' . ($p['n'] !== '' ? esc_html($p['n']) : 'Yeni ürün') . '</span><span class="if-sub">' . esc_html(isset($axes[$p['a']]) ? $axes[$p['a']] : '') . '</span>' . intrafarma_row_tools() . '</summary><div class="if-body">';
     // 1. temel bilgiler
     $h .= '<h3 class="if-h">1 · Temel bilgiler</h3><div class="if-grid"><label>Ürün adı<input type="text" class="if-name regular-text" data-f="n" value="' . esc_attr($p['n']) . '" required></label>';
     $h .= '<label>Ürün grubu<select data-f="a">';
-    foreach ($axes as $ai => $an) { $h .= '<option value="' . (int) $ai . '"' . selected((int) $p['a'], $ai, false) . '>0' . ($ai + 1) . ' · ' . esc_html($an) . '</option>'; }
-    $h .= '</select></label><label>Kimler görür<select data-f="open"><option value="0"' . selected(!empty($p['open']), false, false) . '>Yalnızca sağlık çalışanları (teknik ayrıntı)</option><option value="1"' . selected(!empty($p['open']), true, false) . '>Herkese açık</option></select></label></div>';
+    foreach ($axes as $ai => $an) { $h .= '<option value="' . (int) $ai . '"' . selected((int) $p['a'], $ai, false) . '>' . str_pad((string) ($ai + 1), 2, '0', STR_PAD_LEFT) . ' · ' . esc_html($an) . '</option>'; }
+    $h .= '</select></label><label>Kimler görür<select data-f="open"><option value="0"' . selected(!empty($p['open']), false, false) . '>Yalnızca sağlık çalışanları (teknik ayrıntı)</option><option value="1"' . selected(!empty($p['open']), true, false) . '>Herkese açık</option></select></label><label class="if-check"><input type="checkbox" data-f="pr"' . checked(!empty($p['pr']), true, false) . '> Ana sayfadaki premium bantta göster</label></div>';
     $h .= '<fieldset class="if-cas"><legend>Klinik alanlar</legend>';
     $ca = array_map('intval', (array) $p['ca']);
     foreach (intrafarma_ca_names() as $ci => $cn) { $h .= '<label><input type="checkbox" data-ca="' . $ci . '"' . checked(in_array($ci, $ca, true), true, false) . '> ' . esc_html($cn) . '</label>'; }
@@ -305,7 +307,7 @@ function intrafarma_prod_row($i, $p, $axes) {
     return $h;
 }
 function intrafarma_admin_prods() {
-    $axes = array(); for ($i = 0; $i < 5; $i++) { $axes[$i] = intrafarma_cms_text('tr', 'ax_' . $i); }
+    $axes = array(); for ($i = 0; $i < INTRAFARMA_AX_N; $i++) { $axes[$i] = intrafarma_cms_text('tr', 'ax_' . $i); }
     $prods = intrafarma_cms_prods();
     intrafarma_admin_head('Ürünler', 'Her ürün beş bölümden oluşur: temel bilgiler, görsel, video, yazılar (6 dil) ve belgeler. Düzenlemek için ürünün adına tıklayın; yeni ürün için en alttaki “+ Ürün ekle”. Sıra, sitedeki sıradır.');
     echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '" class="if-form if-list-form" data-name="prods">';
@@ -327,7 +329,8 @@ add_action('admin_post_intrafarma_save_prods', function () {
         $sl = intrafarma_slug($n); if ($sl === '' || isset($seen[$sl])) { continue; } $seen[$sl] = 1;   // adresi aynı olan ikinci ürün alınmaz
         $d = array();
         foreach (INTRAFARMA_LANGS as $l) { $t = isset($p['d'][$l]) ? sanitize_textarea_field($p['d'][$l]) : ''; if ($t !== '') { $d[$l] = $t; } }
-        $row = array('n' => $n, 'a' => max(0, min(4, isset($p['a']) ? (int) $p['a'] : 0)), 'open' => !empty($p['open']) && $p['open'] !== '0');
+        $row = array('n' => $n, 'a' => max(0, min(INTRAFARMA_AX_N - 1, isset($p['a']) ? (int) $p['a'] : 0)), 'open' => !empty($p['open']) && $p['open'] !== '0');
+        if (!empty($p['pr'])) { $row['pr'] = true; }
         $img = isset($p['img']) ? esc_url_raw($p['img']) : '';
         if ($img !== '') { $row['img'] = $img; }
         $row['crop'] = array();
@@ -512,6 +515,10 @@ function intrafarma_admin_set() {
     echo '<tr><th><label for="if_adres">Adres</label></th><td><textarea id="if_adres" name="set[adres]" rows="3" class="large-text">' . esc_textarea($s['adres']) . '</textarea><p class="description">Boş bırakılırsa sitede "Hazırlanıyor" yazar.</p></td></tr>';
     echo '<tr><th><label for="if_tel">Telefon</label></th><td><input id="if_tel" type="text" name="set[telefon]" class="regular-text" value="' . esc_attr($s['telefon']) . '" placeholder="+90 212 000 00 00"><p class="description">Telefondan tıklanınca arama başlatır.</p></td></tr>';
     echo '<tr><th><label for="if_mail">E-posta</label></th><td><input id="if_mail" type="email" name="set[eposta]" class="regular-text" value="' . esc_attr($s['eposta']) . '" placeholder="info@intrafarma.com.tr"></td></tr>';
+    echo '</tbody></table><h2>Ürün kataloğu</h2><p>Katalog yalnızca Pro alanında (sağlık çalışanı girişinden sonra) indirilebilir. PDF yükleyin ya da kütüphaneden seçin.</p><table class="form-table"><tbody>';
+    foreach (array('katalog_tr' => 'Türkçe katalog (PDF)', 'katalog_en' => 'İngilizce katalog (PDF)') as $k => $lab) {
+        echo '<tr><th><label for="if_' . $k . '">' . $lab . '</label></th><td><div class="if-file"><input id="if_' . $k . '" type="url" name="set[' . $k . ']" class="large-text if-url" value="' . esc_attr($s[$k]) . '" placeholder="https://"> <button type="button" class="button if-pickf" data-type="application/pdf">PDF seç</button></div></td></tr>';
+    }
     echo '</tbody></table><h2>Sosyal medya</h2><p>Boş bırakılan hesabın simgesi sitede gizlenir.</p><table class="form-table"><tbody>';
     foreach (array('instagram' => 'Instagram', 'facebook' => 'Facebook', 'linkedin' => 'LinkedIn', 'youtube' => 'YouTube') as $k => $lab) {
         echo '<tr><th><label for="if_' . $k . '">' . $lab . '</label></th><td><input id="if_' . $k . '" type="url" name="set[' . $k . ']" class="large-text" value="' . esc_attr($s[$k]) . '" placeholder="https://"></td></tr>';
@@ -526,7 +533,7 @@ add_action('admin_post_intrafarma_save_set', function () {
         'telefon' => isset($in['telefon']) ? sanitize_text_field($in['telefon']) : '',
         'eposta' => isset($in['eposta']) ? sanitize_email($in['eposta']) : '',
     );
-    foreach (array('instagram', 'facebook', 'linkedin', 'youtube') as $k) { $out[$k] = isset($in[$k]) ? esc_url_raw(trim($in[$k])) : ''; }
+    foreach (array('instagram', 'facebook', 'linkedin', 'youtube', 'katalog_tr', 'katalog_en') as $k) { $out[$k] = isset($in[$k]) ? esc_url_raw(trim($in[$k])) : ''; }
     update_option('intrafarma_set', $out);
     intrafarma_admin_back('intrafarma-iletisim', array('kayit' => 1));
 });

@@ -239,7 +239,7 @@ const EXV=[...Array(9)].map((_,i)=>{const m=new THREE.Mesh(sph,exMat);m.layers.e
 let ecmA=0,OPOS=null;
 const OCW=[...document.querySelectorAll('.oc')],OCC=[...document.querySelectorAll('.oc-c')];
 const MKK=['o_nuc','o_golgi','o_ecm','o_mito','o_er','o_gf'];
-const MK=MKK.map((k,i)=>{const d=document.createElement('div');d.className='mk';d.dataset.o=k;d.setAttribute('aria-hidden','true');d.textContent='0'+(i+1);stage.appendChild(d);return d;});
+const MK=MKK.map((k,i)=>{const d=document.createElement('div');d.className='mk';d.dataset.o=k;d.setAttribute('aria-hidden','true');d.textContent=String(i+1).padStart(2,'0');stage.appendChild(d);return d;});
 const LL=document.createElementNS('http://www.w3.org/2000/svg','svg');LL.setAttribute('class','ll');LL.setAttribute('aria-hidden','true');stage.appendChild(LL);
 const LLC={o_nuc:'#6A4A9E',o_golgi:'#C7962A',o_ecm:'#B98452',o_mito:'#D2553A',o_er:'#A96FBE',o_gf:'#2FAE96'};
 const LLP=MKK.map(k=>{const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('stroke',LLC[k]);p.dataset.o=k;LL.appendChild(p);return p;});

@@ -6,7 +6,7 @@
  */
 if (!defined('ABSPATH')) { exit; }
 
-define('INTRAFARMA_TALEP_TUR', array('numune' => 'Numune', 'belge' => 'Belge', 'teklif' => 'Fiyat teklifi', 'bilgi' => 'Bilgi'));
+define('INTRAFARMA_TALEP_TUR', array('numune' => 'Numune', 'belge' => 'Belge', 'teklif' => 'Fiyat teklifi', 'bilgi' => 'Bilgi', 'bayilik' => 'Bayilik başvurusu', 'isbirligi' => 'İş birliği başvurusu'));
 
 add_action('init', function () {
     register_post_type('if_talep', array(
@@ -43,7 +43,7 @@ add_action('rest_api_init', function () {
         $f = array(
             'tur' => $tur, 'urun' => $g('urun', 120), 'kurum' => $g('kurum', 160), 'ad' => $g('ad', 120), 'unvan' => $g('unvan', 120),
             'tel' => $g('tel', 40), 'eposta' => $mail, 'adet' => $g('adet', 10), 'not' => mb_substr(sanitize_textarea_field((string) $req->get_param('not')), 0, 2000),
-            'meslek' => $g('meslek', 80), 'ulke' => $g('ulke', 80), 'dil' => $g('dil', 5), 'sayfa' => $g('sayfa', 190), 'bulten' => $req->get_param('bulten') ? 1 : 0,
+            'meslek' => $g('meslek', 80), 'ulke' => $g('ulke', 80), 'sehir' => $g('sehir', 120), 'site' => esc_url_raw($g('site', 190)), 'dil' => $g('dil', 5), 'sayfa' => $g('sayfa', 190), 'bulten' => $req->get_param('bulten') ? 1 : 0,
         );
         $title = INTRAFARMA_TALEP_TUR[$tur] . ($f['urun'] !== '' ? ' · ' . $f['urun'] : '') . ' · ' . ($f['kurum'] !== '' ? $f['kurum'] : $mail);
         $id = wp_insert_post(array('post_type' => 'if_talep', 'post_status' => 'private', 'post_title' => $title), true);
@@ -54,7 +54,7 @@ add_action('rest_api_init', function () {
         update_post_meta($id, '_if_ref', $ref);
 
         $etiket = array('tur' => 'Talep türü', 'urun' => 'Ürün', 'kurum' => 'Kurum', 'ad' => 'Ad soyad', 'unvan' => 'Unvan', 'tel' => 'Telefon', 'eposta' => 'E-posta',
-            'adet' => 'Adet', 'not' => 'Not', 'meslek' => 'Beyan edilen meslek', 'ulke' => 'Ülke', 'dil' => 'Site dili', 'sayfa' => 'Gönderildiği sayfa', 'bulten' => 'Bülten izni');
+            'adet' => 'Adet', 'sehir' => 'Şehir / ülke', 'site' => 'Web sitesi', 'not' => 'Not', 'meslek' => 'Beyan edilen meslek', 'ulke' => 'Ülke', 'dil' => 'Site dili', 'sayfa' => 'Gönderildiği sayfa', 'bulten' => 'Bülten izni');
         $body = "Sitede yeni bir talep var. Referans: $ref\n\n";
         foreach ($etiket as $k => $lab) {
             $v = $k === 'tur' ? INTRAFARMA_TALEP_TUR[$tur] : ($k === 'bulten' ? ($f['bulten'] ? 'Evet' : 'Hayır') : $f[$k]);
@@ -75,7 +75,7 @@ add_action('admin_menu', function () {
 }, 20);
 
 function intrafarma_admin_talep() {
-    intrafarma_admin_head('Talepler', 'Sitedeki numune, belge, fiyat teklifi ve bilgi talepleri. Her talep aşağıdaki adreslere e-postayla da gelir; yanıtı siz elle gönderirsiniz. Yanıtladığınız talebi “Yanıtlandı” olarak işaretleyin.');
+    intrafarma_admin_head('Talepler', 'Sitedeki numune, belge, fiyat teklifi ve bilgi talepleri ile bayilik ve iş birliği başvuruları. Her talep aşağıdaki adreslere e-postayla da gelir; yanıtı siz elle gönderirsiniz. Yanıtladığınız talebi “Yanıtlandı” olarak işaretleyin.');
     echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '" class="if-form">';
     wp_nonce_field('intrafarma_save_talep_set');
     echo '<input type="hidden" name="action" value="intrafarma_save_talep_set"><table class="form-table"><tbody><tr><th><label for="if_te">Taleplerin gideceği e-posta</label></th><td><input id="if_te" type="text" class="large-text" name="talep_eposta" value="' . esc_attr((string) get_option('intrafarma_talep_eposta', '')) . '" placeholder="' . esc_attr(implode(', ', intrafarma_talep_alicilar())) . '"><p class="description">Birden çok adres için virgülle ayırın. Boşsa İletişim ekranındaki e-posta kullanılır. Şu an: <b>' . esc_html(implode(', ', intrafarma_talep_alicilar())) . '</b></p></td></tr></tbody></table><p><button class="button button-primary">Adresi kaydet</button></p></form>';

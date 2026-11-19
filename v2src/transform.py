@@ -476,5 +476,6 @@ _ap = os.path.join(HERE, 'app.html'); _h = io.open(_ap, encoding='utf-8').read()
 for _a, _b in _POST:
     if _h.count(_a) != 1: sys.exit('SON EK EŞLEŞMEDİ (' + str(_h.count(_a)) + '): ' + _a)
     _h = _h.replace(_a, _b)
+exec(io.open(os.path.join(HERE, 'revize1.py'), encoding='utf-8').read()); _h = revize1(_h)
 io.open(_ap, 'w', encoding='utf-8').write(_h)
 print('app.html yazıldı', len(s), '|', '; '.join(LOG))
