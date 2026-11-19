@@ -1597,3 +1597,38 @@ html[data-page=home] .kr{padding-top:calc(var(--sp)*.45)!important;padding-botto
  #vUrunler #ucAx .chip,#vUrunler #ucCa .chip{height:34px!important;min-height:0!important;padding:0 13px!important;font-size:13.5px!important;display:inline-flex!important;align-items:center}
  #vUrunler .uc-q{height:38px!important}
 }
+
+/* ---- Ürünler açılır menüsü: iki sütun içeriğe göre genişler, ekrandan taşmaz ---- */
+@media (min-width:1101px){
+ .site-top .nv-2{position:relative}
+ .site-top .nv-2 .nv-m{inset-inline-start:auto!important;inset-inline-end:-14px;left:auto;width:max-content;max-width:min(680px,calc(100vw - 2*var(--px)))}
+ .site-top .nv-l2{grid-template-columns:repeat(2,max-content)!important;column-gap:4px}
+ .site-top .nv-l2 a{white-space:nowrap}
+ [dir=rtl] .site-top .nv-2 .nv-m{inset-inline-end:auto;inset-inline-start:-14px!important}
+}
+
+/* ---- Kurumsal (Hakkımızda) sayfası: tek ritim ---- */
+html[data-page=hakkimizda] .pg.pg-tall{min-height:0!important;height:auto!important;padding-top:calc(var(--hdr) + 22px)!important;padding-bottom:32px!important}
+html[data-page=hakkimizda] .pg.pg-tall .pg-vid{width:58%}
+html[data-page=hakkimizda] #vHakkimizda>.hs{padding-top:56px!important;padding-bottom:0!important}
+html[data-page=hakkimizda] #vHakkimizda>.hs.band,html[data-page=hakkimizda] #vHakkimizda>.hs.hk-pt{padding-bottom:56px!important;margin-top:56px}
+html[data-page=hakkimizda] #vHakkimizda>.hs.band+.hs,html[data-page=hakkimizda] #vHakkimizda>.hs.hk-pt+.hs{padding-top:0!important;margin-top:56px}
+html[data-page=hakkimizda] #vHakkimizda .hs-h{margin-bottom:24px!important;position:static!important}
+html[data-page=hakkimizda] #vHakkimizda .hs-h h2{font-size:clamp(26px,2.6vw,34px)!important}
+html[data-page=hakkimizda] #vHakkimizda>.hs:last-child{padding-bottom:64px!important}
+html[data-page=hakkimizda] .hk-pos{padding-top:48px!important}
+/* iş ortakları: düğme başlıkla aynı satırda, logolar daha alçak */
+html[data-page=hakkimizda] .hk-pt{position:relative}
+html[data-page=hakkimizda] .hk-pt .film-control{position:absolute;top:60px;inset-inline-end:var(--px);margin:0!important;height:34px;font-size:13px;padding:0 14px}
+html[data-page=hakkimizda] .hk-ptg .film-rail{padding-block:6px!important;height:auto!important}
+html[data-page=hakkimizda] .hk-ptg .pt-l{height:76px!important;width:156px!important}
+html[data-page=hakkimizda] .hk-ptg .pt-l img{max-height:52px;width:auto!important;max-width:120px}
+html[data-page=hakkimizda] .hk-ptg .film-track{height:auto!important}
+html[data-page=hakkimizda] .hk-ptg{position:static!important}
+html[data-page=hakkimizda] .hk-pt .film-control{top:56px!important}
+html[data-page=hakkimizda] .hk-pos .hk-fig{aspect-ratio:16/10!important;height:auto!important;max-height:320px}
+html[data-page=hakkimizda] .hk-pos .hk-fig img,html[data-page=hakkimizda] .hk-pos .hk-fig video{width:100%;height:100%;object-fit:cover}
+html[data-page=hakkimizda] #vHakkimizda>.hs.hk-pt{padding-bottom:40px!important}
+html[data-page=hakkimizda] .hk-ptg,html[data-page=hakkimizda] .hk-ptg .film-rail:last-child{margin-bottom:0!important;padding-bottom:0!important}
+html[data-page=hakkimizda] .hk-ptg .film-rail{margin:0!important}
+html[data-page=hakkimizda] .hk-ptg{display:grid;gap:10px}
