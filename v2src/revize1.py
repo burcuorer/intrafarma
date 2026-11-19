@@ -95,8 +95,7 @@ def revize1(h):
             '<button type="button" class="nv-srch" id="nvSrch" data-tl="srch"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg></button>\n      <button class="nv-burger" id="nvBurger"', h)
 
     # ---------- 3) ana sayfa: premium kit bandı, danışma kurulu kesiti ----------
-    h = _r1('<section class="hs ua" id="uzmanlik"',
-            '<section class="hs kb band dark" id="premium" aria-labelledby="kbH"><div class="kb-in"><div class="kb-t" data-rv="rise"><p class="eyebrow" data-t="kb_ey"></p><h2 id="kbH" data-t="kb_h"></h2><p data-t="kb_p"></p><div class="kb-dots" id="kbDots" role="group"></div></div><div class="kb-s" id="kbS" aria-live="polite"></div></div></section>\n    <section class="hs ua" id="uzmanlik"', h)
+    # premium kitler ayrı bölüm değil: ürün portföyü bölümünün görselinde döner (v2c2.js)
     h = _r1('<section class="hs lbs band tint"',
             '<section class="hs kr" id="kurul-ozet" aria-labelledby="krH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="bk_ey"></p><h2 id="krH" data-t="kr_h"></h2><p data-t="kr_p"></p></div><div class="kr-g bk-g mk-bk" id="krG"></div><a class="hc-m kr-cta" href="bilim.html#kurul"><span data-t="kr_cta"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></a></section>\n    <section class="hs lbs band tint"', h)
 
@@ -137,6 +136,10 @@ def revize1(h):
     h = _r1("if(q&&T[q])return q;", "if(q&&T[q]&&q!=='ro')return q;", h)
     h = _r1("if(s&&T[s])return s;", "if(s&&T[s]&&s!=='ro')return s;", h)
     h = _rx(r'(<div><b>)05(</b><span data-t="s2"></span></div>\s*<div><b>)06(</b><span data-t="s3"></span></div>)', r'\g<1>10\g<2>07\g<3>', h)
+    # üst menü 1100 px'e kadar açık kalır (eski 1180 kırılımındaki menü kuralları 1100'e iner)
+    i = h.index('.nv-burger{display:grid;order:9}'); j = h.rfind('@media (max-width:1180px){', 0, i)
+    if j < 0 or i - j > 400: raise SystemExit('eski menü kırılımı bulunamadı')
+    h = h[:j] + '@media (max-width:1100px){' + h[j + len('@media (max-width:1180px){'):]
     return h
 
 def FORM(anchor, k):

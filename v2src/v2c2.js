@@ -296,18 +296,20 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
  $$('[data-srch]').forEach(x=>x.addEventListener('click',()=>{const st=document.querySelector('.site');if(st&&st.classList.contains('nav-open')){const bg=$('#nvBurger');if(bg)bg.click();}open();}));
  IF.onLang.push(()=>{if(btn)btn.setAttribute('aria-label',tr('srch'));if(!box.hidden)run();});}
 
-/* ana sayfa: premium kitler reklam bandı (panelde ürünün "premium bant" kutusu işaretli olanlar) */
-{const S=$('#kbS'),Dt=$('#kbDots');if(S&&window.IFD){const K=IFD.PRODS.filter(p=>p.pr);let cur=0,tm=null;
- if(!K.length)$('#premium').hidden=true;
- function draw(){const L=IF.lang||'tr',AXl=IFD.AX[L]||IFD.AX.en;
-  S.innerHTML=K.map((p,i)=>'<a class="kb-c'+(i===cur?' on':'')+'" href="'+esc2(IFU.prod(p))+'"'+(i===cur?'':' tabindex="-1" aria-hidden="true"')+'><span class="kb-im">'+(p.img?'<img src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async">':'')+'</span><span class="kb-tx"><small>'+esc2(AXl[p.a]||'')+'</small><b>'+esc2(p.n)+'</b><span class="kb-go">'+esc2(tr('kb_go'))+' →</span></span></a>').join('');
-  Dt.innerHTML=K.length>1?K.map((p,i)=>'<button type="button" aria-label="'+esc2(p.n)+'" aria-pressed="'+(i===cur)+'"></button>').join(''):'';
-  Dt.querySelectorAll('button').forEach((b,i)=>b.addEventListener('click',()=>{go(i);stop();}));}
- function go(i){cur=(i+K.length)%K.length;S.querySelectorAll('.kb-c').forEach((c,j)=>{const on=j===cur;c.classList.toggle('on',on);if(on){c.removeAttribute('tabindex');c.removeAttribute('aria-hidden');}else{c.setAttribute('tabindex','-1');c.setAttribute('aria-hidden','true');}});Dt.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',j===cur));}
- function play(){if(matchMedia('(prefers-reduced-motion: reduce)').matches||K.length<2||tm)return;tm=setInterval(()=>go(cur+1),5200);}
- function stop(){clearInterval(tm);tm=null;}
- draw();play();S.addEventListener('mouseenter',stop);S.addEventListener('mouseleave',play);S.addEventListener('focusin',stop);
- IF.onLang.push(draw);}}
+/* ana sayfa: premium kitler ürün portföyü bölümünün görselinde reklam gibi döner (panelde "premium bant" kutusu) */
+{const F=$('section.hp .hp-f');if(F&&window.IFD){const K=IFD.PRODS.filter(p=>p.pr&&p.img);let cur=0,tm=null;
+ if(K.length){F.classList.add('kb-on');F.setAttribute('aria-live','polite');
+ const draw=()=>{const L=IF.lang||'tr',ey=tr('kb_ey').replace(/^\/\s*/,'');
+  F.innerHTML=K.map((p,i)=>'<a class="kb-c'+(i===cur?' on':'')+'" href="'+esc2(IFU.prod(p))+'"'+(i===cur?'':' tabindex="-1" aria-hidden="true"')+'><img src="'+esc2(p.img)+'" alt="" decoding="async"'+(i?' loading="lazy"':'')+'><span class="kb-tx"><small>'+esc2(ey)+'</small><b>'+esc2(p.n)+'</b><span class="kb-go">'+esc2(tr('kb_go'))+' →</span></span></a>').join('')+(K.length>1?'<div class="kb-dots" role="group">'+K.map((p,i)=>'<button type="button" aria-label="'+esc2(p.n)+'" aria-pressed="'+(i===cur)+'"></button>').join('')+'</div>':'');
+  F.querySelectorAll('.kb-dots button').forEach((b,i)=>b.addEventListener('click',e=>{e.preventDefault();go(i);stop();}));};
+ const go=i=>{cur=(i+K.length)%K.length;F.querySelectorAll('.kb-c').forEach((c,j)=>{const on=j===cur;c.classList.toggle('on',on);if(on){c.removeAttribute('tabindex');c.removeAttribute('aria-hidden');}else{c.setAttribute('tabindex','-1');c.setAttribute('aria-hidden','true');}});F.querySelectorAll('.kb-dots button').forEach((b,j)=>b.setAttribute('aria-pressed',j===cur));};
+ const play=()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches||K.length<2||tm)return;tm=setInterval(()=>go(cur+1),5200);};
+ const stop=()=>{clearInterval(tm);tm=null;};
+ draw();play();F.addEventListener('mouseenter',stop);F.addEventListener('mouseleave',play);F.addEventListener('focusin',stop);IF.onLang.push(draw);}}}
+
+/* yukarı kaydırırken girişler daha hızlı ve yarı büyüklükte (aşağı inerken büyük hareket kalır) */
+{let y0=scrollY,up=false;const H=document.documentElement;
+ addEventListener('scroll',()=>{const y=scrollY,d=y-y0;if(Math.abs(d)<6)return;const u=d<0;if(u!==up){up=u;H.classList.toggle('rv-up',u);}y0=y;},{passive:true});}
 
 /* ana sayfa: bilimsel danışma kurulundan bir kesit (Bölüm görselleri → Danışma kurulu ile aynı veriler) */
 {const g=$('#krG');if(g){const O=(window.IF_CMS&&IF_CMS.orn)||{},ON=O.tag!==false,v=parseInt(O.n_kurul,10),N=isNaN(v)?4:Math.max(0,Math.min(4,v));
@@ -340,6 +342,6 @@ $$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();con
 
 /* üst çubuk sığma denetimi: dil değişince ya da pencere boyutu değişince */
 {const top=document.querySelector('.site-top'),H=document.documentElement;
- const fit=()=>{if(!top)return;H.classList.remove('nv-c1','nv-c2');if(innerWidth<=1360)return;const over=()=>{const r=top.getBoundingClientRect(),cs=getComputedStyle(top),rtl=cs.direction==='rtl',k=[...top.children].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!k.length)return false;return rtl?Math.min(...k.map(b=>b.left))<r.left+parseFloat(cs.paddingLeft)-1:Math.max(...k.map(b=>b.right))>r.right-parseFloat(cs.paddingRight)+1;};
-  if(over()){H.classList.add('nv-c1');if(over())H.classList.add('nv-c2');}};
+ const fit=()=>{if(!top)return;H.classList.remove('nv-c1','nv-c2','nv-c3','nv-c4');if(innerWidth<=1100)return;const over=()=>{const r=top.getBoundingClientRect(),cs=getComputedStyle(top),rtl=cs.direction==='rtl',k=[...top.children].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!k.length)return false;return rtl?Math.min(...k.map(b=>b.left))<r.left+parseFloat(cs.paddingLeft)-1:Math.max(...k.map(b=>b.right))>r.right-parseFloat(cs.paddingRight)+1;};
+  for(const c of ['nv-c1','nv-c2','nv-c3','nv-c4']){if(!over())break;H.classList.add(c);}};
  fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);IF.onLang.push(()=>requestAnimationFrame(fit));}
