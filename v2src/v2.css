@@ -1572,3 +1572,28 @@ html[data-page=home] .kr{padding-top:calc(var(--sp)*.45)!important;padding-botto
 /* ürün filtreleri daha sıkı */
 .uc-ax .chip,.uc-ca .chip{font-size:14px;padding:6px 13px;min-height:34px}
 .uc-ax{margin-bottom:10px}
+
+/* ürünler sayfası filtre paneli: sıkı, iki hizalı satır (etiket · seçenekler · arama) */
+.uf-lab{display:none}
+@media (min-width:641px){
+ #vUrunler #ucBar{display:grid!important;grid-template-columns:118px minmax(0,1fr) auto;align-items:start;gap:0 14px;padding:14px 16px 12px!important;border-radius:18px 18px 0 0}
+ #vUrunler .uf-lab,#vUrunler #ucCa .lab{display:block;width:118px;flex:none;margin:0!important;font:500 11px/30px var(--f-m)!important;letter-spacing:.07em;text-transform:uppercase;color:#a9c6d2!important}
+ html:lang(ar) #vUrunler .uf-lab{text-transform:none;letter-spacing:0}
+ #vUrunler #ucAx{display:flex!important;flex-wrap:wrap!important;gap:6px!important;margin:0!important;overflow:visible!important;width:auto}
+ #vUrunler #ucCa{display:flex!important;flex-wrap:wrap!important;align-items:center;gap:6px!important;padding:10px 16px 14px!important;overflow:visible!important;border-radius:0 0 18px 18px}
+ #vUrunler #ucCa .lab{width:104px}
+ #vUrunler #ucAx .chip,#vUrunler #ucCa .chip{height:30px!important;min-height:0!important;padding:0 12px!important;font-size:13px!important;line-height:1!important;display:inline-flex!important;align-items:center;border-radius:999px}
+ #vUrunler .uc-q{width:210px;height:32px!important;padding:0 12px!important;font-size:14px;align-self:start}
+ #vUrunler .uc-q input{font-size:14px}
+ #vUrunler .uc-n{margin:14px 0 10px!important}
+}
+@media (min-width:641px){
+ #vUrunler #ucCa{position:relative;padding-left:148px!important}
+ #vUrunler #ucCa .lab{position:absolute;left:16px;top:10px;width:118px}
+ [dir=rtl] #vUrunler #ucCa{padding-left:16px!important;padding-right:148px!important}
+ [dir=rtl] #vUrunler #ucCa .lab{left:auto;right:16px}
+}
+@media (max-width:640px){
+ #vUrunler #ucAx .chip,#vUrunler #ucCa .chip{height:34px!important;min-height:0!important;padding:0 13px!important;font-size:13.5px!important;display:inline-flex!important;align-items:center}
+ #vUrunler .uc-q{height:38px!important}
+}

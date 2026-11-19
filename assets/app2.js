@@ -502,6 +502,9 @@ $$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();con
   for(const c of ['nv-c1','nv-c2','nv-c3','nv-c4']){if(!over())break;H.classList.add(c);}};
  fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);IF.onLang.push(()=>requestAnimationFrame(fit));}
 
+/* ürünler sayfası filtresi: ürün grubu satırına da etiket (klinik alan satırıyla aynı hizada) */
+{const bar=$('#ucBar');if(bar&&!bar.querySelector('.uf-lab')){const l=document.createElement('span');l.className='uf-lab';l.setAttribute('data-t','srch_g');l.textContent=tr('srch_g');bar.insertBefore(l,bar.firstChild);}}
+
 labels();
 })();
 
