@@ -2753,6 +2753,28 @@ html .pg.al-ph .pg-vid{top:var(--hdr)!important;bottom:0!important;height:auto!i
  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%),linear-gradient(180deg,transparent 0,#000 22%)!important;-webkit-mask-composite:source-in!important;
  mask-image:linear-gradient(90deg,transparent 0,#000 38%),linear-gradient(180deg,transparent 0,#000 22%)!important;mask-composite:intersect!important}
 html .pg.al-ph>.pg-in{width:min(58%,700px)!important}
+
+/* Layout audit: readable catalogue, full-width partner rails, quiet arrivals. */
+html[data-page=hakkimizda] #hkPt.hk-film{grid-template-columns:minmax(0,1fr);width:100%;min-width:0}
+#hkPt .film-rail{width:100%;min-width:0}
+html body .uc-c,html body .uc-c.has-img,html body .uc-c:not(.has-img),html body .al-cards .uc-c,html body .al-cards .uc-c.has-img,html body .al-cards .uc-c:not(.has-img){height:auto!important;min-height:148px!important;grid-template-columns:112px minmax(0,1fr) 16px!important;padding:14px!important;column-gap:16px;row-gap:6px}
+html body .uc-c .uc-art,html body .uc-c.has-img .uc-art,html body .al-cards .uc-c.has-img .uc-art,html body .uc-c:not(.has-img)::after{width:112px!important;height:112px!important}
+html body .uc-c>b,html body .uc-c.has-img>b{font-size:17px!important;line-height:1.3;overflow-wrap:anywhere}
+html body .uc-c .uc-t{white-space:normal!important;text-overflow:clip;line-height:1.4;font-size:11px!important}
+html body .uc-c .uc-acc{line-height:1.4}
+html body .uc-g,html body .al-cards{gap:18px}
+html body .ur-f{margin-top:clamp(56px,6vw,88px);gap:28px}
+html body .il-soc{margin-top:28px!important}
+html body [data-rv],html body .ua-c[data-rv]{filter:none!important;transition:opacity .55s ease,transform .65s cubic-bezier(.16,1,.3,1);transition-delay:calc(min(var(--i,0),3)*70ms)}
+html body [data-rv]:not(.in){transform:translateY(14px)}
+html body .pg .pg-in,html body .pg .wd>span{opacity:1;transform:none;filter:none}
+@media(min-width:641px) and (max-width:1100px){html body .uc-g,html body .al-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:640px){
+ html body .uc-c,html body .uc-c.has-img,html body .uc-c:not(.has-img),html body .al-cards .uc-c,html body .al-cards .uc-c.has-img,html body .al-cards .uc-c:not(.has-img){grid-template-columns:88px minmax(0,1fr) 14px!important;min-height:132px!important;padding:12px!important;column-gap:12px}
+ html body .uc-c .uc-art,html body .uc-c.has-img .uc-art,html body .al-cards .uc-c.has-img .uc-art,html body .uc-c:not(.has-img)::after{width:88px!important;height:100px!important}
+ html body .ur-f{margin-top:44px;gap:32px}
+}
+@media(prefers-reduced-motion:reduce){html body [data-rv],html body .ua-c[data-rv]{opacity:1!important;transform:none!important;transition:none!important}}
 </style>
 </head><body>
 
@@ -3791,8 +3813,7 @@ sel2.value=document.documentElement.lang||'tr';
 /* reveal on scroll */
 const ioIn=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
 /* once an element has left the screen completely it resets, so coming back to a section plays it again */
-const ioOut=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting&&!RM&&e.target.classList.contains('in')){e.target.classList.remove('in');e.target.classList.add('seen');}}),{threshold:0});
-const io={observe(el){ioIn.observe(el);ioOut.observe(el);}};
+const io={observe(el){ioIn.observe(el);}};
 $$('[data-rv]').forEach(el=>io.observe(el));
 
 /* count-up numbers */
@@ -4096,7 +4117,7 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
 {const T2=k=>{const v=tr(k);return v===k?'':v;},sp=(k,tagName,cls)=>'<'+(tagName||'span')+(cls?' class="'+cls+'"':'')+' data-t="'+k+'">'+T2(k)+'</'+(tagName||'span')+'>';
  /* WordPress → Intrafarma → Bölüm görselleri: kart sayıları, fotoğraflar, bağlantılar, "Örnektir" etiketi */
  const O=(window.IF_CMS&&window.IF_CMS.orn)||{},ON=O.tag!==false;
- const n=(k,max)=>{const v=parseInt(O['n_'+k],10);return Array.from({length:isNaN(v)?max:Math.max(0,Math.min(max,v))},(_,i)=>i+1);};
+ const n=(k,max)=>{const v=parseInt(O['n_'+k],10);return Array.from({length:isNaN(v)?0:Math.max(0,Math.min(max,v))},(_,i)=>i+1);};
  const at=(arr,i)=>(Array.isArray(arr)&&arr[i-1])||{};
  const safe=u=>{u=String(u||'').trim();return u&&(/^https?:\/\//i.test(u)||!/^[a-z][a-z0-9+.-]*:/i.test(u))?esc2(u):'';};
  const tag=k=>ON?'<em class="ornek" data-t="'+(k||'ornek')+'">'+T2(k||'ornek')+'</em>':'';
@@ -4115,7 +4136,7 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
  /* güncel: yazılar */
  {const L=n('yazi',3);put('#yayinlar .pend-card','<div class="bl-g mk-bl">'+L.map((i,j)=>{const x=at(O.yazi,i);return '<article data-rv="up" style="--i:'+j+'"><div class="mk-cov c'+i+(x.img?' has-img':'')+'">'+(x.img?img(x.img):'')+tag(x.img?'ornek':'ornek_img')+sp('bl_c'+i,'span','bl-c')+'</div>'+lnk(x.url,sp('bl'+i+'_t','h3'),'mk-h')+sp('bl'+i+'_p','p')+'<footer>'+sp('bl'+i+'_m','small')+lnk(x.url,'<span class="mk-more">'+sp('bl_read')+' →</span>')+'</footer></article>';}).join('')+'</div>'+note,L.length);}
  /* hakkımızda: medya ve basın */
- {const L=n('basin',3),F=O.film||{};put('.hk-med .pend-card','<div class="mk-md">'+lnk(F.url,'<figure class="mk-film" data-rv="up">'+img(F.img||B+'media/gorsel/regenyal-laboratuvar.jpg')+'<span class="mk-play" aria-hidden="true"></span>'+tag()+'<figcaption>'+sp('md_film','b')+sp('md_film_p','span')+'</figcaption></figure>','mk-film-a')+(L.length?'<ul class="mk-press">'+L.map((i,j)=>'<li data-rv="up" style="--i:'+(j+1)+'">'+sp('md'+i+'_s','small')+lnk(at(O.basin,i).url,sp('md'+i+'_t','b'))+sp('md'+i+'_d','time')+tag()+'</li>').join('')+'</ul>':'')+'</div>'+note,1);}
+ {const L=n('basin',3),F=O.film||{};put('.hk-med .pend-card','<div class="mk-md">'+lnk(F.url,'<figure class="mk-film" data-rv="up">'+img(F.img||B+'media/gorsel/regenyal-laboratuvar.jpg')+'<span class="mk-play" aria-hidden="true"></span>'+tag()+'<figcaption>'+sp('md_film','b')+sp('md_film_p','span')+'</figcaption></figure>','mk-film-a')+(L.length?'<ul class="mk-press">'+L.map((i,j)=>'<li data-rv="up" style="--i:'+(j+1)+'">'+sp('md'+i+'_s','small')+lnk(at(O.basin,i).url,sp('md'+i+'_t','b'))+sp('md'+i+'_d','time')+tag()+'</li>').join('')+'</ul>':'')+'</div>'+note,(F.url||L.length)?1:0);}
  /* üretim: adım açıklamaları */
  $$('.ur-g article p').forEach((a,i)=>{if(T2('ur_p'+(i+1))){a.dataset.t='ur_p'+(i+1);a.textContent=T2('ur_p'+(i+1));}});
 }
