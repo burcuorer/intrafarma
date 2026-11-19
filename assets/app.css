@@ -2388,3 +2388,11 @@ html.srch-on{overflow:hidden}
  .site-top{gap:8px}
 }
 @media (max-width:370px){.site-top .nv-srch{display:none}.site-top .hcp{margin-inline-start:auto}}
+/* uzun dillerde (RU, ES, FR …) üst çubuk sığmazsa önce sıkışır, sonra "Sağlık çalışanları" düğmesi kısalır (JS: html.nv-c1 / nv-c2) */
+@media (min-width:1361px){
+ html.nv-c1 .site-top{gap:14px}
+ html.nv-c1 .site-top .pub-nav{gap:12px}
+ html.nv-c1 .site-top .nv-t{font-size:14px}
+ html.nv-c2 .site-top>.hcp{font-size:0!important;padding:0 20px!important;min-width:76px;display:inline-flex!important;align-items:center;justify-content:center;line-height:1}
+ html.nv-c2 .site-top>.hcp::after{content:"Pro"!important;position:static!important;inset:auto!important;width:auto!important;height:auto!important;background:none!important;box-shadow:none!important;border:0!important;opacity:1!important;transform:none!important;color:#fff;font:600 14px/1 var(--f-b)}
+}

@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) { exit; }
  * tema kendi varsayılanlarıyla (data/varsayilan.json) çalışır. Kod bilgisi gerekmez.
  */
 define('INTRAFARMA_CAP', 'edit_pages');
-define('INTRAFARMA_LANG_NAMES', array('tr' => 'Türkçe', 'en' => 'English', 'ar' => 'العربية', 'it' => 'Italiano', 'ru' => 'Русский', 'ro' => 'Română'));
+define('INTRAFARMA_LANG_NAMES', array('tr' => 'Türkçe', 'en' => 'English', 'es' => 'Español', 'fr' => 'Français', 'ar' => 'العربية', 'it' => 'Italiano', 'ru' => 'Русский'));
 define('INTRAFARMA_GROUPS', array('Ana sayfa', 'Menü', 'Uzmanlık', 'Ürünler', 'Üretim', 'Bilim', 'Güncel', 'İletişim', 'Hakkımızda',
     'Sağlık çalışanı girişi', 'Sağlık çalışanları alanı (Pro)', 'Alt bilgi', 'Çerez bandı ve video'));
 /* iletişim bilgileri ayrı sayfadan yönetilir */

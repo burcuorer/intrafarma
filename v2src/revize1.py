@@ -22,7 +22,8 @@ def revize1(h):
         'ar': ['العلاجات الخلوية (خيفية)', 'مجموعات فصل الخلايا الجذعية والإكسوسومات (ذاتية)', 'أحماض الهيالورونيك', 'منتجات حمض الهيالورونيك للتجميل التناسلي', 'منتجات الكولاجين', 'مجموعات البلازما الغنية بالصفائح', 'المكملات الغذائية', 'أنظمة إزالة التلوث الحيوي', 'Hipsafe', 'جهاز الموجات فوق الصوتية المحمول'],
         'it': ['Terapie cellulari (allogeniche)', 'Kit di isolamento di cellule staminali ed esosomi (autologhi)', 'Acidi ialuronici', 'Acidi ialuronici per estetica genitale', 'Prodotti al collagene', 'Kit PRP', 'Integratori alimentari', 'Sistemi di biodecontaminazione', 'Hipsafe', 'Ecografo portatile'],
         'ru': ['Клеточная терапия (аллогенная)', 'Наборы для выделения стволовых клеток и экзосом (аутологичные)', 'Гиалуроновые кислоты', 'Гиалуроновая кислота для интимной эстетики', 'Коллагеновые продукты', 'Наборы PRP', 'Пищевые добавки', 'Системы биодеконтаминации', 'Hipsafe', 'Портативный УЗИ-аппарат'],
-        'ro': ['Terapii celulare (alogene)', 'Kituri de izolare a celulelor stem și exozomilor (autologe)', 'Acizi hialuronici', 'Acizi hialuronici pentru estetică genitală', 'Produse cu colagen', 'Kituri PRP', 'Suplimente alimentare', 'Sisteme de biodecontaminare', 'Hipsafe', 'Ecograf portabil'],
+        'es': ['Terapias celulares (alogénicas)', 'Kits de aislamiento de células madre y exosomas (autólogos)', 'Ácidos hialurónicos', 'Ácidos hialurónicos para estética genital', 'Productos de colágeno', 'Kits de PRP', 'Complementos alimenticios', 'Sistemas de biodescontaminación', 'Hipsafe', 'Ecógrafo portátil'],
+        'fr': ['Thérapies cellulaires (allogéniques)', 'Kits d’isolement de cellules souches et d’exosomes (autologues)', 'Acides hyaluroniques', 'Acides hyaluroniques pour l’esthétique génitale', 'Produits à base de collagène', 'Kits PRP', 'Compléments alimentaires', 'Systèmes de biodécontamination', 'Hipsafe', 'Échographe portable'],
     }
     CA = {
         'tr': ['Ortopedi ve fiziksel tıp', 'Üroloji ve androloji', 'Kadın hastalıkları ve doğum', 'Nöroloji, beyin ve sinir cerrahisi', 'Dermatoloji ve medikal estetik', 'Diğer alanlar'],
@@ -30,7 +31,8 @@ def revize1(h):
         'ar': ['جراحة العظام والطب الطبيعي', 'المسالك البولية وأمراض الذكورة', 'أمراض النساء والتوليد', 'الأعصاب وجراحة المخ والأعصاب', 'الأمراض الجلدية والتجميل الطبي', 'تخصصات أخرى'],
         'it': ['Ortopedia e medicina fisica', 'Urologia e andrologia', 'Ginecologia e ostetricia', 'Neurologia e neurochirurgia', 'Dermatologia e medicina estetica', 'Altre specialità'],
         'ru': ['Ортопедия и физическая медицина', 'Урология и андрология', 'Акушерство и гинекология', 'Неврология и нейрохирургия', 'Дерматология и медицинская эстетика', 'Другие направления'],
-        'ro': ['Ortopedie și medicină fizică', 'Urologie și andrologie', 'Obstetrică și ginecologie', 'Neurologie și neurochirurgie', 'Dermatologie și medicină estetică', 'Alte specialități'],
+        'es': ['Traumatología y medicina física', 'Urología y andrología', 'Ginecología y obstetricia', 'Neurología y neurocirugía', 'Dermatología y medicina estética', 'Otras especialidades'],
+        'fr': ['Orthopédie et médecine physique', 'Urologie et andrologie', 'Gynécologie et obstétrique', 'Neurologie et neurochirurgie', 'Dermatologie et médecine esthétique', 'Autres spécialités'],
     }
     import json as _j
     js = lambda v: _j.dumps(v, ensure_ascii=False)
@@ -127,6 +129,14 @@ def revize1(h):
     # ---------- 9) İletişim: iletişim formu ve bayilik başvurusu ----------
     a = h.index('<div class="il-soc">'); b = h.index('</section>', a)
     h = h[:b] + FORM('form', 'ilf') + FORM('bayilik', 'bay') + h[b:]
+    # ---------- 10) diller: TR · EN · ES · FR · AR · IT · RU (Romence çıkarıldı) ----------
+    h = h.replace('<button type="button" data-lang="ro" lang="ro">RO</button>', '').replace('<option value="ro" lang="ro">RO</option>', '')
+    h = h.replace('<button type="button" data-lang="en" lang="en">EN</button>', '<button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="es" lang="es">ES</button><button type="button" data-lang="fr" lang="fr">FR</button>')
+    h = h.replace('<option value="en" lang="en">EN</option>', '<option value="en" lang="en">EN</option><option value="es" lang="es">ES</option><option value="fr" lang="fr">FR</option>')
+    if 'data-lang="ro"' in h or 'data-lang="fr"' not in h: raise SystemExit('dil düğmeleri')
+    h = _r1("if(q&&T[q])return q;", "if(q&&T[q]&&q!=='ro')return q;", h)
+    h = _r1("if(s&&T[s])return s;", "if(s&&T[s]&&s!=='ro')return s;", h)
+    h = _rx(r'(<div><b>)05(</b><span data-t="s2"></span></div>\s*<div><b>)06(</b><span data-t="s3"></span></div>)', r'\g<1>10\g<2>07\g<3>', h)
     return h
 
 def FORM(anchor, k):

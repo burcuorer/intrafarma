@@ -251,7 +251,7 @@ c1n = jrep(c1n, "cas=AXCA[p.a].map(", "cas=pCA(p).map(")
 c1n = jrep(c1n, "function openZoom(card){", "function openZoom(card){if(window.proRestore)proRestore();")
 c1n = PRE + c1n
 keys = json.load(io.open(os.path.join(HERE, 'v2keys.json'), encoding='utf-8'))
-inj = 'for(const [l,o] of Object.entries(%s))Object.assign(T[l],o);\n' % json.dumps(keys, ensure_ascii=False)
+inj = 'for(const [l,o] of Object.entries(%s))Object.assign(T[l]=T[l]||{},o);\n' % json.dumps(keys, ensure_ascii=False)
 c1n = jrep(c1n, 'const IF=window.IF=', inj + 'const IF=window.IF=')
 c1n = jrep(c1n, "m.textContent=src.textContent;", "if(src.dataset.src)m.src=src.dataset.src;else m.textContent=src.textContent;")
 c1n = jrep(c1n, "new IntersectionObserver((es,ob)=>{if(es.some(e=>e.isIntersecting)){ob.disconnect();IF.loadCell();}},{rootMargin:'700px 0px'}).observe(document.getElementById('hucre'));",

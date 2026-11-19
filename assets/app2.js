@@ -490,6 +490,12 @@ $$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();con
  d.onay=1;const b=f.querySelector('button[type=submit]');b.disabled=true;m.textContent='…';
  IF_SEND(d).then(r=>{m.classList.add('ok');m.textContent=IF_OKTX('f_ok',r);f.querySelectorAll('input:not([type=checkbox]),textarea').forEach(x=>{if(x.name!=='web')x.value='';});},()=>{m.textContent=tr('rq_fail');}).finally(()=>{b.disabled=false;});}));
 
+/* üst çubuk sığma denetimi: dil değişince ya da pencere boyutu değişince */
+{const top=document.querySelector('.site-top'),H=document.documentElement;
+ const fit=()=>{if(!top)return;H.classList.remove('nv-c1','nv-c2');if(innerWidth<=1360)return;const over=()=>{const r=top.getBoundingClientRect(),cs=getComputedStyle(top),rtl=cs.direction==='rtl',k=[...top.children].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!k.length)return false;return rtl?Math.min(...k.map(b=>b.left))<r.left+parseFloat(cs.paddingLeft)-1:Math.max(...k.map(b=>b.right))>r.right-parseFloat(cs.paddingRight)+1;};
+  if(over()){H.classList.add('nv-c1');if(over())H.classList.add('nv-c2');}};
+ fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);IF.onLang.push(()=>requestAnimationFrame(fit));}
+
 labels();
 })();
 

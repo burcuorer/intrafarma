@@ -4,7 +4,7 @@ const {chromium}=require('playwright');const fs=require('fs'),path=require('path
 (async()=>{const b=await chromium.launch();const p=await b.newPage();
  await p.goto(process.argv[2]||'http://127.0.0.1:8770/index.html');await p.waitForTimeout(1800);
  const out=await p.evaluate(()=>{
-  const T=IF.T,D=window.IFD,langs=Object.keys(T);
+  const T=IF.T,D=window.IFD,langs=Object.keys(T).filter(l=>l!=='ro');
   const tx={};langs.forEach(l=>{tx[l]={};Object.keys(T.tr).forEach(k=>{tx[l][k]=typeof T[l][k]==='string'?T[l][k]:String(T.tr[k]);});
    D.AX.tr.forEach((_,i)=>{tx[l]['ax_'+i]=(D.AX[l]||D.AX.en)[i];});D.CA.tr.forEach((_,i)=>{tx[l]['ca_'+i]=(D.CA[l]||D.CA.en)[i];});});
   /* her metnin sitede nerede durduğu */

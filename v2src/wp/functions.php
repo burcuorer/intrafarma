@@ -7,7 +7,7 @@
 if (!defined('ABSPATH')) { exit; }
 define('INTRAFARMA_VER', wp_get_theme()->get('Version'));
 define('INTRAFARMA_PAGES', array('uzmanlik' => 'Uzmanlık', 'urunler' => 'Ürünler', 'uretim' => 'Üretim ve özel marka', 'bilim' => 'Bilim', 'guncel' => 'Güncel', 'iletisim' => 'İletişim', 'hakkimizda' => 'Hakkımızda'));
-define('INTRAFARMA_LANGS', array('tr', 'en', 'ar', 'it', 'ru', 'ro'));
+define('INTRAFARMA_LANGS', array('tr', 'en', 'es', 'fr', 'ar', 'it', 'ru'));
 
 function intrafarma_uri() { return untrailingslashit(get_template_directory_uri()); }
 
