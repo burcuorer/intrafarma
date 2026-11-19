@@ -327,8 +327,8 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
 /* uzmanlık alanı sayfası: başlık bandının sağındaki videonun yerine alanın fotoğrafı (Bölüm görselleri → Klinik alan görselleri) */
 {const draw=()=>{const pg=$('#vAlan .pg');if(!pg)return;const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');
   const O=(window.IF_CMS&&IF_CMS.orn)||{},u=i<0?'':((Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp':''));
-  pg.classList.toggle('al-ph',!!u);let f=pg.querySelector('.pg-vid');
-  if(!u)return;
+  pg.classList.toggle('al-ph',!!u);pg.classList.toggle('al-noimg',i>=0&&!u);let f=pg.querySelector('.pg-vid');
+  if(!u){if(f)f.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}});return;}
   if(!f){f=document.createElement('figure');f.className='pg-vid';f.setAttribute('aria-hidden','true');pg.appendChild(f);pg.classList.add('has-vid');}
   if(f.dataset.u===u)return;f.dataset.u=u;f.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}v.remove();});
   const old=f.querySelector('img.al-img');if(old)old.remove();const im=document.createElement('img');im.className='al-img';im.alt='';im.decoding='async';im.src=u;f.insertBefore(im,f.firstChild);
@@ -352,3 +352,14 @@ $$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();con
 
 /* ürünler sayfası filtresi: ürün grubu satırına da etiket (klinik alan satırıyla aynı hizada) */
 {const bar=$('#ucBar');if(bar&&!bar.querySelector('.uf-lab')){const l=document.createElement('span');l.className='uf-lab';l.setAttribute('data-t','srch_g');l.textContent=tr('srch_g');bar.insertBefore(l,bar.firstChild);}}
+
+/* ürünler sayfası: grup ve klinik alan seçimi iki açılır kutuda (tek satır); kutular mevcut bağlantıları kullanır */
+{const bar=$('#ucBar'),ax=$('#ucAx'),ca=$('#ucCa');
+ if(bar&&ax&&ca){const row=document.createElement('div');row.className='uf-row';
+  const mk=(lab)=>{const w=document.createElement('label');w.className='uf-sel';w.innerHTML='<span></span><select></select>';w.firstChild.textContent=lab;return w;};
+  const sA=mk(''),sC=mk('');row.appendChild(sA);row.appendChild(sC);bar.insertBefore(row,bar.firstChild);
+  const fill=(w,src,labKey)=>{w.firstChild.textContent=tr(labKey);const s=w.lastChild,ch=[...src.querySelectorAll('.chip')];
+   s.innerHTML=ch.map((c,i)=>'<option value="'+i+'"'+(c.getAttribute('aria-pressed')==='true'||c.classList.contains('on')||c.getAttribute('aria-current')?' selected':'')+'>'+esc2(c.textContent)+'</option>').join('');
+   s.onchange=()=>{const c=src.querySelectorAll('.chip')[+s.value];if(c)c.click();};};
+  const sync=()=>{fill(sA,ax,'srch_g');fill(sC,ca,'cat_ca');};
+  sync();new MutationObserver(sync).observe(ax,{childList:true,subtree:true,attributes:true});new MutationObserver(sync).observe(ca,{childList:true,subtree:true,attributes:true});}}

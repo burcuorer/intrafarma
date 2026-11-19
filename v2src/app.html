@@ -2708,6 +2708,51 @@ html .uc-c .uc-t{margin-bottom:1px!important}
  html .uc-c>b,html .uc-c.has-img>b{font-size:15px!important}
 }
 html .uc-c .uc-t,html .uc-c.has-img .uc-t,html .uc-c:not(.has-img) .uc-t{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;-webkit-line-clamp:unset!important;margin-bottom:3px!important}
+
+/* ===== 20.11 · dördüncü tur ===== */
+/* ürünler sayfası filtresi: tek satır — grup, klinik alan, arama */
+html #vUrunler #ucAx,html #vUrunler #ucCa,html #vUrunler .uf-lab{display:none!important}
+html #vUrunler #ucBar{display:flex!important;flex-wrap:wrap;align-items:flex-end;gap:10px 12px!important;padding:12px 14px!important;border-radius:16px!important}
+.uf-row{display:contents}
+.uf-sel{display:flex;flex-direction:column;gap:5px;flex:1 1 220px;min-width:0}
+.uf-sel span{font:500 10.5px/1 var(--f-m);letter-spacing:.07em;text-transform:uppercase;color:#a9c6d2}
+html:lang(ar) .uf-sel span{text-transform:none;letter-spacing:0}
+.uf-sel select{height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23cfe3ea' stroke-width='1.6'/%3E%3C/svg%3E") right 12px center/11px no-repeat;color:#fff;font:500 14px var(--f-b);padding:0 34px 0 12px;-webkit-appearance:none;appearance:none;cursor:pointer;width:100%}
+[dir=rtl] .uf-sel select{background-position:left 12px center;padding:0 12px 0 34px}
+.uf-sel select option{color:#0e2235}
+html #vUrunler .uc-q{flex:1 1 220px;height:38px!important;width:auto!important;border-radius:10px!important;align-self:flex-end}
+html #vUrunler .uc-n{margin:12px 0 8px!important}
+
+/* ürün kartları: daha alçak; alan sayfasında grup satırı gizli kalsın */
+html body .al-cards .uc-c .uc-t,html body .al-cards .uc-c.has-img .uc-t,html body .al-cards .uc-c:not(.has-img) .uc-t{display:none!important}
+html body .al-cards .uc-c>b{grid-row:2!important}
+html body .al-cards .uc-c .uc-acc{grid-row:3!important}
+@media (min-width:641px){
+ html body .uc-c,html body .uc-c.has-img,html body .uc-c:not(.has-img),html body .al-cards .uc-c,html body .al-cards .uc-c.has-img,html body .al-cards .uc-c:not(.has-img){height:84px!important;grid-template-columns:100px minmax(0,1fr) auto!important;padding:6px 12px 6px 6px!important;column-gap:12px}
+ html body .uc-c .uc-art,html body .uc-c.has-img .uc-art,html body .al-cards .uc-c.has-img .uc-art,html body .uc-c:not(.has-img)::after{width:100px!important;height:72px!important}
+ html body .uc-c>b,html body .uc-c.has-img>b{font-size:15px!important}
+}
+html .al-g{padding:14px 16px 16px!important;border-radius:18px!important}
+html #vAlan .hs.al{padding-top:22px!important}
+html #vAlan .hs.al>h2,html #vAlan .hs.al .al-h2,html #vAlan .hs.al h2{font-size:clamp(20px,1.9vw,24px)!important;margin:0 0 12px!important}
+
+/* başlık kelime animasyonu: daha hızlı otursun */
+.wd>span{transition-duration:.6s!important;transition-delay:calc(.05s + var(--w,0)*30ms)!important}
+
+/* uzmanlık alanı başlığı: alan görseli kırpılmadan sağda, sola doğru yumuşak geçişle; görseli olmayan alanda video yok */
+html .pg.al-ph .pg-vid{width:min(42%,520px)!important}
+html .pg.al-ph .pg-vid img.al-img{object-fit:contain!important;object-position:100% 50%!important}
+html .pg.al-noimg .pg-vid{display:none!important}
+html .pg.al-noimg>.pg-in{width:min(100%,760px)!important}
+html .pg.al-ph .pg-vid{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%)!important;mask-image:linear-gradient(90deg,transparent 0,#000 38%)!important}
+[dir=rtl] html .pg.al-ph .pg-vid,html[dir=rtl] .pg.al-ph .pg-vid{-webkit-mask-image:linear-gradient(270deg,transparent 0,#000 38%)!important;mask-image:linear-gradient(270deg,transparent 0,#000 38%)!important}
+html .pg.al-ph .pg-vid img.al-img{object-fit:cover!important;object-position:50% 45%!important}
+/* alan görseli menünün altından başlar, metin kesilmez */
+html .pg.al-ph{height:auto!important;overflow:hidden}
+html .pg.al-ph .pg-vid{top:var(--hdr)!important;bottom:0!important;height:auto!important;
+ -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%),linear-gradient(180deg,transparent 0,#000 22%)!important;-webkit-mask-composite:source-in!important;
+ mask-image:linear-gradient(90deg,transparent 0,#000 38%),linear-gradient(180deg,transparent 0,#000 22%)!important;mask-composite:intersect!important}
+html .pg.al-ph>.pg-in{width:min(58%,700px)!important}
 </style>
 </head><body>
 
@@ -4174,8 +4219,8 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
 /* uzmanlık alanı sayfası: başlık bandının sağındaki videonun yerine alanın fotoğrafı (Bölüm görselleri → Klinik alan görselleri) */
 {const draw=()=>{const pg=$('#vAlan .pg');if(!pg)return;const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');
   const O=(window.IF_CMS&&IF_CMS.orn)||{},u=i<0?'':((Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp':''));
-  pg.classList.toggle('al-ph',!!u);let f=pg.querySelector('.pg-vid');
-  if(!u)return;
+  pg.classList.toggle('al-ph',!!u);pg.classList.toggle('al-noimg',i>=0&&!u);let f=pg.querySelector('.pg-vid');
+  if(!u){if(f)f.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}});return;}
   if(!f){f=document.createElement('figure');f.className='pg-vid';f.setAttribute('aria-hidden','true');pg.appendChild(f);pg.classList.add('has-vid');}
   if(f.dataset.u===u)return;f.dataset.u=u;f.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}v.remove();});
   const old=f.querySelector('img.al-img');if(old)old.remove();const im=document.createElement('img');im.className='al-img';im.alt='';im.decoding='async';im.src=u;f.insertBefore(im,f.firstChild);
@@ -4199,6 +4244,17 @@ $$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();con
 
 /* ürünler sayfası filtresi: ürün grubu satırına da etiket (klinik alan satırıyla aynı hizada) */
 {const bar=$('#ucBar');if(bar&&!bar.querySelector('.uf-lab')){const l=document.createElement('span');l.className='uf-lab';l.setAttribute('data-t','srch_g');l.textContent=tr('srch_g');bar.insertBefore(l,bar.firstChild);}}
+
+/* ürünler sayfası: grup ve klinik alan seçimi iki açılır kutuda (tek satır); kutular mevcut bağlantıları kullanır */
+{const bar=$('#ucBar'),ax=$('#ucAx'),ca=$('#ucCa');
+ if(bar&&ax&&ca){const row=document.createElement('div');row.className='uf-row';
+  const mk=(lab)=>{const w=document.createElement('label');w.className='uf-sel';w.innerHTML='<span></span><select></select>';w.firstChild.textContent=lab;return w;};
+  const sA=mk(''),sC=mk('');row.appendChild(sA);row.appendChild(sC);bar.insertBefore(row,bar.firstChild);
+  const fill=(w,src,labKey)=>{w.firstChild.textContent=tr(labKey);const s=w.lastChild,ch=[...src.querySelectorAll('.chip')];
+   s.innerHTML=ch.map((c,i)=>'<option value="'+i+'"'+(c.getAttribute('aria-pressed')==='true'||c.classList.contains('on')||c.getAttribute('aria-current')?' selected':'')+'>'+esc2(c.textContent)+'</option>').join('');
+   s.onchange=()=>{const c=src.querySelectorAll('.chip')[+s.value];if(c)c.click();};};
+  const sync=()=>{fill(sA,ax,'srch_g');fill(sC,ca,'cat_ca');};
+  sync();new MutationObserver(sync).observe(ax,{childList:true,subtree:true,attributes:true});new MutationObserver(sync).observe(ca,{childList:true,subtree:true,attributes:true});}}
 
 labels();
 })();
