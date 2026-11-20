@@ -51,7 +51,8 @@ sel2.value=document.documentElement.lang||'tr';
 /* reveal on scroll */
 const ioIn=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
 /* once an element has left the screen completely it resets, so coming back to a section plays it again */
-const io={observe(el){ioIn.observe(el);}};
+const ioOut=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting&&!RM&&e.target.classList.contains('in')){e.target.classList.remove('in');e.target.classList.add('seen');}}),{threshold:0});
+const io={observe(el){ioIn.observe(el);ioOut.observe(el);}};
 $$('[data-rv]').forEach(el=>io.observe(el));
 
 /* count-up numbers */
@@ -174,11 +175,10 @@ function ucRead(){const q=new URLSearchParams(location.search),PR=D2().PRODS;UC.
 function ucHref(o){const s=Object.assign({ax:UC.ax,ca:UC.ca,urun:-1},o||{}),q=new URLSearchParams();
  if(s.urun>=0)q.set('urun',IFU.slug(D2().PRODS[s.urun].n));else{if(s.ax>=0)q.set('eksen',IFU.AXS[s.ax]);if(s.ca>=0)q.set('alan',IFU.AL[s.ca]);}
  const qo={};q.forEach((v,k)=>{qo[k]=v;});return IFU.q(IFU.U.urunler,qo);}
-function ucCard(p,i,L,AX){const AXC=IF.AXC||[],open=!!p.open,c=p.crop||{};
- const num=(v,f,min,max)=>Number.isFinite(Number(v))&&v!==''?Math.max(min,Math.min(max,Number(v))):f;
- const crop='--pack-x:'+num(c.x,50,0,100)+'%;--pack-y:'+num(c.y,45,0,100)+'%;--pack-zoom:'+num(c.zoom,1.65,1,3)+';';
- const img=p.img?'<span class="uc-art" aria-hidden="true"><img class="uc-haze" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"><img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"></span>':'';
- return '<a class="uc-c'+(p.img?' has-img':'')+'" data-axis="'+p.a+'" href="'+ucHref({urun:i})+'" style="'+crop+'--card-delay:'+(-(i%7)*1.4)+'s;--tc:'+(AXC[p.a]||'#17707A')+'">'+img+'<span class="uc-t"><i>'+String(p.a+1).padStart(2,'0')+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'"><span class="l">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="s">'+esc2(tr(open?'cat_pub_s':'cat_pro_s'))+'</span></span><span class="uc-go" aria-hidden="true">→</span></a>';}
+function ucCard(p,i,L,AX){const AXC=IF.AXC||[],open=!!p.open;
+ const art=p.img?'<span class="uc-art" aria-hidden="true"><img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"></span>'
+  :'<span class="uc-art uc-soon" aria-hidden="true"><i></i><em>'+esc2(tr('img_soon'))+'</em></span>';
+ return '<a class="uc-c'+(p.img?' has-img':' no-img')+'" data-axis="'+p.a+'" href="'+ucHref({urun:i})+'" style="--tc:'+(AXC[p.a]||'#17707A')+'">'+art+'<span class="uc-t"><i>'+String(p.a+1).padStart(2,'0')+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'"><span class="l">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="s">'+esc2(tr(open?'cat_pub_s':'cat_pro_s'))+'</span></span><span class="uc-go" aria-hidden="true">→</span></a>';}
 
 function renderUC(){
  if(P!=='urunler')return;
@@ -300,11 +300,20 @@ new MutationObserver(v2refresh).observe(document.documentElement,{attributes:tru
 const PGV={urunler:'hero-urun',uretim:'hero-uretim',bilim:'hero-bilim',uzmanlik:'hero-laboratuvar',hakkimizda:'hero-laboratuvar',guncel:'hero-bilim',iletisim:'hero-laboratuvar'};
 /* başlık boyu: büyük video yalnız Hakkımızda ve Üretim'de; ürün ayrıntısında video yok (ürünün kendi görseli hemen altta) */
 function pgMode(){const pg=curView&&$('#'+curView+' .pg');if(!pg)return;pg.classList.toggle('pg-tall',P==='hakkimizda'||P==='uretim');pg.classList.toggle('pg-det',P==='urunler'&&UC.urun>=0);}
-function pgVideo(){const k=PGV[P];const mob=!matchMedia('(min-width: 901px)').matches,nc=navigator.connection;if(!k||!curView||(mob&&nc&&nc.saveData))return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
- const B=(window.IF_BASE||'')+'media/'+(mob&&k==='hero-bilim'?'hero-laboratuvar':k),f=document.createElement('figure'),v=document.createElement('video');f.className='pg-vid';f.setAttribute('aria-hidden','true');
- v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata';v.poster=B+'.jpg';
- if(!matchMedia('(prefers-reduced-motion: reduce)').matches){v.autoplay=true;v.src=B+'.mp4';}
- f.appendChild(v);const cap=document.createElement('figcaption');cap.className='pg-cap';cap.innerHTML='<i></i><span data-t="'+(mob&&k==='hero-bilim'?'v_cap2':({urunler:'v_cap4',uretim:'v_cap3',bilim:'v_cap1',guncel:'v_cap1'}[P]||'v_cap2'))+'"></span>';f.appendChild(cap);cap.querySelector('span').innerHTML=tr(cap.querySelector('span').dataset.t);pg.appendChild(f);pg.classList.add('has-vid');const pl=v.play&&v.src?v.play():null;if(pl&&pl.catch)pl.catch(()=>{});}
+/* alt sayfa başlıkları: aynı videolar yerine sayfaya uygun görsellerin yavaş geçişli döngüsü (firma videoları gelene kadar) */
+const PGI={urunler:['hero-urun.jpg','gorsel/portfolio-regenflex-studio.jpg','gorsel/regenyal-siringhe.jpg'],
+ uretim:['hero-uretim.jpg','gorsel/regenyal-laboratuvar.jpg','gorsel/regenyal-equipe.jpg','gorsel/tesis.jpg'],
+ bilim:['hero-bilim.jpg','hero-laboratuvar.jpg','gorsel/regenyal-laboratuvar.jpg'],
+ guncel:['gorsel/regenyal-equipe.jpg','hero-bilim.jpg','gorsel/tesis.jpg'],
+ uzmanlik:['alan/ortopedi.webp','alan/uroloji.webp','alan/kadin-sagligi.webp','alan/estetik.webp'],
+ hakkimizda:['hero-laboratuvar.jpg','gorsel/regenyal-equipe.jpg','gorsel/tesis.jpg','hero-uretim.jpg'],
+ iletisim:['hero-laboratuvar.jpg','gorsel/regenyal-laboratuvar.jpg']};
+function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
+ const f=document.createElement('figure');f.className='pg-vid pg-loop'+(P==='uzmanlik'?' pg-alan':'');f.setAttribute('aria-hidden','true');
+ f.innerHTML=L.map((u,i)=>'<img class="pl'+(i?'':' on')+'" src="'+(window.IF_BASE||'')+'media/'+u+'" alt="" decoding="async"'+(i?' loading="lazy"':'')+'>').join('');
+ pg.appendChild(f);pg.classList.add('has-vid');
+ if(L.length<2||matchMedia('(prefers-reduced-motion: reduce)').matches)return;let k=0;
+ const t=setInterval(()=>{const im=f.querySelectorAll('img.pl');if(!im.length||!f.isConnected){clearInterval(t);return;}im[k%im.length].classList.remove('on');k++;im[k%im.length].classList.add('on');},6000);}
 ucRead();v2route();v2refresh();pgVideo();pgMode();setTimeout(renderHK,1500);
 if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
 
@@ -319,7 +328,7 @@ if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decode
 
 /* ürün görseli yüklenemezse (dosya yoksa) renkli ad kutusuna dön */
 document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLImageElement))return;
- if(im.classList.contains('uc-ci')){im.closest('.uc-c')&&im.closest('.uc-c').classList.remove('has-img');const art=im.closest('.uc-art');if(art)art.remove();else im.remove();}
+ if(im.classList.contains('uc-ci')){const c=im.closest('.uc-c'),art=im.closest('.uc-art');if(c){c.classList.remove('has-img');c.classList.add('no-img');}if(art){art.className='uc-art uc-soon';art.innerHTML='<i></i><em>'+esc2(tr('img_soon'))+'</em>';}else im.remove();}
  else if(im.parentElement&&im.parentElement.classList.contains('uc-vis')){im.parentElement.classList.remove('has-img');im.remove();}},true);
 
 /* ---- mobil menü: açılınca bulunulan bölüm açık gelir; menüdeki sağlık çalışanı girişi menüyü kapatır ---- */
@@ -479,9 +488,9 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
 {const draw=()=>{const pg=$('#vAlan .pg');if(!pg)return;const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');
   const O=(window.IF_CMS&&IF_CMS.orn)||{},u=i<0?'':((Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp':''));
   pg.classList.toggle('al-ph',!!u);pg.classList.toggle('al-noimg',i>=0&&!u);let f=pg.querySelector('.pg-vid');
-  if(!u){if(f)f.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}});return;}
+  if(!u){if(f&&i>=0)f.remove();return;}
   if(!f){f=document.createElement('figure');f.className='pg-vid';f.setAttribute('aria-hidden','true');pg.appendChild(f);pg.classList.add('has-vid');}
-  if(f.dataset.u===u)return;f.dataset.u=u;f.querySelectorAll('video').forEach(v=>{try{v.pause();}catch(e){}v.remove();});
+  if(f.dataset.u===u)return;f.dataset.u=u;f.querySelectorAll('video,img.pl').forEach(v=>{try{v.pause&&v.pause();}catch(e){}v.remove();});f.classList.remove('pg-loop','pg-alan');
   const old=f.querySelector('img.al-img');if(old)old.remove();const im=document.createElement('img');im.className='al-img';im.alt='';im.decoding='async';im.src=u;f.insertBefore(im,f.firstChild);
   const cap=f.querySelector('.pg-cap span');if(cap){cap.removeAttribute('data-t');cap.textContent=(IFD.CA[IF.lang||'tr']||IFD.CA.en)[i]||'';}};
  draw();setTimeout(draw,400);setTimeout(draw,1500);addEventListener('popstate',()=>setTimeout(draw,50));IF.onLang.push(()=>setTimeout(draw,30));}
