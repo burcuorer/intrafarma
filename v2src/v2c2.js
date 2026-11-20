@@ -359,7 +359,7 @@ $$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();con
 
 /* üst çubuk sığma denetimi: dil değişince ya da pencere boyutu değişince */
 {const top=document.querySelector('.site-top'),H=document.documentElement;
- const fit=()=>{if(!top)return;H.classList.remove('nv-c1','nv-c2','nv-c3','nv-c4');if(innerWidth<=1100)return;const over=()=>{const r=top.getBoundingClientRect(),cs=getComputedStyle(top),rtl=cs.direction==='rtl',k=[...top.children].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!k.length)return false;return rtl?Math.min(...k.map(b=>b.left))<r.left+parseFloat(cs.paddingLeft)-1:Math.max(...k.map(b=>b.right))>r.right-parseFloat(cs.paddingRight)+1;};
+ const fit=()=>{if(!top)return;H.classList.remove('nv-c1','nv-c2','nv-c3','nv-c4');if(innerWidth<=1100)return;const over=()=>{const r=top.getBoundingClientRect(),cs=getComputedStyle(top),rtl=cs.direction==='rtl',k=[...top.children,...top.querySelectorAll('.nv')].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!k.length)return false;return rtl?Math.min(...k.map(b=>b.left))<r.left+parseFloat(cs.paddingLeft)-1:Math.max(...k.map(b=>b.right))>r.right-parseFloat(cs.paddingRight)+1;};
   for(const c of ['nv-c1','nv-c2','nv-c3','nv-c4']){if(!over())break;H.classList.add(c);}};
  fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);IF.onLang.push(()=>requestAnimationFrame(fit));}
 
