@@ -283,7 +283,16 @@
     "mb_lab": "Hızlı erişim",
     "cert_h": "Sertifikalar ve belgeler",
     "cert_c": "Belge yakında",
-    "cert_n": "Kalite ve uygunluk belgelerimiz bu alanda yayımlanacak."
+    "cert_n": "Kalite ve uygunluk belgelerimiz bu alanda yayımlanacak.",
+    "ct_sh": "Sonraki adımlar",
+    "ct_sp": "Talebiniz doğrudan ilgili ekibimize iletilir.",
+    "ct_s1": "Talebiniz bize ulaşır",
+    "ct_s1p": "Form e-postamıza ve talep listemize düşer.",
+    "ct_s2": "İlgili birim değerlendirir",
+    "ct_s2p": "Ürün, bayilik ya da iş birliği konusuna göre yönlendirilir.",
+    "ct_s3": "Size geri döneriz",
+    "ct_s3p": "Ekibimiz e-posta ya da telefonla iletişime geçer.",
+    "ct_map": "Google Haritalar’da aç"
   },
   "en": {
     "draft": "Test version · text, figures and images are samples",
@@ -569,7 +578,16 @@
     "mb_lab": "Quick access",
     "cert_h": "Certificates and approvals",
     "cert_c": "Coming soon",
-    "cert_n": "Our quality and compliance certificates will be published here."
+    "cert_n": "Our quality and compliance certificates will be published here.",
+    "ct_sh": "Next steps",
+    "ct_sp": "Your request goes straight to the right team.",
+    "ct_s1": "We receive your request",
+    "ct_s1p": "The form reaches our inbox and request list.",
+    "ct_s2": "The relevant team reviews it",
+    "ct_s2p": "It is routed by topic: products, distribution or partnership.",
+    "ct_s3": "We get back to you",
+    "ct_s3p": "Our team contacts you by e-mail or phone.",
+    "ct_map": "Open in Google Maps"
   },
   "ar": {
     "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -855,7 +873,16 @@
     "mb_lab": "وصول سريع",
     "cert_h": "الشهادات والموافقات",
     "cert_c": "قريبًا",
-    "cert_n": "ستُنشر هنا شهادات الجودة والمطابقة الخاصة بنا."
+    "cert_n": "ستُنشر هنا شهادات الجودة والمطابقة الخاصة بنا.",
+    "ct_sh": "الخطوات التالية",
+    "ct_sp": "يصل طلبك مباشرة إلى الفريق المختص.",
+    "ct_s1": "نستلم طلبك",
+    "ct_s1p": "يصل النموذج إلى بريدنا وقائمة الطلبات.",
+    "ct_s2": "يراجعه الفريق المختص",
+    "ct_s2p": "يُوجَّه حسب الموضوع: المنتجات أو التوزيع أو الشراكة.",
+    "ct_s3": "نعاود التواصل معك",
+    "ct_s3p": "يتواصل فريقنا معك عبر البريد أو الهاتف.",
+    "ct_map": "افتح في خرائط Google"
   },
   "it": {
     "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -1141,7 +1168,16 @@
     "mb_lab": "Accesso rapido",
     "cert_h": "Certificati e autorizzazioni",
     "cert_c": "Prossimamente",
-    "cert_n": "I nostri certificati di qualità e conformità saranno pubblicati qui."
+    "cert_n": "I nostri certificati di qualità e conformità saranno pubblicati qui.",
+    "ct_sh": "Prossimi passi",
+    "ct_sp": "La sua richiesta arriva direttamente al team giusto.",
+    "ct_s1": "Riceviamo la sua richiesta",
+    "ct_s1p": "Il modulo arriva alla nostra e-mail e all’elenco richieste.",
+    "ct_s2": "Il team competente la valuta",
+    "ct_s2p": "Viene indirizzata per tema: prodotti, distribuzione o collaborazione.",
+    "ct_s3": "La ricontattiamo",
+    "ct_s3p": "Il nostro team la contatta via e-mail o telefono.",
+    "ct_map": "Apri in Google Maps"
   },
   "ru": {
     "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -1427,7 +1463,16 @@
     "mb_lab": "Быстрый доступ",
     "cert_h": "Сертификаты и разрешения",
     "cert_c": "Скоро",
-    "cert_n": "Здесь будут опубликованы наши сертификаты качества и соответствия."
+    "cert_n": "Здесь будут опубликованы наши сертификаты качества и соответствия.",
+    "ct_sh": "Следующие шаги",
+    "ct_sp": "Ваш запрос сразу попадает к нужной команде.",
+    "ct_s1": "Мы получаем ваш запрос",
+    "ct_s1p": "Форма поступает на нашу почту и в список запросов.",
+    "ct_s2": "Профильный отдел рассматривает его",
+    "ct_s2p": "Направляется по теме: продукты, дистрибуция или сотрудничество.",
+    "ct_s3": "Мы свяжемся с вами",
+    "ct_s3p": "Наша команда свяжется с вами по почте или телефону.",
+    "ct_map": "Открыть в Google Картах"
   },
   "es": {
     "pc_ey": "/ Pro · Productos",
@@ -1989,7 +2034,16 @@
     "mb_lab": "Acceso rápido",
     "cert_h": "Certificados y autorizaciones",
     "cert_c": "Próximamente",
-    "cert_n": "Aquí se publicarán nuestros certificados de calidad y conformidad."
+    "cert_n": "Aquí se publicarán nuestros certificados de calidad y conformidad.",
+    "ct_sh": "Próximos pasos",
+    "ct_sp": "Su solicitud llega directamente al equipo adecuado.",
+    "ct_s1": "Recibimos su solicitud",
+    "ct_s1p": "El formulario llega a nuestro correo y lista de solicitudes.",
+    "ct_s2": "El equipo correspondiente la revisa",
+    "ct_s2p": "Se dirige según el tema: productos, distribución o colaboración.",
+    "ct_s3": "Le respondemos",
+    "ct_s3p": "Nuestro equipo le contacta por correo o teléfono.",
+    "ct_map": "Abrir en Google Maps"
   },
   "fr": {
     "pc_ey": "/ Pro · Produits",
@@ -2551,6 +2605,15 @@
     "mb_lab": "Accès rapide",
     "cert_h": "Certificats et autorisations",
     "cert_c": "Bientôt",
-    "cert_n": "Nos certificats de qualité et de conformité seront publiés ici."
+    "cert_n": "Nos certificats de qualité et de conformité seront publiés ici.",
+    "ct_sh": "Prochaines étapes",
+    "ct_sp": "Votre demande parvient directement à la bonne équipe.",
+    "ct_s1": "Nous recevons votre demande",
+    "ct_s1p": "Le formulaire arrive dans notre messagerie et notre liste de demandes.",
+    "ct_s2": "L’équipe concernée l’examine",
+    "ct_s2p": "Elle est orientée selon le sujet : produits, distribution ou partenariat.",
+    "ct_s3": "Nous revenons vers vous",
+    "ct_s3p": "Notre équipe vous contacte par e-mail ou téléphone.",
+    "ct_map": "Ouvrir dans Google Maps"
   }
 }

@@ -310,9 +310,9 @@ const PGI={urunler:['genis/hero-urun.webp','genis/portfolio-regenflex-studio.web
  guncel:['genis/hero-bilim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
  uzmanlik:['banner/ortopedi.webp','banner/uroloji.webp','banner/kadin-sagligi.webp','banner/noroloji.webp','banner/estetik.webp','banner/diger.webp'],
  hakkimizda:['genis/hero-laboratuvar.webp','genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp'],
- iletisim:['genis/hero-laboratuvar.webp','genis/regenyal-laboratuvar.webp']};
+ iletisim:['genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp']};
 function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
- const f=document.createElement('figure');f.className='pg-vid pg-loop'+(P==='uzmanlik'?' pg-alan':'');f.setAttribute('aria-hidden','true');
+ const f=document.createElement('figure');f.className='pg-vid pg-loop'+(P==='uzmanlik'?' pg-alan':'')+(P==='iletisim'?' pg-ct':'');f.setAttribute('aria-hidden','true');
  f.innerHTML=L.map((u,i)=>'<img class="pl'+(i?'':' on')+'" src="'+(window.IF_BASE||'')+'media/'+u+'" alt="" decoding="async"'+(i?' loading="lazy"':'')+'>').join('');
  pg.appendChild(f);pg.classList.add('has-vid');
  if(L.length<2||matchMedia('(prefers-reduced-motion: reduce)').matches)return;let k=0;
@@ -557,6 +557,33 @@ soonCards();
  const all=()=>$$('.nv').forEach(place);
  $$('.nv').forEach(nv=>{['mouseenter','focusin'].forEach(ev=>nv.addEventListener(ev,()=>place(nv)));const t=nv.querySelector(':scope>.nv-t');if(t)t.addEventListener('click',()=>requestAnimationFrame(()=>place(nv)));});
  addEventListener('resize',all);IF.onLang.push(()=>setTimeout(all,50));setTimeout(all,300);}
+
+/* İletişim sayfası: tek form kartı (sekmeli), solda sonraki adımlar, altta bilgi kartları ve harita */
+function ctBuild(){const v=$('#vIletisim');if(!v||v.querySelector('.ct'))return;
+ const fA=v.querySelector('#form'),fB=v.querySelector('#bayilik'),g=v.querySelector('.il-g'),soc=v.querySelector('.il-soc');if(!fA||!fB)return;
+ const T=k=>esc2(tr(k));
+ const w=document.createElement('div');w.className='ct';
+ w.innerHTML='<aside class="ct-st" data-rv="up"><h2 data-t="ct_sh">'+T('ct_sh')+'</h2><p data-t="ct_sp">'+T('ct_sp')+'</p><ol>'+[1,2,3].map(i=>'<li><b data-t="ct_s'+i+'">'+T('ct_s'+i)+'</b><span data-t="ct_s'+i+'p">'+T('ct_s'+i+'p')+'</span></li>').join('')+'</ol></aside>'
+  +'<div class="ct-card" data-rv="up"><div class="ct-tabs" role="tablist"><button type="button" role="tab" data-p="form" data-t="nv_ilf">'+T('nv_ilf')+'</button><button type="button" role="tab" data-p="bayilik" data-t="nv_bay">'+T('nv_bay')+'</button></div><div class="ct-panes"></div></div>';
+ const panes=w.querySelector('.ct-panes');
+ [fA,fB].forEach(sec=>{const pn=document.createElement('div');pn.className='ct-pane';pn.id=sec.id;sec.removeAttribute('id');const hp=sec.querySelector('.if-fm-h p');if(hp){hp.className='ct-lede';pn.appendChild(hp);}pn.appendChild(sec.querySelector('form'));panes.appendChild(pn);sec.remove();});
+ const sec=g?g.closest('section'):v.querySelector('.pg-sec');sec.insertBefore(w,sec.firstChild);
+ if(soc)soc.hidden=true;
+ if(g){g.classList.add('ct-info');[['il_t','tel'],['il_m','mail'],['il_a','pin']].forEach(([k,ic],i)=>{});const ord=['il_t','il_m','il_a'],ics={il_t:'<path d="M5 4h3l2 5-2 1a11 11 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',il_m:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',il_a:'<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'};
+  ord.forEach(k=>{const h=g.querySelector('h3[data-t="'+k+'"]');if(!h)return;const d=h.parentElement;d.removeAttribute('data-rv');d.classList.add('in');if(!d.querySelector('svg')){const s2=document.createElementNS('http://www.w3.org/2000/svg','svg');s2.setAttribute('viewBox','0 0 24 24');s2.setAttribute('aria-hidden','true');s2.innerHTML=ics[k];d.insertBefore(s2,d.firstChild);}g.appendChild(d);});
+  w.after(g);
+  const adr=(g.querySelector('[data-t="il_av"]')||{}).textContent||'Intrafarma Beylikdüzü İstanbul';
+  const m=document.createElement('a');m.className='ct-map';m.target='_blank';m.rel='noopener';m.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Intrafarma '+adr.replace(/\s+/g,' '));
+  m.innerHTML='<span class="ct-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="ct-mapb" data-t="ct_map">'+T('ct_map')+' →</span>';
+  g.after(m);}
+ const tabs=[...w.querySelectorAll('.ct-tabs button')],ps=[...w.querySelectorAll('.ct-pane')];
+ const sel=id=>{tabs.forEach(b=>{const on=b.dataset.p===id;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});ps.forEach(p=>p.hidden=p.id!==id);};
+ tabs.forEach(b=>b.addEventListener('click',()=>{sel(b.dataset.p);history.replaceState(history.state,'','#'+b.dataset.p);}));
+ const fromHash=()=>{const h=location.hash.slice(1);if(h==='bayilik'||h==='form'){sel(h);requestAnimationFrame(()=>w.scrollIntoView({block:'start'}));}else sel('form');};
+ fromHash();addEventListener('hashchange',fromHash);
+ v.querySelectorAll('.ct [data-rv]').forEach(e=>e.classList.add('in'));
+ IF.onLang.push(()=>{w.querySelectorAll('[data-t]').forEach(e=>{const k=e.dataset.t;e.textContent=tr(k)+(k==='ct_map'?' →':'');});const mb=document.querySelector('.ct-mapb');if(mb)mb.textContent=tr('ct_map')+' →';});}
+ctBuild();
 
 labels();
 })();
