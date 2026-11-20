@@ -2751,6 +2751,15 @@ html .pg.al-ph .pg-vid{top:var(--hdr)!important;bottom:0!important;height:auto!i
  mask-image:linear-gradient(90deg,transparent 0,#000 38%),linear-gradient(180deg,transparent 0,#000 22%)!important;mask-composite:intersect!important}
 html .pg.al-ph>.pg-in{width:min(58%,700px)!important}
 
+
+/* (uzak oturum, 20.11 02:19) Layout audit: full-width partner rails, quiet arrivals */
+html[data-page=hakkimizda] #hkPt.hk-film{grid-template-columns:minmax(0,1fr);width:100%;min-width:0}
+#hkPt .film-rail{width:100%;min-width:0}
+html body .ur-f{margin-top:clamp(56px,6vw,88px);gap:28px}
+html body .il-soc{margin-top:28px!important}
+html body .pg .pg-in,html body .pg .wd>span{opacity:1;transform:none;filter:none}
+@media(max-width:640px){html body .ur-f{margin-top:44px;gap:32px}}
+
 /* =====================================================================
    SADE KATMAN (20.11 sabah): tek koyu vurgu (hücre bölümü) + altbilgi.
    Diğer bütün kutular açık zeminde, ince çerçeveli, gölgesiz.

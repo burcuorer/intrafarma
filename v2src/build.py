@@ -30,8 +30,8 @@ def need(c, m):
     if not c: sys.exit('DERLEME HATASI: ' + m)
 
 A = os.path.join(OUT, 'assets')
-if os.path.isdir(A): shutil.rmtree(A)
-os.makedirs(os.path.join(A, 'fonts')); os.makedirs(os.path.join(A, 'vendor', 'addons', 'environments'))
+os.makedirs(os.path.join(A, 'fonts'), exist_ok=True)
+os.makedirs(os.path.join(A, 'vendor', 'addons', 'environments'), exist_ok=True)
 def W(rel, txt):
     p = os.path.join(A, rel); io.open(p, 'w', encoding='utf-8', newline='\n').write(txt)
     return hashlib.sha1(txt.encode()).hexdigest()[:8]
@@ -59,21 +59,27 @@ imap_txt = imap.group(0)
 cellmod = '<script type="text/x-cell-module" id="cellMod" data-src="assets/cell.js?v=%s"></script>' % h_m
 
 # fontlar yerel
-FONTS = {'ibm-plex-mono': [400, 500], 'ibm-plex-sans': [400, 500, 600], 'ibm-plex-sans-arabic': [400, 500, 600, 700], 'schibsted-grotesk': [500, 600, 700, 800]}
-fcss = []
-for pkg, ws in FONTS.items():
-    for w in ws:
-        p = '%s/@fontsource/%s/%d.css' % (NM, pkg, w); need(os.path.exists(p), 'font ' + p)
-        t = io.open(p, encoding='utf-8').read()
-        t = re.sub(r",\s*url\(\./files/[^)]+\.woff\) format\('woff'\)", '', t)
-        for f in set(re.findall(r'url\(\./files/([^)]+\.woff2)\)', t)):
-            shutil.copy('%s/@fontsource/%s/files/%s' % (NM, pkg, f), os.path.join(A, 'fonts', f))
-        fcss.append(t.replace('url(./files/', 'url(fonts/'))
-h_f = W('fonts.css', re.sub(r'/\*.*?\*/\s*', '', '\n'.join(fcss), flags=re.S))
-# three.js yerel
-shutil.copy(NM + '/three/build/three.module.js', os.path.join(A, 'vendor', 'three.module.js'))
-shutil.copy(NM + '/three/examples/jsm/environments/RoomEnvironment.js', os.path.join(A, 'vendor', 'addons', 'environments', 'RoomEnvironment.js'))
-shutil.copy(NM + '/three/LICENSE', os.path.join(A, 'vendor', 'THREE-LICENSE.txt'))
+if os.path.isdir(NM):
+    FONTS = {'ibm-plex-mono': [400, 500], 'ibm-plex-sans': [400, 500, 600], 'ibm-plex-sans-arabic': [400, 500, 600, 700], 'schibsted-grotesk': [500, 600, 700, 800]}
+    fcss = []
+    for pkg, ws in FONTS.items():
+        for w in ws:
+            p = '%s/@fontsource/%s/%d.css' % (NM, pkg, w); need(os.path.exists(p), 'font ' + p)
+            t = io.open(p, encoding='utf-8').read()
+            t = re.sub(r",\s*url\(\./files/[^)]+\.woff\) format\('woff'\)", '', t)
+            for f in set(re.findall(r'url\(\./files/([^)]+\.woff2)\)', t)):
+                shutil.copy('%s/@fontsource/%s/files/%s' % (NM, pkg, f), os.path.join(A, 'fonts', f))
+            fcss.append(t.replace('url(./files/', 'url(fonts/'))
+    h_f = W('fonts.css', re.sub(r'/\*.*?\*/\s*', '', '\n'.join(fcss), flags=re.S))
+    # three.js yerel
+    shutil.copy(NM + '/three/build/three.module.js', os.path.join(A, 'vendor', 'three.module.js'))
+    shutil.copy(NM + '/three/examples/jsm/environments/RoomEnvironment.js', os.path.join(A, 'vendor', 'addons', 'environments', 'RoomEnvironment.js'))
+    shutil.copy(NM + '/three/LICENSE', os.path.join(A, 'vendor', 'THREE-LICENSE.txt'))
+else:
+    # Tracked fonts and vendor files make a clean checkout buildable offline.
+    for rel in ('fonts.css', 'vendor/three.module.js', 'vendor/addons/environments/RoomEnvironment.js'):
+        need(os.path.isfile(os.path.join(A, rel)), 'eksik yerel dosya: ' + rel)
+    h_f = hashlib.sha1(open(os.path.join(A, 'fonts.css'), 'rb').read()).hexdigest()[:8]
 
 for fn, pid, title in PAGES:
     h = re.sub(r'<html lang="tr"[^>]*>', '<html lang="tr" data-page="%s">' % pid, head, count=1)
