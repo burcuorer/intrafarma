@@ -152,13 +152,13 @@ const PGV={urunler:'hero-urun',uretim:'hero-uretim',bilim:'hero-bilim',uzmanlik:
 /* başlık boyu: büyük video yalnız Hakkımızda ve Üretim'de; ürün ayrıntısında video yok (ürünün kendi görseli hemen altta) */
 function pgMode(){const pg=curView&&$('#'+curView+' .pg');if(!pg)return;pg.classList.toggle('pg-tall',P==='hakkimizda'||P==='uretim');pg.classList.toggle('pg-det',P==='urunler'&&UC.urun>=0);}
 /* alt sayfa başlıkları: aynı videolar yerine sayfaya uygun görsellerin yavaş geçişli döngüsü (firma videoları gelene kadar) */
-const PGI={urunler:['hero-urun.jpg','gorsel/portfolio-regenflex-studio.jpg','gorsel/regenyal-siringhe.jpg'],
- uretim:['hero-uretim.jpg','gorsel/regenyal-laboratuvar.jpg','gorsel/regenyal-equipe.jpg','gorsel/tesis.jpg'],
- bilim:['hero-bilim.jpg','hero-laboratuvar.jpg','gorsel/regenyal-laboratuvar.jpg'],
- guncel:['gorsel/regenyal-equipe.jpg','hero-bilim.jpg','gorsel/tesis.jpg'],
- uzmanlik:['alan/ortopedi.webp','alan/uroloji.webp','alan/kadin-sagligi.webp','alan/noroloji.webp','alan/estetik.webp','alan/diger.webp'],
- hakkimizda:['hero-laboratuvar.jpg','gorsel/regenyal-equipe.jpg','gorsel/tesis.jpg','hero-uretim.jpg'],
- iletisim:['hero-laboratuvar.jpg','gorsel/regenyal-laboratuvar.jpg']};
+const PGI={urunler:['genis/hero-urun.webp','genis/portfolio-regenflex-studio.webp','genis/regenyal-siringhe.webp'],
+ uretim:['genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
+ bilim:['genis/hero-bilim.webp','genis/hero-laboratuvar.webp','genis/regenyal-laboratuvar.webp'],
+ guncel:['genis/hero-bilim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
+ uzmanlik:['alan-genis/ortopedi.webp','alan-genis/uroloji.webp','alan-genis/kadin-sagligi.webp','alan-genis/noroloji.webp','alan-genis/estetik.webp','alan-genis/diger.webp'],
+ hakkimizda:['genis/hero-laboratuvar.webp','genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp'],
+ iletisim:['genis/hero-laboratuvar.webp','genis/regenyal-laboratuvar.webp']};
 function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
  const f=document.createElement('figure');f.className='pg-vid pg-loop'+(P==='uzmanlik'?' pg-alan':'');f.setAttribute('aria-hidden','true');
  f.innerHTML=L.map((u,i)=>'<img class="pl'+(i?'':' on')+'" src="'+(window.IF_BASE||'')+'media/'+u+'" alt="" decoding="async"'+(i?' loading="lazy"':'')+'>').join('');
@@ -339,7 +339,7 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
 
 /* uzmanlık alanı sayfası: başlık bandının sağındaki videonun yerine alanın fotoğrafı (Bölüm görselleri → Klinik alan görselleri) */
 {const draw=()=>{const pg=$('#vAlan .pg');if(!pg)return;const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');
-  const O=(window.IF_CMS&&IF_CMS.orn)||{},u=i<0?'':((Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp':''));
+  const O=(window.IF_CMS&&IF_CMS.orn)||{},u=i<0?'':((Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan-genis/'+UA_IMG[i]+'.webp':''));
   pg.classList.toggle('al-ph',!!u);pg.classList.toggle('al-noimg',i>=0&&!u);let f=pg.querySelector('.pg-vid');
   if(!u){if(f&&i>=0)f.remove();return;}
   if(!f){f=document.createElement('figure');f.className='pg-vid';f.setAttribute('aria-hidden','true');pg.appendChild(f);pg.classList.add('has-vid');}

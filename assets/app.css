@@ -2931,8 +2931,8 @@ html body .uc-g .uc-c.uc-c .uc-art .uc-ci.uc-ci,html body .al-g .al-cards .uc-c.
 /* görsel yakında: grup rengine göre değil, tek nötr ton */
 html body .uc-soon i{border-color:#c3d1d8!important;background:#f3f6f8!important}
 /* başlık görsel döngüsü: ürün/ambalaj fotoğrafları kırpılmasın */
-.pg-loop:not(.pg-alan) img.pl{object-fit:contain;object-position:100% 50%;transform-origin:100% 50%}
-.pg-loop:not(.pg-alan) img.pl{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%)}
+
+
 /* Pro / katalog / giriş: hücre sahnesi yine tam ekran (sonraki katmanlardaki sahne yüksekliği bunu eziyordu) */
 html.stage-full,html.stage-full body{overflow:hidden!important}
 html.stage-full body .home .stage,html.stage-full body #stage.stage{position:fixed!important;inset:0!important;z-index:200!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-height:none!important;min-height:0!important;margin:0!important;border-radius:0!important;transform:none!important}
@@ -2944,3 +2944,6 @@ html.stage-full body .mb-bar{display:none!important}
 .cert-g .soon-c{padding:8px 8px 12px}
 .cert-g .soon-im{aspect-ratio:3/4!important}
 @media (max-width:760px){.cert-g{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}.cert-g .soon-c:nth-child(3){display:flex}.cert-g .soon-c:nth-child(4){display:none}.cert-g .soon-im em{font-size:9px;padding:5px 7px}}
+
+/* Başlık görselleri: hepsi yatay (genişletilmiş) sürüm; konu ortada, kırpılmaz */
+html body .pg-loop img.pl,html body .pg.al-ph .pg-vid img.al-img{object-fit:cover!important;object-position:50% 50%!important}
