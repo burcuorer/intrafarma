@@ -584,6 +584,14 @@ function ctBuild(){const v=$('#vIletisim');if(!v||v.querySelector('.ct'))return;
  v.querySelectorAll('.ct [data-rv]').forEach(e=>e.classList.add('in'));
  IF.onLang.push(()=>{w.querySelectorAll('[data-t]').forEach(e=>{const k=e.dataset.t;e.textContent=tr(k)+(k==='ct_map'?' →':'');});const mb=document.querySelector('.ct-mapb');if(mb)mb.textContent=tr('ct_map')+' →';});}
 ctBuild();
+/* Pro / katalog tam ekran: sahne yüksekliğini pencereye piksel olarak sabitle (Safari'de alt kısım beyaz kalıyordu) */
+{const st=$('#stage'),H=document.documentElement;let on=false;
+ const fit=()=>{if(!st)return;const full=H.classList.contains('stage-full');
+  if(full){const h=(window.visualViewport?visualViewport.height:innerHeight);st.style.setProperty('height',h+'px','important');st.style.setProperty('top','0','important');st.style.setProperty('bottom','auto','important');}
+  else{st.style.removeProperty('height');st.style.removeProperty('top');st.style.removeProperty('bottom');}
+  if(full!==on){on=full;requestAnimationFrame(()=>dispatchEvent(new Event('resize')));setTimeout(()=>dispatchEvent(new Event('resize')),350);}};
+ new MutationObserver(fit).observe(H,{attributes:true,attributeFilter:['class']});
+ addEventListener('resize',()=>{if(on)fit();});if(window.visualViewport)visualViewport.addEventListener('resize',()=>{if(on)fit();});fit();}
 
 labels();
 })();

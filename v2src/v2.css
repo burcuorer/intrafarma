@@ -2022,3 +2022,4 @@ html[data-page=iletisim] .pg .pg-in p{max-width:520px}
 .ct-info>div>*:not(svg){grid-column:2}
 .ct-info p,.ct-info p *{font-weight:400!important}
 .ct-map{margin-bottom:clamp(24px,3vw,40px)!important}
+html.stage-full body #stage.stage canvas#gl{height:100%!important}
