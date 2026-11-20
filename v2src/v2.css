@@ -1937,3 +1937,6 @@ html body .pg.al-ph>*:not(.pg-vid),html body .pg:has(.pg-loop.pg-alan)>*:not(.pg
 @media (max-width:760px){
  html body .pg.al-ph .pg-vid,html body .pg-loop.pg-alan{position:relative!important;inset:auto!important;display:block;width:calc(100% + 2*var(--px))!important;margin:18px calc(-1*var(--px)) 0!important;aspect-ratio:16/9;height:auto!important}
  html body .pg.al-ph .pg-vid img.al-img,html body .pg-loop.pg-alan img.pl{object-position:88% 50%!important}}
+/* Açılış slaytı: video adı sağ altta (kontrollerle aynı hizada) */
+html body .vh .vh-cap{top:auto!important;bottom:34px!important;right:var(--px,40px)!important;left:auto!important;transform:none!important}
+@media (max-width:760px){html body .vh .vh-cap{display:none!important}}
