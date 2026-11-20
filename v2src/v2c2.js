@@ -97,9 +97,12 @@ function renderHK(){
   const belt=document.createElement('div');belt.className='film-track';belt.style.setProperty('--film-duration',(100+row*12)+'s');
   for(let copy=0;copy<2;copy++){const group=document.createElement('div');group.className='film-group';
    if(copy){group.setAttribute('aria-hidden','true');}
-   items.forEach(item=>{const c=item.cloneNode(true);if(copy){c.tabIndex=-1;const im=c.querySelector('img');if(im)im.alt='';}group.appendChild(c);});belt.appendChild(group);}
+   items.forEach(item=>{const c=item.cloneNode(true);c.querySelectorAll('img').forEach(i=>{i.loading='eager';});if(copy){c.tabIndex=-1;const im=c.querySelector('img');if(im)im.alt='';}group.appendChild(c);});belt.appendChild(group);}
   rail.appendChild(belt);g.appendChild(rail);
  }
+ /* Safari kayan bandı içerik genişliğini yanlış ölçüp ikinci kopyayı ilkinin üstüne bindirebiliyor: genişlikleri piksel olarak sabitle */
+ const fit=()=>{g.querySelectorAll('.film-track').forEach(t=>{const gr=t.querySelectorAll('.film-group'),first=gr[0]&&gr[0].querySelector('.pt-l');if(!first)return;gr.forEach(x=>x.style.width='');const cw=first.getBoundingClientRect().width,n=gr[0].children.length,w=Math.ceil(n*(cw+16));gr.forEach(x=>x.style.width=w+'px');t.style.width=(w*2)+'px';t.style.setProperty('--gw',w+'px');});};
+ fit();if(!g._fitBound){let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(fit,150);});g._fitBound=1;}
  const sync=()=>g.classList.toggle('film-active',g.dataset.inview==='true'&&!document.hidden);
  g._filmObserver=new IntersectionObserver(es=>{g.dataset.inview=String(es[0].isIntersecting);sync();},{threshold:.05});g._filmObserver.observe(g);
  if(!g.dataset.visibilityBound){document.addEventListener('visibilitychange',sync);g.dataset.visibilityBound='1';}
@@ -381,6 +384,8 @@ function soonCards(){['#haberler','#etkinlikler','#duyurular'].forEach(id=>{cons
  d.innerHTML='<div class="soon-g" aria-hidden="true">'+[0,1,2].map(j=>'<div class="soon-c" style="--i:'+j+'"><span class="soon-im"><em data-t="soon_t">'+esc2(tr('soon_t'))+'</em></span><i></i><i></i><i class="s"></i></div>').join('')+'</div><p class="soon-n"><span'+(k?' data-t="'+k+'"':'')+'>'+esc2(k?tr(k):'')+'</span></p>';
  pc.replaceWith(d);});}
 soonCards();
+/* Hakkımızda: tanıtım filmi/basın içeriği yoksa tek satırlık notla bölüm açmayalım */
+{const pc=$('.hk-med .pend-card');if(pc){const sec=pc.closest('section')||pc.parentElement;if(sec)sec.hidden=true;}}
 /* Telefon: alt gezinme çubuğu (ürünler, arama, Pro) — iletişim çağrısı içermez */
 {const nb=document.createElement('nav');nb.className='mb-bar';nb.setAttribute('aria-label',tr('mb_lab'));
  nb.innerHTML='<a href="'+esc2(IFU.U.urunler)+'"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5"/><rect x="11" y="11" width="6" height="6" rx="1.5"/></svg><span data-t="nav3">'+esc2(tr('nav3'))+'</span></a>'
