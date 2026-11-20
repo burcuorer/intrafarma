@@ -2869,3 +2869,46 @@ html body .pg.pg-tall{min-height:0!important;height:auto!important;padding-top:c
 @media (max-width:900px){html body .pg.has-vid .pg-vid{position:relative!important;inset:auto!important;width:auto!important;height:200px!important;margin:18px calc(-1*var(--px)) 0!important;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 30%)!important;mask-image:linear-gradient(180deg,transparent 0,#000 30%)!important}}
 @media (max-width:900px){html body .pg.has-vid .pg-vid{width:calc(100% + 2*var(--px))!important;max-width:none!important}}
 html body .hk-pos-in{padding:clamp(18px,2.4vw,32px)!important;border-radius:20px!important}
+
+/* ===== ÖNERİLER KATMANI: etiketler, benzer ürünler, arama önerileri, Yakında kartları, telefon alt çubuğu ===== */
+html body .uc-c{position:relative}
+.uc-bds{position:absolute;top:10px;left:10px;z-index:2;display:flex;gap:6px;pointer-events:none}
+[dir=rtl] .uc-bds{left:auto;right:10px}
+.uc-bd{font:600 10.5px/1 var(--f-b);letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:5px 8px;border-radius:999px;background:#fff;color:var(--ink);border:1px solid var(--ln2)}
+.uc-bd.pr{background:#0E2235;color:#fff;border-color:#0E2235}
+.uc-bd.nw{background:#E8F4F2;color:#0F6B63;border-color:#BFE0DA}
+html body .uc-more .uc-g{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1100px){html body .uc-more .uc-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.srch-sg{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.srch-sg a{display:inline-block;padding:8px 14px;border-radius:999px;border:1px solid var(--ln2);background:#fff;color:var(--ink);text-decoration:none;font:500 14px/1.2 var(--f-b);transition:border-color .2s,background .2s}
+.srch-sg a:hover,.srch-sg a:focus-visible{border-color:var(--cobalt);background:#F2F7F9}
+/* Medya: Yakında iskelet kartları */
+.soon-w{max-width:none}
+.soon-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.soon-c{display:flex;flex-direction:column;gap:8px;padding:10px 10px 16px;border:1px solid var(--ln);border-radius:var(--r2);background:#fff}
+.soon-im{position:relative;display:grid;place-items:center;aspect-ratio:2/1;border-radius:calc(var(--r2) - 6px);background:linear-gradient(135deg,#F2F6F8,#E6EEF2);overflow:hidden;margin-bottom:6px}
+.soon-im::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.65) 50%,transparent 70%);transform:translateX(-100%);animation:soonSh 2.6s ease-in-out infinite;animation-delay:calc(var(--i)*.35s)}
+.soon-im em{position:relative;z-index:1;font:600 11px/1 var(--f-b);letter-spacing:.12em;text-transform:uppercase;font-style:normal;color:#7C8F9A;padding:7px 11px;border:1px dashed #B9C8D0;border-radius:999px;background:rgba(255,255,255,.7)}
+.soon-c i{display:block;height:9px;border-radius:5px;background:#EDF2F4;width:90%}
+.soon-c i:first-of-type{width:34%;height:7px;background:#E3EBEF}
+.soon-c i.s{width:62%}
+.soon-n{margin:14px 0 0;color:var(--tx2);font:400 15px/1.5 var(--f-b)}
+@keyframes soonSh{to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.soon-im::after{animation:none;display:none}}
+@media (max-width:760px){.soon-g{grid-template-columns:1fr 1fr;gap:12px}.soon-c:nth-child(3){display:none}}
+/* Telefon alt çubuğu */
+.mb-bar{display:none}
+@media (max-width:760px){
+ .mb-bar{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;display:grid;grid-template-columns:repeat(4,1fr);height:58px;border-radius:18px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--ln);box-shadow:0 10px 30px rgba(14,34,53,.14)}
+ .mb-bar a,.mb-bar button{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--ink-2);font:500 11px/1 var(--f-b);-webkit-tap-highlight-color:transparent}
+ .mb-bar svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+ .mb-bar [aria-current]{color:var(--cobalt)}
+ .mb-bar a:focus-visible,.mb-bar button:focus-visible{outline:2px solid var(--cobalt);outline-offset:-4px;border-radius:14px}
+ body{padding-bottom:84px}
+ html body .totop{bottom:84px!important}
+ html body .draft-chip{bottom:80px!important}
+ html body .nv-srch,html body .nv-hcp,html body .site-top>.hcp{display:none!important}
+ html body .pg.al-ph>.pg-in{width:auto!important;max-width:none}
+ html body .site-top .nv-burger{margin-inline-start:auto}
+ html.nav-lock .mb-bar,html.srch-on .mb-bar,html.ck-on .mb-bar{display:none}
+}

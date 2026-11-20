@@ -260,14 +260,14 @@ function intrafarma_doc_row($x) {
     return $h;
 }
 function intrafarma_prod_row($i, $p, $axes) {
-    $p += array('n' => '', 'a' => 0, 'open' => false, 'pr' => false, 'img' => '', 'd' => array(), 'u' => array(), 'f' => array(), 't' => array(), 'v' => '', 'ca' => array(), 'docs' => array(), 'crop' => array());
+    $p += array('n' => '', 'a' => 0, 'open' => false, 'pr' => false, 'nw' => false, 'img' => '', 'd' => array(), 'u' => array(), 'f' => array(), 't' => array(), 'v' => '', 'ca' => array(), 'docs' => array(), 'crop' => array());
     $L = INTRAFARMA_LANG_NAMES;
     $h = '<details class="if-item if-prod"' . ($p['n'] === '' ? ' open' : '') . '><summary><span class="if-thumb">' . ($p['img'] ? '<img src="' . esc_url(intrafarma_media_url($p['img'])) . '" alt="">' : '') . '</span><span class="if-title">' . ($p['n'] !== '' ? esc_html($p['n']) : 'Yeni ürün') . '</span><span class="if-sub">' . esc_html(isset($axes[$p['a']]) ? $axes[$p['a']] : '') . '</span>' . intrafarma_row_tools() . '</summary><div class="if-body">';
     // 1. temel bilgiler
     $h .= '<h3 class="if-h">1 · Temel bilgiler</h3><div class="if-grid"><label>Ürün adı<input type="text" class="if-name regular-text" data-f="n" value="' . esc_attr($p['n']) . '" required></label>';
     $h .= '<label>Ürün grubu<select data-f="a">';
     foreach ($axes as $ai => $an) { $h .= '<option value="' . (int) $ai . '"' . selected((int) $p['a'], $ai, false) . '>' . str_pad((string) ($ai + 1), 2, '0', STR_PAD_LEFT) . ' · ' . esc_html($an) . '</option>'; }
-    $h .= '</select></label><label>Kimler görür<select data-f="open"><option value="0"' . selected(!empty($p['open']), false, false) . '>Yalnızca sağlık çalışanları (teknik ayrıntı)</option><option value="1"' . selected(!empty($p['open']), true, false) . '>Herkese açık</option></select></label><label class="if-check"><input type="checkbox" data-f="pr"' . checked(!empty($p['pr']), true, false) . '> Ana sayfadaki premium bantta göster</label></div>';
+    $h .= '</select></label><label>Kimler görür<select data-f="open"><option value="0"' . selected(!empty($p['open']), false, false) . '>Yalnızca sağlık çalışanları (teknik ayrıntı)</option><option value="1"' . selected(!empty($p['open']), true, false) . '>Herkese açık</option></select></label><label class="if-check"><input type="checkbox" data-f="pr"' . checked(!empty($p['pr']), true, false) . '> Ana sayfadaki premium bantta göster</label><label class="if-check"><input type="checkbox" data-f="nw"' . checked(!empty($p['nw']), true, false) . '> Kartta &quot;Yeni&quot; etiketi göster</label></div>';
     $h .= '<fieldset class="if-cas"><legend>Klinik alanlar</legend>';
     $ca = array_map('intval', (array) $p['ca']);
     foreach (intrafarma_ca_names() as $ci => $cn) { $h .= '<label><input type="checkbox" data-ca="' . $ci . '"' . checked(in_array($ci, $ca, true), true, false) . '> ' . esc_html($cn) . '</label>'; }
@@ -331,6 +331,7 @@ add_action('admin_post_intrafarma_save_prods', function () {
         foreach (INTRAFARMA_LANGS as $l) { $t = isset($p['d'][$l]) ? sanitize_textarea_field($p['d'][$l]) : ''; if ($t !== '') { $d[$l] = $t; } }
         $row = array('n' => $n, 'a' => max(0, min(INTRAFARMA_AX_N - 1, isset($p['a']) ? (int) $p['a'] : 0)), 'open' => !empty($p['open']) && $p['open'] !== '0');
         if (!empty($p['pr'])) { $row['pr'] = true; }
+        if (!empty($p['nw'])) { $row['nw'] = true; }
         $img = isset($p['img']) ? esc_url_raw($p['img']) : '';
         if ($img !== '') { $row['img'] = $img; }
         $row['crop'] = array();

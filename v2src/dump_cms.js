@@ -19,7 +19,7 @@ const {chromium}=require('playwright');const fs=require('fs'),path=require('path
    [/^(rq_|dt_|dq|d_|d\d|s_|m_|pub_|ps_|k\d|z_|tab|dd|dt\d|pn|pc_|pd_|pr_|p_|via|logout|pro_)/,'Sağlık çalışanları alanı (Pro)'],
    [/^(ft_)/,'Alt bilgi'],[/^(nav|n_|nv_|srch|hcp|pg_home|all_|bc|ov$|close|totop|draft|pend|prog)/,'Menü'],[/./,'Ana sayfa']];
   Object.keys(tx.tr).forEach(k=>{if(!grp[k]){for(const [re,name] of PF){if(re.test(k)){grp[k]=name;break;}}}});
-  const prods=D.PRODS.map(p=>Object.assign({n:p.n,a:p.a,open:!!p.open},p.pr?{pr:true}:{}));
+  const prods=D.PRODS.map(p=>Object.assign({n:p.n,a:p.a,open:!!p.open},p.pr?{pr:true}:{},p.nw?{nw:true}:{}));
   return {langs,tx,grp,prods,axca:D.AXCA};});
  /* iş ortakları kaynak koddan */
  const src=fs.readFileSync(path.join(__dirname,'app.html'),'utf8');const m=/\|\|(\[\[.*?\]\]);\s*\nconst track/s.exec(src);

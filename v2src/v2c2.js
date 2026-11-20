@@ -26,7 +26,8 @@ function ucHref(o){const s=Object.assign({ax:UC.ax,ca:UC.ca,urun:-1},o||{}),q=ne
 function ucCard(p,i,L,AX){const AXC=IF.AXC||[],open=!!p.open;
  const art=p.img?'<span class="uc-art" aria-hidden="true"><img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"></span>'
   :'<span class="uc-art uc-soon" aria-hidden="true"><i></i><em>'+esc2(tr('img_soon'))+'</em></span>';
- return '<a class="uc-c'+(p.img?' has-img':' no-img')+'" data-axis="'+p.a+'" href="'+ucHref({urun:i})+'" style="--tc:'+(AXC[p.a]||'#17707A')+'">'+art+'<span class="uc-t"><i>'+String(p.a+1).padStart(2,'0')+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'"><span class="l">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="s">'+esc2(tr(open?'cat_pub_s':'cat_pro_s'))+'</span></span><span class="uc-go" aria-hidden="true">→</span></a>';}
+ const bd=(p.pr?'<em class="uc-bd pr">'+esc2(tr('bdg_pr'))+'</em>':'')+(p.nw?'<em class="uc-bd nw">'+esc2(tr('bdg_nw'))+'</em>':'');
+ return '<a class="uc-c'+(p.img?' has-img':' no-img')+'" data-axis="'+p.a+'" href="'+ucHref({urun:i})+'" style="--tc:'+(AXC[p.a]||'#17707A')+'">'+art+(bd?'<span class="uc-bds">'+bd+'</span>':'')+'<span class="uc-t"><i>'+String(p.a+1).padStart(2,'0')+'</i>'+esc2(AX[p.a])+'</span><b>'+esc2(p.n)+'</b><span class="uc-acc'+(open?' open':'')+'"><span class="l">'+esc2(tr(open?'cat_pub':'cat_pro'))+'</span><span class="s">'+esc2(tr(open?'cat_pub_s':'cat_pro_s'))+'</span></span><span class="uc-go" aria-hidden="true">→</span></a>';}
 
 function renderUC(){
  if(P!=='urunler')return;
@@ -51,7 +52,7 @@ function renderUC(){
  }else{
   const p=PR[UC.urun],axn=AX[p.a],open=!!p.open;
   const areas=pCA(p).map(i=>'<a href="'+IFU.alan(i)+'">'+esc2(CA[i])+'</a>').join('');
-  const more=PR.map((x,i)=>({x,i})).filter(o=>o.x.a===p.a&&o.i!==UC.urun);
+  const pc=pCA(p),all=PR.map((x,i)=>({x,i})).filter(o=>o.i!==UC.urun),same=all.filter(o=>o.x.a===p.a),near=all.filter(o=>o.x.a!==p.a&&pCA(o.x).some(c=>pc.includes(c)));const more=same.concat(near).slice(0,4);
   $('#ucD').innerHTML=
    '<a class="uc-back" href="'+ucHref({ax:p.a,ca:-1})+'"><i aria-hidden="true">←</i><span>'+esc2(axn)+'</span></a>'+
    '<div class="uc-dg"><div class="uc-vis'+(p.img?' has-img':'')+'" style="--tc:'+(AXC[p.a]||'#17707A')+(p.img?';--im:url(&quot;'+esc2(encodeURI(p.img))+'&quot;)':'')+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="'+esc2(p.n)+'" loading="lazy">':'')+'<small>0'+(p.a+1)+' · '+esc2(axn)+'</small><span>'+esc2(p.n)+'</span></div>'+
@@ -60,7 +61,7 @@ function renderUC(){
    (open?'<div class="uc-box open"><h2>'+tr('op_t')+'</h2><p>'+tr('op_b')+'</p></div>'
         :'<div class="uc-box lock"><h2>'+tr('lk_t')+'</h2><p>'+tr('lk_b')+'</p><button type="button" class="b-pri" id="ucGate"><span>'+esc2(tr('cta1'))+'</span><span class="o"></span></button></div>')+
    '</div></div>'+
-   (more.length?'<div class="uc-more"><h2>'+esc2(tr('uc_more'))+'</h2><div class="uc-g">'+more.map(o=>ucCard(o.x,o.i,L,AX)).join('')+'</div></div>':'');
+   (more.length?'<div class="uc-more"><h2>'+esc2(tr('uc_sim'))+'</h2><div class="uc-g">'+more.map(o=>ucCard(o.x,o.i,L,AX)).join('')+'</div></div>':'');
   const g=$('#ucGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;IF.openGate();});ucExtra(p,L);
  }
 }
@@ -153,7 +154,7 @@ const PGI={urunler:['hero-urun.jpg','gorsel/portfolio-regenflex-studio.jpg','gor
  uretim:['hero-uretim.jpg','gorsel/regenyal-laboratuvar.jpg','gorsel/regenyal-equipe.jpg','gorsel/tesis.jpg'],
  bilim:['hero-bilim.jpg','hero-laboratuvar.jpg','gorsel/regenyal-laboratuvar.jpg'],
  guncel:['gorsel/regenyal-equipe.jpg','hero-bilim.jpg','gorsel/tesis.jpg'],
- uzmanlik:['alan/ortopedi.webp','alan/uroloji.webp','alan/kadin-sagligi.webp','alan/estetik.webp'],
+ uzmanlik:['alan/ortopedi.webp','alan/uroloji.webp','alan/kadin-sagligi.webp','alan/noroloji.webp','alan/estetik.webp','alan/diger.webp'],
  hakkimizda:['hero-laboratuvar.jpg','gorsel/regenyal-equipe.jpg','gorsel/tesis.jpg','hero-uretim.jpg'],
  iletisim:['hero-laboratuvar.jpg','gorsel/regenyal-laboratuvar.jpg']};
 function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
@@ -288,7 +289,9 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
  const q=box.querySelector('input'),R=box.querySelector('.srch-r'),btn=$('#nvSrch');let back=null;
  const norm=s=>String(s).toLocaleLowerCase('tr').replace(/ı/g,'i').normalize('NFD').replace(/[̀-ͯ]/g,'');
  function run(){const L=IF.lang||'tr',v=norm(q.value.trim()),AXl=D.AX[L]||D.AX.en,CAl=D.CA[L]||D.CA.en;q.placeholder=tr('srch_ph');q.setAttribute('aria-label',tr('srch'));
-  if(!v){R.innerHTML='';return;}
+  if(!v){const pr=D.PRODS.filter(p=>p.pr||p.nw).slice(0,6);
+   R.innerHTML=(pr.length?'<h3>'+esc2(tr('srch_pop'))+'</h3><ul class="srch-p1">'+pr.map(p=>'<li><a href="'+esc2(IFU.prod(p))+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="" loading="lazy">':'<i aria-hidden="true"></i>')+'<b>'+esc2(p.n)+'</b><small>'+esc2(AXl[p.a]||'')+'</small></a></li>').join('')+'</ul>':'')
+    +'<h3>'+esc2(tr('srch_g'))+'</h3><ul class="srch-sg">'+AXl.map((n,i)=>'<li><a href="'+esc2(IFU.ax(i))+'">'+esc2(n)+'</a></li>').join('')+'</ul>';return;}
   const P=D.PRODS.filter(p=>norm(p.n).includes(v)||norm(AXl[p.a]||'').includes(v)).slice(0,9),G=AXl.map((n,i)=>({n,i})).filter(o=>norm(o.n).includes(v)),A=CAl.map((n,i)=>({n,i})).filter(o=>norm(o.n).includes(v));
   let h='';
   if(P.length)h+='<h3>'+esc2(tr('nav3'))+'</h3><ul class="srch-p1">'+P.map(p=>'<li><a href="'+esc2(IFU.prod(p))+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="" loading="lazy">':'<i aria-hidden="true"></i>')+'<b>'+esc2(p.n)+'</b><small>'+esc2(AXl[p.a]||'')+'</small></a></li>').join('')+'</ul>';
@@ -371,3 +374,21 @@ $$('.if-fm-f').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();con
    s.onchange=()=>{const c=src.querySelectorAll('.chip')[+s.value];if(c)c.click();};};
   const sync=()=>{fill(sA,ax,'srch_g');fill(sC,ca,'cat_ca');};
   sync();new MutationObserver(sync).observe(ax,{childList:true,subtree:true,attributes:true});new MutationObserver(sync).observe(ca,{childList:true,subtree:true,attributes:true});}}
+
+/* Medya: içerik gelene kadar tek satırlık not yerine "Yakında" iskelet kartları */
+function soonCards(){['#haberler','#etkinlikler','#duyurular'].forEach(id=>{const pc=$(id+' > .pend-card');if(!pc)return;const sp=pc.querySelector('span[data-t]'),k=sp?sp.dataset.t:'';
+ const d=document.createElement('div');d.className='soon-w';
+ d.innerHTML='<div class="soon-g" aria-hidden="true">'+[0,1,2].map(j=>'<div class="soon-c" style="--i:'+j+'"><span class="soon-im"><em data-t="soon_t">'+esc2(tr('soon_t'))+'</em></span><i></i><i></i><i class="s"></i></div>').join('')+'</div><p class="soon-n"><span'+(k?' data-t="'+k+'"':'')+'>'+esc2(k?tr(k):'')+'</span></p>';
+ pc.replaceWith(d);});}
+soonCards();
+/* Telefon: alt gezinme çubuğu (ürünler, arama, Pro) — iletişim çağrısı içermez */
+{const nb=document.createElement('nav');nb.className='mb-bar';nb.setAttribute('aria-label',tr('mb_lab'));
+ nb.innerHTML='<a href="'+esc2(IFU.U.urunler)+'"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5"/><rect x="11" y="11" width="6" height="6" rx="1.5"/></svg><span data-t="nav3">'+esc2(tr('nav3'))+'</span></a>'
+  +'<a href="'+esc2(IFU.U.uzmanlik||'uzmanlik.html')+'" class="mb-uz"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 3v14M3 10h14"/></svg><span data-t="n_uzm">'+esc2(tr('n_uzm'))+'</span></a>'
+  +'<button type="button" data-srch><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg><span data-t="srch">'+esc2(tr('srch'))+'</span></button>'
+  +'<button type="button" class="mb-pro"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="8" rx="2"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg><span data-t="mb_pro">'+esc2(tr('mb_pro'))+'</span></button>';
+ document.body.appendChild(nb);
+ const sb=nb.querySelector('[data-srch]');sb.addEventListener('click',()=>{const b=$('#nvSrch');if(b)b.click();});
+ nb.querySelector('.mb-pro').addEventListener('click',()=>{if(IF.openGate)IF.openGate();});
+ if(P==='urunler')nb.querySelector('a').setAttribute('aria-current','page');if(P==='uzmanlik')nb.querySelector('.mb-uz').setAttribute('aria-current','page');
+ IF.onLang.push(()=>{nb.setAttribute('aria-label',tr('mb_lab'));nb.querySelectorAll('[data-t]').forEach(e=>e.textContent=tr(e.dataset.t));});}

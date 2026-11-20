@@ -60,7 +60,7 @@ def revize1(h):
             "const PRODS=[" + rows + "].map(([n,a,pr])=>({n,a,open:a>=6&&a<=8,pr:!!pr}));", h, _re.S)
     h = _rx(r"var AL=\[[^\]]*\];", "var AL=['ortopedi-fiziksel-tip','uroloji-androloji','kadin-hastaliklari-dogum','noroloji','dermatoloji-medikal-estetik','diger'];", h)
     h = _rx(r"var AXS=\[[^\]]*\];", "var AXS=['hucresel-tedaviler','ayristirma-kitleri','hyaluronik-asitler','genital-estetik','kolajen','prp-kitleri','gida-takviyeleri','biodekontaminant','hipsafe','tasinabilir-ultrason'];", h)
-    h = _rx(r"const UA_IMG=\[[^\]]*\];", "const UA_IMG=['ortopedi','uroloji','kadin-sagligi','','estetik',''];", h)
+    h = _rx(r"const UA_IMG=\[[^\]]*\];", "const UA_IMG=['ortopedi','uroloji','kadin-sagligi','noroloji','estetik','diger'];", h)
     # simgeler: 4. alan nöroloji (beyin), 6. alan diğer (artı)
     m = _re.search(r"const UA_IC=\[(.*?)\];\n", h, _re.S)
     ic = _re.findall(r"'([^']*)'", m.group(1))
