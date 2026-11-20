@@ -2950,6 +2950,12 @@ html.stage-full body .mb-bar{display:none!important}
 
 /* Başlık görselleri: hepsi yatay (genişletilmiş) sürüm; konu ortada, kırpılmaz */
 html body .pg-loop img.pl,html body .pg.al-ph .pg-vid img.al-img{object-fit:cover!important;object-position:50% 50%!important}
+/* Uzmanlık bannerı: kare görsel büyük, banner kenarlarından taşar gibi; her yöne yumuşakça soluklaşır */
+html body .pg.al-ph .pg-vid,html body .pg-loop.pg-alan{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18%)!important;mask-image:linear-gradient(90deg,transparent 0,#000 18%)!important;background:none!important;overflow:hidden}
+html body .pg.al-ph .pg-vid img.al-img,html body .pg-loop.pg-alan img.pl{position:absolute!important;inset:auto!important;top:54%!important;left:56%!important;width:auto!important;height:128%!important;max-width:none!important;aspect-ratio:1/1;object-fit:cover!important;object-position:50% 40%!important;transform:translate(-50%,-50%)!important;
+ -webkit-mask-image:radial-gradient(closest-side,#000 40%,rgba(0,0,0,.6) 66%,rgba(0,0,0,.18) 86%,transparent 100%);mask-image:radial-gradient(closest-side,#000 40%,rgba(0,0,0,.6) 66%,rgba(0,0,0,.18) 86%,transparent 100%)}
+html body .pg-loop.pg-alan img.pl{transition:opacity 1.6s ease!important}
+@media (max-width:760px){html body .pg.al-ph .pg-vid img.al-img,html body .pg-loop.pg-alan img.pl{left:50%!important;height:118%!important;top:52%!important}html body .pg.al-ph .pg-vid,html body .pg-loop.pg-alan{-webkit-mask-image:none!important;mask-image:none!important}}
 </style>
 </head><body>
 
@@ -4245,7 +4251,7 @@ const PGI={urunler:['genis/hero-urun.webp','genis/portfolio-regenflex-studio.web
  uretim:['genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
  bilim:['genis/hero-bilim.webp','genis/hero-laboratuvar.webp','genis/regenyal-laboratuvar.webp'],
  guncel:['genis/hero-bilim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
- uzmanlik:['alan-genis/ortopedi.webp','alan-genis/uroloji.webp','alan-genis/kadin-sagligi.webp','alan-genis/noroloji.webp','alan-genis/estetik.webp','alan-genis/diger.webp'],
+ uzmanlik:['alan/ortopedi.webp','alan/uroloji.webp','alan/kadin-sagligi.webp','alan/noroloji.webp','alan/estetik.webp','alan/diger.webp'],
  hakkimizda:['genis/hero-laboratuvar.webp','genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp'],
  iletisim:['genis/hero-laboratuvar.webp','genis/regenyal-laboratuvar.webp']};
 function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
@@ -4428,7 +4434,7 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
 
 /* uzmanlık alanı sayfası: başlık bandının sağındaki videonun yerine alanın fotoğrafı (Bölüm görselleri → Klinik alan görselleri) */
 {const draw=()=>{const pg=$('#vAlan .pg');if(!pg)return;const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');
-  const O=(window.IF_CMS&&IF_CMS.orn)||{},u=i<0?'':((Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan-genis/'+UA_IMG[i]+'.webp':''));
+  const O=(window.IF_CMS&&IF_CMS.orn)||{},u=i<0?'':((Array.isArray(O.alan)&&O.alan[i])||(UA_IMG[i]?(window.IF_BASE||'')+'media/alan/'+UA_IMG[i]+'.webp':''));
   pg.classList.toggle('al-ph',!!u);pg.classList.toggle('al-noimg',i>=0&&!u);let f=pg.querySelector('.pg-vid');
   if(!u){if(f&&i>=0)f.remove();return;}
   if(!f){f=document.createElement('figure');f.className='pg-vid';f.setAttribute('aria-hidden','true');pg.appendChild(f);pg.classList.add('has-vid');}
