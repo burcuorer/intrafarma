@@ -548,6 +548,15 @@ soonCards();
  nb.querySelector('.mb-pro').addEventListener('click',()=>{if(IF.openGate)IF.openGate();});
  if(P==='urunler')nb.querySelector('a').setAttribute('aria-current','page');if(P==='uzmanlik')nb.querySelector('.mb-uz').setAttribute('aria-current','page');
  IF.onLang.push(()=>{nb.setAttribute('aria-label',tr('mb_lab'));nb.querySelectorAll('[data-t]').forEach(e=>e.textContent=tr(e.dataset.t));});}
+/* Üst menü açılırları: tetikleyicinin altında ortalı, ekran kenarına taşmadan (her dil ve genişlikte) */
+{const place=nv=>{const m=nv.querySelector(':scope>.nv-m'),t=nv.querySelector(':scope>.nv-t');if(!m||!t||innerWidth<1101)return;
+  m.style.removeProperty('left');m.style.removeProperty('right');
+  const mw=m.offsetWidth,tr=t.getBoundingClientRect(),nr=nv.getBoundingClientRect(),vw=document.documentElement.clientWidth,pad=16;
+  let x=tr.left+tr.width/2-mw/2;x=Math.max(pad,Math.min(vw-pad-mw,x));
+  m.style.setProperty('left',(x-nr.left)+'px','important');m.style.setProperty('right','auto','important');};
+ const all=()=>$$('.nv').forEach(place);
+ $$('.nv').forEach(nv=>{['mouseenter','focusin'].forEach(ev=>nv.addEventListener(ev,()=>place(nv)));const t=nv.querySelector(':scope>.nv-t');if(t)t.addEventListener('click',()=>requestAnimationFrame(()=>place(nv)));});
+ addEventListener('resize',all);IF.onLang.push(()=>setTimeout(all,50));setTimeout(all,300);}
 
 labels();
 })();
