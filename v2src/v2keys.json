@@ -280,7 +280,10 @@
     "srch_pop": "Öne çıkanlar",
     "soon_t": "Yakında",
     "mb_pro": "Pro giriş",
-    "mb_lab": "Hızlı erişim"
+    "mb_lab": "Hızlı erişim",
+    "cert_h": "Sertifikalar ve belgeler",
+    "cert_c": "Belge yakında",
+    "cert_n": "Kalite ve uygunluk belgelerimiz bu alanda yayımlanacak."
   },
   "en": {
     "draft": "Test version · text, figures and images are samples",
@@ -563,7 +566,10 @@
     "srch_pop": "Featured",
     "soon_t": "Coming soon",
     "mb_pro": "Pro login",
-    "mb_lab": "Quick access"
+    "mb_lab": "Quick access",
+    "cert_h": "Certificates and approvals",
+    "cert_c": "Coming soon",
+    "cert_n": "Our quality and compliance certificates will be published here."
   },
   "ar": {
     "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -846,7 +852,10 @@
     "srch_pop": "منتجات مميزة",
     "soon_t": "قريبًا",
     "mb_pro": "دخول Pro",
-    "mb_lab": "وصول سريع"
+    "mb_lab": "وصول سريع",
+    "cert_h": "الشهادات والموافقات",
+    "cert_c": "قريبًا",
+    "cert_n": "ستُنشر هنا شهادات الجودة والمطابقة الخاصة بنا."
   },
   "it": {
     "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -1129,7 +1138,10 @@
     "srch_pop": "In evidenza",
     "soon_t": "Prossimamente",
     "mb_pro": "Accesso Pro",
-    "mb_lab": "Accesso rapido"
+    "mb_lab": "Accesso rapido",
+    "cert_h": "Certificati e autorizzazioni",
+    "cert_c": "Prossimamente",
+    "cert_n": "I nostri certificati di qualità e conformità saranno pubblicati qui."
   },
   "ru": {
     "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -1412,7 +1424,10 @@
     "srch_pop": "Рекомендуемые",
     "soon_t": "Скоро",
     "mb_pro": "Вход Pro",
-    "mb_lab": "Быстрый доступ"
+    "mb_lab": "Быстрый доступ",
+    "cert_h": "Сертификаты и разрешения",
+    "cert_c": "Скоро",
+    "cert_n": "Здесь будут опубликованы наши сертификаты качества и соответствия."
   },
   "es": {
     "pc_ey": "/ Pro · Productos",
@@ -1971,7 +1986,10 @@
     "srch_pop": "Destacados",
     "soon_t": "Próximamente",
     "mb_pro": "Acceso Pro",
-    "mb_lab": "Acceso rápido"
+    "mb_lab": "Acceso rápido",
+    "cert_h": "Certificados y autorizaciones",
+    "cert_c": "Próximamente",
+    "cert_n": "Aquí se publicarán nuestros certificados de calidad y conformidad."
   },
   "fr": {
     "pc_ey": "/ Pro · Produits",
@@ -2530,6 +2548,9 @@
     "srch_pop": "À la une",
     "soon_t": "Bientôt",
     "mb_pro": "Accès Pro",
-    "mb_lab": "Accès rapide"
+    "mb_lab": "Accès rapide",
+    "cert_h": "Certificats et autorisations",
+    "cert_c": "Bientôt",
+    "cert_n": "Nos certificats de qualité et de conformité seront publiés ici."
   }
 }

@@ -1894,11 +1894,14 @@ html body .uc-more .uc-g{grid-template-columns:repeat(4,minmax(0,1fr))}
  html.nav-lock .mb-bar,html.srch-on .mb-bar,html.ck-on .mb-bar{display:none}
 }
 
-/* İş ortakları bandı: piksel genişlikli gruplar (Safari bindirme düzeltmesi) */
-html body .film-group{box-sizing:border-box;flex:0 0 auto}
-html body .film-group>.pt-l{flex:0 0 clamp(150px,15vw,210px)!important;min-width:0}
-@keyframes partnerFilmPx{from{transform:translate3d(calc(var(--gw,50%)*-1),0,0)}to{transform:translate3d(0,0,0)}}
-html body .film-track{animation-name:partnerFilmPx}
+/* İş ortakları bandı: sabit kart genişliği; grup ve kaydırma mesafesi aynı formülden (Safari bindirme düzeltmesi) */
+.hk-film{--cw:184px;--gp:16px}
+@media (max-width:760px){.hk-film{--cw:148px;--gp:12px}}
+html body .hk-film .film-track{width:calc(var(--n,6) * (var(--cw) + var(--gp)) * 2)!important;animation-name:partnerFilmFix}
+html body .hk-film .film-group{display:flex;gap:0!important;padding:0!important;margin:0!important;flex:0 0 auto!important;width:calc(var(--n,6) * (var(--cw) + var(--gp)))!important;box-sizing:border-box}
+html body .hk-film .film-group>.pt-l{flex:0 0 var(--cw)!important;width:var(--cw)!important;min-width:var(--cw)!important;max-width:var(--cw)!important;margin:0 var(--gp) 0 0!important;box-sizing:border-box;overflow:hidden;position:relative}
+html body .hk-film .film-group>.pt-l img{position:static}
+@keyframes partnerFilmFix{from{transform:translate3d(calc(var(--n,6) * (var(--cw) + var(--gp)) * -1),0,0)}to{transform:translate3d(0,0,0)}}
 
 /* ===== HİZALAMA TURU (20.11 sabah) ===== */
 /* filtre: arama kutusu açılır listelerle aynı alt çizgide */
@@ -1915,3 +1918,10 @@ html body .uc-soon i{border-color:#c3d1d8!important;background:#f3f6f8!important
 html.stage-full,html.stage-full body{overflow:hidden!important}
 html.stage-full body .home .stage,html.stage-full body #stage.stage{position:fixed!important;inset:0!important;z-index:200!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-height:none!important;min-height:0!important;margin:0!important;border-radius:0!important;transform:none!important}
 html.stage-full body .mb-bar{display:none!important}
+/* Kalite: sertifika yer tutucuları (belge oranında) */
+.hk-cert{margin-top:28px}
+.hk-cert h3{margin:0 0 14px;font:600 18px/1.3 var(--f-d,var(--f-b));color:var(--ink)}
+.cert-g{grid-template-columns:repeat(4,minmax(0,170px))!important;gap:14px!important}
+.cert-g .soon-c{padding:8px 8px 12px}
+.cert-g .soon-im{aspect-ratio:3/4!important}
+@media (max-width:760px){.cert-g{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}.cert-g .soon-c:nth-child(3){display:flex}.cert-g .soon-c:nth-child(4){display:none}.cert-g .soon-im em{font-size:9px;padding:5px 7px}}

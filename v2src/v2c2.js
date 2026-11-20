@@ -100,9 +100,8 @@ function renderHK(){
    items.forEach(item=>{const c=item.cloneNode(true);c.querySelectorAll('img').forEach(i=>{i.loading='eager';});if(copy){c.tabIndex=-1;const im=c.querySelector('img');if(im)im.alt='';}group.appendChild(c);});belt.appendChild(group);}
   rail.appendChild(belt);g.appendChild(rail);
  }
- /* Safari kayan bandı içerik genişliğini yanlış ölçüp ikinci kopyayı ilkinin üstüne bindirebiliyor: genişlikleri piksel olarak sabitle */
- const fit=()=>{g.querySelectorAll('.film-track').forEach(t=>{const gr=t.querySelectorAll('.film-group'),first=gr[0]&&gr[0].querySelector('.pt-l');if(!first)return;gr.forEach(x=>x.style.width='');const cw=first.getBoundingClientRect().width,n=gr[0].children.length,w=Math.ceil(n*(cw+16));gr.forEach(x=>x.style.width=w+'px');t.style.width=(w*2)+'px';t.style.setProperty('--gw',w+'px');});};
- fit();if(!g._fitBound){let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(fit,150);});g._fitBound=1;}
+ /* kayan bant: kart genişliği sabit (CSS --cw), grup genişliği = adet × (kart + boşluk); ölçüm yok, Safari'de de bindirme yok */
+ g.querySelectorAll('.film-track').forEach(t=>{const n=t.querySelector('.film-group').children.length;t.style.setProperty('--n',n);});
  const sync=()=>g.classList.toggle('film-active',g.dataset.inview==='true'&&!document.hidden);
  g._filmObserver=new IntersectionObserver(es=>{g.dataset.inview=String(es[0].isIntersecting);sync();},{threshold:.05});g._filmObserver.observe(g);
  if(!g.dataset.visibilityBound){document.addEventListener('visibilitychange',sync);g.dataset.visibilityBound='1';}
