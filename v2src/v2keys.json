@@ -272,7 +272,8 @@
   "k1m": "10 ürün grubu",
   "s2": "Ürün grubu",
   "d_ax": "Ürün grubu",
-  "dd1": "Hyaluronik asitler"
+  "dd1": "Hyaluronik asitler",
+  "img_soon": "Görsel yakında"
  },
  "en": {
   "draft": "Test version · text, figures and images are samples",
@@ -547,7 +548,8 @@
   "k1m": "10 product groups",
   "s2": "Product groups",
   "d_ax": "Product group",
-  "dd1": "Hyaluronic acids"
+  "dd1": "Hyaluronic acids",
+  "img_soon": "Image coming soon"
  },
  "ar": {
   "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -822,7 +824,8 @@
   "k1m": "10 مجموعات منتجات",
   "s2": "مجموعات المنتجات",
   "d_ax": "مجموعة المنتجات",
-  "dd1": "أحماض الهيالورونيك"
+  "dd1": "أحماض الهيالورونيك",
+  "img_soon": "الصورة قريبًا"
  },
  "it": {
   "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -1097,7 +1100,8 @@
   "k1m": "10 gruppi di prodotti",
   "s2": "Gruppi di prodotti",
   "d_ax": "Gruppo di prodotti",
-  "dd1": "Acidi ialuronici"
+  "dd1": "Acidi ialuronici",
+  "img_soon": "Immagine in arrivo"
  },
  "ru": {
   "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -1372,7 +1376,8 @@
   "k1m": "10 групп продуктов",
   "s2": "Группы продуктов",
   "d_ax": "Группа продуктов",
-  "dd1": "Гиалуроновые кислоты"
+  "dd1": "Гиалуроновые кислоты",
+  "img_soon": "Фото скоро"
  },
  "es": {
   "pc_ey": "/ Pro · Productos",
@@ -1923,7 +1928,8 @@
   "ax_p6": "Complementos alimenticios que apoyan la salud articular y de los tejidos a través de la nutrición.",
   "ax_p7": "Sistemas de biodescontaminación de aire y superficies para entornos clínicos.",
   "ax_p8": "El producto Hipsafe.",
-  "ax_p9": "Un ecógrafo portátil para la consulta y el trabajo de campo."
+  "ax_p9": "Un ecógrafo portátil para la consulta y el trabajo de campo.",
+  "img_soon": "Imagen próximamente"
  },
  "fr": {
   "pc_ey": "/ Pro · Produits",
@@ -2474,6 +2480,7 @@
   "ax_p6": "Compléments alimentaires qui soutiennent la santé des articulations et des tissus par la nutrition.",
   "ax_p7": "Systèmes de biodécontamination de l'air et des surfaces pour les environnements cliniques.",
   "ax_p8": "Le produit Hipsafe.",
-  "ax_p9": "Un échographe portable pour le cabinet et le terrain."
+  "ax_p9": "Un échographe portable pour le cabinet et le terrain.",
+  "img_soon": "Image bientôt disponible"
  }
 }
