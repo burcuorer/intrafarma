@@ -43,7 +43,7 @@ add_action('rest_api_init', function () {
         $f = array(
             'tur' => $tur, 'urun' => $g('urun', 120), 'kurum' => $g('kurum', 160), 'ad' => $g('ad', 120), 'unvan' => $g('unvan', 120),
             'tel' => $g('tel', 40), 'eposta' => $mail, 'adet' => $g('adet', 10), 'not' => mb_substr(sanitize_textarea_field((string) $req->get_param('not')), 0, 2000),
-            'meslek' => $g('meslek', 80), 'ulke' => $g('ulke', 80), 'sehir' => $g('sehir', 120), 'site' => esc_url_raw($g('site', 190)), 'dil' => $g('dil', 5), 'sayfa' => $g('sayfa', 190), 'lot' => $g('lot', 60), 'tarih' => $g('tarih', 20), 'bulten' => $req->get_param('bulten') ? 1 : 0,
+            'meslek' => $g('meslek', 80), 'ulke' => $g('ulke', 80), 'dil' => $g('dil', 5), 'sayfa' => $g('sayfa', 190), 'lot' => $g('lot', 60), 'tarih' => $g('tarih', 20), 'bulten' => $req->get_param('bulten') ? 1 : 0,
         );
         $title = INTRAFARMA_TALEP_TUR[$tur] . ($f['urun'] !== '' ? ' · ' . $f['urun'] : '') . ' · ' . ($f['kurum'] !== '' ? $f['kurum'] : $mail);
         $id = wp_insert_post(array('post_type' => 'if_talep', 'post_status' => 'private', 'post_title' => $title), true);
@@ -54,7 +54,7 @@ add_action('rest_api_init', function () {
         update_post_meta($id, '_if_ref', $ref);
 
         $etiket = array('tur' => 'Talep türü', 'urun' => 'Ürün', 'kurum' => 'Kurum', 'ad' => 'Ad soyad', 'unvan' => 'Unvan', 'tel' => 'Telefon', 'eposta' => 'E-posta',
-            'adet' => 'Adet', 'sehir' => 'Şehir / ülke', 'site' => 'Web sitesi', 'not' => 'Not', 'meslek' => 'Beyan edilen meslek', 'ulke' => 'Ülke', 'dil' => 'Site dili', 'sayfa' => 'Gönderildiği sayfa', 'lot' => 'Lot / seri no', 'tarih' => 'Olay tarihi', 'bulten' => 'Bülten izni');
+            'adet' => 'Adet', 'not' => 'Not', 'meslek' => 'Beyan edilen meslek', 'ulke' => 'Ülke', 'dil' => 'Site dili', 'sayfa' => 'Gönderildiği sayfa', 'lot' => 'Lot / seri no', 'tarih' => 'Olay tarihi', 'bulten' => 'Bülten izni');
         $body = "Sitede yeni bir talep var. Referans: $ref\n\n";
         foreach ($etiket as $k => $lab) {
             $v = $k === 'tur' ? INTRAFARMA_TALEP_TUR[$tur] : ($k === 'bulten' ? ($f['bulten'] ? 'Evet' : 'Hayır') : $f[$k]);

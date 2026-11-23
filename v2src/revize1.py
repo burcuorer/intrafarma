@@ -170,7 +170,7 @@ def FORM(anchor, k):
     """Talep formu: site → WordPress (Talepler) + e-posta. Ortak form sistemi: etiket üstte, zorunlu (*) / isteğe bağlı işareti, alan altında hata."""
     f = {
         'ilf': [('ad', 'f_ad', 'text', 1), ('kurum', 'f_kurum', 'text', 0), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 0)],
-        'bay': [('kurum', 'f_firma', 'text', 1), ('ad', 'f_ad', 'text', 1), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 1), ('sehir', 'f_sehir', 'text', 1), ('web', 'f_webs', 'url', 0)],
+        'bay': [('kurum', 'f_firma', 'text', 1), ('ad', 'f_ad', 'text', 1), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 1)],
         'isb': [('kurum', 'f_firma', 'text', 1), ('ad', 'f_ad', 'text', 1), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 0)],
         'yan': [('meslek', 'f_bildiren', 'sel-rol', 1), ('ad', 'f_ad', 'text', 1), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 0), ('urun', 'f_urun', 'sel-urun', 1), ('lot', 'f_lot', 'text', 0), ('tarih', 'f_tarih', 'date', 0)],
     }[k]
