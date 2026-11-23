@@ -3345,3 +3345,11 @@ html body .ur-ct .ct-card{border-radius:18px}
 html body .stage{overflow:clip!important}
 html body .pro-hero .kat-soon{padding:0!important;margin:0!important;text-indent:0}
 html body .pro-hero .kat-c .kat-b{padding:0!important}
+/* ana sayfa: bölümler arası nefes */
+html[data-page=home]{--hy:clamp(72px,7.5vw,120px)}
+@media(max-width:760px){html[data-page=home]{--hy:64px}}
+html[data-page=home] body section.hs.hs.hs{padding-top:var(--hy)!important;padding-bottom:0!important;margin-top:0!important}
+html[data-page=home] body section.hs.hs.hs:is(.band,.tint){padding-bottom:var(--hy)!important;margin-top:var(--hy)!important}
+html[data-page=home] body section.hs.hs.hs:is(.band,.tint) + section.hs.hs.hs{padding-top:var(--hy)!important}
+html[data-page=home] body section#uzmanlik.hs.hs.hs{padding-bottom:var(--hy)!important}
+html[data-page=home] body section.hs.hs.hs:last-of-type{padding-bottom:var(--hy)!important}
