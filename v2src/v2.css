@@ -2023,3 +2023,51 @@ html[data-page=iletisim] .pg .pg-in p{max-width:520px}
 .ct-info p,.ct-info p *{font-weight:400!important}
 .ct-map{margin-bottom:clamp(24px,3vw,40px)!important}
 html.stage-full body #stage.stage canvas#gl{height:100%!important}
+
+/* ===== FORM SİSTEMİ (tüm talep formları: iletişim, bayilik, iş birliği, yan etki) ===== */
+:root{--f-gap-y:22px;--f-gap-x:16px;--f-h:46px;--f-r:10px;--f-bd:#cfdade;--f-bd-h:#aebfc6;--f-ac:#17707A;--f-er:#b4232f}
+html body .if-fm{max-width:720px;margin-inline:auto}
+html body .if-fm-h h2{font:700 clamp(22px,2vw,28px)/1.2 var(--f-d)!important;margin:0 0 6px!important}
+html body .if-fm-h p{font-size:15.5px!important;line-height:1.55;color:#5a6b75!important;margin:0 0 22px!important;max-width:56ch}
+html body .if-fm-f{display:grid!important;grid-template-columns:1fr 1fr!important;gap:var(--f-gap-y) var(--f-gap-x)!important;max-width:560px;margin:0!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important}
+html body .if-fm-f .fld2{display:flex!important;flex-direction:column;gap:7px!important;margin:0!important;min-width:0}
+html body .if-fm-f .fld2.full,html body .if-fm-f .chk,html body .if-fm-f .if-fm-a,html body .if-fm-f .f-note{grid-column:1/-1}
+html body .if-fm-f .lb{display:flex;align-items:baseline;gap:4px;font:500 14px/1.3 var(--f-b)!important;color:#2b3d47!important;letter-spacing:0!important;text-transform:none!important}
+html body .if-fm-f .lb>span{font:inherit!important;color:inherit!important;letter-spacing:0!important;text-transform:none!important}
+html body .if-fm-f .lb .rq{font-style:normal;color:var(--f-er)}
+html body .if-fm-f .lb .op{font-style:normal;font-weight:400;font-size:12.5px;color:#7d8d96}
+html body .if-fm-f input:not([type=checkbox]):not(.hp),html body .if-fm-f select,html body .if-fm-f textarea{width:100%;height:var(--f-h)!important;box-sizing:border-box;margin:0!important;padding:0 14px!important;border:1px solid var(--f-bd)!important;border-radius:var(--f-r)!important;background:#fff!important;font:400 16px/1.4 var(--f-b)!important;color:var(--ink,#0e2235)!important;box-shadow:none!important;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none}
+html body .if-fm-f select{padding-right:38px!important;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%235a6b75' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center/16px!important}
+html body .if-fm-f select:invalid{color:#7d8d96!important}
+html body .if-fm-f textarea{height:auto!important;min-height:128px;padding:12px 14px!important;resize:vertical}
+html body .if-fm-f input:not([type=checkbox]):hover,html body .if-fm-f select:hover,html body .if-fm-f textarea:hover{border-color:var(--f-bd-h)!important}
+html body .if-fm-f input:not([type=checkbox]):focus,html body .if-fm-f select:focus,html body .if-fm-f textarea:focus{outline:0!important;border-color:var(--f-ac)!important;box-shadow:0 0 0 3px rgba(23,112,122,.14)!important}
+html body .if-fm-f .err{border-color:var(--f-er)!important;box-shadow:0 0 0 3px rgba(180,35,47,.10)!important}
+html body .if-fm-f .f-er{font:500 13px/1.35 var(--f-b);color:var(--f-er)}
+html body .if-fm-f .chk{display:flex!important;gap:10px;align-items:flex-start;margin:2px 0 0!important;font:400 13.5px/1.5 var(--f-b)!important;color:#5a6b75!important;cursor:pointer}
+html body .if-fm-f .chk input{width:18px;height:18px;margin:1px 0 0!important;flex:none;accent-color:var(--f-ac)}
+html body .if-fm-f .chk.err span{color:var(--f-er)}
+html body .if-fm-f .f-note{margin:-6px 0 0!important;padding:12px 14px;border-radius:10px;background:#fff6e5;border:1px solid #f0dcae;font-size:13.5px;line-height:1.5;color:#6b5420}
+html body .if-fm-f .if-fm-a{display:flex!important;align-items:center;gap:16px;flex-wrap:wrap;margin:4px 0 0!important}
+html body .if-fm-f .if-fm-a .b-pri{height:46px!important;min-height:0!important;padding:0 24px!important;border-radius:999px!important;background:var(--ink,#0e2235)!important;color:#fff!important;font:600 15px/1 var(--f-b)!important;box-shadow:0 10px 22px -12px rgba(14,34,53,.55)!important}
+html body .if-fm-f .if-fm-a .b-pri .o{display:none!important}
+html body .if-fm-f .if-fm-a .b-pri::after{content:"→";margin-inline-start:8px}
+html body .if-fm-f .if-fm-a .b-pri:hover{background:var(--f-ac)!important}
+html body .if-fm-f .if-fm-m{margin:0!important;font-size:14px;color:var(--f-er)}
+html body .if-fm-f .if-fm-m.ok{color:#17707A}
+@media (max-width:600px){html body .if-fm-f{grid-template-columns:1fr!important;--f-gap-y:18px}}
+/* iletişim kartı: dar ve ferah */
+html body .ct{grid-template-columns:minmax(0,280px) minmax(0,720px)!important;justify-content:center}
+html body .ct-card{max-width:720px}
+html body .ct-pane{padding:clamp(24px,3.4vw,44px)!important}
+html body .ct-pane .if-fm-f{max-width:none}
+html body .ct-tabs{padding:8px 8px 0!important;overflow-x:auto;scrollbar-width:none}
+html body .ct-tabs button{white-space:nowrap}
+html body .ct-tabs .ct-ae{margin-inline-start:auto;color:#8a2c33}
+html body .ct-tabs .ct-ae[aria-selected=true]{color:#8a2c33}
+html body .ct .fld2>span:not(.lb){font:inherit!important}
+@media (max-width:900px){html body .ct{grid-template-columns:1fr!important}html body .ct-tabs .ct-ae{margin-inline-start:0}}
+/* Pro ve giriş formları: telefonda yakınlaşmayı önlemek için 16px yazı */
+@media (max-width:900px){#rqF input,#rqF select,#rqF textarea,#sForm input,#sForm select,#sForm textarea,#gForm input,#gForm select,#mailForm input{font-size:16px!important}}
+html body .if-fm-f small.f-er{display:block;margin:0!important;font:500 13px/1.35 var(--f-b)!important;letter-spacing:0!important;text-transform:none!important;color:var(--f-er)!important}
+@media (max-width:600px){html body .ct-tabs{overflow:visible;display:grid!important;grid-template-columns:repeat(3,1fr);gap:4px}html body .ct-tabs button{white-space:normal;text-align:center;padding:11px 6px!important;font-size:13px!important;line-height:1.25!important;display:flex;align-items:center;justify-content:center}}

@@ -86,7 +86,7 @@ def revize1(h):
             + nv('bilim', 'n_bil', lk([('bilim.html', 'ov'), ('bilim.html#kurul', 'nav_kurul'), ('bilim.html#yayinlar', 'nv_yay'), ('bilim.html#sss', 'ft_sss')]))
             + nv('uretim', 'nav_ozel', lk([('uretim.html', 'ov'), ('uretim.html#gelistirme', 'nv_urg'), ('uretim.html#surec', 'nv_urs'), ('uretim.html#isbirligi', 'nv_isb')]))
             + nv('guncel', 'nav6', lk([('guncel.html#haberler', 'nv_hab'), ('guncel.html#etkinlikler', 'nv_kon'), ('guncel.html#duyurular', 'nv_duy')]))
-            + nv('iletisim', 'nav5', lk([('iletisim.html', 'nv_ilb'), ('iletisim.html#form', 'nv_ilf'), ('iletisim.html#bayilik', 'nv_bay')]))
+            + nv('iletisim', 'nav5', lk([('iletisim.html', 'nv_ilb'), ('iletisim.html#form', 'nv_ilf'), ('iletisim.html#bayilik', 'nv_bay'), ('iletisim.html#yan-etki', 'nv_ae')]))
             + '<button type="button" class="nv-sr2" data-srch><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg><span data-t="srch"></span></button>'
             + '\n        ')
     h = h[:a] + menu + h[b:]
@@ -127,7 +127,7 @@ def revize1(h):
 
     # ---------- 9) İletişim: iletişim formu ve bayilik başvurusu ----------
     a = h.index('<div class="il-soc">'); b = h.index('</section>', a)
-    h = h[:b] + FORM('form', 'ilf') + FORM('bayilik', 'bay') + h[b:]
+    h = h[:b] + FORM('form', 'ilf') + FORM('bayilik', 'bay') + FORM('yan-etki', 'yan') + h[b:]
     # ---------- 10) diller: TR · EN · ES · FR · AR · IT · RU (Romence çıkarıldı) ----------
     h = h.replace('<button type="button" data-lang="ro" lang="ro">RO</button>', '').replace('<option value="ro" lang="ro">RO</option>', '')
     h = h.replace('<button type="button" data-lang="en" lang="en">EN</button>', '<button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="es" lang="es">ES</button><button type="button" data-lang="fr" lang="fr">FR</button>')
@@ -143,17 +143,33 @@ def revize1(h):
     return h
 
 def FORM(anchor, k):
-    """Talep formu: site → WordPress (Talepler) + e-posta. Alanlar dil anahtarlarıyla."""
+    """Talep formu: site → WordPress (Talepler) + e-posta. Ortak form sistemi: etiket üstte, zorunlu (*) / isteğe bağlı işareti, alan altında hata."""
     f = {
-        'ilf': [('ad', 'f_ad', 'text', 1), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 0), ('kurum', 'f_kurum', 'text', 0)],
-        'bay': [('kurum', 'f_firma', 'text', 1), ('ad', 'f_ad', 'text', 1), ('sehir', 'f_sehir', 'text', 1), ('tel', 'f_tel', 'tel', 1), ('eposta', 'rq_mail', 'email', 1), ('web', 'f_webs', 'url', 0)],
+        'ilf': [('ad', 'f_ad', 'text', 1), ('kurum', 'f_kurum', 'text', 0), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 0)],
+        'bay': [('kurum', 'f_firma', 'text', 1), ('ad', 'f_ad', 'text', 1), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 1), ('sehir', 'f_sehir', 'text', 1), ('web', 'f_webs', 'url', 0)],
         'isb': [('kurum', 'f_firma', 'text', 1), ('ad', 'f_ad', 'text', 1), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 0)],
+        'yan': [('meslek', 'f_bildiren', 'sel-rol', 1), ('ad', 'f_ad', 'text', 1), ('eposta', 'rq_mail', 'email', 1), ('tel', 'f_tel', 'tel', 0), ('urun', 'f_urun', 'sel-urun', 1), ('lot', 'f_lot', 'text', 0), ('tarih', 'f_tarih', 'date', 0)],
     }[k]
-    tur = {'ilf': 'bilgi', 'bay': 'bayilik', 'isb': 'isbirligi'}[k]
-    fl = ''.join('<label class="fld2"><span data-t="%s"></span><input name="%s" type="%s"%s></label>' % (lab, n if n != 'web' else 'site', t, ' required' if req else '') for n, lab, t, req in f)
+    tur = {'ilf': 'bilgi', 'bay': 'bayilik', 'isb': 'isbirligi', 'yan': 'yanetki'}[k]
+    ac = {'ad': 'name', 'eposta': 'email', 'tel': 'tel', 'kurum': 'organization', 'sehir': 'address-level2', 'web': 'url'}
+    def fld(n, lab, t, req):
+        nm = n if n != 'web' else 'site'
+        mk = '<i class="rq" aria-hidden="true">*</i>' if req else '<i class="op" data-t="f_opt"></i>'
+        rq = ' required aria-required="true"' if req else ''
+        if t == 'sel-rol':
+            ctl = '<select name="%s"%s><option value="" data-t="f_sec"></option>%s</select>' % (nm, rq, ''.join('<option value="%s" data-t="f_r%d"></option>' % (v, i) for i, v in enumerate(['hekim', 'eczaci', 'saglik', 'hasta', 'diger'], 1)))
+        elif t == 'sel-urun':
+            ctl = '<select name="%s" data-urun%s><option value="" data-t="f_sec"></option></select>' % (nm, rq)
+        else:
+            ctl = '<input name="%s" type="%s"%s%s%s>' % (nm, t, rq, (' autocomplete="%s"' % ac[n]) if n in ac else '', ' autocapitalize="off" spellcheck="false"' if t in ('email', 'url') else '')
+        return '<label class="fld2"><span class="lb"><span data-t="%s"></span>%s</span>%s</label>' % (lab, mk, ctl)
+    fl = ''.join(fld(*x) for x in f)
+    ta_req = k == 'yan'
+    ta = '<label class="fld2 full"><span class="lb"><span data-t="%s"></span>%s</span><textarea name="not" rows="4"%s></textarea></label>' % ('f_olay' if k == 'yan' else 'f_not', '<i class="rq" aria-hidden="true">*</i>' if ta_req else '<i class="op" data-t="f_opt"></i>', ' required aria-required="true"' if ta_req else '')
+    note = '<p class="f-note full" data-t="yan_note"></p>' if k == 'yan' else ''
     return ('<section class="if-fm" id="%s" aria-labelledby="%sH"><div class="if-fm-h"><h2 id="%sH" data-t="%s_h"></h2><p data-t="%s_p"></p></div>'
-            '<form class="if-fm-f" data-tur="%s" novalidate>%s<label class="fld2 full"><span data-t="f_not"></span><textarea name="not" rows="4"></textarea></label>'
+            '<form class="if-fm-f" data-tur="%s" novalidate>%s%s%s'
             '<input name="web" type="text" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">'
             '<label class="chk full"><input type="checkbox" name="onay"><span data-t="rq_kvkk"></span></label>'
             '<div class="full if-fm-a"><button class="b-pri" type="submit"><span data-t="f_send"></span><span class="o"></span></button><p class="if-fm-m" role="status"></p></div></form></section>'
-            % (anchor, k, k, k, k, tur, fl))
+            % (anchor, k, k, k, k, tur, fl, ta, note))
