@@ -441,7 +441,7 @@ ctBuild();
 /* Pro / katalog tam ekran: sahne yüksekliğini pencereye piksel olarak sabitle (Safari'de alt kısım beyaz kalıyordu) */
 {const st=$('#stage'),H=document.documentElement;let on=false;
  const fit=()=>{if(!st)return;const full=H.classList.contains('stage-full');
-  if(full){const h=(window.visualViewport?visualViewport.height:innerHeight);st.style.setProperty('height',h+'px','important');st.style.setProperty('top','0','important');st.style.setProperty('bottom','auto','important');}
+  if(full){const vv=window.visualViewport,h=Math.max(innerHeight||0,H.clientHeight||0,vv?Math.round(vv.height*(vv.scale||1)):0);st.style.setProperty('height',h+'px','important');st.style.setProperty('top','0','important');st.style.setProperty('bottom','auto','important');}
   else{st.style.removeProperty('height');st.style.removeProperty('top');st.style.removeProperty('bottom');}
   if(full!==on){on=full;requestAnimationFrame(()=>dispatchEvent(new Event('resize')));setTimeout(()=>dispatchEvent(new Event('resize')),350);}};
  new MutationObserver(fit).observe(H,{attributes:true,attributeFilter:['class']});

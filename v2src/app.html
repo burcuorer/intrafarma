@@ -3228,6 +3228,10 @@ html body .if-fm-f .chk a,html body .if-fm-f .f-pr a{color:#17707A;text-decorati
 .ae-list{color:#4a5c66;font-size:15px;line-height:1.6;margin:0 0 var(--s3)}
 .ct-pane .f-note,.if-fm.ae .f-note{padding:12px 16px;border-radius:8px;background:#fff6e5;border:1px solid #f0dcae;font-size:13.5px;line-height:1.5;color:#6b5420;margin:0}
 @media (max-width:600px){.ae-ch{grid-template-columns:1fr}}
+
+/* Pro tam ekran: iOS'ta sahnenin altında beyaz bant kalmasın */
+html.stage-full,html.stage-full body{background:#7fc3d0!important;overscroll-behavior:none}
+@supports(height:100lvh){html.stage-full body #stage.stage{min-height:100lvh!important}}
 </style>
 </head><body>
 
@@ -4859,7 +4863,7 @@ ctBuild();
 /* Pro / katalog tam ekran: sahne yüksekliğini pencereye piksel olarak sabitle (Safari'de alt kısım beyaz kalıyordu) */
 {const st=$('#stage'),H=document.documentElement;let on=false;
  const fit=()=>{if(!st)return;const full=H.classList.contains('stage-full');
-  if(full){const h=(window.visualViewport?visualViewport.height:innerHeight);st.style.setProperty('height',h+'px','important');st.style.setProperty('top','0','important');st.style.setProperty('bottom','auto','important');}
+  if(full){const vv=window.visualViewport,h=Math.max(innerHeight||0,H.clientHeight||0,vv?Math.round(vv.height*(vv.scale||1)):0);st.style.setProperty('height',h+'px','important');st.style.setProperty('top','0','important');st.style.setProperty('bottom','auto','important');}
   else{st.style.removeProperty('height');st.style.removeProperty('top');st.style.removeProperty('bottom');}
   if(full!==on){on=full;requestAnimationFrame(()=>dispatchEvent(new Event('resize')));setTimeout(()=>dispatchEvent(new Event('resize')),350);}};
  new MutationObserver(fit).observe(H,{attributes:true,attributeFilter:['class']});
