@@ -567,3 +567,12 @@ add_action('customize_register', function ($wp_customize) {
         'description' => 'Gerçek ürün görselinizi seçin. Boş bırakıldığında temadaki Regenflex Kit görseli kullanılır. Yatay, beyaz veya şeffaf zeminli görsel önerilir.'
     )));
 });
+
+/* KVKK sayfası düzenlenirken kısa yol gösterici not */
+add_action('admin_notices', function () {
+    $s = function_exists('get_current_screen') ? get_current_screen() : null;
+    if (!$s || $s->base !== 'post' || $s->post_type !== 'page') { return; }
+    $p = get_post(isset($_GET['post']) ? (int) $_GET['post'] : 0);
+    if (!$p || $p->post_name !== 'kvkk') { return; }
+    echo '<div class="notice notice-info"><p><strong>KVKK aydınlatma metni:</strong> Bu sayfadaki metin sitede aynen gösterilir. Başlıklar (Başlık 2 ve Başlık 3) sol taraftaki içindekiler listesini kendiliğinden oluşturur. Metni tamamen silerseniz temadaki imzalı metin geri gelir. Metinde değişiklik yapmadan önce hukuk danışmanınızın onayını alın.</p></div>';
+});

@@ -2210,3 +2210,5 @@ html body .if-fm-f .chk a,html body .if-fm-f .f-pr a{color:#17707A;text-decorati
 /* Pro tam ekran: iOS'ta sahnenin altında beyaz bant kalmasın */
 html.stage-full,html.stage-full body{background:#7fc3d0!important;overscroll-behavior:none}
 @supports(height:100lvh){html.stage-full body #stage.stage{min-height:100lvh!important}}
+.ys-toc a:not(.ys-sub){font-weight:600;margin-top:var(--s2)}
+.ys-toc a.ys-sub{padding-left:var(--s3);color:#4a5c66;font-weight:400;margin-top:0}

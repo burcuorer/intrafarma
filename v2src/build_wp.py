@@ -7,8 +7,8 @@ DEST = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, 'dist')
 SLUG = 'intrafarma-2026'
 OUT = os.path.join(DEST, SLUG)
 NM = '/tmp/claude-0/-home-claude/06ad3418-85a2-578d-a5ea-e5e40f6a3e32/scratchpad/i18n/fonts/node_modules'
-PAGES = ['home', 'uzmanlik', 'urunler', 'uretim', 'bilim', 'guncel', 'iletisim', 'hakkimizda']
-TITLES = {'uzmanlik': 'Uzmanlık', 'urunler': 'Ürünler', 'uretim': 'Üretim ve özel marka', 'bilim': 'Bilim', 'guncel': 'Güncel', 'iletisim': 'İletişim', 'hakkimizda': 'Hakkımızda'}
+PAGES = ['home', 'uzmanlik', 'urunler', 'uretim', 'bilim', 'guncel', 'iletisim', 'hakkimizda', 'kvkk']
+TITLES = {'uzmanlik': 'Uzmanlık', 'urunler': 'Ürünler', 'uretim': 'Üretim ve özel marka', 'bilim': 'Bilim', 'guncel': 'Güncel', 'iletisim': 'İletişim', 'hakkimizda': 'Hakkımızda', 'kvkk': 'KVKK aydınlatma metni'}
 def need(c, m):
     if not c: sys.exit('TEMA HATASI: ' + m)
 s = io.open(os.path.join(HERE, 'app.html'), encoding='utf-8').read()
@@ -32,6 +32,10 @@ def link(m):
     return 'href="{{U:%s}}%s"' % (page, m.group(2) or '')
 body = re.sub(r'href="([a-z]+)\.html(#[\w-]+)?"', link, body)
 need('.html"' not in body and '.html#' not in body, '.html bağlantısı kaldı')
+# KVKK metni: WordPress'te 'kvkk' sayfasının içeriğinden gelir; varsayılanı parts/kvkk.html
+_ys = re.search(r'<!--YS-->(.*?)<!--/YS-->', body, re.S); need(_ys, 'KVKK işaretleri')
+W('parts/kvkk.html', re.sub(r'>\s+<', '><', _ys.group(1).strip()))
+body = body[:_ys.start()] + '{{KVKK}}' + body[_ys.end():]
 need('<?' not in body, 'gövdede <?')
 W('parts/body.html', body)
 fav = re.search(r'<link rel="icon" type="image/png" href="(data:image/png;base64,[^"]+)">', s); need(fav, 'favicon')

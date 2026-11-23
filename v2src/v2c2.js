@@ -446,3 +446,8 @@ ctBuild();
   if(full!==on){on=full;requestAnimationFrame(()=>dispatchEvent(new Event('resize')));setTimeout(()=>dispatchEvent(new Event('resize')),350);}};
  new MutationObserver(fit).observe(H,{attributes:true,attributeFilter:['class']});
  addEventListener('resize',()=>{if(on)fit();});if(window.visualViewport)visualViewport.addEventListener('resize',()=>{if(on)fit();});fit();}
+/* KVKK sayfası: içindekiler, metindeki başlıklardan üretilir (metin WordPress'te değişse de güncel kalır) */
+{const nav=document.querySelector('#vYasal .ys-toc'),doc=document.querySelector('#vYasal .ys-doc');
+ if(nav&&doc){let n=0;doc.querySelectorAll('h2,h3').forEach(h=>{const t=(h.dataset.toc||h.textContent).trim();if(!t)return;
+  if(!h.id)h.id='ys-b'+(++n);const a=document.createElement('a');a.href='#'+h.id;a.textContent=t;if(h.tagName==='H3')a.className='ys-sub';
+  const art=h.tagName==='H2'&&h.closest('article');if(art&&art.id&&art.firstElementChild===h)a.href='#'+art.id;nav.appendChild(a);});}}

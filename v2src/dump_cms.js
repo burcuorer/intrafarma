@@ -18,6 +18,8 @@ const {chromium}=require('playwright');const fs=require('fs'),path=require('path
    [/^(ur\d|ur_|lb_)/,'Üretim'],[/^(il_|pgi_)/,'İletişim'],[/^(ev_|bl_|gn_|pgg_)/,'Güncel'],[/^(bk_|fq|pgb_)/,'Bilim'],[/^(g_|p[1-7]$|c[1-6]$|e_)/,'Sağlık çalışanı girişi'],
    [/^(rq_|dt_|dq|d_|d\d|s_|m_|pub_|ps_|k\d|z_|tab|dd|dt\d|pn|pc_|pd_|pr_|p_|via|logout|pro_)/,'Sağlık çalışanları alanı (Pro)'],
    [/^(ft_)/,'Alt bilgi'],[/^(nav|n_|nv_|srch|hcp|pg_home|all_|bc|ov$|close|totop|draft|pend|prog)/,'Menü'],[/./,'Ana sayfa']];
+  /* form, KVKK ve yan etki metinleri tek yerde: İletişim */
+  Object.keys(tx.tr).forEach(k=>{if(/^(f_|yan_|ys_|ft_kvkk|ft_cookie|rq_kvkk|ck_ps|ck_ok)/.test(k))grp[k]=/^(ck_|ft_)/.test(k)?(k.startsWith('ck_')?'Çerez bandı ve video':'Alt bilgi'):'İletişim';});
   Object.keys(tx.tr).forEach(k=>{if(!grp[k]){for(const [re,name] of PF){if(re.test(k)){grp[k]=name;break;}}}});
   const prods=D.PRODS.map(p=>Object.assign({n:p.n,a:p.a,open:!!p.open},p.pr?{pr:true}:{},p.nw?{nw:true}:{}));
   return {langs,tx,grp,prods,axca:D.AXCA};});

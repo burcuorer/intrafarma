@@ -6,7 +6,7 @@
  */
 if (!defined('ABSPATH')) { exit; }
 define('INTRAFARMA_VER', wp_get_theme()->get('Version'));
-define('INTRAFARMA_PAGES', array('uzmanlik' => 'Uzmanlık', 'urunler' => 'Ürünler', 'uretim' => 'Üretim ve özel marka', 'bilim' => 'Bilim', 'guncel' => 'Güncel', 'iletisim' => 'İletişim', 'hakkimizda' => 'Hakkımızda'));
+define('INTRAFARMA_PAGES', array('uzmanlik' => 'Uzmanlık', 'urunler' => 'Ürünler', 'uretim' => 'Üretim ve özel marka', 'bilim' => 'Bilim', 'guncel' => 'Güncel', 'iletisim' => 'İletişim', 'hakkimizda' => 'Hakkımızda', 'kvkk' => 'KVKK aydınlatma metni'));
 define('INTRAFARMA_LANGS', array('tr', 'en', 'es', 'fr', 'ar', 'it', 'ru'));
 
 function intrafarma_uri() { return untrailingslashit(get_template_directory_uri()); }
@@ -160,8 +160,9 @@ function intrafarma_ensure_pages() {
         $p = intrafarma_page($slug);
         $id = $p ? $p->ID : 0;
         if (!$id) {
+            $content = $slug === 'kvkk' ? intrafarma_kvkk_default() : '<!-- Bu sayfanın içeriği Intrafarma menüsünden düzenlenir. -->';
             $id = wp_insert_post(array('post_type' => 'page', 'post_status' => 'publish', 'post_title' => $title, 'post_name' => $slug,
-                'post_content' => '<!-- Bu sayfanın içeriği Intrafarma menüsünden düzenlenir. -->'));
+                'post_content' => $content));
             if ($id && !is_wp_error($id)) { $made[] = $slug; } else { $id = 0; }
         }
         // Polylang: dili atanmamış sayfa gizlenir; varsayılan dili ata
@@ -191,10 +192,28 @@ require get_template_directory() . '/inc/icerik.php';
 require get_template_directory() . '/inc/yonlendirme.php';
 require get_template_directory() . '/inc/talep.php';
 
+/** KVKK metninin varsayılanı (imzalı metin, tema içinde) */
+function intrafarma_kvkk_default() {
+    $f = get_template_directory() . '/parts/kvkk.html';
+    return file_exists($f) ? (string) file_get_contents($f) : '';
+}
+/**
+ * KVKK metni: WordPress'teki "KVKK aydınlatma metni" sayfasının içeriği.
+ * Sayfa yoksa ya da içeriği boşsa temadaki imzalı metin gösterilir. İçindekiler listesi başlıklardan kendiliğinden oluşur.
+ */
+function intrafarma_kvkk_html() {
+    $p = intrafarma_page('kvkk');
+    $c = $p ? trim((string) $p->post_content) : '';
+    if ($c === '' || strpos($c, '<!-- Bu sayfanın') === 0) { return intrafarma_kvkk_default(); }
+    $c = has_blocks($c) ? do_blocks($c) : wpautop($c);
+    return do_shortcode($c);
+}
+
 /** Tasarım sayfasını basar */
 function intrafarma_render($page) {
     $body = file_get_contents(get_template_directory() . '/parts/body.html');
     $u = intrafarma_urls();
+    $body = str_replace('{{KVKK}}', intrafarma_kvkk_html(), $body);   // önce: varsayılan metindeki {{U:...}} bağlantıları da çözülsün
     $body = str_replace('{{THEME}}', esc_url(intrafarma_uri()), $body);
     $body = preg_replace_callback('/\{\{U:([a-z]+)\}\}/', function ($m) use ($u) { return esc_url(isset($u[$m[1]]) ? $u[$m[1]] : home_url('/')); }, $body);
     ?><!doctype html>

@@ -3232,6 +3232,8 @@ html body .if-fm-f .chk a,html body .if-fm-f .f-pr a{color:#17707A;text-decorati
 /* Pro tam ekran: iOS'ta sahnenin altında beyaz bant kalmasın */
 html.stage-full,html.stage-full body{background:#7fc3d0!important;overscroll-behavior:none}
 @supports(height:100lvh){html.stage-full body #stage.stage{min-height:100lvh!important}}
+.ys-toc a:not(.ys-sub){font-weight:600;margin-top:var(--s2)}
+.ys-toc a.ys-sub{padding-left:var(--s3);color:#4a5c66;font-weight:400;margin-top:0}
 </style>
 </head><body>
 
@@ -3586,10 +3588,10 @@ html.stage-full,html.stage-full body{background:#7fc3d0!important;overscroll-beh
     <div class="view" id="vYasal" hidden lang="tr">
 <section class="pg band ice" aria-labelledby="ysH"><div class="pg-in" data-rv="rise"><p class="eyebrow">/ KVKK</p><h1 id="ysH">Aydınlatma metni ve çerez politikası</h1><p>www.intrafarma.com.tr internet sitesinde kişisel verilerinizin nasıl işlendiği ve hangi çerezlerin kullanıldığı.</p><p class="ys-lang" data-t="ys_lang"></p></div></section>
 <section class="hs ys">
-<nav class="ys-toc" aria-label="İçindekiler"><b>İçindekiler</b><a href="#aydinlatma">Aydınlatma metni</a><a href="#ys-1">1. Veri sorumlusu</a><a href="#ys-2">2. Hangi verileri işliyoruz</a><a href="#ys-3">3. Amaçlar ve hukuki sebepler</a><a href="#ys-4">4. Verileri nasıl topluyoruz</a><a href="#ys-5">5. Kimlere aktarıyoruz</a><a href="#ys-6">6. Ne kadar süre saklıyoruz</a><a href="#ys-7">7. Haklarınız</a><a href="#cerez">Çerez politikası</a></nav>
-<div class="ys-doc">
+<nav class="ys-toc" aria-label="İçindekiler"><b>İçindekiler</b></nav>
+<div class="ys-doc"><!--YS-->
 <article id="aydinlatma" aria-labelledby="ysA">
-<h2 id="ysA">İntrafarma İnternet Sitesi Kişisel Verilerin Korunması Aydınlatma Metni</h2>
+<h2 id="ysA" data-toc="Aydınlatma metni">İntrafarma İnternet Sitesi Kişisel Verilerin Korunması Aydınlatma Metni</h2>
 <p class="ys-lede">Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu’nun (“Kanun”) 10. maddesi uyarınca, www.intrafarma.com.tr internet sitesini kullanan ve sitedeki formları dolduran kişileri bilgilendirmek için hazırlanmıştır.</p>
 <h3 id="ys-1">1. Veri sorumlusu</h3>
 <dl class="ys-dl"><div><dt>Şirket</dt><dd>İntrafarma İlaç Sanayi Ticaret Limited Şirketi</dd></div><div><dt>Adres</dt><dd>Barış Mah. Necip Fazıl Kısakürek Sok. C Blok No: 1 İç Kapı No: 7 Beylikdüzü / İstanbul</dd></div><div><dt>E-posta</dt><dd><a href="mailto:info@intrafarma.com.tr">info@intrafarma.com.tr</a></dd></div><div><dt>KEP</dt><dd>intafarmailac@hs01.kep.tr</dd></div></dl>
@@ -3617,7 +3619,7 @@ html.stage-full,html.stage-full body{background:#7fc3d0!important;overscroll-beh
 <p class="ys-date">Son güncelleme: 19.11.2026</p>
 </article>
 <article id="cerez" aria-labelledby="ysC">
-<h2 id="ysC">İntrafarma İnternet Sitesi Çerez Politikası</h2>
+<h2 id="ysC" data-toc="Çerez politikası">İntrafarma İnternet Sitesi Çerez Politikası</h2>
 <p class="ys-lede">Çerezler, siteyi ziyaret ettiğinizde tarayıcınıza kaydedilen küçük metin dosyalarıdır. Bu sitede yalnızca sitenin çalışması için gerekli çerezler kullanılır; reklam, ölçüm ya da sizi başka sitelerde izleyen çerez kullanılmaz.</p>
 <div class="ys-tw"><table><thead><tr><th>Ad</th><th>Ne işe yarar</th><th>Süre</th></tr></thead><tbody>
 <tr><td><code>if_consent</code></td><td>Çerez bildirimini gördüğünüzü hatırlar; bildirim her sayfada tekrar çıkmaz</td><td>180 gün</td></tr>
@@ -3630,7 +3632,7 @@ html.stage-full,html.stage-full body{background:#7fc3d0!important;overscroll-beh
 <p>Tarayıcınızın ayarlarından çerezleri silebilir ya da engelleyebilirsiniz. Gerekli çerezleri engellerseniz sitenin bazı bölümleri düzgün çalışmayabilir.</p>
 <p class="ys-date">Son güncelleme: 19.11.2026</p>
 </article>
-</div>
+<!--/YS--></div>
 </section>
 </div>
 
@@ -4868,6 +4870,11 @@ ctBuild();
   if(full!==on){on=full;requestAnimationFrame(()=>dispatchEvent(new Event('resize')));setTimeout(()=>dispatchEvent(new Event('resize')),350);}};
  new MutationObserver(fit).observe(H,{attributes:true,attributeFilter:['class']});
  addEventListener('resize',()=>{if(on)fit();});if(window.visualViewport)visualViewport.addEventListener('resize',()=>{if(on)fit();});fit();}
+/* KVKK sayfası: içindekiler, metindeki başlıklardan üretilir (metin WordPress'te değişse de güncel kalır) */
+{const nav=document.querySelector('#vYasal .ys-toc'),doc=document.querySelector('#vYasal .ys-doc');
+ if(nav&&doc){let n=0;doc.querySelectorAll('h2,h3').forEach(h=>{const t=(h.dataset.toc||h.textContent).trim();if(!t)return;
+  if(!h.id)h.id='ys-b'+(++n);const a=document.createElement('a');a.href='#'+h.id;a.textContent=t;if(h.tagName==='H3')a.className='ys-sub';
+  const art=h.tagName==='H2'&&h.closest('article');if(art&&art.id&&art.firstElementChild===h)a.href='#'+art.id;nav.appendChild(a);});}}
 
 labels();
 })();
