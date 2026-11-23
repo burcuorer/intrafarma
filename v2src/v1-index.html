@@ -1805,7 +1805,7 @@ function closeCat(instant){if(cat.hidden)return;cat.classList.remove('open');if(
 $$('#proNav button').forEach(b=>b.addEventListener('click',()=>openPro(b.dataset.pv)));
 $$('[data-cat]').forEach(b=>b.addEventListener('click',openCat));
 $('#catClose').addEventListener('click',()=>closeCat());
-$('#catQ').addEventListener('input',e=>{CS.q=e.target.value;CS.det=-1;renderCat();});
+$('#catQ').addEventListener('input',e=>{CS.q=e.target.value;CS.det=-1;if(CS.q.trim()){CS.ax=-1;CS.ca=-1;}renderCat();});
 
 
 /* full window: the gate, the catalogue and Pro open as a page of their own, not a box in the middle of the home page */
@@ -2533,7 +2533,7 @@ function frame(){
   ax=lerp(cx+d0,Q.x,b);ay=lerp(P.y,Q.y,b);aR=lerp(r0,Q.R,b);
   if(b<.999){showB=true;bx=lerp(cx-d0,cx-P.R*2.4,b);by=lerp(P.y,P.y-P.R*1.2,b);bR=r0*(1-b*.92);}
  }
- if(ph===0&&!cmp){if(s>=1){ax=Q.x;ay=Q.y;aR=Q.R;}else{ax=P.x;ay=P.y;aR=P.R;}}
+ if(ph===0&&!cmp){if(s>=1){ax=Q.x;ay=Q.y+(W<760&&IF.proSY?IF.proSY*vh/H:0);aR=Q.R;}else{ax=P.x;ay=P.y;aR=P.R;}}
  if(cmp){ax=(IF.cmpX/W-.5)*vw;ay=(.5-.48)*vh;aR=P.R*.78;}
  if(ph===2&&!snapped){snapped=true;flashT=t;U.uRip.value[0].set(-1,0,0,t);U.uRip.value[1].set(1,0,0,t);U.uRip.value[2].set(0,1,0,t+.12);ripIdx=3;}
  if(s===0){snapped=false;flashT=-99;}

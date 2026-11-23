@@ -253,7 +253,7 @@ function resize(){
  vh=2*cam.position.z*Math.tan(THREE.MathUtils.degToRad(cam.fov/2));vw=vh*cam.aspect;
  const n=W<760;
  place(L.pub,.5,n?.42:.45,n?.32:.36);
- place(L.pro,n?.66:.63,n?.29:.44,n?.15:.23);
+ if(n)place(L.pro,.5,Math.min(.33,260/H),Math.min(.15,96/H));else place(L.pro,.63,.44,.23);
  const v=new THREE.Vector2();renderer.getDrawingBufferSize(v);const rw=Math.max(2,Math.round(v.x*RTS)),rh=Math.max(2,Math.round(v.y*RTS));rt.setSize(rw,rh);bgMat.uniforms.uRes.value.set(rw,rh);cpMat.uniforms.uRes.value.copy(v);MU.uFull.value.copy(v);
 }
 new ResizeObserver(resize).observe(stage);resize();IF.relayout=resize;
@@ -410,7 +410,7 @@ function frame(){
   ax=lerp(cx+d0,Q.x,b);ay=lerp(P.y,Q.y,b);aR=lerp(r0,Q.R,b);
   if(b<.999){showB=true;bx=lerp(cx-d0,cx-P.R*2.4,b);by=lerp(P.y,P.y-P.R*1.2,b);bR=r0*(1-b*.92);}
  }
- if(ph===0&&!cmp){if(s>=1){ax=Q.x;ay=Q.y;aR=Q.R;}else{ax=P.x;ay=P.y;aR=P.R;}}
+ if(ph===0&&!cmp){if(s>=1){ax=Q.x;ay=Q.y+(W<760&&IF.proSY?IF.proSY*vh/H:0);aR=Q.R;}else{ax=P.x;ay=P.y;aR=P.R;}}
  if(cmp){ax=(IF.cmpX/W-.5)*vw;ay=(.5-.48)*vh;aR=P.R*.78;}
  if(ph===2&&!snapped){snapped=true;flashT=t;U.uRip.value[0].set(-1,0,0,t);U.uRip.value[1].set(1,0,0,t);U.uRip.value[2].set(0,1,0,t+.12);ripIdx=3;}
  if(s===0){snapped=false;flashT=-99;}

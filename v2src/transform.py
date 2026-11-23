@@ -219,7 +219,7 @@ s = s[:_b0] + re.sub(r'(src|poster)="media/', r'\1="{{BASE}}media/', _body) + s[
 LOG.append('medya yolu: %d' % n_media)
 
 # Pro: hücre metne yaklaşır (sağda boş alan kalmasın)
-rep("place(L.pro,n?.66:.74,n?.29:.42,n?.15:.23);", "place(L.pro,n?.66:.63,n?.29:.44,n?.15:.23);")
+rep("place(L.pro,n?.66:.74,n?.29:.42,n?.15:.23);", "if(n)place(L.pro,.5,Math.min(.33,260/H),Math.min(.15,96/H));else place(L.pro,.63,.44,.23);")
 
 # ---------------------------------------------------------------- JS
 scripts = list(re.finditer(r'<script>(.*?)</script>', s, re.S))

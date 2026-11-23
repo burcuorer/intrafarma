@@ -320,7 +320,16 @@
     "ft_cookie": "Çerez politikası",
     "ys_lang": "",
     "yan_p2": "Ürünlerimizle ilgili bir yan etki ya da olumsuz olayı ürün güvenliği ekibimize telefonla ya da e-postayla bildirebilirsiniz.",
-    "yan_bil": "Bildiriminizde mümkünse ürün adı, lot / seri numarası, olayın tarihi ve kısa açıklaması ile size ulaşabileceğimiz bilgiler yer alsın."
+    "yan_bil": "Bildiriminizde mümkünse ürün adı, lot / seri numarası, olayın tarihi ve kısa açıklaması ile size ulaşabileceğimiz bilgiler yer alsın.",
+    "ur_ey": "/ İş birliği",
+    "ur_sh": "Süreç nasıl işler?",
+    "ur_sp": "Başvurunuz doğrudan iş geliştirme ekibimize iletilir.",
+    "ur_s1": "Başvurunuz bize ulaşır",
+    "ur_s1p": "Form e-postamıza ve talep listemize düşer.",
+    "ur_s2": "Fikriniz değerlendirilir",
+    "ur_s2p": "Formül, üretim ve ambalaj olanakları açısından incelenir.",
+    "ur_s3": "Size geri döneriz",
+    "ur_s3p": "Sonraki adımlar için ekibimiz sizinle iletişime geçer."
   },
   "en": {
     "draft": "Test version · text, figures and images are samples",
@@ -643,7 +652,16 @@
     "ft_cookie": "Cookie policy",
     "ys_lang": "This notice is published in Turkish; the Turkish text is the binding version.",
     "yan_p2": "You can report a side effect or adverse event with one of our products to our product safety team by phone or e-mail.",
-    "yan_bil": "If possible, include the product name, lot / batch number, date and a short description of the event, and how we can reach you."
+    "yan_bil": "If possible, include the product name, lot / batch number, date and a short description of the event, and how we can reach you.",
+    "ur_ey": "/ Partnership",
+    "ur_sh": "How it works",
+    "ur_sp": "Your application goes straight to our business development team.",
+    "ur_s1": "We receive your application",
+    "ur_s1p": "The form reaches our inbox and request list.",
+    "ur_s2": "Your idea is assessed",
+    "ur_s2p": "We review it in terms of formula, manufacturing and packaging options.",
+    "ur_s3": "We get back to you",
+    "ur_s3p": "Our team contacts you about the next steps."
   },
   "ar": {
     "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -966,7 +984,16 @@
     "ft_cookie": "سياسة ملفات تعريف الارتباط",
     "ys_lang": "هذا الإشعار منشور باللغة التركية، والنص التركي هو النص الملزم.",
     "yan_p2": "يمكنك الإبلاغ عن أثر جانبي أو حدث سلبي مرتبط بمنتجاتنا لفريق سلامة المنتجات عبر الهاتف أو البريد الإلكتروني.",
-    "yan_bil": "يُرجى ذكر اسم المنتج ورقم الدفعة وتاريخ الحدث ووصفًا موجزًا وطريقة التواصل معك إن أمكن."
+    "yan_bil": "يُرجى ذكر اسم المنتج ورقم الدفعة وتاريخ الحدث ووصفًا موجزًا وطريقة التواصل معك إن أمكن.",
+    "ur_ey": "/ شراكة",
+    "ur_sh": "كيف تسير العملية؟",
+    "ur_sp": "يصل طلبك مباشرة إلى فريق تطوير الأعمال لدينا.",
+    "ur_s1": "يصلنا طلبك",
+    "ur_s1p": "يصل النموذج إلى بريدنا الإلكتروني وقائمة الطلبات.",
+    "ur_s2": "تُقيَّم فكرتك",
+    "ur_s2p": "ندرسها من حيث التركيبة والتصنيع وخيارات التعبئة.",
+    "ur_s3": "نعاود التواصل معك",
+    "ur_s3p": "يتواصل فريقنا معك بشأن الخطوات التالية."
   },
   "it": {
     "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -1289,7 +1316,16 @@
     "ft_cookie": "Cookie policy",
     "ys_lang": "L’informativa è pubblicata in turco; fa fede il testo turco.",
     "yan_p2": "Può segnalare un effetto collaterale o un evento avverso legato ai nostri prodotti al team sicurezza per telefono o e-mail.",
-    "yan_bil": "Se possibile indichi nome del prodotto, lotto, data e breve descrizione dell’evento e un recapito."
+    "yan_bil": "Se possibile indichi nome del prodotto, lotto, data e breve descrizione dell’evento e un recapito.",
+    "ur_ey": "/ Collaborazione",
+    "ur_sh": "Come funziona",
+    "ur_sp": "La tua richiesta arriva direttamente al nostro team di sviluppo commerciale.",
+    "ur_s1": "Riceviamo la tua richiesta",
+    "ur_s1p": "Il modulo arriva alla nostra e-mail e all’elenco richieste.",
+    "ur_s2": "Valutiamo la tua idea",
+    "ur_s2p": "La esaminiamo in termini di formula, produzione e confezionamento.",
+    "ur_s3": "Ti ricontattiamo",
+    "ur_s3p": "Il nostro team ti contatta per i passi successivi."
   },
   "ru": {
     "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -1612,7 +1648,16 @@
     "ft_cookie": "Политика cookie",
     "ys_lang": "Уведомление опубликовано на турецком языке; обязательной является турецкая версия.",
     "yan_p2": "Сообщить о побочном эффекте или нежелательном явлении можно нашей службе безопасности продукции по телефону или e-mail.",
-    "yan_bil": "По возможности укажите название продукта, номер партии, дату и краткое описание события, а также контакты."
+    "yan_bil": "По возможности укажите название продукта, номер партии, дату и краткое описание события, а также контакты.",
+    "ur_ey": "/ Сотрудничество",
+    "ur_sh": "Как это работает",
+    "ur_sp": "Ваша заявка поступает напрямую в наш отдел развития бизнеса.",
+    "ur_s1": "Мы получаем заявку",
+    "ur_s1p": "Форма поступает на нашу почту и в список запросов.",
+    "ur_s2": "Мы оцениваем идею",
+    "ur_s2p": "Рассматриваем её с точки зрения формулы, производства и упаковки.",
+    "ur_s3": "Мы связываемся с вами",
+    "ur_s3p": "Наша команда свяжется с вами по следующим шагам."
   },
   "es": {
     "pc_ey": "/ Pro · Productos",
@@ -2208,7 +2253,16 @@
     "ck_ok": "Aceptar",
     "ys_lang": "Este aviso se publica en turco; el texto turco es el vinculante.",
     "yan_p2": "Puede comunicar un efecto adverso o incidente con nuestros productos a nuestro equipo de seguridad por teléfono o correo.",
-    "yan_bil": "Si es posible, indique producto, lote, fecha y breve descripción del suceso, y cómo contactarle."
+    "yan_bil": "Si es posible, indique producto, lote, fecha y breve descripción del suceso, y cómo contactarle.",
+    "ur_ey": "/ Colaboración",
+    "ur_sh": "Cómo funciona",
+    "ur_sp": "Su solicitud llega directamente a nuestro equipo de desarrollo de negocio.",
+    "ur_s1": "Recibimos su solicitud",
+    "ur_s1p": "El formulario llega a nuestro correo y a la lista de solicitudes.",
+    "ur_s2": "Evaluamos su idea",
+    "ur_s2p": "La analizamos en cuanto a fórmula, fabricación y envase.",
+    "ur_s3": "Le respondemos",
+    "ur_s3p": "Nuestro equipo se pondrá en contacto sobre los siguientes pasos."
   },
   "fr": {
     "pc_ey": "/ Pro · Produits",
@@ -2804,6 +2858,15 @@
     "ck_ok": "OK",
     "ys_lang": "Cette notice est publiée en turc ; seule la version turque fait foi.",
     "yan_p2": "Vous pouvez signaler un effet indésirable lié à nos produits à notre équipe sécurité par téléphone ou e-mail.",
-    "yan_bil": "Si possible, indiquez le produit, le numéro de lot, la date, une brève description et vos coordonnées."
+    "yan_bil": "Si possible, indiquez le produit, le numéro de lot, la date, une brève description et vos coordonnées.",
+    "ur_ey": "/ Partenariat",
+    "ur_sh": "Comment ça marche",
+    "ur_sp": "Votre demande parvient directement à notre équipe de développement commercial.",
+    "ur_s1": "Nous recevons votre demande",
+    "ur_s1p": "Le formulaire arrive dans notre boîte e-mail et notre liste de demandes.",
+    "ur_s2": "Votre idée est étudiée",
+    "ur_s2p": "Nous l’examinons sous l’angle de la formule, de la fabrication et du conditionnement.",
+    "ur_s3": "Nous revenons vers vous",
+    "ur_s3p": "Notre équipe vous contacte pour les prochaines étapes."
   }
 }

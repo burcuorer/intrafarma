@@ -73,7 +73,7 @@ if(P==='urunler'){
   /* filtre düğmeleri (eksen, klinik alan) sayfayı yerinde bırakır; ürün açılınca ya da başka yerden gelinince başa dönülür */
   const inFilter=!!a.closest('.uc-bar,.uc-ca,.uc-ax');const toProd=new URL(a.href).searchParams.has('urun');
   ucGo(a.href,true);if(!inFilter||toProd)scrollTo({top:0,behavior:'auto'});});
- $('#ucQ').addEventListener('input',e=>{UC.q=e.target.value;renderUC();});
+ $('#ucQ').addEventListener('input',e=>{UC.q=e.target.value;/* arama her zaman bütün ürünlerde: seçili grup/klinik alan sıfırlanır */if(UC.q.trim()&&(UC.ax>=0||UC.ca>=0)){UC.ax=-1;UC.ca=-1;history.replaceState({ifuc:1},'',IFU.U.urunler);crumbs();titleSync();}renderUC();});
  addEventListener('popstate',()=>{ucRead();renderUC();crumbs();titleSync();pgMode();});
 }
 
@@ -451,3 +451,20 @@ ctBuild();
  if(nav&&doc){let n=0;doc.querySelectorAll('h2,h3').forEach(h=>{const t=(h.dataset.toc||h.textContent).trim();if(!t)return;
   if(!h.id)h.id='ys-b'+(++n);const a=document.createElement('a');a.href='#'+h.id;a.textContent=t;if(h.tagName==='H3')a.className='ys-sub';
   const art=h.tagName==='H2'&&h.closest('article');if(art&&art.id&&art.firstElementChild===h)a.href='#'+art.id;nav.appendChild(a);});}}
+
+/* Pro telefon: hücre sayfayla birlikte kayar (kaydırma miktarı hücre çizimine iletilir) */
+{const pu=$('.pro-ui');if(pu)pu.addEventListener('scroll',()=>{IF.proSY=innerWidth<760?pu.scrollTop:0;},{passive:true});}
+/* Pro genel bakış: katalog şeridi aramanın altına, başlık bloğunun içine */
+{const k=$('#katDl'),h=$('.pro-hero');if(k&&h&&k.parentElement!==h)h.appendChild(k);}
+
+/* Üretim: iş birliği formu İletişim düzeninde (bant + bindirmeli kart + süreç adımları) */
+function urBuild(){const v=$('#vUretim');if(!v||v.querySelector('.ur-ct'))return;const sec=v.querySelector('section.if-fm#isbirligi');if(!sec)return;
+ const T=k=>esc2(tr(k)),h=sec.querySelector('.if-fm-h'),fm=sec.querySelector('form');if(!fm)return;
+ const w=document.createElement('section');w.className='ur-cta';w.id='isbirligi';sec.removeAttribute('id');
+ const img=new URL((window.IF_BASE||'')+'media/gorsel/regenyal-laboratuvar.jpg',location.href).href;
+ w.innerHTML='<div class="ur-band" style="--im:url(&quot;'+img+'&quot;)"><div class="ur-band-in"><p class="eyebrow" data-t="ur_ey">'+T('ur_ey')+'</p><h2 data-t="isb_h">'+T('isb_h')+'</h2><p data-t="isb_p">'+T('isb_p')+'</p></div></div>'
+  +'<div class="ct ur-ct"><aside class="ct-st"><h2 data-t="ur_sh">'+T('ur_sh')+'</h2><p data-t="ur_sp">'+T('ur_sp')+'</p><ol>'+[1,2,3].map(i=>'<li><b data-t="ur_s'+i+'">'+T('ur_s'+i)+'</b><span data-t="ur_s'+i+'p">'+T('ur_s'+i+'p')+'</span></li>').join('')+'</ol></aside>'
+  +'<div class="ct-card"><div class="ct-pane"></div></div></div>';
+ w.querySelector('.ct-pane').appendChild(fm);sec.replaceWith(w);}
+urBuild();
+{const st=$('#stage');if(st)st.addEventListener('scroll',()=>{if(st.scrollLeft)st.scrollLeft=0;if(st.scrollTop)st.scrollTop=0;},{passive:true});}
