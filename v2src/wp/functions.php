@@ -231,3 +231,10 @@ function intrafarma_render($page) {
 </html>
 <?php
 }
+
+/* WP-Optimize: tema dosyaları birleştirilip küçültülmesin (küçültücü tema kodunu bozuyor, sayfa boş kalıyordu) */
+add_filter('wp-optimize-minify-default-exclusions', function ($ex) {
+    $ex = is_array($ex) ? $ex : array();
+    $ex[] = '/themes/intrafarma-2026/';
+    return $ex;
+});
