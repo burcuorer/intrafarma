@@ -3093,6 +3093,39 @@ html body .ct .fld2>span:not(.lb){font:inherit!important}
 @media (max-width:900px){#rqF input,#rqF select,#rqF textarea,#sForm input,#sForm select,#sForm textarea,#gForm input,#gForm select,#mailForm input{font-size:16px!important}}
 html body .if-fm-f small.f-er{display:block;margin:0!important;font:500 13px/1.35 var(--f-b)!important;letter-spacing:0!important;text-transform:none!important;color:var(--f-er)!important}
 @media (max-width:600px){html body .ct-tabs{overflow:visible;display:grid!important;grid-template-columns:repeat(3,1fr);gap:4px}html body .ct-tabs button{white-space:normal;text-align:center;padding:11px 6px!important;font-size:13px!important;line-height:1.25!important;display:flex;align-items:center;justify-content:center}}
+
+/* ===== ÖLÇÜ SİSTEMİ (alt sayfalar): tek kenar, tek bölüm ritmi, iki başlık boyu ===== */
+:root{--sp-s:40px;--sp-m:clamp(48px,4.4vw,64px);--r-s:8px;--r-m:16px}
+@media (max-width:760px){:root{--sp-s:32px;--sp-m:48px}}
+/* kenar: tüm içerik logoyla aynı çizgide */
+html body .pg-sec{padding-inline:var(--px)!important}
+/* bölüm ritmi: her bölüm yalnız üstten boşluk alır; zeminli bölümler ve sayfanın son bölümü alttan da */
+html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vIletisim,#vUzmanlik) section.hs.hs.hs{padding-top:var(--sp-m)!important;padding-bottom:0!important}
+html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vIletisim,#vUzmanlik) section.hs.hs.hs.band,html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vIletisim,#vUzmanlik) section.hs.hs.hs.tint{padding-bottom:var(--sp-m)!important}
+html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vIletisim,#vUzmanlik) > section.pg + section.hs.hs.hs,html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vIletisim,#vUzmanlik) > section.pg + div > section.hs.hs.hs:first-child{padding-top:var(--sp-s)!important}
+html:not([data-page=home]) body [id^=v] > section.hs.hs.hs:last-child,html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vIletisim,#vUzmanlik) > :last-child section.hs.hs.hs:last-child{padding-bottom:var(--sp-m)!important}
+html:not([data-page=home]):not([data-page=iletisim]) body [id^=v] > .pg + .pg-sec{padding-top:var(--sp-s)!important}
+html[data-page=iletisim] body [id^=v] > .pg-sec.pg-sec{padding-top:0!important}
+/* sayfa üstü bannerları: aynı yükseklik (alan sayfaları ve iletişim kendi ölçüsünde) */
+@media (min-width:761px){html:not([data-page=home]):not([data-page=iletisim]) [id^=v] > .pg:not(.al-ph):not(:has(.pg-alan)){min-height:calc(var(--hdr,104px) + 300px)!important;box-sizing:border-box;display:flex!important;flex-direction:column;justify-content:center;align-items:stretch}html:not([data-page=home]):not([data-page=iletisim]) [id^=v] > .pg:not(.al-ph):not(:has(.pg-alan)) > .pg-in{align-self:flex-start;margin-inline:0!important}}
+/* başlıklar: bölüm başlığı 36 / kart başlığı 20 (telefonda 26 / 18) */
+html:not([data-page=home]) [id^=v] .hs-h h2,html:not([data-page=home]) [id^=v] .hs > h2{font-size:clamp(26px,2.5vw,36px)!important;line-height:1.15!important}
+html:not([data-page=home]) [id^=v] .hs h3{font-size:clamp(18px,1.4vw,20px)!important}
+/* köşe yuvarlaklığı: kartlar 16, küçük öğeler 8 */
+html body .ct-card,html body .soon-c,html body .ct-info>div,html body .ct-map{border-radius:var(--r-m)!important}
+/* Bilim: danışma kurulu ve yayınlar tam genişlik "yakında" kartlarıyla */
+.soon-kur .soon-g{grid-template-columns:repeat(4,minmax(0,1fr))}
+.soon-kur .soon-im{aspect-ratio:1/1;border-radius:50%!important;width:62%;margin:10px auto 8px}
+.soon-kur .soon-c{align-items:center}.soon-kur .soon-c i{margin-inline:auto}
+@media (max-width:760px){.soon-kur .soon-g{grid-template-columns:1fr 1fr}.soon-kur .soon-c:nth-child(n+3){display:flex}}
+/* küçük dokunma hedefleri: görünüm aynı, dokunma alanı en az 40px */
+.vh-dots button,.kb-dots button,.hp-dots button,[class*=-dots] button{position:relative}
+.vh-dots button::after,.kb-dots button::after,[class*=-dots] button::after{content:"";position:absolute;inset:-14px -6px}
+html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vIletisim,#vUzmanlik){padding-bottom:var(--sp-m)!important}
+html:not([data-page=home]) body :is(#vUretim,#vIletisim) > .pg-sec.pg-sec{padding-bottom:0!important}
+
+html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vUzmanlik) section.hs.hs.hs:is(.band,.tint) + section.hs.hs.hs{padding-top:var(--sp-s)!important;margin-top:0!important}
+html:not([data-page=home]) body :is(#vHakkimizda,#vUrunler,#vBilim,#vUretim,#vGuncel,#vUzmanlik) section.hs.hs.hs + section.hs.hs.hs.hs{margin-top:0!important}
 </style>
 </head><body>
 
@@ -4616,9 +4649,9 @@ $$('.if-fm-f').forEach(f=>{f.querySelectorAll('input,textarea,select').forEach(x
   sync();new MutationObserver(sync).observe(ax,{childList:true,subtree:true,attributes:true});new MutationObserver(sync).observe(ca,{childList:true,subtree:true,attributes:true});}}
 
 /* Medya: içerik gelene kadar tek satırlık not yerine "Yakında" iskelet kartları */
-function soonCards(){['#haberler','#etkinlikler','#duyurular'].forEach(id=>{const pc=$(id+' > .pend-card');if(!pc)return;const sp=pc.querySelector('span[data-t]'),k=sp?sp.dataset.t:'';
+function soonCards(){['#haberler','#etkinlikler','#duyurular','#kurul','#blog'].forEach(id=>{const pc=$(id+' > .pend-card');if(!pc)return;const sp=pc.querySelector('span[data-t]'),k=sp?sp.dataset.t:'';
  const d=document.createElement('div');d.className='soon-w';
- d.innerHTML='<div class="soon-g" aria-hidden="true">'+[0,1,2].map(j=>'<div class="soon-c" style="--i:'+j+'"><span class="soon-im"><em data-t="soon_t">'+esc2(tr('soon_t'))+'</em></span><i></i><i></i><i class="s"></i></div>').join('')+'</div><p class="soon-n"><span'+(k?' data-t="'+k+'"':'')+'>'+esc2(k?tr(k):'')+'</span></p>';
+ const kk=id==='#kurul';d.className='soon-w'+(kk?' soon-kur':'');d.innerHTML='<div class="soon-g" aria-hidden="true">'+(kk?[0,1,2,3]:[0,1,2]).map(j=>'<div class="soon-c" style="--i:'+j+'"><span class="soon-im"><em data-t="soon_t">'+esc2(tr('soon_t'))+'</em></span><i></i><i></i><i class="s"></i></div>').join('')+'</div><p class="soon-n"><span'+(k?' data-t="'+k+'"':'')+'>'+esc2(k?tr(k):'')+'</span></p>';
  pc.replaceWith(d);});}
 soonCards();
 /* Hakkımızda: tanıtım filmi/basın içeriği yoksa tek satırlık notla bölüm açmayalım */

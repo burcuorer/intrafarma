@@ -536,9 +536,9 @@ $$('.if-fm-f').forEach(f=>{f.querySelectorAll('input,textarea,select').forEach(x
   sync();new MutationObserver(sync).observe(ax,{childList:true,subtree:true,attributes:true});new MutationObserver(sync).observe(ca,{childList:true,subtree:true,attributes:true});}}
 
 /* Medya: içerik gelene kadar tek satırlık not yerine "Yakında" iskelet kartları */
-function soonCards(){['#haberler','#etkinlikler','#duyurular'].forEach(id=>{const pc=$(id+' > .pend-card');if(!pc)return;const sp=pc.querySelector('span[data-t]'),k=sp?sp.dataset.t:'';
+function soonCards(){['#haberler','#etkinlikler','#duyurular','#kurul','#blog'].forEach(id=>{const pc=$(id+' > .pend-card');if(!pc)return;const sp=pc.querySelector('span[data-t]'),k=sp?sp.dataset.t:'';
  const d=document.createElement('div');d.className='soon-w';
- d.innerHTML='<div class="soon-g" aria-hidden="true">'+[0,1,2].map(j=>'<div class="soon-c" style="--i:'+j+'"><span class="soon-im"><em data-t="soon_t">'+esc2(tr('soon_t'))+'</em></span><i></i><i></i><i class="s"></i></div>').join('')+'</div><p class="soon-n"><span'+(k?' data-t="'+k+'"':'')+'>'+esc2(k?tr(k):'')+'</span></p>';
+ const kk=id==='#kurul';d.className='soon-w'+(kk?' soon-kur':'');d.innerHTML='<div class="soon-g" aria-hidden="true">'+(kk?[0,1,2,3]:[0,1,2]).map(j=>'<div class="soon-c" style="--i:'+j+'"><span class="soon-im"><em data-t="soon_t">'+esc2(tr('soon_t'))+'</em></span><i></i><i></i><i class="s"></i></div>').join('')+'</div><p class="soon-n"><span'+(k?' data-t="'+k+'"':'')+'>'+esc2(k?tr(k):'')+'</span></p>';
  pc.replaceWith(d);});}
 soonCards();
 /* Hakkımızda: tanıtım filmi/basın içeriği yoksa tek satırlık notla bölüm açmayalım */
