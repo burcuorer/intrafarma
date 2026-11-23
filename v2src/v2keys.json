@@ -310,7 +310,17 @@
     "f_lot": "Lot / seri numarası",
     "f_tarih": "Olay tarihi",
     "f_olay": "Olayın açıklaması",
-    "yan_note": "Acil bir durumda lütfen 112’yi arayın. Bildiriminizi ayrıca Türkiye İlaç ve Tıbbi Cihaz Kurumu’na (TİTCK) da iletebilirsiniz."
+    "yan_note": "Acil bir durumda lütfen 112’yi arayın. Bildiriminizi ayrıca Türkiye İlaç ve Tıbbi Cihaz Kurumu’na (TİTCK) da iletebilirsiniz.",
+    "pd_cta": "Teknik belge ve numune talebi",
+    "rq_kvkk": "<a href=\"kvkk.html\">Aydınlatma Metni</a>’ni okudum ve anladım.",
+    "f_pr": "Bilgileriniz yalnızca talebinizi yanıtlamak için kullanılır. Ayrıntı: <a href=\"kvkk.html\">Aydınlatma Metni</a>.",
+    "ck_ps": "Bu sitede yalnızca sitenin çalışması için gerekli çerezler kullanılır. Ayrıntılar için <a href=\"kvkk.html#cerez\">Çerez Politikası</a>’na bakabilirsiniz.",
+    "ck_ok": "Tamam",
+    "ft_kvkk": "KVKK Aydınlatma Metni",
+    "ft_cookie": "Çerez politikası",
+    "ys_lang": "",
+    "yan_p2": "Ürünlerimizle ilgili bir yan etki ya da olumsuz olayı ürün güvenliği ekibimize telefonla ya da e-postayla bildirebilirsiniz.",
+    "yan_bil": "Bildiriminizde mümkünse ürün adı, lot / seri numarası, olayın tarihi ve kısa açıklaması ile size ulaşabileceğimiz bilgiler yer alsın."
   },
   "en": {
     "draft": "Test version · text, figures and images are samples",
@@ -623,7 +633,17 @@
     "f_lot": "Lot / batch number",
     "f_tarih": "Date of event",
     "f_olay": "Description of the event",
-    "yan_note": "In an emergency, call your local emergency number. You can also report to your national medicines and medical devices authority."
+    "yan_note": "In an emergency, call your local emergency number. You can also report to your national medicines and medical devices authority.",
+    "pd_cta": "Technical files and samples",
+    "rq_kvkk": "I have read and understood the <a href=\"kvkk.html\">Privacy Notice</a>.",
+    "f_pr": "Your details are used only to answer your request. Details: <a href=\"kvkk.html\">Privacy Notice</a>.",
+    "ck_ps": "This site only uses cookies that are necessary for it to work. See our <a href=\"kvkk.html#cerez\">Cookie Policy</a> for details.",
+    "ck_ok": "OK",
+    "ft_kvkk": "Privacy Notice (KVKK)",
+    "ft_cookie": "Cookie policy",
+    "ys_lang": "This notice is published in Turkish; the Turkish text is the binding version.",
+    "yan_p2": "You can report a side effect or adverse event with one of our products to our product safety team by phone or e-mail.",
+    "yan_bil": "If possible, include the product name, lot / batch number, date and a short description of the event, and how we can reach you."
   },
   "ar": {
     "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -936,7 +956,17 @@
     "f_lot": "رقم الدفعة",
     "f_tarih": "تاريخ الحدث",
     "f_olay": "وصف الحدث",
-    "yan_note": "في حالة الطوارئ اتصل برقم الطوارئ المحلي. يمكنك أيضًا الإبلاغ للهيئة الوطنية للأدوية والأجهزة الطبية."
+    "yan_note": "في حالة الطوارئ اتصل برقم الطوارئ المحلي. يمكنك أيضًا الإبلاغ للهيئة الوطنية للأدوية والأجهزة الطبية.",
+    "pd_cta": "الملفات الفنية والعينات",
+    "rq_kvkk": "لقد قرأت <a href=\"kvkk.html\">إشعار الخصوصية</a> وفهمته.",
+    "f_pr": "تُستخدم بياناتك فقط للرد على طلبك. التفاصيل: <a href=\"kvkk.html\">إشعار الخصوصية</a>.",
+    "ck_ps": "يستخدم هذا الموقع ملفات تعريف الارتباط الضرورية لعمله فقط. التفاصيل في <a href=\"kvkk.html#cerez\">سياسة ملفات تعريف الارتباط</a>.",
+    "ck_ok": "حسنًا",
+    "ft_kvkk": "إشعار الخصوصية",
+    "ft_cookie": "سياسة ملفات تعريف الارتباط",
+    "ys_lang": "هذا الإشعار منشور باللغة التركية، والنص التركي هو النص الملزم.",
+    "yan_p2": "يمكنك الإبلاغ عن أثر جانبي أو حدث سلبي مرتبط بمنتجاتنا لفريق سلامة المنتجات عبر الهاتف أو البريد الإلكتروني.",
+    "yan_bil": "يُرجى ذكر اسم المنتج ورقم الدفعة وتاريخ الحدث ووصفًا موجزًا وطريقة التواصل معك إن أمكن."
   },
   "it": {
     "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -1249,7 +1279,17 @@
     "f_lot": "Lotto",
     "f_tarih": "Data dell’evento",
     "f_olay": "Descrizione dell’evento",
-    "yan_note": "In caso di emergenza chiami il numero di emergenza. Può anche segnalare all’autorità nazionale per farmaci e dispositivi medici."
+    "yan_note": "In caso di emergenza chiami il numero di emergenza. Può anche segnalare all’autorità nazionale per farmaci e dispositivi medici.",
+    "pd_cta": "Documenti tecnici e campioni",
+    "rq_kvkk": "Ho letto e compreso l’<a href=\"kvkk.html\">Informativa privacy</a>.",
+    "f_pr": "I suoi dati sono usati solo per rispondere alla richiesta. Dettagli: <a href=\"kvkk.html\">Informativa privacy</a>.",
+    "ck_ps": "Questo sito usa solo i cookie necessari al suo funzionamento. Dettagli nella <a href=\"kvkk.html#cerez\">Cookie policy</a>.",
+    "ck_ok": "OK",
+    "ft_kvkk": "Informativa privacy",
+    "ft_cookie": "Cookie policy",
+    "ys_lang": "L’informativa è pubblicata in turco; fa fede il testo turco.",
+    "yan_p2": "Può segnalare un effetto collaterale o un evento avverso legato ai nostri prodotti al team sicurezza per telefono o e-mail.",
+    "yan_bil": "Se possibile indichi nome del prodotto, lotto, data e breve descrizione dell’evento e un recapito."
   },
   "ru": {
     "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -1562,7 +1602,17 @@
     "f_lot": "Номер партии",
     "f_tarih": "Дата события",
     "f_olay": "Описание события",
-    "yan_note": "В экстренной ситуации звоните в службу экстренной помощи. Вы также можете сообщить в национальный регулятор лекарств и медизделий."
+    "yan_note": "В экстренной ситуации звоните в службу экстренной помощи. Вы также можете сообщить в национальный регулятор лекарств и медизделий.",
+    "pd_cta": "Техническая документация и образцы",
+    "rq_kvkk": "Я прочитал(а) и понял(а) <a href=\"kvkk.html\">Уведомление о конфиденциальности</a>.",
+    "f_pr": "Ваши данные используются только для ответа на запрос. Подробнее: <a href=\"kvkk.html\">Уведомление о конфиденциальности</a>.",
+    "ck_ps": "Сайт использует только cookie, необходимые для его работы. Подробнее в <a href=\"kvkk.html#cerez\">Политике cookie</a>.",
+    "ck_ok": "OK",
+    "ft_kvkk": "Уведомление о конфиденциальности",
+    "ft_cookie": "Политика cookie",
+    "ys_lang": "Уведомление опубликовано на турецком языке; обязательной является турецкая версия.",
+    "yan_p2": "Сообщить о побочном эффекте или нежелательном явлении можно нашей службе безопасности продукции по телефону или e-mail.",
+    "yan_bil": "По возможности укажите название продукта, номер партии, дату и краткое описание события, а также контакты."
   },
   "es": {
     "pc_ey": "/ Pro · Productos",
@@ -1602,7 +1652,7 @@
     "rq_mail": "Correo electrónico",
     "rq_qty": "Cantidad",
     "rq_msg": "Nota (opcional)",
-    "rq_kvkk": "He leído el aviso de privacidad y acepto que mis datos se traten para esta solicitud.",
+    "rq_kvkk": "He leído y entendido el <a href=\"kvkk.html\">Aviso de privacidad</a>.",
     "rq_send": "Enviar solicitud",
     "rq_ok": "Hemos recibido su solicitud. Referencia: {r}. Nuestro equipo se pondrá en contacto con usted en breve.",
     "rq_err": "La institución, el nombre, un correo válido y el consentimiento son obligatorios.",
@@ -1763,7 +1813,7 @@
     "o_golgi": "Aparato de Golgi",
     "ft_rights": "© 2026 Intrafarma",
     "ft_kvkk": "Aviso de privacidad",
-    "ft_cookie": "Preferencias de cookies",
+    "ft_cookie": "Política de cookies",
     "ft_ae": "Notificación de seguridad del producto",
     "totop": "Volver arriba",
     "hc_ey": "/ Intrafarma",
@@ -2151,7 +2201,14 @@
     "f_lot": "Lote",
     "f_tarih": "Fecha del suceso",
     "f_olay": "Descripción del suceso",
-    "yan_note": "En una emergencia llame al número de emergencias. También puede notificarlo a la autoridad nacional de medicamentos y productos sanitarios."
+    "yan_note": "En una emergencia llame al número de emergencias. También puede notificarlo a la autoridad nacional de medicamentos y productos sanitarios.",
+    "pd_cta": "Documentación técnica y muestras",
+    "f_pr": "Sus datos solo se usan para responder a su solicitud. Detalles: <a href=\"kvkk.html\">Aviso de privacidad</a>.",
+    "ck_ps": "Este sitio solo usa las cookies necesarias para su funcionamiento. Detalles en la <a href=\"kvkk.html#cerez\">Política de cookies</a>.",
+    "ck_ok": "Aceptar",
+    "ys_lang": "Este aviso se publica en turco; el texto turco es el vinculante.",
+    "yan_p2": "Puede comunicar un efecto adverso o incidente con nuestros productos a nuestro equipo de seguridad por teléfono o correo.",
+    "yan_bil": "Si es posible, indique producto, lote, fecha y breve descripción del suceso, y cómo contactarle."
   },
   "fr": {
     "pc_ey": "/ Pro · Produits",
@@ -2191,7 +2248,7 @@
     "rq_mail": "E-mail",
     "rq_qty": "Quantité",
     "rq_msg": "Note (facultatif)",
-    "rq_kvkk": "J'ai lu la notice d'information et j'accepte que mes données soient traitées pour cette demande.",
+    "rq_kvkk": "J’ai lu et compris la <a href=\"kvkk.html\">Notice d’information</a>.",
     "rq_send": "Envoyer la demande",
     "rq_ok": "Votre demande a bien été reçue. Référence : {r}. Notre équipe vous contactera rapidement.",
     "rq_err": "L'établissement, le nom, un e-mail valide et le consentement sont obligatoires.",
@@ -2351,8 +2408,8 @@
     "o_er": "Réticulum endoplasmique",
     "o_golgi": "Appareil de Golgi",
     "ft_rights": "© 2026 Intrafarma",
-    "ft_kvkk": "Notice d'information",
-    "ft_cookie": "Préférences cookies",
+    "ft_kvkk": "Notice d’information",
+    "ft_cookie": "Politique cookies",
     "ft_ae": "Signalement de sécurité produit",
     "totop": "Haut de page",
     "hc_ey": "/ Intrafarma",
@@ -2740,6 +2797,13 @@
     "f_lot": "Numéro de lot",
     "f_tarih": "Date de l’événement",
     "f_olay": "Description de l’événement",
-    "yan_note": "En cas d’urgence, appelez le numéro d’urgence. Vous pouvez aussi déclarer auprès de l’autorité nationale des médicaments et dispositifs médicaux."
+    "yan_note": "En cas d’urgence, appelez le numéro d’urgence. Vous pouvez aussi déclarer auprès de l’autorité nationale des médicaments et dispositifs médicaux.",
+    "pd_cta": "Documents techniques et échantillons",
+    "f_pr": "Vos données servent uniquement à répondre à votre demande. Détails : <a href=\"kvkk.html\">Notice d’information</a>.",
+    "ck_ps": "Ce site n’utilise que les cookies nécessaires à son fonctionnement. Détails dans la <a href=\"kvkk.html#cerez\">Politique cookies</a>.",
+    "ck_ok": "OK",
+    "ys_lang": "Cette notice est publiée en turc ; seule la version turque fait foi.",
+    "yan_p2": "Vous pouvez signaler un effet indésirable lié à nos produits à notre équipe sécurité par téléphone ou e-mail.",
+    "yan_bil": "Si possible, indiquez le produit, le numéro de lot, la date, une brève description et vos coordonnées."
   }
 }

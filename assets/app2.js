@@ -154,7 +154,7 @@ const tt=$('#totop');addEventListener('scroll',()=>tt.classList.toggle('show',sc
 /* ===================== v2: sayfa yönlendirme, sayfa yolu, ürün sayfası, dil seçici ===================== */
 const P=IFU.page,D2=()=>window.IFD;
 const esc2=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const VMAP={uzmanlik:'vUzmanlik',urunler:'vUrunler',uretim:'vUretim',bilim:'vBilim',guncel:'vGuncel',iletisim:'vIletisim',hakkimizda:'vHakkimizda'};
+const VMAP={uzmanlik:'vUzmanlik',urunler:'vUrunler',uretim:'vUretim',bilim:'vBilim',guncel:'vGuncel',iletisim:'vIletisim',hakkimizda:'vHakkimizda',kvkk:'vYasal'};
 const SEC={uzmanlik:'uzmanlik',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'guncel',iletisim:'iletisim'};
 let curView='';
 document.documentElement.classList.add('v2');
@@ -210,8 +210,8 @@ function renderUC(){
    '<div class="uc-dg"><div class="uc-vis'+(p.img?' has-img':'')+'" style="--tc:'+(AXC[p.a]||'#17707A')+(p.img?';--im:url(&quot;'+esc2(encodeURI(p.img))+'&quot;)':'')+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="'+esc2(p.n)+'" loading="lazy">':'')+'<small>'+String(p.a+1).padStart(2,'0')+' · '+esc2(axn)+'</small><span>'+esc2(p.n)+'</span></div>'+
    '<div class="uc-info"><dl class="uc-meta"><div><dt>'+esc2(tr('d_ax'))+'</dt><dd><a href="'+ucHref({ax:p.a,ca:-1})+'">'+String(p.a+1).padStart(2,'0')+' '+esc2(axn)+'</a></dd></div>'+
    '<div><dt>'+esc2(tr('d_ca'))+'</dt><dd class="uc-areas">'+areas+'</dd></div><div><dt>'+esc2(tr('d_lang'))+'</dt><dd>TR · EN</dd></div></dl>'+
-   (open?'<div class="uc-box open"><h2>'+tr('op_t')+'</h2><p>'+tr('op_b')+'</p></div>'
-        :'<div class="uc-box lock"><h2>'+tr('lk_t')+'</h2><p>'+tr('lk_b')+'</p><button type="button" class="b-pri" id="ucGate"><span>'+esc2(tr('cta1'))+'</span><span class="o"></span></button></div>')+
+   (open?'<div class="uc-box open"><h2>'+tr('op_t')+'</h2><p>'+tr('op_b')+'</p><button type="button" class="b-pri" data-gate><span>'+esc2(tr('pd_cta'))+'</span><span class="o"></span></button></div>'
+        :'<div class="uc-box lock"><h2>'+tr('lk_t')+'</h2><p>'+tr('lk_b')+'</p><button type="button" class="b-pri" id="ucGate"><span>'+esc2(tr('pd_cta'))+'</span><span class="o"></span></button></div>')+
    '</div></div>'+
    (more.length?'<div class="uc-more"><h2>'+esc2(tr('uc_sim'))+'</h2><div class="uc-g">'+more.map(o=>ucCard(o.x,o.i,L,AX)).join('')+'</div></div>':'');
   const g=$('#ucGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;IF.openGate();});ucExtra(p,L);
@@ -572,7 +572,7 @@ function ctBuild(){const v=$('#vIletisim');if(!v||v.querySelector('.ct'))return;
  w.innerHTML='<aside class="ct-st" data-rv="up"><h2 data-t="ct_sh">'+T('ct_sh')+'</h2><p data-t="ct_sp">'+T('ct_sp')+'</p><ol>'+[1,2,3].map(i=>'<li><b data-t="ct_s'+i+'">'+T('ct_s'+i)+'</b><span data-t="ct_s'+i+'p">'+T('ct_s'+i+'p')+'</span></li>').join('')+'</ol></aside>'
   +'<div class="ct-card" data-rv="up"><div class="ct-tabs" role="tablist">'+secs.map(x=>{const k={form:'nv_ilf',bayilik:'nv_bay','yan-etki':'nv_ae'}[x.id]||'nv_ilf';return '<button type="button" role="tab" data-p="'+x.id+'" data-t="'+k+'"'+(x.id==='yan-etki'?' class="ct-ae"':'')+'>'+T(k)+'</button>';}).join('')+'</div><div class="ct-panes"></div></div>';
  const panes=w.querySelector('.ct-panes');
- secs.forEach(sec=>{const pn=document.createElement('div');pn.className='ct-pane';pn.id=sec.id;sec.removeAttribute('id');const hp=sec.querySelector('.if-fm-h p');if(hp){hp.className='ct-lede';pn.appendChild(hp);}pn.appendChild(sec.querySelector('form'));panes.appendChild(pn);sec.remove();});
+ secs.forEach(sec=>{const pn=document.createElement('div');pn.className='ct-pane';pn.id=sec.id;sec.removeAttribute('id');const hp=sec.querySelector('.if-fm-h p');if(hp){hp.className='ct-lede';pn.appendChild(hp);}const fm=sec.querySelector('form');if(fm)pn.appendChild(fm);else [...sec.children].filter(x=>!x.classList.contains('if-fm-h')).forEach(x=>pn.appendChild(x));panes.appendChild(pn);sec.remove();});
  const sec=g?g.closest('section'):v.querySelector('.pg-sec');sec.insertBefore(w,sec.firstChild);
  if(soc)soc.hidden=true;
  if(g){g.classList.add('ct-info');[['il_t','tel'],['il_m','mail'],['il_a','pin']].forEach(([k,ic],i)=>{});const ord=['il_t','il_m','il_a'],ics={il_t:'<path d="M5 4h3l2 5-2 1a11 11 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',il_m:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',il_a:'<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'};
@@ -608,7 +608,7 @@ labels();
    - Google etiketleri yalnızca canlı alan adında yüklenir (IF_CK.live); test ve önizlemede bant çalışır, etiket yüklenmez.
    - YouTube videoları tıklanınca yüklenir (youtube-nocookie). */
 (function(){
-const C=Object.assign({ga:'',ads:'',live:[],log:'',policy:'',nec:[]},window.IF_CK||{});
+const C=Object.assign({ga:'',ads:'',live:[],log:'',policy:'',nec:[],simple:false},window.IF_CK||{});
 const CK='if_consent',AGE=15552000; /* 180 gün */
 const host=location.hostname.replace(/^www\./,'');
 const LIVE=C.live.some(h=>String(h).trim().replace(/^www\./,'')===host);
@@ -667,6 +667,7 @@ function say(m){live.textContent='';setTimeout(()=>{live.textContent=m;},50);}
 let bar=null;
 function banner(){
  if(bar)return;bar=document.createElement('section');bar.className='ck-bar';bar.setAttribute('aria-labelledby','ckT');
+ if(C.simple){bar.className='ck-bar ck-simple';bar.innerHTML='<div class="ck-tx"><p data-t="ck_ps"></p></div><div class="ck-bt"><button type="button" class="ck-b ck-pri" data-ck="none" data-t="ck_ok"></button></div>';fill(bar);document.body.appendChild(bar);document.documentElement.classList.add('ck-on');return;}
  bar.innerHTML='<div class="ck-tx"><h2 id="ckT" data-t="ck_t"></h2><p data-t="ck_p"></p></div>'+
   '<div class="ck-bt"><button type="button" class="ck-b ck-pri" data-ck="all" data-t="ck_acc"></button><button type="button" class="ck-b ck-pri" data-ck="none" data-t="ck_rej"></button><button type="button" class="ck-b" data-ck="prefs" data-t="ck_set"></button></div>';
  fill(bar);document.body.appendChild(bar);document.documentElement.classList.add('ck-on');
@@ -706,7 +707,7 @@ document.addEventListener('click',e=>{
   else if(a==='close')closePrefs();
   else if(a==='save'){const o={};CATS.forEach(k=>{o[k]=dlg.querySelector('input[name="'+k+'"]').checked;});save(o,'save');closePrefs();}
   return;}
- if(e.target.closest('.ck-open')){e.preventDefault();prefs();}
+ if(e.target.closest('.ck-open')&&!C.simple){e.preventDefault();prefs();}
 });
 
 /* ---- YouTube: tıklayınca yükle ----
@@ -727,7 +728,7 @@ function ytInit(){
    '<div class="yt-ask" hidden><p class="yt-h" data-t="yt_h"></p><p data-t="yt_p"></p><div class="yt-bt"><button type="button" class="ck-b ck-pri" data-yt-go="1" data-t="yt_once"></button><button type="button" class="ck-b" data-yt-go="2" data-t="yt_always"></button></div>'+
    '<a class="yt-ext" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v='+encodeURIComponent(el.dataset.yt)+'" data-t="yt_open"></a></div>';
   fill(el);
-  el.querySelector('.yt-play').addEventListener('click',()=>{if(has('md'))ytEmbed(el);else{el.querySelector('.yt-play').hidden=true;el.querySelector('.yt-ask').hidden=false;el.querySelector('[data-yt-go]').focus();}});
+  el.querySelector('.yt-play').addEventListener('click',()=>{if(has('md')||C.simple)ytEmbed(el);else{el.querySelector('.yt-play').hidden=true;el.querySelector('.yt-ask').hidden=false;el.querySelector('[data-yt-go]').focus();}});
   el.querySelectorAll('[data-yt-go]').forEach(b=>b.addEventListener('click',()=>{
    if(b.dataset.ytGo==='2'){const o={};CATS.forEach(k=>{o[k]=has(k);});o.md=1;save(o,'yt');}
    ytEmbed(el);}));

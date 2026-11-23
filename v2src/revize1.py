@@ -1,3 +1,4 @@
+import io, os
 # Revize 1 (19.11.2026): firmanın "Website örnekleri ve yorumları" belgesine göre yapı değişiklikleri.
 # transform.py'nin sonunda, son eklerden sonra app.html metnine (_h) uygulanır. Eşleşmezse derleme durur.
 import re as _re
@@ -127,7 +128,7 @@ def revize1(h):
 
     # ---------- 9) İletişim: iletişim formu ve bayilik başvurusu ----------
     a = h.index('<div class="il-soc">'); b = h.index('</section>', a)
-    h = h[:b] + FORM('form', 'ilf') + FORM('bayilik', 'bay') + FORM('yan-etki', 'yan') + h[b:]
+    h = h[:b] + FORM('form', 'ilf') + FORM('bayilik', 'bay') + AE() + h[b:]
     # ---------- 10) diller: TR · EN · ES · FR · AR · IT · RU (Romence çıkarıldı) ----------
     h = h.replace('<button type="button" data-lang="ro" lang="ro">RO</button>', '').replace('<option value="ro" lang="ro">RO</option>', '')
     h = h.replace('<button type="button" data-lang="en" lang="en">EN</button>', '<button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="es" lang="es">ES</button><button type="button" data-lang="fr" lang="fr">FR</button>')
@@ -140,7 +141,30 @@ def revize1(h):
     i = h.index('.nv-burger{display:grid;order:9}'); j = h.rfind('@media (max-width:1180px){', 0, i)
     if j < 0 or i - j > 400: raise SystemExit('eski menü kırılımı bulunamadı')
     h = h[:j] + '@media (max-width:1100px){' + h[j + len('@media (max-width:1180px){'):]
+    # ---------- 11) Uzmanlık alanı sayfası: süreç, SSS ve tek son çağrı (Pro) ----------
+    a = h.index('id="vAlan"'); a = h.index('<aside class="al-side">', a); b = h.index('</section>', a) + len('</section>')
+    blk = ('<section class="hs hk-how band tint al-how" aria-labelledby="alHowH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="hk_how_ey"></p><h2 id="alHowH" data-t="hk_how_h"></h2></div>'
+           '<ol class="hk-steps">' + ''.join('<li data-rv="up"><i>0%d</i><h3 data-t="hk_s%d"></h3><p data-t="hk_s%dp"></p></li>' % (i, i, i) for i in range(1, 5)) + '</ol></section>'
+           '<section class="hs fq al-fq" aria-labelledby="alFqH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="fq_ey"></p><h2 id="alFqH" data-t="ft_sss"></h2></div><div class="fq-l">'
+           + ''.join('<details><summary data-t="fq%d"></summary><p data-t="fq_a"></p></details>' % i for i in (1, 3, 4)) + '</div></section>'
+           '<section class="hs al-end" aria-labelledby="alEndH"><div class="al-end-in" data-rv="up"><div><h2 id="alEndH" data-t="al_pro"></h2><p data-t="al_pro_p"></p></div>'
+           '<button class="b-pri" type="button" data-gate><span data-t="cta1"></span><span class="o"></span></button></div></section>')
+    h = h[:b] + blk + h[b:]
+    # alan içindeki küçük Pro şeridi kalkar (tek son çağrı sayfanın sonunda)
+    a = h.index('id="vAlan"'); x = h.index('<div class="al-pro">', a); y = h.index('</button></div>', x) + len('</button></div>')
+    h = h[:x] + h[y:]
+    # ---------- 12) KVKK aydınlatma metni ve çerez politikası (Intrafarma onayı: 19.11.2026, Hatice Korkmaz) ----------
+    yas = io.open(os.path.join(HERE, 'yasal_tr.html'), encoding='utf-8').read()
+    a = h.index('<div class="view" id="vUretim"')
+    h = h[:a] + yas + '\n' + h[a:]
     return h
+
+def AE():
+    """Ürün güvenliği / yan etki: onaylı aydınlatma metnine göre sitede form yok; yalnızca e-posta ve telefon."""
+    return ('<section class="if-fm ae" id="yan-etki" aria-labelledby="yanH"><div class="if-fm-h"><h2 id="yanH" data-t="yan_h"></h2><p data-t="yan_p2"></p></div>'
+            '<div class="ae-ch"><a class="ae-c" href="tel:+902124385760"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3l2 5-2 1a11 11 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span><small data-t="f_tel"></small><b>0 (212) 438 57 60</b></span></a>'
+            '<a class="ae-c" href="mailto:info@intrafarma.com.tr?subject=%C3%9Cr%C3%BCn%20g%C3%BCvenli%C4%9Fi%20bildirimi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span><small data-t="rq_mail"></small><b>info@intrafarma.com.tr</b></span></a></div>'
+            '<p class="ae-list" data-t="yan_bil"></p><p class="f-note" data-t="yan_note"></p></section>')
 
 def FORM(anchor, k):
     """Talep formu: site → WordPress (Talepler) + e-posta. Ortak form sistemi: etiket üstte, zorunlu (*) / isteğe bağlı işareti, alan altında hata."""
@@ -170,6 +194,6 @@ def FORM(anchor, k):
     return ('<section class="if-fm" id="%s" aria-labelledby="%sH"><div class="if-fm-h"><h2 id="%sH" data-t="%s_h"></h2><p data-t="%s_p"></p></div>'
             '<form class="if-fm-f" data-tur="%s" novalidate>%s%s%s'
             '<input name="web" type="text" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">'
-            '<label class="chk full"><input type="checkbox" name="onay"><span data-t="rq_kvkk"></span></label>'
+            '<label class="chk full"><input type="checkbox" name="onay"><span data-t="rq_kvkk"></span></label><p class="f-pr full" data-t="f_pr"></p>'
             '<div class="full if-fm-a"><button class="b-pri" type="submit"><span data-t="f_send"></span><span class="o"></span></button><p class="if-fm-m" role="status"></p></div></form></section>'
             % (anchor, k, k, k, k, tur, fl, ta, note))

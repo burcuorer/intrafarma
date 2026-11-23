@@ -5,7 +5,7 @@
    - Google etiketleri yalnızca canlı alan adında yüklenir (IF_CK.live); test ve önizlemede bant çalışır, etiket yüklenmez.
    - YouTube videoları tıklanınca yüklenir (youtube-nocookie). */
 (function(){
-const C=Object.assign({ga:'',ads:'',live:[],log:'',policy:'',nec:[]},window.IF_CK||{});
+const C=Object.assign({ga:'',ads:'',live:[],log:'',policy:'',nec:[],simple:false},window.IF_CK||{});
 const CK='if_consent',AGE=15552000; /* 180 gün */
 const host=location.hostname.replace(/^www\./,'');
 const LIVE=C.live.some(h=>String(h).trim().replace(/^www\./,'')===host);
@@ -64,6 +64,7 @@ function say(m){live.textContent='';setTimeout(()=>{live.textContent=m;},50);}
 let bar=null;
 function banner(){
  if(bar)return;bar=document.createElement('section');bar.className='ck-bar';bar.setAttribute('aria-labelledby','ckT');
+ if(C.simple){bar.className='ck-bar ck-simple';bar.innerHTML='<div class="ck-tx"><p data-t="ck_ps"></p></div><div class="ck-bt"><button type="button" class="ck-b ck-pri" data-ck="none" data-t="ck_ok"></button></div>';fill(bar);document.body.appendChild(bar);document.documentElement.classList.add('ck-on');return;}
  bar.innerHTML='<div class="ck-tx"><h2 id="ckT" data-t="ck_t"></h2><p data-t="ck_p"></p></div>'+
   '<div class="ck-bt"><button type="button" class="ck-b ck-pri" data-ck="all" data-t="ck_acc"></button><button type="button" class="ck-b ck-pri" data-ck="none" data-t="ck_rej"></button><button type="button" class="ck-b" data-ck="prefs" data-t="ck_set"></button></div>';
  fill(bar);document.body.appendChild(bar);document.documentElement.classList.add('ck-on');
@@ -103,7 +104,7 @@ document.addEventListener('click',e=>{
   else if(a==='close')closePrefs();
   else if(a==='save'){const o={};CATS.forEach(k=>{o[k]=dlg.querySelector('input[name="'+k+'"]').checked;});save(o,'save');closePrefs();}
   return;}
- if(e.target.closest('.ck-open')){e.preventDefault();prefs();}
+ if(e.target.closest('.ck-open')&&!C.simple){e.preventDefault();prefs();}
 });
 
 /* ---- YouTube: tıklayınca yükle ----
@@ -124,7 +125,7 @@ function ytInit(){
    '<div class="yt-ask" hidden><p class="yt-h" data-t="yt_h"></p><p data-t="yt_p"></p><div class="yt-bt"><button type="button" class="ck-b ck-pri" data-yt-go="1" data-t="yt_once"></button><button type="button" class="ck-b" data-yt-go="2" data-t="yt_always"></button></div>'+
    '<a class="yt-ext" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v='+encodeURIComponent(el.dataset.yt)+'" data-t="yt_open"></a></div>';
   fill(el);
-  el.querySelector('.yt-play').addEventListener('click',()=>{if(has('md'))ytEmbed(el);else{el.querySelector('.yt-play').hidden=true;el.querySelector('.yt-ask').hidden=false;el.querySelector('[data-yt-go]').focus();}});
+  el.querySelector('.yt-play').addEventListener('click',()=>{if(has('md')||C.simple)ytEmbed(el);else{el.querySelector('.yt-play').hidden=true;el.querySelector('.yt-ask').hidden=false;el.querySelector('[data-yt-go]').focus();}});
   el.querySelectorAll('[data-yt-go]').forEach(b=>b.addEventListener('click',()=>{
    if(b.dataset.ytGo==='2'){const o={};CATS.forEach(k=>{o[k]=has(k);});o.md=1;save(o,'yt');}
    ytEmbed(el);}));

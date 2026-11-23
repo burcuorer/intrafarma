@@ -25,6 +25,7 @@ PAGES = [  # dosya, sayfa kimliği, ilk başlık (dil seçilince JS günceller)
  ('guncel.html', 'guncel', 'Medya · Intrafarma'),
  ('iletisim.html', 'iletisim', 'İletişim · Intrafarma'),
  ('hakkimizda.html', 'hakkimizda', 'Hakkımızda · Intrafarma'),
+ ('kvkk.html', 'kvkk', 'KVKK aydınlatma metni ve çerez politikası · Intrafarma'),
 ]
 def need(c, m):
     if not c: sys.exit('DERLEME HATASI: ' + m)
@@ -84,7 +85,7 @@ else:
 for fn, pid, title in PAGES:
     h = re.sub(r'<html lang="tr"[^>]*>', '<html lang="tr" data-page="%s">' % pid, head, count=1)
     need('data-page="%s"' % pid in h, 'html etiketi')
-    h = h.replace('</head>', '<title>%s</title>\n<link rel="stylesheet" href="assets/fonts.css?v=%s">\n<link rel="stylesheet" href="assets/app.css?v=%s">\n<script>window.IF_BASE=%r;window.IF_IMG=__IFIMG__;window.IF_CK={ga:\"G-DNHVY79BSW\",ads:\"\",live:[\"intrafarma.com.tr\",\"www.intrafarma.com.tr\"],log:\"\",policy:\"\"};</script>\n</head>' % (title, h_f, h_css, BASE)).replace('__IFIMG__', IFIMG)
+    h = h.replace('</head>', '<title>%s</title>\n<link rel="stylesheet" href="assets/fonts.css?v=%s">\n<link rel="stylesheet" href="assets/app.css?v=%s">\n<script>window.IF_BASE=%r;window.IF_IMG=__IFIMG__;window.IF_CK={ga:\"\",ads:\"\",live:[\"intrafarma.com.tr\",\"www.intrafarma.com.tr\"],log:\"\",policy:\"kvkk.html#cerez\",simple:true};</script>\n</head>' % (title, h_f, h_css, BASE)).replace('__IFIMG__', IFIMG)
     if '</head>' not in head:
         sys.exit('head kapanışı yok')
     html = (h + '<body>' + body +

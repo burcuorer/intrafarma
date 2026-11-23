@@ -2,7 +2,7 @@
 /* ===================== v2: sayfa yönlendirme, sayfa yolu, ürün sayfası, dil seçici ===================== */
 const P=IFU.page,D2=()=>window.IFD;
 const esc2=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const VMAP={uzmanlik:'vUzmanlik',urunler:'vUrunler',uretim:'vUretim',bilim:'vBilim',guncel:'vGuncel',iletisim:'vIletisim',hakkimizda:'vHakkimizda'};
+const VMAP={uzmanlik:'vUzmanlik',urunler:'vUrunler',uretim:'vUretim',bilim:'vBilim',guncel:'vGuncel',iletisim:'vIletisim',hakkimizda:'vHakkimizda',kvkk:'vYasal'};
 const SEC={uzmanlik:'urunler',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'kurumsal',iletisim:'iletisim'};
 let curView='';
 document.documentElement.classList.add('v2');
@@ -58,8 +58,8 @@ function renderUC(){
    '<div class="uc-dg"><div class="uc-vis'+(p.img?' has-img':'')+'" style="--tc:'+(AXC[p.a]||'#17707A')+(p.img?';--im:url(&quot;'+esc2(encodeURI(p.img))+'&quot;)':'')+'">'+(p.img?'<img src="'+esc2(p.img)+'" alt="'+esc2(p.n)+'" loading="lazy">':'')+'<small>0'+(p.a+1)+' · '+esc2(axn)+'</small><span>'+esc2(p.n)+'</span></div>'+
    '<div class="uc-info"><dl class="uc-meta"><div><dt>'+esc2(tr('d_ax'))+'</dt><dd><a href="'+ucHref({ax:p.a,ca:-1})+'">0'+(p.a+1)+' '+esc2(axn)+'</a></dd></div>'+
    '<div><dt>'+esc2(tr('d_ca'))+'</dt><dd class="uc-areas">'+areas+'</dd></div><div><dt>'+esc2(tr('d_lang'))+'</dt><dd>TR · EN</dd></div></dl>'+
-   (open?'<div class="uc-box open"><h2>'+tr('op_t')+'</h2><p>'+tr('op_b')+'</p></div>'
-        :'<div class="uc-box lock"><h2>'+tr('lk_t')+'</h2><p>'+tr('lk_b')+'</p><button type="button" class="b-pri" id="ucGate"><span>'+esc2(tr('cta1'))+'</span><span class="o"></span></button></div>')+
+   (open?'<div class="uc-box open"><h2>'+tr('op_t')+'</h2><p>'+tr('op_b')+'</p><button type="button" class="b-pri" data-gate><span>'+esc2(tr('pd_cta'))+'</span><span class="o"></span></button></div>'
+        :'<div class="uc-box lock"><h2>'+tr('lk_t')+'</h2><p>'+tr('lk_b')+'</p><button type="button" class="b-pri" id="ucGate"><span>'+esc2(tr('pd_cta'))+'</span><span class="o"></span></button></div>')+
    '</div></div>'+
    (more.length?'<div class="uc-more"><h2>'+esc2(tr('uc_sim'))+'</h2><div class="uc-g">'+more.map(o=>ucCard(o.x,o.i,L,AX)).join('')+'</div></div>':'');
   const g=$('#ucGate');if(g)g.addEventListener('click',()=>{IF.after=p.n;IF.openGate();});ucExtra(p,L);
@@ -420,7 +420,7 @@ function ctBuild(){const v=$('#vIletisim');if(!v||v.querySelector('.ct'))return;
  w.innerHTML='<aside class="ct-st" data-rv="up"><h2 data-t="ct_sh">'+T('ct_sh')+'</h2><p data-t="ct_sp">'+T('ct_sp')+'</p><ol>'+[1,2,3].map(i=>'<li><b data-t="ct_s'+i+'">'+T('ct_s'+i)+'</b><span data-t="ct_s'+i+'p">'+T('ct_s'+i+'p')+'</span></li>').join('')+'</ol></aside>'
   +'<div class="ct-card" data-rv="up"><div class="ct-tabs" role="tablist">'+secs.map(x=>{const k={form:'nv_ilf',bayilik:'nv_bay','yan-etki':'nv_ae'}[x.id]||'nv_ilf';return '<button type="button" role="tab" data-p="'+x.id+'" data-t="'+k+'"'+(x.id==='yan-etki'?' class="ct-ae"':'')+'>'+T(k)+'</button>';}).join('')+'</div><div class="ct-panes"></div></div>';
  const panes=w.querySelector('.ct-panes');
- secs.forEach(sec=>{const pn=document.createElement('div');pn.className='ct-pane';pn.id=sec.id;sec.removeAttribute('id');const hp=sec.querySelector('.if-fm-h p');if(hp){hp.className='ct-lede';pn.appendChild(hp);}pn.appendChild(sec.querySelector('form'));panes.appendChild(pn);sec.remove();});
+ secs.forEach(sec=>{const pn=document.createElement('div');pn.className='ct-pane';pn.id=sec.id;sec.removeAttribute('id');const hp=sec.querySelector('.if-fm-h p');if(hp){hp.className='ct-lede';pn.appendChild(hp);}const fm=sec.querySelector('form');if(fm)pn.appendChild(fm);else [...sec.children].filter(x=>!x.classList.contains('if-fm-h')).forEach(x=>pn.appendChild(x));panes.appendChild(pn);sec.remove();});
  const sec=g?g.closest('section'):v.querySelector('.pg-sec');sec.insertBefore(w,sec.firstChild);
  if(soc)soc.hidden=true;
  if(g){g.classList.add('ct-info');[['il_t','tel'],['il_m','mail'],['il_a','pin']].forEach(([k,ic],i)=>{});const ord=['il_t','il_m','il_a'],ics={il_t:'<path d="M5 4h3l2 5-2 1a11 11 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',il_m:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',il_a:'<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'};
