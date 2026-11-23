@@ -2212,3 +2212,6 @@ html.stage-full,html.stage-full body{background:#7fc3d0!important;overscroll-beh
 @supports(height:100lvh){html.stage-full body #stage.stage{min-height:100lvh!important}}
 .ys-toc a:not(.ys-sub){font-weight:600;margin-top:var(--s2)}
 .ys-toc a.ys-sub{padding-left:var(--s3);color:#4a5c66;font-weight:400;margin-top:0}
+/* Diğer alanlar: numara başlığın üstünde, hepsi üstten hizalı (tek/iki satır başlıklar kaymasın) */
+html body .al-side #alO a{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:var(--s2);padding:var(--s3) 0 0;line-height:1.3}
+html body .al-side #alO a i{order:-1}
