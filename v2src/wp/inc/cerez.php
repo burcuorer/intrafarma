@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) { exit; }
  * Onay kayıtları: Araçlar → Çerez onayları (IP adresi tutulmaz).
  */
 function intrafarma_ck_opt($k) {
-    $d = array('ga' => 'G-DNHVY79BSW', 'ads' => '', 'live' => 'intrafarma.com.tr, www.intrafarma.com.tr', 'policy' => '');
+    $d = array('ga' => '', 'ads' => '', 'live' => 'intrafarma.com.tr, www.intrafarma.com.tr', 'policy' => '');
     $v = get_theme_mod('intrafarma_ck_' . $k, $d[$k]);
     return is_string($v) ? trim($v) : $d[$k];
 }
@@ -18,13 +18,15 @@ function intrafarma_ck_config() {
         'ads' => preg_match('/^AW-[0-9]+$/', intrafarma_ck_opt('ads')) ? intrafarma_ck_opt('ads') : '',
         'live' => array_values(array_filter(array_map('trim', explode(',', strtolower(intrafarma_ck_opt('live')))))),
         'log' => esc_url_raw(rest_url('intrafarma/v1/consent')),
-        'policy' => esc_url_raw(intrafarma_ck_opt('policy')),
+        'policy' => esc_url_raw(intrafarma_ck_opt('policy') !== '' ? intrafarma_ck_opt('policy') : home_url('/kvkk/#cerez')),
+        /* Onaylı metin: yalnızca zorunlu çerezler. Google kimliği girilmedikçe izin bandı yerine tek "Tamam"lı bilgi notu çıkar. */
+        'simple' => !preg_match('/^G-[A-Z0-9]+$/', intrafarma_ck_opt('ga')) && !preg_match('/^AW-[0-9]+$/', intrafarma_ck_opt('ads')),
         'nec' => $nec,
     );
 }
 add_action('customize_register', function ($wpc) {
     $wpc->add_section('intrafarma_ck', array('title' => 'Intrafarma · Çerezler', 'priority' => 160,
-        'description' => 'Google etiketleri yalnızca aşağıdaki canlı alan adlarında ve ziyaretçi izin verdikten sonra yüklenir. Test adresinde bant çalışır, etiket yüklenmez.'));
+        'description' => 'Şu an onaylı KVKK metnine göre yalnızca zorunlu çerezler kullanılıyor; kimlik alanları boşken ziyaretçiye tek düğmeli bilgi notu gösterilir. Google kimliği eklenirse önce KVKK/çerez metni güncellenmelidir. Google etiketleri yalnızca aşağıdaki canlı alan adlarında ve ziyaretçi izin verdikten sonra yüklenir. Test adresinde bant çalışır, etiket yüklenmez.'));
     $f = array(
         'ga' => array('Google Analytics ölçüm kimliği', 'G-XXXXXXXXXX'),
         'ads' => array('Google Ads etiket kimliği (boş bırakılırsa Pazarlama kategorisi görünmez)', 'AW-1234567890'),
