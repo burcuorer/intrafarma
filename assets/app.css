@@ -3353,3 +3353,5 @@ html[data-page=home] body section.hs.hs.hs:is(.band,.tint){padding-bottom:var(--
 html[data-page=home] body section.hs.hs.hs:is(.band,.tint) + section.hs.hs.hs{padding-top:var(--hy)!important}
 html[data-page=home] body section#uzmanlik.hs.hs.hs{padding-bottom:var(--hy)!important}
 html[data-page=home] body section.hs.hs.hs:last-of-type{padding-bottom:var(--hy)!important}
+/* Safari: overflow:clip, position:fixed sahneyi #site sınırında kesiyordu (sayfa sonundayken Pro girişinin altı turkuaz kalıyordu) */
+html.stage-full body #site,html.stage-full body #top,html.stage-full body #vHome,html.stage-full body .cell-sec,html.stage-full body .cw{overflow:visible!important;contain:none!important}
