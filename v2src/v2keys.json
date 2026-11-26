@@ -344,7 +344,14 @@
     "gn_h": "Son Etkinlikler ve Yazılar",
     "hcp": "Sağlık Çalışanları",
     "nav_ur": "Üretim ve Özel Marka",
-    "pg_home": "Ana Sayfa"
+    "pg_home": "Ana Sayfa",
+    "nv_bas": "Basında Biz",
+    "nv_vid": "Videolar",
+    "mg_all": "Tümünü Görüntüle",
+    "bs_ey": "/ Basında Biz",
+    "bs_soon": "Basında çıkan haber ve röportajlarımız burada yayımlanacak.",
+    "vd_ey": "/ Videolar",
+    "vd_soon": "Kurumsal videolarımız burada yayımlanacak."
   },
   "en": {
     "draft": "Test version · text, figures and images are samples",
@@ -690,7 +697,14 @@
     "ft_sss": "Frequently Asked Questions",
     "gn_h": "Latest Events and Articles",
     "hcp": "Healthcare Professionals",
-    "nav_ur": "Manufacturing and Private Label"
+    "nav_ur": "Manufacturing and Private Label",
+    "nv_bas": "In the Press",
+    "nv_vid": "Videos",
+    "mg_all": "View All",
+    "bs_ey": "/ In the Press",
+    "bs_soon": "Press coverage and interviews will be published here.",
+    "vd_ey": "/ Videos",
+    "vd_soon": "Our company videos will be published here."
   },
   "ar": {
     "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -1022,7 +1036,14 @@
     "ur_s2": "تُقيَّم فكرتك",
     "ur_s2p": "ندرسها من حيث التركيبة والتصنيع وخيارات التعبئة.",
     "ur_s3": "نعاود التواصل معك",
-    "ur_s3p": "يتواصل فريقنا معك بشأن الخطوات التالية."
+    "ur_s3p": "يتواصل فريقنا معك بشأن الخطوات التالية.",
+    "nv_bas": "في الصحافة",
+    "nv_vid": "مقاطع الفيديو",
+    "mg_all": "عرض الكل",
+    "bs_ey": "/ في الصحافة",
+    "bs_soon": "سيتم نشر تغطياتنا الصحفية ومقابلاتنا هنا.",
+    "vd_ey": "/ مقاطع الفيديو",
+    "vd_soon": "سيتم نشر مقاطع الفيديو الخاصة بالشركة هنا."
   },
   "it": {
     "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -1354,7 +1375,14 @@
     "ur_s2": "Valutiamo la tua idea",
     "ur_s2p": "La esaminiamo in termini di formula, produzione e confezionamento.",
     "ur_s3": "Ti ricontattiamo",
-    "ur_s3p": "Il nostro team ti contatta per i passi successivi."
+    "ur_s3p": "Il nostro team ti contatta per i passi successivi.",
+    "nv_bas": "Dicono di noi",
+    "nv_vid": "Video",
+    "mg_all": "Vedi tutto",
+    "bs_ey": "/ Dicono di noi",
+    "bs_soon": "Qui verranno pubblicati articoli e interviste su di noi.",
+    "vd_ey": "/ Video",
+    "vd_soon": "Qui verranno pubblicati i nostri video aziendali."
   },
   "ru": {
     "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -1686,7 +1714,14 @@
     "ur_s2": "Мы оцениваем идею",
     "ur_s2p": "Рассматриваем её с точки зрения формулы, производства и упаковки.",
     "ur_s3": "Мы связываемся с вами",
-    "ur_s3p": "Наша команда свяжется с вами по следующим шагам."
+    "ur_s3p": "Наша команда свяжется с вами по следующим шагам.",
+    "nv_bas": "СМИ о нас",
+    "nv_vid": "Видео",
+    "mg_all": "Смотреть все",
+    "bs_ey": "/ СМИ о нас",
+    "bs_soon": "Здесь будут опубликованы публикации в СМИ и интервью.",
+    "vd_ey": "/ Видео",
+    "vd_soon": "Здесь будут опубликованы видео о компании."
   },
   "es": {
     "pc_ey": "/ Pro · Productos",
@@ -2291,7 +2326,14 @@
     "ur_s2": "Evaluamos su idea",
     "ur_s2p": "La analizamos en cuanto a fórmula, fabricación y envase.",
     "ur_s3": "Le respondemos",
-    "ur_s3p": "Nuestro equipo se pondrá en contacto sobre los siguientes pasos."
+    "ur_s3p": "Nuestro equipo se pondrá en contacto sobre los siguientes pasos.",
+    "nv_bas": "En los medios",
+    "nv_vid": "Vídeos",
+    "mg_all": "Ver todo",
+    "bs_ey": "/ En los medios",
+    "bs_soon": "Aquí se publicarán nuestras apariciones en prensa y entrevistas.",
+    "vd_ey": "/ Vídeos",
+    "vd_soon": "Aquí se publicarán nuestros vídeos corporativos."
   },
   "fr": {
     "pc_ey": "/ Pro · Produits",
@@ -2896,6 +2938,13 @@
     "ur_s2": "Votre idée est étudiée",
     "ur_s2p": "Nous l’examinons sous l’angle de la formule, de la fabrication et du conditionnement.",
     "ur_s3": "Nous revenons vers vous",
-    "ur_s3p": "Notre équipe vous contacte pour les prochaines étapes."
+    "ur_s3p": "Notre équipe vous contacte pour les prochaines étapes.",
+    "nv_bas": "Dans la presse",
+    "nv_vid": "Vidéos",
+    "mg_all": "Tout voir",
+    "bs_ey": "/ Dans la presse",
+    "bs_soon": "Nos parutions presse et interviews seront publiées ici.",
+    "vd_ey": "/ Vidéos",
+    "vd_soon": "Nos vidéos d’entreprise seront publiées ici."
   }
 }

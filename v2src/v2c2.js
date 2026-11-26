@@ -402,15 +402,25 @@ soonCards();
  nb.querySelector('.mb-pro').addEventListener('click',()=>{if(IF.openGate)IF.openGate();});
  if(P==='urunler')nb.querySelector('a').setAttribute('aria-current','page');if(P==='uzmanlik')nb.querySelector('.mb-uz').setAttribute('aria-current','page');
  IF.onLang.push(()=>{nb.setAttribute('aria-label',tr('mb_lab'));nb.querySelectorAll('[data-t]').forEach(e=>e.textContent=tr(e.dataset.t));});}
-/* Üst menü açılırları: tetikleyicinin altında ortalı, ekran kenarına taşmadan (her dil ve genişlikte) */
-{const place=nv=>{const m=nv.querySelector(':scope>.nv-m'),t=nv.querySelector(':scope>.nv-t');if(!m||!t||innerWidth<1101)return;
-  m.style.removeProperty('left');m.style.removeProperty('right');
-  const mw=m.offsetWidth,tr=t.getBoundingClientRect(),nr=nv.getBoundingClientRect(),vw=document.documentElement.clientWidth,pad=16;
-  let x=tr.left+tr.width/2-mw/2;x=Math.max(pad,Math.min(vw-pad-mw,x));
-  m.style.setProperty('left',(x-nr.left)+'px','important');m.style.setProperty('right','auto','important');};
- const all=()=>$$('.nv').forEach(place);
- $$('.nv').forEach(nv=>{['mouseenter','focusin'].forEach(ev=>nv.addEventListener(ev,()=>place(nv)));const t=nv.querySelector(':scope>.nv-t');if(t)t.addEventListener('click',()=>requestAnimationFrame(()=>place(nv)));});
- addEventListener('resize',all);IF.onLang.push(()=>setTimeout(all,50));setTimeout(all,300);}
+/* Revize 2 · mega menü: her başlık tam genişlikte, yukarıdan açılan panel; alt öğeler görselli kart.
+   Görseli olmayan kart nötr yer tutucuyla görünür (gerçek fotoğraf gelince MG_IMG'ye ya da panelden IF_CMS.orn.menu'ya eklenir). */
+{const MG_IMG={nv_urg:'genis/regenyal-laboratuvar.webp',nv_urs:'genis/hero-uretim.webp'};
+ const B=()=>window.IF_BASE||'',mgO=()=>(window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.menu)||{};
+ const im=(s,u,fit)=>{s.classList.toggle('mg-ph',!u);s.classList.toggle('mg-fit',!!(u&&fit));s.innerHTML=u?'<img src="'+esc2(u)+'" alt="" loading="lazy" decoding="async">':'';
+  const g=s.firstChild;if(g)g.addEventListener('error',()=>{g.remove();s.classList.remove('mg-fit');s.classList.add('mg-ph');},{once:true});};
+ const card=(href,txt,u,fit)=>{const a=document.createElement('a');a.className='mg-c';a.href=href;a.innerHTML='<span class="mg-im" aria-hidden="true"></span><span class="mg-tx"></span>';a.lastChild.textContent=txt;im(a.firstChild,u,fit);return a;};
+ const ua=$('#nvUa'),hp=$('#nvHp');
+ function megaBuild(){const D=window.IFD;if(!D)return;const L=IF.lang||'tr',O=mgO();
+  $$('.mg-c[data-mg]').forEach(a=>{const k=a.dataset.mg,u=O[k]||(MG_IMG[k]?B()+'media/'+MG_IMG[k]:''),s=a.querySelector('.mg-im');if(s&&s.dataset.u!==u){s.dataset.u=u;im(s,u);}});
+  if(ua){const CA=D.CA[L]||D.CA.en;ua.replaceChildren(...CA.map((n,i)=>card(IFU.alan(i),n,(Array.isArray(O.alanKart)&&O.alanKart[i])||(UA_IMG[i]?B()+'media/alan/'+UA_IMG[i]+'.webp':''))));}
+  if(hp){const AX=D.AX[L]||D.AX.en;hp.replaceChildren(...AX.map((n,i)=>{const G=(D.PRODS||[]).filter(q=>q.a===i&&q.img),p=G.find(q=>!/^(https?:)?\/\//.test(q.img))||G[0];return card(IFU.ax(i),n,p?p.img:'',1);}));}}
+ /* eski çizim (düz bağlantılar) araya girerse kartlara geri dön */
+ [ua,hp].forEach(el=>{if(el)new MutationObserver(()=>{if([...el.children].some(c=>!c.classList.contains('mg-c')))megaBuild();}).observe(el,{childList:true});});
+ megaBuild();IF.onLang.push(()=>setTimeout(megaBuild,0));
+ /* aynı anda tek panel: başka başlığın üzerine gelince tıklamayla açık kalan kapanır; Esc kapatır */
+ const shut=x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');};
+ $$('.site-top .nv').forEach(nv=>nv.addEventListener('mouseenter',()=>{if(innerWidth>1100)$$('.site-top .nv.open').forEach(x=>{if(x!==nv)shut(x);});}));
+ addEventListener('keydown',e=>{if(e.key!=='Escape'||innerWidth<=1100)return;const a=document.activeElement,nv=a&&a.closest&&a.closest('.site-top .nv');$$('.site-top .nv.open').forEach(shut);if(nv)nv.firstElementChild.focus();});}
 
 /* İletişim sayfası: tek form kartı (sekmeli), solda sonraki adımlar, altta bilgi kartları ve harita */
 function ctBuild(){const v=$('#vIletisim');if(!v||v.querySelector('.ct'))return;

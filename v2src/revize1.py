@@ -73,21 +73,27 @@ def revize1(h):
     h, n1 = _re.subn(r">0'\+\(([\w.]+)\+1\)", r">'+String(\1+1).padStart(2,'0')", h)
     h, n2 = _re.subn(r"'0'\+\(([\w.]+)\+1\)", r"String(\1+1).padStart(2,'0')", h)
     h = _r1("const SEC={uzmanlik:'urunler',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'kurumsal',iletisim:'iletisim'}",
-            "const SEC={uzmanlik:'uzmanlik',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'guncel',iletisim:'iletisim'}", h)
+            "const SEC={uzmanlik:'uzmanlik',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'kurumsal',iletisim:'iletisim'}", h)
 
     # ---------- 2) üst menü ----------
     a = h.index('<nav class="pub-nav" id="pubNav" aria-label="Menü">')
     b = h.index('<button type="button" class="nv-hcp" data-gate data-t="hcp"></button>', a)
-    nv = lambda sec, key, links, cls='nv': ('<div class="%s" data-sec="%s"><button type="button" class="nv-t" aria-expanded="false" data-t="%s"></button><div class="nv-m">%s</div></div>' % (cls, sec, key, links))
-    lk = lambda pairs: ''.join('<a href="%s" data-t="%s"></a>' % p for p in pairs)
+    # Revize 2: mega menü. Her başlık tam genişlikte, yukarıdan açılan bir panel; alt öğeler görselli kart, altta "Tümünü Görüntüle".
+    # Kart görselleri JS'te (v2c2.js → MG_IMG) atanır; görseli olmayan kart nötr yer tutucuyla görünür.
+    ARW = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>'
+    def nv(sec, key, cards, allhref, gid=''):
+        g = '<div class="mg-g"%s>%s</div>' % ((' id="%s"' % gid) if gid else '', cards)
+        return ('<div class="nv nv-mg" data-sec="%s"><button type="button" class="nv-t" aria-expanded="false" data-t="%s"></button>'
+                '<div class="nv-m"><div class="mg-in">%s<a class="mg-all" href="%s"><span data-t="mg_all"></span>%s</a></div></div></div>' % (sec, key, g, allhref, ARW))
+    lk = lambda pairs: ''.join('<a class="mg-c" href="%s" data-mg="%s"><span class="mg-im" aria-hidden="true"></span><span class="mg-tx" data-t="%s"></span></a>' % (u, k, k) for u, k in pairs)
     menu = ('<nav class="pub-nav" id="pubNav" aria-label="Menü">\n        <a class="nv-home" href="index.html" data-t="pg_home"></a>\n        '
-            + nv('kurumsal', 'n_kur', lk([('hakkimizda.html', 'nv_hak'), ('hakkimizda.html#vizyon', 'nv_viz'), ('hakkimizda.html#degerler', 'nv_deg'), ('hakkimizda.html#is-ortaklari', 'nav_ort'), ('hakkimizda.html#kalite', 'nv_kal')]))
-            + nv('uzmanlik', 'n_uzm', '<div class="nv-l" id="nvUa"></div>')
-            + nv('urunler', 'nav3', '<div class="nv-l nv-l2" id="nvHp"></div>', 'nv nv-2')
-            + nv('bilim', 'n_bil', lk([('bilim.html', 'ov'), ('bilim.html#kurul', 'nav_kurul'), ('bilim.html#yayinlar', 'nv_yay'), ('bilim.html#sss', 'ft_sss')]))
-            + nv('uretim', 'nav_ozel', lk([('uretim.html', 'ov'), ('uretim.html#gelistirme', 'nv_urg'), ('uretim.html#surec', 'nv_urs'), ('uretim.html#isbirligi', 'nv_isb')]))
-            + nv('guncel', 'nav6', lk([('guncel.html#haberler', 'nv_hab'), ('guncel.html#etkinlikler', 'nv_kon'), ('guncel.html#duyurular', 'nv_duy')]))
-            + nv('iletisim', 'nav5', lk([('iletisim.html', 'nv_ilb'), ('iletisim.html#form', 'nv_ilf'), ('iletisim.html#bayilik', 'nv_bay'), ('iletisim.html#yan-etki', 'nv_ae')]))
+            + nv('kurumsal', 'n_kur', lk([('hakkimizda.html', 'nv_hak'), ('hakkimizda.html#vizyon', 'nv_viz'), ('hakkimizda.html#degerler', 'nv_deg'), ('hakkimizda.html#is-ortaklari', 'nav_ort'), ('hakkimizda.html#kalite', 'nv_kal'),
+                                          ('guncel.html#basinda-biz', 'nv_bas'), ('guncel.html#haberler', 'nv_hab'), ('guncel.html#videolar', 'nv_vid')]), 'hakkimizda.html')
+            + nv('uzmanlik', 'n_uzm', '', 'uzmanlik.html', 'nvUa')
+            + nv('urunler', 'nav3', '', 'urunler.html', 'nvHp')
+            + nv('bilim', 'n_bil', lk([('bilim.html#kurul', 'nav_kurul'), ('bilim.html#yayinlar', 'nv_yay'), ('bilim.html#sss', 'ft_sss')]), 'bilim.html')
+            + nv('uretim', 'nav_ozel', lk([('uretim.html#gelistirme', 'nv_urg'), ('uretim.html#surec', 'nv_urs'), ('uretim.html#isbirligi', 'nv_isb')]), 'uretim.html')
+            + '<a class="nv-a nv-ct" href="iletisim.html" data-sec="iletisim" data-t="nav5"></a>'
             + '<button type="button" class="nv-sr2" data-srch><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg><span data-t="srch"></span></button>'
             + '\n        ')
     h = h[:a] + menu + h[b:]
@@ -115,8 +121,9 @@ def revize1(h):
     h = _r1('<section class="hs fq" id="sss"', '<div id="yayinlar">' + blog + '</div>\n    <section class="hs fq" id="sss"', h)
 
     # ---------- 7) Medya: haberler, kongre ve etkinlikler, duyurular ----------
+    PEND = lambda sid, cls, ey, hk, soon: '<section class="hs %s" id="%s" aria-labelledby="%sH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="%s"></p><h2 id="%sH" data-t="%s"></h2></div><p class="pend-card"><i aria-hidden="true"></i><span data-t="%s"></span></p></section>\n    ' % (cls, sid, cls, ey, cls, hk, soon)
     h = _r1('<section class="hs ev" id="etkinlikler"',
-            '<section class="hs hb" id="haberler" aria-labelledby="hbH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="hb_ey"></p><h2 id="hbH" data-t="nv_hab"></h2></div><p class="pend-card"><i aria-hidden="true"></i><span data-t="hb_soon"></span></p></section>\n    <section class="hs ev" id="etkinlikler"', h)
+            PEND('basinda-biz', 'bs', 'bs_ey', 'nv_bas', 'bs_soon') + '<section class="hs hb" id="haberler" aria-labelledby="hbH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="hb_ey"></p><h2 id="hbH" data-t="nv_hab"></h2></div><p class="pend-card"><i aria-hidden="true"></i><span data-t="hb_soon"></span></p></section>\n    ' + PEND('videolar', 'vd', 'vd_ey', 'nv_vid', 'vd_soon') + '<section class="hs ev" id="etkinlikler"', h)
     a = h.index('<section class="hs ev" id="etkinlikler"'); b = h.index('</section>', a) + len('</section>')
     h = h[:b] + '\n    <section class="hs dy" id="duyurular" aria-labelledby="dyH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="dy_ey"></p><h2 id="dyH" data-t="nv_duy"></h2></div><p class="pend-card"><i aria-hidden="true"></i><span data-t="dy_soon"></span></p></section>' + h[b:]
 
