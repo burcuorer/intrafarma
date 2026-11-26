@@ -156,7 +156,7 @@ const PGI={urunler:['genis/hero-urun.webp','genis/portfolio-regenflex-studio.web
  uretim:['genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
  bilim:['genis/hero-bilim.webp','genis/hero-laboratuvar.webp','genis/regenyal-laboratuvar.webp'],
  guncel:['genis/hero-bilim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
- uzmanlik:['banner/ortopedi.webp','banner/uroloji.webp','banner/kadin-sagligi.webp','banner/noroloji.webp','banner/estetik.webp','banner/diger.webp'],
+ uzmanlik:['banner/ortopedi.webp','banner/uroloji.webp','banner/kadin-sagligi.webp','banner/noroloji.webp','banner/estetik.webp'],
  hakkimizda:['genis/hero-laboratuvar.webp','genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp'],
  iletisim:['genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp']};
 function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;

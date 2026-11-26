@@ -4584,7 +4584,7 @@ function vhShrink(){vhq=false;const r=vh.getBoundingClientRect(),p=Math.min(1,Ma
 if(!RM){addEventListener('scroll',()=>{if(!vhq){vhq=true;requestAnimationFrame(vhShrink);}},{passive:true});vhShrink();}
 
 /* expertise cards and product axes from the shared catalogue data */
-const UA_IMG=['ortopedi','uroloji','kadin-sagligi','noroloji','estetik','diger'];
+const UA_IMG=['ortopedi','uroloji','kadin-sagligi','noroloji','estetik',null];
 const UA_IC=['<circle cx="12" cy="12" r="9"/><path d="M8 8.5c2 1 2 3 0 4M16 11.5c-2 1-2 3 0 4M9 12.5h6"/>','<circle cx="12" cy="12" r="9"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>','<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>','<path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 1V5a3 3 0 0 0-3-1zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 1"/>','<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>','<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'];
 function homeData(){
  const portfolio=document.querySelector('.hp-f img');if(portfolio&&window.IF_CMS&&IF_CMS.home_product_image)portfolio.src=IF_CMS.home_product_image;
@@ -4819,7 +4819,7 @@ const PGI={urunler:['genis/hero-urun.webp','genis/portfolio-regenflex-studio.web
  uretim:['genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
  bilim:['genis/hero-bilim.webp','genis/hero-laboratuvar.webp','genis/regenyal-laboratuvar.webp'],
  guncel:['genis/hero-bilim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
- uzmanlik:['banner/ortopedi.webp','banner/uroloji.webp','banner/kadin-sagligi.webp','banner/noroloji.webp','banner/estetik.webp','banner/diger.webp'],
+ uzmanlik:['banner/ortopedi.webp','banner/uroloji.webp','banner/kadin-sagligi.webp','banner/noroloji.webp','banner/estetik.webp'],
  hakkimizda:['genis/hero-laboratuvar.webp','genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp'],
  iletisim:['genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp']};
 function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
