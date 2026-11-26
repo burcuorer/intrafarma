@@ -18,8 +18,8 @@ def _rx(pat, new, h, flags=0):
 def revize1(h):
     # ---------- 1) ürün grupları (10), uzmanlık alanları (6 + tüm alanlar), ürün listesi ----------
     AX = {
-        'tr': ['Hücresel tedaviler (allojenik)', 'Kök hücre ve eksozom ayrıştırma kitleri (otolog)', 'Hyaluronik asitler', 'Genital estetik hyaluronik asit ürünleri', 'Kolajen ürünleri', 'PRP kitleri', 'Gıda takviyeleri', 'Biodekontaminant sistemleri', 'Hipsafe', 'Taşınabilir ultrason cihazı'],
-        'en': ['Cellular therapies (allogeneic)', 'Stem cell & exosome isolation kits (autologous)', 'Hyaluronic acids', 'Genital aesthetic hyaluronic acids', 'Collagen products', 'PRP kits', 'Food supplements', 'Biodecontamination systems', 'Hipsafe', 'Portable ultrasound device'],
+        'tr': ['Hücresel Tedaviler (Allojenik)', 'Kök Hücre ve Eksozom Ayrıştırma Kitleri (Otolog)', 'Hyaluronik Asitler', 'Genital Estetik Hyaluronik Asit Ürünleri', 'Kolajen Ürünleri', 'PRP Kitleri', 'Gıda Takviyeleri', 'Biodekontaminant Sistemleri', 'Hipsafe', 'Taşınabilir Ultrason Cihazı'],
+        'en': ['Cellular Therapies (Allogeneic)', 'Stem Cell & Exosome Isolation Kits (Autologous)', 'Hyaluronic Acids', 'Genital Aesthetic Hyaluronic Acids', 'Collagen Products', 'PRP Kits', 'Food Supplements', 'Biodecontamination Systems', 'Hipsafe', 'Portable Ultrasound Device'],
         'ar': ['العلاجات الخلوية (خيفية)', 'مجموعات فصل الخلايا الجذعية والإكسوسومات (ذاتية)', 'أحماض الهيالورونيك', 'منتجات حمض الهيالورونيك للتجميل التناسلي', 'منتجات الكولاجين', 'مجموعات البلازما الغنية بالصفائح', 'المكملات الغذائية', 'أنظمة إزالة التلوث الحيوي', 'Hipsafe', 'جهاز الموجات فوق الصوتية المحمول'],
         'it': ['Terapie cellulari (allogeniche)', 'Kit di isolamento di cellule staminali ed esosomi (autologhi)', 'Acidi ialuronici', 'Acidi ialuronici per estetica genitale', 'Prodotti al collagene', 'Kit PRP', 'Integratori alimentari', 'Sistemi di biodecontaminazione', 'Hipsafe', 'Ecografo portatile'],
         'ru': ['Клеточная терапия (аллогенная)', 'Наборы для выделения стволовых клеток и экзосом (аутологичные)', 'Гиалуроновые кислоты', 'Гиалуроновая кислота для интимной эстетики', 'Коллагеновые продукты', 'Наборы PRP', 'Пищевые добавки', 'Системы биодеконтаминации', 'Hipsafe', 'Портативный УЗИ-аппарат'],
@@ -27,8 +27,8 @@ def revize1(h):
         'fr': ['Thérapies cellulaires (allogéniques)', 'Kits d’isolement de cellules souches et d’exosomes (autologues)', 'Acides hyaluroniques', 'Acides hyaluroniques pour l’esthétique génitale', 'Produits à base de collagène', 'Kits PRP', 'Compléments alimentaires', 'Systèmes de biodécontamination', 'Hipsafe', 'Échographe portable'],
     }
     CA = {
-        'tr': ['Ortopedi ve fiziksel tıp', 'Üroloji ve androloji', 'Kadın hastalıkları ve doğum', 'Nöroloji, beyin ve sinir cerrahisi', 'Dermatoloji ve medikal estetik', 'Diğer alanlar'],
-        'en': ['Orthopaedics & physical medicine', 'Urology & andrology', 'Obstetrics & gynaecology', 'Neurology & neurosurgery', 'Dermatology & medical aesthetics', 'Other specialties'],
+        'tr': ['Ortopedi ve Fiziksel Tıp', 'Üroloji ve Androloji', 'Kadın Hastalıkları ve Doğum', 'Nöroloji, Beyin ve Sinir Cerrahisi', 'Dermatoloji ve Medikal Estetik', 'Diğer Alanlar'],
+        'en': ['Orthopaedics & Physical Medicine', 'Urology & Andrology', 'Obstetrics & Gynaecology', 'Neurology & Neurosurgery', 'Dermatology & Medical Aesthetics', 'Other Specialties'],
         'ar': ['جراحة العظام والطب الطبيعي', 'المسالك البولية وأمراض الذكورة', 'أمراض النساء والتوليد', 'الأعصاب وجراحة المخ والأعصاب', 'الأمراض الجلدية والتجميل الطبي', 'تخصصات أخرى'],
         'it': ['Ortopedia e medicina fisica', 'Urologia e andrologia', 'Ginecologia e ostetricia', 'Neurologia e neurochirurgia', 'Dermatologia e medicina estetica', 'Altre specialità'],
         'ru': ['Ортопедия и физическая медицина', 'Урология и андрология', 'Акушерство и гинекология', 'Неврология и нейрохирургия', 'Дерматология и медицинская эстетика', 'Другие направления'],
