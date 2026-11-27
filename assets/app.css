@@ -3597,3 +3597,12 @@ html body .pg.has-vid:not(.pg-det) .pg-in a.b-link,html body .pg.has-vid:not(.pg
  html body .pg.has-vid:not(.pg-det) .pg-vid.pg-movie::after{background:linear-gradient(90deg,rgba(14,34,53,.66) 0%,rgba(14,34,53,.4) 60%,rgba(14,34,53,.2) 100%)!important;transform:none!important}
  html[dir=rtl] body .pg.has-vid:not(.pg-det) .pg-vid.pg-movie::after{transform:scaleX(-1)!important}
 }
+
+/* =====================================================================
+   REVİZE 6: başlık görseli/videosu kendi oranında (≈2.4:1) görünür, aşırı büyütülüp kesilmez
+   Alan yüksekliği = üst bant + genişlik/2.4 (en az 360, en fazla 640 px). Görseller ve videolar 1920×822 / 1820×700.
+   ===================================================================== */
+@media (min-width:901px){
+ html body .pg.has-vid:not(.pg-det),html[data-page=hakkimizda] body .pg.has-vid.pg-tall,html body [id^=v]>.pg.has-vid:not(.pg-det):not(.r6a):not(.r6b):not(.r6c){height:auto!important;min-height:calc(var(--hdr) + clamp(360px,calc(100vw / 2.4),640px))!important;box-sizing:border-box;display:flex!important;flex-direction:column;justify-content:center;align-items:stretch;padding-top:calc(var(--hdr) + 24px)!important;padding-bottom:40px!important}
+}
+@media (min-width:901px){html body .pg.has-vid:not(.pg-det)>.pg-in{align-self:flex-start!important;margin-inline:0!important}}

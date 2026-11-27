@@ -168,9 +168,14 @@ function loopMedia(k){const B=window.IF_BASE||'',O=((window.IF_CMS&&IF_CMS.orn&&
  const still=matchMedia('(max-width:760px)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches||!!(navigator.connection&&navigator.connection.saveData);
  if(still){const im=document.createElement('img');im.className='lv-po';im.src=po;im.alt='';im.decoding='async';return im;}
  const v=document.createElement('video');v.className='lv';v.muted=true;v.defaultMuted=true;v.loop=true;v.playsInline=true;v.autoplay=true;
- ['muted','playsinline','autoplay','loop'].forEach(a=>v.setAttribute(a,''));v.preload='auto';v.poster=po;v.src=mp4;
+ ['muted','playsinline','autoplay','loop'].forEach(a=>v.setAttribute(a,''));v.preload='auto';v.poster=po;v.src=mp4;slowVid(v);
  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=v.play();if(p&&p.catch)p.catch(()=>{});}else v.pause();})).observe(v);
  return v;}
+/* Revize 6: tüm arka plan videoları yavaş oynar (yeniden kodlama yok; hız panelden IF_CMS.orn.videoHiz ile değişir, 0.3–1) */
+const VRATE=(()=>{const r=+((window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.videoHiz)||0.6);return r>=0.3&&r<=1?r:0.6;})();
+function slowVid(v){const f=()=>{if(v.playbackRate!==VRATE)v.playbackRate=VRATE;};v.defaultPlaybackRate=VRATE;v.playbackRate=VRATE;['loadedmetadata','play'].forEach(e=>v.addEventListener(e,f));}
+/* açılış slaytları: yavaşlayan uzun videolar slaytı bekletmesin; en fazla ~9 sn sonra sıradakine geçilir (durdur düğmesine basılınca beklemez) */
+$$('.vh-media video').forEach(v=>{slowVid(v);let t=0;v.addEventListener('play',()=>{clearTimeout(t);t=setTimeout(()=>{if(!v.paused&&v.classList.contains('on'))v.dispatchEvent(new Event('ended'));},9000);});v.addEventListener('pause',()=>clearTimeout(t));});
 /* açılış slaytlarında panelden gelen video/poster (data-lv: aynı bölüm anahtarı) */
 {const V=(window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.video)||{};$$('.vh-media video[data-lv]').forEach(v=>{const o=V[v.dataset.lv];if(!o)return;if(o.poster)v.poster=o.poster;const s=v.querySelector('source');if(o.mp4&&s){s.src=o.mp4;v.load();}});}
 function pgVideo(){if(!curView)return;const vk=PGVID[P],L=PGI[P];if(!L&&!vk)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
