@@ -111,6 +111,9 @@ def revize1(h):
             + '<button type="button" class="nv-sr2" data-srch><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg><span data-t="srch"></span></button>'
             + '\n        ')
     h = h[:a] + menu + h[b:]
+    # Revize 5: açılış slaytlarındaki Üretim videosu firmanın üretim döngüsüyle değişir (Özel Üretim başlığıyla aynı video; panelde tek ayar)
+    h = _r1('<video class="vh-v" muted playsinline preload="none" poster="{{BASE}}media/hero-uretim.jpg" data-cap="v_cap3"><source src="{{BASE}}media/hero-uretim.mp4" type="video/mp4"></video>',
+            '<video class="vh-v" muted playsinline preload="none" poster="{{BASE}}media/video/uretim-poster.jpg" data-cap="v_cap3" data-lv="uretim"><source src="{{BASE}}media/video/uretim-loop.mp4" type="video/mp4"></video>', h)
     # Revize 4: alt menüyü yalnızca ok düğmesi açar/kapatır; başlığa tıklamak sayfaya gider
     h = _r1("$$('.nv-t').forEach(t=>t.addEventListener('click',e=>{const n=t.parentElement,o=!n.classList.contains('open');$$('.nv.open').forEach(x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');});",
             "$$('.nv-tg').forEach(t=>t.addEventListener('click',e=>{const n=t.parentElement,o=!n.classList.contains('open');$$('.nv.open').forEach(x=>{x.classList.remove('open');const g=x.querySelector('.nv-tg');if(g)g.setAttribute('aria-expanded','false');});", h)

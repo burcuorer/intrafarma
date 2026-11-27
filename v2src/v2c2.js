@@ -171,6 +171,8 @@ function loopMedia(k){const B=window.IF_BASE||'',O=((window.IF_CMS&&IF_CMS.orn&&
  ['muted','playsinline','autoplay','loop'].forEach(a=>v.setAttribute(a,''));v.preload='auto';v.poster=po;v.src=mp4;
  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=v.play();if(p&&p.catch)p.catch(()=>{});}else v.pause();})).observe(v);
  return v;}
+/* açılış slaytlarında panelden gelen video/poster (data-lv: aynı bölüm anahtarı) */
+{const V=(window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.video)||{};$$('.vh-media video[data-lv]').forEach(v=>{const o=V[v.dataset.lv];if(!o)return;if(o.poster)v.poster=o.poster;const s=v.querySelector('source');if(o.mp4&&s){s.src=o.mp4;v.load();}});}
 function pgVideo(){if(!curView)return;const vk=PGVID[P],L=PGI[P];if(!L&&!vk)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
  if(vk){const f=document.createElement('figure');f.className='pg-vid pg-movie';f.setAttribute('aria-hidden','true');f.appendChild(loopMedia(vk));pg.appendChild(f);pg.classList.add('has-vid');return;}
  const f=document.createElement('figure');f.className='pg-vid pg-loop'+(P==='uzmanlik'?' pg-alan':'')+(P==='iletisim'?' pg-ct':'');f.setAttribute('aria-hidden','true');

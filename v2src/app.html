@@ -3638,7 +3638,7 @@ html body .pg.has-vid:not(.pg-det) .pg-in a.b-link,html body .pg.has-vid:not(.pg
       <div class="vh-media" aria-hidden="true">
         <video class="vh-v on" muted playsinline preload="none" poster="{{BASE}}media/hero-bilim.jpg" data-cap="v_cap1"><source src="{{BASE}}media/hero-bilim.mp4" type="video/mp4"></video>
         <video class="vh-v" muted playsinline preload="none" poster="{{BASE}}media/hero-laboratuvar.jpg" data-cap="v_cap2"><source src="{{BASE}}media/hero-laboratuvar.mp4" type="video/mp4"></video>
-        <video class="vh-v" muted playsinline preload="none" poster="{{BASE}}media/hero-uretim.jpg" data-cap="v_cap3"><source src="{{BASE}}media/hero-uretim.mp4" type="video/mp4"></video>
+        <video class="vh-v" muted playsinline preload="none" poster="{{BASE}}media/video/uretim-poster.jpg" data-cap="v_cap3" data-lv="uretim"><source src="{{BASE}}media/video/uretim-loop.mp4" type="video/mp4"></video>
         <video class="vh-v" muted playsinline preload="none" poster="{{BASE}}media/hero-urun.jpg" data-cap="v_cap4"><source src="{{BASE}}media/hero-urun.mp4" type="video/mp4"></video>
       </div>
       <div class="vh-veil" aria-hidden="true"></div>
@@ -4963,6 +4963,8 @@ function loopMedia(k){const B=window.IF_BASE||'',O=((window.IF_CMS&&IF_CMS.orn&&
  ['muted','playsinline','autoplay','loop'].forEach(a=>v.setAttribute(a,''));v.preload='auto';v.poster=po;v.src=mp4;
  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=v.play();if(p&&p.catch)p.catch(()=>{});}else v.pause();})).observe(v);
  return v;}
+/* açılış slaytlarında panelden gelen video/poster (data-lv: aynı bölüm anahtarı) */
+{const V=(window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.video)||{};$$('.vh-media video[data-lv]').forEach(v=>{const o=V[v.dataset.lv];if(!o)return;if(o.poster)v.poster=o.poster;const s=v.querySelector('source');if(o.mp4&&s){s.src=o.mp4;v.load();}});}
 function pgVideo(){if(!curView)return;const vk=PGVID[P],L=PGI[P];if(!L&&!vk)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
  if(vk){const f=document.createElement('figure');f.className='pg-vid pg-movie';f.setAttribute('aria-hidden','true');f.appendChild(loopMedia(vk));pg.appendChild(f);pg.classList.add('has-vid');return;}
  const f=document.createElement('figure');f.className='pg-vid pg-loop'+(P==='uzmanlik'?' pg-alan':'')+(P==='iletisim'?' pg-ct':'');f.setAttribute('aria-hidden','true');
