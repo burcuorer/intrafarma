@@ -73,7 +73,7 @@ function vhShrink(){vhq=false;const r=vh.getBoundingClientRect(),p=Math.min(1,Ma
 if(!RM){addEventListener('scroll',()=>{if(!vhq){vhq=true;requestAnimationFrame(vhShrink);}},{passive:true});vhShrink();}
 
 /* expertise cards and product axes from the shared catalogue data */
-const UA_IMG=['ortopedi','uroloji','kadin-sagligi','noroloji','estetik',null];
+const UA_IMG=['ortopedi','uroloji','kadin-sagligi','noroloji','estetik','diger'];
 const UA_IC=['<circle cx="12" cy="12" r="9"/><path d="M8 8.5c2 1 2 3 0 4M16 11.5c-2 1-2 3 0 4M9 12.5h6"/>','<circle cx="12" cy="12" r="9"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>','<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>','<path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 1V5a3 3 0 0 0-3-1zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 1"/>','<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>','<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'];
 function homeData(){
  const portfolio=document.querySelector('.hp-f img');if(portfolio&&window.IF_CMS&&IF_CMS.home_product_image)portfolio.src=IF_CMS.home_product_image;
@@ -308,7 +308,7 @@ const PGI={urunler:['genis/hero-urun.webp','genis/portfolio-regenflex-studio.web
  uretim:['genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
  bilim:['genis/hero-bilim.webp','genis/hero-laboratuvar.webp','genis/regenyal-laboratuvar.webp'],
  guncel:['genis/hero-bilim.webp','genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp'],
- uzmanlik:['banner/ortopedi.webp','banner/uroloji.webp','banner/kadin-sagligi.webp','banner/noroloji.webp','banner/estetik.webp'],
+ uzmanlik:['banner/ortopedi.webp','banner/uroloji.webp','banner/kadin-sagligi.webp','banner/noroloji.webp','banner/estetik.webp','banner/diger.webp'],
  hakkimizda:['genis/hero-laboratuvar.webp','genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp'],
  iletisim:['genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp']};
 function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
@@ -517,8 +517,15 @@ $$('.if-fm-f').forEach(f=>{f.querySelectorAll('input,textarea,select').forEach(x
 
 /* üst çubuk sığma denetimi: dil değişince ya da pencere boyutu değişince */
 {const top=document.querySelector('.site-top'),H=document.documentElement;
- const fit=()=>{if(!top)return;H.classList.remove('nv-c1','nv-c2','nv-c3','nv-c4');if(innerWidth<=1100)return;const over=()=>{const r=top.getBoundingClientRect(),cs=getComputedStyle(top),rtl=cs.direction==='rtl',k=[...top.children,...top.querySelectorAll('.nv')].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!k.length)return false;return rtl?Math.min(...k.map(b=>b.left))<r.left+parseFloat(cs.paddingLeft)-1:Math.max(...k.map(b=>b.right))>r.right-parseFloat(cs.paddingRight)+1;};
-  for(const c of ['nv-c1','nv-c2','nv-c3','nv-c4']){if(!over())break;H.classList.add(c);}};
+ const CS5=['nv-c1','nv-c2','nv-c3','nv-c4','nv-c5'];
+ const fit=()=>{if(!top)return;H.classList.remove(...CS5);if(innerWidth<=1100)return;const over=()=>{const r=top.getBoundingClientRect(),cs=getComputedStyle(top),rtl=cs.direction==='rtl',k=[...top.children,...top.querySelectorAll('.nv')].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!k.length)return false;
+   if(rtl?Math.min(...k.map(b=>b.left))<r.left+parseFloat(cs.paddingLeft)-1:Math.max(...k.map(b=>b.right))>r.right-parseFloat(cs.paddingRight)+1)return true;
+   /* Revize 3: tek satırda menü kendi alanından taşıp dil/Pro/arama düğmelerine binmesin */
+   const nv=top.querySelector('.pub-nav');if(!nv)return false;const nr=nv.getBoundingClientRect(),q=[...nv.children].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!q.length)return false;
+   return rtl?Math.min(...q.map(b=>b.left))<nr.left+4:Math.max(...q.map(b=>b.right))>nr.right-4;};
+  for(const c of CS5){if(!over())break;H.classList.add(c);}};
+ /* kaydırma çubuğu sonradan çıkınca da (genişlik değişir, resize olayı gelmez) yeniden hesapla */
+ if(top&&window.ResizeObserver){let w0=0;new ResizeObserver(es=>{const w=Math.round(es[0].contentRect.width);if(w!==w0){w0=w;requestAnimationFrame(fit);}}).observe(top);}
  fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);IF.onLang.push(()=>requestAnimationFrame(fit));}
 
 /* ürünler sayfası filtresi: ürün grubu satırına da etiket (klinik alan satırıyla aynı hizada) */
@@ -556,7 +563,8 @@ soonCards();
  IF.onLang.push(()=>{nb.setAttribute('aria-label',tr('mb_lab'));nb.querySelectorAll('[data-t]').forEach(e=>e.textContent=tr(e.dataset.t));});}
 /* Revize 2 · mega menü: her başlık tam genişlikte, yukarıdan açılan panel; alt öğeler görselli kart.
    Görseli olmayan kart nötr yer tutucuyla görünür (gerçek fotoğraf gelince MG_IMG'ye ya da panelden IF_CMS.orn.menu'ya eklenir). */
-{const MG_IMG={nv_urg:'genis/regenyal-laboratuvar.webp',nv_urs:'genis/hero-uretim.webp'};
+{const MG_IMG={nv_urg:'genis/regenyal-laboratuvar.webp',nv_urs:'genis/hero-uretim.webp',kurumsal:'genis/hero-uretim.webp'};
+ const MG_MAX=5,MG_AX=[0,1,2,5];/* öne çıkan ürün grupları: Hücresel Tedaviler, Kök Hücre ve Eksozom Kitleri, Hyaluronik Asitler, PRP Kitleri */
  const B=()=>window.IF_BASE||'',mgO=()=>(window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.menu)||{};
  const im=(s,u,fit)=>{s.classList.toggle('mg-ph',!u);s.classList.toggle('mg-fit',!!(u&&fit));s.innerHTML=u?'<img src="'+esc2(u)+'" alt="" loading="lazy" decoding="async">':'';
   const g=s.firstChild;if(g)g.addEventListener('error',()=>{g.remove();s.classList.remove('mg-fit');s.classList.add('mg-ph');},{once:true});};
@@ -564,8 +572,12 @@ soonCards();
  const ua=$('#nvUa'),hp=$('#nvHp');
  function megaBuild(){const D=window.IFD;if(!D)return;const L=IF.lang||'tr',O=mgO();
   $$('.mg-c[data-mg]').forEach(a=>{const k=a.dataset.mg,u=O[k]||(MG_IMG[k]?B()+'media/'+MG_IMG[k]:''),s=a.querySelector('.mg-im');if(s&&s.dataset.u!==u){s.dataset.u=u;im(s,u);}});
-  if(ua){const CA=D.CA[L]||D.CA.en;ua.replaceChildren(...CA.map((n,i)=>card(IFU.alan(i),n,(Array.isArray(O.alanKart)&&O.alanKart[i])||(UA_IMG[i]?B()+'media/alan/'+UA_IMG[i]+'.webp':''))));}
-  if(hp){const AX=D.AX[L]||D.AX.en;hp.replaceChildren(...AX.map((n,i)=>{const G=(D.PRODS||[]).filter(q=>q.a===i&&q.img),p=G.find(q=>!/^(https?:)?\/\//.test(q.img))||G[0];return card(IFU.ax(i),n,p?p.img:'',1);}));}}
+  $$('.mg-im[data-mgk]').forEach(s=>{const k=s.dataset.mgk,u=O[k]||(MG_IMG[k]?B()+'media/'+MG_IMG[k]:'');if(s.dataset.u!==u){s.dataset.u=u;im(s,u);}});
+  /* Revize 3: her panel tek sıra, en fazla 5 kart. Uzmanlık: ilk 5 alan (Diğer Alanlar "Tümünü Görüntüle" altında); kart görseli alanın başlık fotoğrafının kare kırpımı */
+  if(ua){const CA=D.CA[L]||D.CA.en;ua.replaceChildren(...CA.slice(0,MG_MAX).map((n,i)=>card(IFU.alan(i),n,(Array.isArray(O.alanKart)&&O.alanKart[i])||(UA_IMG[i]?B()+'media/alan/'+UA_IMG[i]+'.webp':''))));}
+  /* Ürünler: menüde görünecek gruplar (WordPress'te grup başına "Menüde göster" → IF_CMS.menuAx) */
+  if(hp){const AX=D.AX[L]||D.AX.en,S=(window.IF_CMS&&Array.isArray(IF_CMS.menuAx)&&IF_CMS.menuAx.length?IF_CMS.menuAx:MG_AX).map(Number).filter(i=>i>=0&&i<AX.length).slice(0,MG_MAX);
+   hp.replaceChildren(...S.map(i=>{const G=(D.PRODS||[]).filter(q=>q.a===i&&q.img),p=G.find(q=>!/^(https?:)?\/\//.test(q.img))||G[0];return card(IFU.ax(i),AX[i],p?p.img:'',1);}));}}
  /* eski çizim (düz bağlantılar) araya girerse kartlara geri dön */
  [ua,hp].forEach(el=>{if(el)new MutationObserver(()=>{if([...el.children].some(c=>!c.classList.contains('mg-c')))megaBuild();}).observe(el,{childList:true});});
  megaBuild();IF.onLang.push(()=>setTimeout(megaBuild,0));
@@ -630,6 +642,19 @@ function urBuild(){const v=$('#vUretim');if(!v||v.querySelector('.ur-ct'))return
  w.querySelector('.ct-pane').appendChild(fm);sec.replaceWith(w);}
 urBuild();
 {const st=$('#stage');if(st)st.addEventListener('scroll',()=>{if(st.scrollLeft)st.scrollLeft=0;if(st.scrollTop)st.scrollTop=0;},{passive:true});}
+
+/* Revize 3 · görsel odak noktası: başlık, alan ve menü görselleri dosya adına göre kırpılır ("yatay% dikey%").
+   Varsayılan CSS'te 50% 25%. WordPress'te her görselin "Odak noktası" alanı IF_CMS.odak olarak gelir ve bu listenin üzerine yazar. */
+{const IF_ODAK={};
+ const all=()=>Object.assign({},IF_ODAK,(window.IF_CMS&&IF_CMS.odak)||{});
+ const key=u=>String(u||'').split(/[?#]/)[0].split('/').pop().replace(/\.[a-z0-9]+$/i,'');
+ const ok=v=>/^\s*-?\d+(\.\d+)?%\s+-?\d+(\.\d+)?%\s*$/.test(String(v||''));
+ const apply=el=>{const f=all()[key(el.getAttribute('src')||el.getAttribute('poster')||'')];if(ok(f))el.style.setProperty('--fp',f.trim());};
+ const SEL='.vh-media video,.pg-vid img,.pg-vid video,.mg-im img,.mg-fig img,.ua-c img';
+ const scan=r=>{if(r.matches&&r.matches(SEL))apply(r);if(r.querySelectorAll)r.querySelectorAll(SEL).forEach(apply);};
+ scan(document);
+ new MutationObserver(ms=>ms.forEach(m=>{if(m.type==='attributes'){if(m.target.matches(SEL))apply(m.target);}else m.addedNodes.forEach(n=>{if(n.nodeType===1)scan(n);});}))
+  .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['src']});}
 
 labels();
 })();

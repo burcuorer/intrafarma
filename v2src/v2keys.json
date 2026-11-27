@@ -351,7 +351,8 @@
     "bs_ey": "/ Basında Biz",
     "bs_soon": "Basında çıkan haber ve röportajlarımız burada yayımlanacak.",
     "vd_ey": "/ Videolar",
-    "vd_soon": "Kurumsal videolarımız burada yayımlanacak."
+    "vd_soon": "Kurumsal videolarımız burada yayımlanacak.",
+    "mg_biz": "Biz"
   },
   "en": {
     "draft": "Test version · text, figures and images are samples",
@@ -704,7 +705,8 @@
     "bs_ey": "/ In the Press",
     "bs_soon": "Press coverage and interviews will be published here.",
     "vd_ey": "/ Videos",
-    "vd_soon": "Our company videos will be published here."
+    "vd_soon": "Our company videos will be published here.",
+    "mg_biz": "Company"
   },
   "ar": {
     "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -1043,7 +1045,8 @@
     "bs_ey": "/ في الصحافة",
     "bs_soon": "سيتم نشر تغطياتنا الصحفية ومقابلاتنا هنا.",
     "vd_ey": "/ مقاطع الفيديو",
-    "vd_soon": "سيتم نشر مقاطع الفيديو الخاصة بالشركة هنا."
+    "vd_soon": "سيتم نشر مقاطع الفيديو الخاصة بالشركة هنا.",
+    "mg_biz": "من نحن"
   },
   "it": {
     "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -1382,7 +1385,8 @@
     "bs_ey": "/ Dicono di noi",
     "bs_soon": "Qui verranno pubblicati articoli e interviste su di noi.",
     "vd_ey": "/ Video",
-    "vd_soon": "Qui verranno pubblicati i nostri video aziendali."
+    "vd_soon": "Qui verranno pubblicati i nostri video aziendali.",
+    "mg_biz": "Chi siamo"
   },
   "ru": {
     "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -1721,7 +1725,8 @@
     "bs_ey": "/ СМИ о нас",
     "bs_soon": "Здесь будут опубликованы публикации в СМИ и интервью.",
     "vd_ey": "/ Видео",
-    "vd_soon": "Здесь будут опубликованы видео о компании."
+    "vd_soon": "Здесь будут опубликованы видео о компании.",
+    "mg_biz": "О нас"
   },
   "es": {
     "pc_ey": "/ Pro · Productos",
@@ -2333,7 +2338,8 @@
     "bs_ey": "/ En los medios",
     "bs_soon": "Aquí se publicarán nuestras apariciones en prensa y entrevistas.",
     "vd_ey": "/ Vídeos",
-    "vd_soon": "Aquí se publicarán nuestros vídeos corporativos."
+    "vd_soon": "Aquí se publicarán nuestros vídeos corporativos.",
+    "mg_biz": "Nosotros"
   },
   "fr": {
     "pc_ey": "/ Pro · Produits",
@@ -2945,6 +2951,7 @@
     "bs_ey": "/ Dans la presse",
     "bs_soon": "Nos parutions presse et interviews seront publiées ici.",
     "vd_ey": "/ Vidéos",
-    "vd_soon": "Nos vidéos d’entreprise seront publiées ici."
+    "vd_soon": "Nos vidéos d’entreprise seront publiées ici.",
+    "mg_biz": "Nous"
   }
 }

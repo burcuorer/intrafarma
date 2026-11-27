@@ -61,7 +61,7 @@ def revize1(h):
             "const PRODS=[" + rows + "].map(([n,a,pr])=>({n,a,open:a>=6&&a<=8,pr:!!pr}));", h, _re.S)
     h = _rx(r"var AL=\[[^\]]*\];", "var AL=['ortopedi-fiziksel-tip','uroloji-androloji','kadin-hastaliklari-dogum','noroloji','dermatoloji-medikal-estetik','diger'];", h)
     h = _rx(r"var AXS=\[[^\]]*\];", "var AXS=['hucresel-tedaviler','ayristirma-kitleri','hyaluronik-asitler','genital-estetik','kolajen','prp-kitleri','gida-takviyeleri','biodekontaminant','hipsafe','tasinabilir-ultrason'];", h)
-    h = _rx(r"const UA_IMG=\[[^\]]*\];", "const UA_IMG=['ortopedi','uroloji','kadin-sagligi','noroloji','estetik',null];", h)  # Revize 2: 'Diğer Alanlar' gerçek fotoğraf gelene kadar görselsiz (AI görsel kaldırıldı)
+    h = _rx(r"const UA_IMG=\[[^\]]*\];", "const UA_IMG=['ortopedi','uroloji','kadin-sagligi','noroloji','estetik','diger'];", h)  # Revize 3: tüm alanlar firmanın fotoğraflarıyla
     # simgeler: 4. alan nöroloji (beyin), 6. alan diğer (artı)
     m = _re.search(r"const UA_IC=\[(.*?)\];\n", h, _re.S)
     ic = _re.findall(r"'([^']*)'", m.group(1))
@@ -86,9 +86,18 @@ def revize1(h):
         return ('<div class="nv nv-mg" data-sec="%s"><button type="button" class="nv-t" aria-expanded="false" data-t="%s"></button>'
                 '<div class="nv-m"><div class="mg-in">%s<a class="mg-all" href="%s"><span data-t="mg_all"></span>%s</a></div></div></div>' % (sec, key, g, allhref, ARW))
     lk = lambda pairs: ''.join('<a class="mg-c" href="%s" data-mg="%s"><span class="mg-im" aria-hidden="true"></span><span class="mg-tx" data-t="%s"></span></a>' % (u, k, k) for u, k in pairs)
+    # Revize 3: Kurumsal paneli görselli kart değil; iki sütun metin listesi (Biz · Medya) ve sağda tek büyük görsel.
+    # Vizyon ve Misyon, Değerlerimiz menüde yok; Hakkımızda sayfasında bölüm olarak duruyor.
+    def kur():
+        col = lambda hk, pairs: '<div class="mg-col"><p class="mg-h" data-t="%s"></p>%s</div>' % (hk, ''.join('<a class="mg-l" href="%s" data-t="%s"></a>' % p for p in pairs))
+        cols = (col('mg_biz', [('hakkimizda.html', 'nv_hak'), ('hakkimizda.html#is-ortaklari', 'nav_ort'), ('hakkimizda.html#kalite', 'nv_kal')])
+                + col('nav6', [('guncel.html#basinda-biz', 'nv_bas'), ('guncel.html#haberler', 'nv_hab'), ('guncel.html#videolar', 'nv_vid')]))
+        return ('<div class="nv nv-mg nv-kur" data-sec="kurumsal"><button type="button" class="nv-t" aria-expanded="false" data-t="n_kur"></button>'
+                '<div class="nv-m"><div class="mg-in mg-kur"><div class="mg-cols">%s</div>'
+                '<a class="mg-fig" href="hakkimizda.html" tabindex="-1" aria-hidden="true"><span class="mg-im" data-mgk="kurumsal"></span></a>'
+                '<a class="mg-all" href="hakkimizda.html"><span data-t="mg_all"></span>%s</a></div></div></div>' % (cols, ARW))
     menu = ('<nav class="pub-nav" id="pubNav" aria-label="Menü">\n        <a class="nv-home" href="index.html" data-t="pg_home"></a>\n        '
-            + nv('kurumsal', 'n_kur', lk([('hakkimizda.html', 'nv_hak'), ('hakkimizda.html#vizyon', 'nv_viz'), ('hakkimizda.html#degerler', 'nv_deg'), ('hakkimizda.html#is-ortaklari', 'nav_ort'), ('hakkimizda.html#kalite', 'nv_kal'),
-                                          ('guncel.html#basinda-biz', 'nv_bas'), ('guncel.html#haberler', 'nv_hab'), ('guncel.html#videolar', 'nv_vid')]), 'hakkimizda.html')
+            + kur()
             + nv('uzmanlik', 'n_uzm', '', 'uzmanlik.html', 'nvUa')
             + nv('urunler', 'nav3', '', 'urunler.html', 'nvHp')
             + nv('bilim', 'n_bil', lk([('bilim.html#kurul', 'nav_kurul'), ('bilim.html#yayinlar', 'nv_yay'), ('bilim.html#sss', 'ft_sss')]), 'bilim.html')

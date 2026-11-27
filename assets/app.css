@@ -3389,7 +3389,7 @@ html body .site-top .nv-m a.mg-all:hover svg{transform:translateX(3px)}
  .mg-in{display:flex;flex-direction:column;align-items:center;gap:22px}
  .mg-g{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,168px);justify-content:center;gap:18px;width:100%}
  #nvHp.mg-g{grid-auto-flow:row;grid-template-columns:repeat(5,minmax(0,168px));grid-auto-columns:auto}
- .mg-tx{max-width:100%;overflow-wrap:anywhere}
+ .mg-tx{max-width:100%;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
  /* İletişim: sağda tek bağlantı (çerçeveli) */
  html body .site-top .pub-nav>a.nv-ct{height:38px!important;padding:0 20px!important;border:1.5px solid currentColor;border-radius:var(--rf);font:600 15px/1 var(--f-b)!important;display:inline-flex;align-items:center;white-space:nowrap;box-shadow:none!important;transition:background-color var(--d1),color var(--d1),border-color var(--d1)}
  html body .site-top .pub-nav>a.nv-ct:hover,html body .site-top .pub-nav>a.nv-ct.cur{background:var(--ink);border-color:var(--ink);color:#fff!important}
@@ -3414,7 +3414,6 @@ html body .site-top .nv-m a.mg-all:hover svg{transform:translateX(3px)}
 html body .site-top,html body .site-top.scrolled{background:var(--hdr-bg)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:0 1px 0 rgba(255,255,255,.06)!important}
 html body .site:not(.nav-open) .site-top::before,html body .site-top::after{display:none!important}
 html body .site.nav-open .site-top::before{background:var(--hdr-bg)!important;border-bottom-color:rgba(255,255,255,.08)!important}
-html body .site-top .logo-a .logo{filter:brightness(0) invert(1)}
 html body .site-top .pub-nav .nv-t,html body .site-top .pub-nav>a.nv-a{color:#fff!important}
 html body .site-top .pub-nav .nv-t:hover,html body .site-top .nv:hover>.nv-t,html body .site-top .nv.open>.nv-t,html body .site-top .nv:focus-within>.nv-t{color:var(--hdr-ac)!important}
 html body .site-top .nv.cur .nv-t{box-shadow:inset 0 -2px 0 var(--hdr-ac)!important}
@@ -3468,3 +3467,94 @@ html body .pg.has-vid:not(.pg-det) .pg-cap{display:none!important}
  html body .pg.has-vid:not(.pg-det) .pg-vid::after{background:linear-gradient(180deg,rgba(8,22,36,.45),rgba(8,22,36,.62))!important;transform:none!important}
  html body .pg.has-vid:not(.pg-det){padding-bottom:clamp(36px,8vw,56px)!important}
 }
+
+/* =====================================================================
+   REVİZE 3 (27.11) · madde 1: tek satır koyu üst bant, orijinal logo beyaz kutuda
+   Masaüstünde 76 px, kaydırınca 64 px. Dil, Sağlık Çalışanları ve arama ana menüyle aynı satırda.
+   ===================================================================== */
+html body .site-top>.logo-a{background:#fff;border-radius:10px;padding:0 16px;box-sizing:border-box;box-shadow:0 1px 2px rgba(0,0,0,.08);transition:height .25s var(--e2),padding .25s var(--e2)}
+html body .site-top>.logo-a .logo{filter:none!important;transition:height .25s var(--e2)}
+@media (min-width:1101px){
+ html:root{--hdr:76px}
+ html body .site-top{grid-template-columns:auto minmax(0,1fr) auto auto auto!important;grid-template-rows:var(--hdr)!important;column-gap:12px!important;height:var(--hdr)!important;transition:height .25s var(--e2)}
+ html body .site-top.scrolled{height:64px!important;grid-template-rows:64px!important}
+ html body .site-top>.logo-a{grid-column:1!important;grid-row:1!important;align-self:center!important;margin:0!important;height:52px!important}
+ html body .site-top>.logo-a .logo{height:30px!important}
+ html body .site-top.scrolled>.logo-a{height:44px!important;padding:0 14px}
+ html body .site-top.scrolled>.logo-a .logo{height:26px!important}
+ html body .site-top .pub-nav{grid-column:2!important;grid-row:1!important;align-self:center;height:100%!important;margin-inline-start:clamp(20px,2.6vw,48px)!important;margin-inline-end:clamp(8px,1vw,16px)!important;gap:clamp(14px,1.6vw,30px)!important}
+ html body .site-top .nv{height:100%;display:flex;align-items:center}
+ html body .site-top .lsw{grid-column:3!important;grid-row:1!important;align-self:center;width:36px!important;height:36px!important}
+ html body .site-top .lsw .lsw-cur{width:36px!important;height:36px!important}
+ html body .site-top>.hcp{grid-column:4!important;grid-row:1!important;align-self:center;height:36px!important;font-size:13.5px!important}
+ html body .site-top .nv-srch{grid-column:5!important;grid-row:1!important;align-self:center;width:36px!important;height:36px!important}
+ html body .site-top .pub-nav>a.nv-ct{height:36px!important;padding:0 16px!important}
+}
+@media (max-width:1100px){
+ html body .site-top>.logo-a{height:44px!important;padding:0 12px}
+ html body .site-top>.logo-a .logo{height:24px!important}
+}
+/* tek satır sığmazsa sırayla sıkışır (JS: html.nv-c1 … nv-c5): boşluk → yazı boyu → "Pro" kısaltması → ok işaretleri → daha küçük yazı */
+@media (min-width:1101px){
+ html.nv-c1 body .site-top .pub-nav{gap:12px!important;margin-inline-start:18px!important}
+ html.nv-c1 body .site-top{column-gap:8px!important}
+ html.nv-c2 body .site-top .pub-nav .nv-t,html.nv-c2 body .site-top .pub-nav>a.nv-ct{font-size:14.5px!important;-webkit-text-stroke:0}
+ html.nv-c2 body .site-top .pub-nav>a.nv-ct{padding:0 12px!important}
+ html.nv-c3 body .site-top>.hcp{font-size:0!important;padding:0 16px!important;min-width:0}
+ html.nv-c3 body .site-top>.hcp::after{content:"Pro"!important;position:static!important;inset:auto!important;width:auto!important;height:auto!important;background:none!important;box-shadow:none!important;border:0!important;opacity:1!important;transform:none!important;color:inherit;font:600 13.5px/1 var(--f-b)}
+ html.nv-c4 body .site-top .nv-t::after{display:none!important}
+ html.nv-c4 body .site-top .nv-t{gap:0!important}
+ html.nv-c4 body .site-top .pub-nav{gap:10px!important;margin-inline-start:12px!important}
+ html.nv-c5 body .site-top .pub-nav .nv-t,html.nv-c5 body .site-top .pub-nav>a.nv-ct{font-size:13.5px!important}
+ html.nv-c5 body .site-top>.logo-a{padding:0 10px}
+ html.nv-c5 body .site-top .pub-nav{gap:8px!important;margin-inline-start:10px!important}
+ html.nv-c5 body .site-top>.logo-a .logo{height:24px!important}
+}
+
+/* =====================================================================
+   REVİZE 3 · madde 2: başlık görselleri üst bandın altından başlar, üstten kırpılmaz
+   Odak noktası: varsayılan yatayda orta, dikeyde %25. Görsel başına --fp ile değişir
+   (JS: IF_ODAK / WordPress'te görselin "Odak noktası" alanı).
+   ===================================================================== */
+html body .vh .vh-media,html body .vh .vh-veil{top:var(--hdr)!important}
+html body .vh .vh-v{object-position:var(--fp,50% 25%)!important}
+html body .pg.has-vid:not(.pg-det) .pg-vid,html[dir=rtl] body .pg.has-vid:not(.pg-det) .pg-vid{top:var(--hdr)!important}
+html body .pg.has-vid:not(.pg-det) .pg-vid img,html body .pg.has-vid:not(.pg-det) .pg-vid video,html body .pg.al-ph .pg-vid img.al-img{object-position:var(--fp,50% 25%)!important}
+
+/* =====================================================================
+   REVİZE 3 · madde 3–6: mega menü tek sıra (en fazla 5 kart), Kurumsal metin listesi + büyük görsel
+   ===================================================================== */
+.mg-h{margin:0 0 10px;font:500 var(--t1)/1.2 var(--f-m);letter-spacing:.08em;text-transform:uppercase;color:var(--iris)}
+html body .site-top .nv-m a.mg-l{display:block;padding:8px 0!important;background:none!important;border-radius:0!important;color:var(--ink)!important;font:600 16px/1.3 var(--f-b)!important;text-decoration:none;white-space:normal!important}
+html body .site-top .nv-m a.mg-l:hover,html body .site-top .nv-m a.mg-l:focus-visible{color:var(--cobalt)!important}
+.mg-fig{display:none}
+@media (min-width:1101px){
+ #nvHp.mg-g,#nvUa.mg-g{grid-auto-flow:column!important;grid-template-columns:none!important;grid-auto-columns:minmax(0,180px)!important}
+ html body .site-top .mg-in.mg-kur{display:grid;grid-template-columns:auto minmax(0,440px);grid-template-rows:auto 1fr;column-gap:clamp(40px,5vw,80px);row-gap:18px;justify-content:center;align-items:start}
+ .mg-kur .mg-cols{grid-column:1;grid-row:1;display:grid;grid-template-columns:repeat(2,minmax(170px,auto));column-gap:clamp(32px,4vw,64px)}
+ .mg-kur .mg-col{display:flex;flex-direction:column}
+ html body .site-top .mg-kur .mg-fig{display:block;grid-column:2;grid-row:1/3;padding:0!important;background:none!important}
+ .mg-kur .mg-fig .mg-im{aspect-ratio:16/10;border-radius:var(--r2)}
+ html body .site-top .mg-kur a.mg-all{grid-column:1;grid-row:2;justify-self:start;align-self:end}
+}
+@media (max-width:1100px){
+ .mg-kur .mg-cols{display:grid;grid-template-columns:1fr;gap:14px}
+ .mg-h{margin:6px 0 4px}
+ html body .site.nav-open .site-top .nv-m a.mg-l{min-height:42px!important;display:flex!important;align-items:center;padding:0 0 0 14px!important;font:500 var(--t3)/1.3 var(--f-b)!important;color:var(--ink-2)!important;border-inline-start:2px solid rgba(16,64,104,.12)!important}
+}
+@media (min-width:1101px){
+ html body .site-top .mg-in.mg-kur{grid-template-rows:auto auto;align-content:start}
+ html body .site-top .mg-kur a.mg-all{align-self:start;margin-top:10px!important}
+}
+@media (max-width:1100px){html body .site .site-top .nv-m a.mg-fig{display:none!important}}
+
+/* =====================================================================
+   REVİZE 3 · taşma düzeltmeleri
+   ===================================================================== */
+/* uzmanlık kartları telefonda: başlık ana sayfadaki kartlarla aynı ölçüde, numara ve okla çakışmaz */
+@media (max-width:640px){
+ html body .uz-g .ua-c b,html body .ua .ua-c b{font-size:15px!important;line-height:1.2!important;min-width:0;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
+ html body .uz-g .ua-c .ua-x,html body .ua .ua-c .ua-x{left:14px;right:12px;bottom:12px}
+}
+/* açılış görseli: tablet ve telefonda video adı kontrollerin üstüne binmesin */
+@media (max-width:1100px){html body .vh .vh-cap{display:none!important}}
