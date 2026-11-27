@@ -3602,13 +3602,17 @@ html body .pg.has-vid:not(.pg-det) .pg-in a.b-link,html body .pg.has-vid:not(.pg
 }
 
 /* =====================================================================
-   REVİZE 6: başlık görseli/videosu kendi oranında (≈2.4:1) görünür, aşırı büyütülüp kesilmez
-   Alan yüksekliği = üst bant + genişlik/2.4 (en az 360, en fazla 640 px). Görseller ve videolar 1920×822 / 1820×700.
+   REVİZE 6 (düzeltildi): başlık yüksekliği önceki ölçüde kalır (videolar tam genişlikte, Hakkımızda'daki gibi).
+   Sabit görseller (≈2.4:1) tam genişlikte aşırı büyüyüp kesiliyordu: sağda ~%62 genişlikte durur, sol kenarı lacivert zemine yumuşakça geçer.
    ===================================================================== */
 @media (min-width:901px){
- html body .pg.has-vid:not(.pg-det),html[data-page=hakkimizda] body .pg.has-vid.pg-tall,html body [id^=v]>.pg.has-vid:not(.pg-det):not(.r6a):not(.r6b):not(.r6c){height:auto!important;min-height:calc(var(--hdr) + clamp(360px,calc(100vw / 2.4),640px))!important;box-sizing:border-box;display:flex!important;flex-direction:column;justify-content:center;align-items:stretch;padding-top:calc(var(--hdr) + 24px)!important;padding-bottom:40px!important}
+ html body .pg.has-vid:not(.pg-det)>.pg-in{align-self:flex-start!important;margin-inline:0!important}
+ html body [id^=v]>.pg.has-vid:not(.pg-det),html body .pg.has-vid.al-ph{background:var(--hdr-bg)!important}
+ html body .pg.has-vid:not(.pg-det)::before{display:none!important}
+ html body .pg.has-vid:not(.pg-det) .pg-vid:not(.pg-movie){left:auto!important;right:0!important;width:62%!important}
+ html[dir=rtl] body .pg.has-vid:not(.pg-det) .pg-vid:not(.pg-movie){right:auto!important;left:0!important}
+ html body .pg.has-vid:not(.pg-det) .pg-vid:not(.pg-movie)::after{background:linear-gradient(90deg,var(--hdr-bg) 0%,rgba(14,34,53,.6) 16%,rgba(14,34,53,.18) 36%,rgba(14,34,53,0) 52%)!important}
 }
-@media (min-width:901px){html body .pg.has-vid:not(.pg-det)>.pg-in{align-self:flex-start!important;margin-inline:0!important}}
 </style>
 </head><body>
 
