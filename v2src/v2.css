@@ -2565,3 +2565,16 @@ html body .site-top .nv-t::after{display:none!important}
  html body .site.nav-open .site-top .nv.open>.nv-tg{color:var(--iris)}
  .nv-tg svg{width:16px;height:16px}
 }
+
+/* =====================================================================
+   REVİZE 5 (27.11): Özel Üretim, Hakkımızda, Bilimsel Platform başlıklarında döngü videosu
+   Video tam genişlikte ve net; beyaz başlık için yalnızca solda hafif lacivert geçiş (Arapçada sağda).
+   ===================================================================== */
+html body .pg.has-vid:not(.pg-det) .pg-vid.pg-movie video,html body .pg.has-vid:not(.pg-det) .pg-vid.pg-movie img{animation:none!important;transform:none!important;background:var(--hdr-bg)}
+html body .pg.has-vid:not(.pg-det) .pg-vid.pg-movie::after{background:linear-gradient(90deg,rgba(14,34,53,.74) 0%,rgba(14,34,53,.58) 30%,rgba(14,34,53,.2) 52%,rgba(14,34,53,0) 66%)!important}
+/* başlık bandındaki bağlantılar görsel üzerinde beyaz */
+html body .pg.has-vid:not(.pg-det) .pg-in a.b-link,html body .pg.has-vid:not(.pg-det) .pg-in .b-link,html body .pg.has-vid:not(.pg-det) .hc-m,html body .pg.has-vid:not(.pg-det) .hc-m *{color:#fff!important;border-color:rgba(255,255,255,.6)!important}
+@media (max-width:900px){
+ html body .pg.has-vid:not(.pg-det) .pg-vid.pg-movie::after{background:linear-gradient(90deg,rgba(14,34,53,.66) 0%,rgba(14,34,53,.4) 60%,rgba(14,34,53,.2) 100%)!important;transform:none!important}
+ html[dir=rtl] body .pg.has-vid:not(.pg-det) .pg-vid.pg-movie::after{transform:scaleX(-1)!important}
+}

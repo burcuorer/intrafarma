@@ -159,14 +159,26 @@ const PGI={urunler:['genis/hero-urun.webp','genis/portfolio-regenflex-studio.web
  uzmanlik:['banner/ortopedi.webp','banner/uroloji.webp','banner/kadin-sagligi.webp','banner/noroloji.webp','banner/estetik.webp','banner/diger.webp'],
  hakkimizda:['genis/hero-laboratuvar.webp','genis/hero-uretim.webp','genis/regenyal-laboratuvar.webp'],
  iletisim:['genis/regenyal-laboratuvar.webp','genis/hero-laboratuvar.webp']};
-function pgVideo(){const L=PGI[P];if(!L||!curView)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
+/* Revize 5: döngü videoları (media/video/<ad>-loop.mp4 + <ad>-poster.jpg). Otomatik, sessiz, döngülü, satır içi.
+   Telefonda (≤760 px), "hareketi azalt" açıkken ve veri tasarrufunda video yüklenmez, yalnızca poster görünür; ekran dışındayken durur.
+   WordPress: Bölüm görselleri → her bölüm için "Video (MP4)" ve "Poster" alanları → IF_CMS.orn.video = {uretim:{mp4,poster}, …} */
+const PGVID={uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim'};
+function loopMedia(k){const B=window.IF_BASE||'',O=((window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.video)||{})[k]||{};
+ const mp4=O.mp4||B+'media/video/'+k+'-loop.mp4',po=O.poster||B+'media/video/'+k+'-poster.jpg';
+ const still=matchMedia('(max-width:760px)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches||!!(navigator.connection&&navigator.connection.saveData);
+ if(still){const im=document.createElement('img');im.className='lv-po';im.src=po;im.alt='';im.decoding='async';return im;}
+ const v=document.createElement('video');v.className='lv';v.muted=true;v.defaultMuted=true;v.loop=true;v.playsInline=true;v.autoplay=true;
+ ['muted','playsinline','autoplay','loop'].forEach(a=>v.setAttribute(a,''));v.preload='auto';v.poster=po;v.src=mp4;
+ if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const p=v.play();if(p&&p.catch)p.catch(()=>{});}else v.pause();})).observe(v);
+ return v;}
+function pgVideo(){if(!curView)return;const vk=PGVID[P],L=PGI[P];if(!L&&!vk)return;const pg=$('#'+curView+' .pg');if(!pg||pg.querySelector('.pg-vid'))return;
+ if(vk){const f=document.createElement('figure');f.className='pg-vid pg-movie';f.setAttribute('aria-hidden','true');f.appendChild(loopMedia(vk));pg.appendChild(f);pg.classList.add('has-vid');return;}
  const f=document.createElement('figure');f.className='pg-vid pg-loop'+(P==='uzmanlik'?' pg-alan':'')+(P==='iletisim'?' pg-ct':'');f.setAttribute('aria-hidden','true');
  f.innerHTML=L.map((u,i)=>'<img class="pl'+(i?'':' on')+'" src="'+(window.IF_BASE||'')+'media/'+u+'" alt="" decoding="async"'+(i?' loading="lazy"':'')+'>').join('');
  pg.appendChild(f);pg.classList.add('has-vid');
  if(L.length<2||matchMedia('(prefers-reduced-motion: reduce)').matches)return;let k=0;
  const t=setInterval(()=>{const im=f.querySelectorAll('img.pl');if(!im.length||!f.isConnected){clearInterval(t);return;}im[k%im.length].classList.remove('on');k++;im[k%im.length].classList.add('on');},6000);}
-ucRead();v2route();v2refresh();pgVideo();pgMode();setTimeout(renderHK,1500);
-if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
+ucRead();v2route();v2refresh();pgVideo();pgMode();setTimeout(renderHK,1500);if(location.hash&&location.hash!=='#pro'){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t)requestAnimationFrame(()=>setTimeout(()=>t.scrollIntoView({block:'start'}),80));}
 
 /* WordPress: gövdedeki .html bağlantıları sayfa adresleriyle değiştirilir (GitHub'da dokunulmaz) */
 
@@ -516,7 +528,7 @@ urBuild();
  const key=u=>String(u||'').split(/[?#]/)[0].split('/').pop().replace(/\.[a-z0-9]+$/i,'');
  const ok=v=>/^\s*-?\d+(\.\d+)?%\s+-?\d+(\.\d+)?%\s*$/.test(String(v||''));
  const apply=el=>{const f=all()[key(el.getAttribute('src')||el.getAttribute('poster')||'')];if(ok(f))el.style.setProperty('--fp',f.trim());};
- const SEL='.vh-media video,.pg-vid img,.pg-vid video,.mg-im img,.mg-fig img,.ua-c img';
+ const SEL='.vh-media video,.pg-vid img,.pg-vid video,.lbs-vid img,.lbs-vid video,.mg-im img,.mg-fig img,.ua-c img';
  const scan=r=>{if(r.matches&&r.matches(SEL))apply(r);if(r.querySelectorAll)r.querySelectorAll(SEL).forEach(apply);};
  scan(document);
  new MutationObserver(ms=>ms.forEach(m=>{if(m.type==='attributes'){if(m.target.matches(SEL))apply(m.target);}else m.addedNodes.forEach(n=>{if(n.nodeType===1)scan(n);});}))
