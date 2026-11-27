@@ -183,7 +183,7 @@ document.addEventListener('error',e=>{const im=e.target;if(!(im instanceof HTMLI
  else if(im.parentElement&&im.parentElement.classList.contains('uc-vis')){im.parentElement.classList.remove('has-img');im.remove();}},true);
 
 /* ---- mobil menü: açılınca bulunulan bölüm açık gelir; menüdeki sağlık çalışanı girişi menüyü kapatır ---- */
-{const bg=$('#nvBurger');if(bg)bg.addEventListener('click',()=>{if(!siteEl.classList.contains('nav-open'))return;const c=$('.site-top .nv.cur');if(c&&!$('.site-top .nv.open')){c.classList.add('open');c.firstElementChild.setAttribute('aria-expanded','true');}const n=$('#pubNav');if(n)n.scrollTop=0;});
+{const bg=$('#nvBurger');if(bg)bg.addEventListener('click',()=>{if(!siteEl.classList.contains('nav-open'))return;const c=$('.site-top .nv.cur');if(c&&!$('.site-top .nv.open')){c.classList.add('open');const g=c.querySelector('.nv-tg');if(g)g.setAttribute('aria-expanded','true');}const n=$('#pubNav');if(n)n.scrollTop=0;});
  const nh=$('.nv-hcp');if(nh)nh.addEventListener('click',()=>closeNav(),true);}
 
 
@@ -370,7 +370,9 @@ $$('.if-fm-f').forEach(f=>{f.querySelectorAll('input,textarea,select').forEach(x
    if(rtl?Math.min(...k.map(b=>b.left))<r.left+parseFloat(cs.paddingLeft)-1:Math.max(...k.map(b=>b.right))>r.right-parseFloat(cs.paddingRight)+1)return true;
    /* Revize 3: tek satırda menü kendi alanından taşıp dil/Pro/arama düğmelerine binmesin */
    const nv=top.querySelector('.pub-nav');if(!nv)return false;const nr=nv.getBoundingClientRect(),q=[...nv.children].filter(c=>c.offsetWidth&&getComputedStyle(c).position!=='fixed').map(c=>c.getBoundingClientRect());if(!q.length)return false;
-   return rtl?Math.min(...q.map(b=>b.left))<nr.left+4:Math.max(...q.map(b=>b.right))>nr.right-4;};
+   /* öğeler space-between ile dağıldığı için kenara değil, genişlik toplamına bakılır (en az CSS gap kadar ara + 4 px pay) */
+   const gp=parseFloat(getComputedStyle(nv).columnGap)||0,need=q.reduce((s,b)=>s+b.width,0)+gp*(q.length-1);
+   return need>nr.width-4;};
   for(const c of CS5){if(!over())break;H.classList.add(c);}};
  /* kaydırma çubuğu sonradan çıkınca da (genişlik değişir, resize olayı gelmez) yeniden hesapla */
  if(top&&window.ResizeObserver){let w0=0;new ResizeObserver(es=>{const w=Math.round(es[0].contentRect.width);if(w!==w0){w0=w;requestAnimationFrame(fit);}}).observe(top);}
@@ -429,10 +431,26 @@ soonCards();
  /* eski çizim (düz bağlantılar) araya girerse kartlara geri dön */
  [ua,hp].forEach(el=>{if(el)new MutationObserver(()=>{if([...el.children].some(c=>!c.classList.contains('mg-c')))megaBuild();}).observe(el,{childList:true});});
  megaBuild();IF.onLang.push(()=>setTimeout(megaBuild,0));
- /* aynı anda tek panel: başka başlığın üzerine gelince tıklamayla açık kalan kapanır; Esc kapatır */
- const shut=x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');};
- $$('.site-top .nv').forEach(nv=>nv.addEventListener('mouseenter',()=>{if(innerWidth>1100)$$('.site-top .nv.open').forEach(x=>{if(x!==nv)shut(x);});}));
- addEventListener('keydown',e=>{if(e.key!=='Escape'||innerWidth<=1100)return;const a=document.activeElement,nv=a&&a.closest&&a.closest('.site-top .nv');$$('.site-top .nv.open').forEach(shut);if(nv)nv.firstElementChild.focus();});}
+ /* Revize 4: başlık bağlantısı bölümün sayfasına gider; panel masaüstünde fareyle (kısa gecikmeyle) ve klavye odağıyla açılır,
+    ok düğmesi her ekranda açar/kapatır. Aynı anda tek panel; Esc kapatır. */
+ const shut=x=>{x.classList.remove('open');const g=x.querySelector('.nv-tg');if(g)g.setAttribute('aria-expanded','false');};
+ const show=nv=>{$$('.site-top .nv.open').forEach(x=>{if(x!==nv)shut(x);});nv.classList.add('open');const g=nv.querySelector('.nv-tg');if(g)g.setAttribute('aria-expanded','true');};
+ const desk=()=>innerWidth>1100,hov=matchMedia('(hover:hover) and (pointer:fine)');
+ $$('.site-top .nv').forEach(nv=>{let tOpen=0,tShut=0;
+  nv.addEventListener('mouseenter',()=>{if(!desk()||!hov.matches)return;clearTimeout(tShut);clearTimeout(tOpen);
+   tOpen=setTimeout(()=>show(nv),$('.site-top .nv.open')?0:110);});
+  nv.addEventListener('mouseleave',()=>{if(!desk()||!hov.matches)return;clearTimeout(tOpen);clearTimeout(tShut);
+   tShut=setTimeout(()=>{if(!nv.querySelector(':focus-visible'))shut(nv);},320);});
+  /* klavye: başlığa Tab ile gelince açılır, odak bölümden çıkınca kapanır */
+  nv.addEventListener('focusin',e=>{if(desk()&&e.target.matches(':focus-visible'))show(nv);});
+  nv.addEventListener('focusout',e=>{if(desk()&&!nv.contains(e.relatedTarget))setTimeout(()=>{if(!nv.matches(':hover'))shut(nv);},0);});});
+ addEventListener('keydown',e=>{if(e.key!=='Escape')return;const a=document.activeElement,nv=a&&a.closest&&a.closest('.site-top .nv');if(!$('.site-top .nv.open'))return;$$('.site-top .nv.open').forEach(shut);if(nv){const g=nv.querySelector('.nv-tg');if(g)g.focus();}});
+ /* ok düğmesinin erişilebilir adı: "Alt menüyü aç: Kurumsal" (dil değişince yenilenir) */
+ const lab=()=>$$('.site-top .nv-tg').forEach(g=>{const t=g.parentElement.querySelector('.nv-t');g.setAttribute('aria-label',tr('mg_open')+': '+(t?t.textContent:''));});
+ /* WordPress: Görünüm → Menüler → "Üst menü" konumu; öğeler data-menu ile eşleşir ({kurumsal:{url,title}, …}) */
+ const wpm=()=>{const M=window.IF_CMS&&IF_CMS.ustMenu;if(!M)return;$$('.site-top [data-menu]').forEach(a=>{const o=M[a.dataset.menu];if(!o)return;
+   if(o.url)a.href=o.url;if(o.title){a.removeAttribute('data-t');a.textContent=o.title;}});};
+ wpm();lab();IF.onLang.push(()=>setTimeout(()=>{wpm();lab();},0));}
 
 /* İletişim sayfası: tek form kartı (sekmeli), solda sonraki adımlar, altta bilgi kartları ve harita */
 function ctBuild(){const v=$('#vIletisim');if(!v||v.querySelector('.ct'))return;

@@ -81,10 +81,15 @@ def revize1(h):
     # Revize 2: mega menü. Her başlık tam genişlikte, yukarıdan açılan bir panel; alt öğeler görselli kart, altta "Tümünü Görüntüle".
     # Kart görselleri JS'te (v2c2.js → MG_IMG) atanır; görseli olmayan kart nötr yer tutucuyla görünür.
     ARW = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>'
+    # Revize 4: başlık gerçek bağlantı (bölümün ana sayfası), yanında alt menüyü açan ayrı ok düğmesi.
+    # data-menu: WordPress'te Görünüm → Menüler → "Üst menü" konumundaki öğenin adı/bağlantısı bununla eşleşir (IF_CMS.ustMenu).
+    def head(sec, key, href):
+        return ('<a class="nv-t" href="%s" data-menu="%s" data-t="%s"></a>'
+                '<button type="button" class="nv-tg" aria-expanded="false" aria-controls="mg-%s"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>' % (href, sec, key, sec))
     def nv(sec, key, cards, allhref, gid=''):
         g = '<div class="mg-g"%s>%s</div>' % ((' id="%s"' % gid) if gid else '', cards)
-        return ('<div class="nv nv-mg" data-sec="%s"><button type="button" class="nv-t" aria-expanded="false" data-t="%s"></button>'
-                '<div class="nv-m"><div class="mg-in">%s<a class="mg-all" href="%s"><span data-t="mg_all"></span>%s</a></div></div></div>' % (sec, key, g, allhref, ARW))
+        return ('<div class="nv nv-mg" data-sec="%s">' % sec + head(sec, key, allhref)
+                + '<div class="nv-m" id="mg-%s"><div class="mg-in">%s<a class="mg-all" href="%s"><span data-t="mg_all"></span>%s</a></div></div></div>' % (sec, g, allhref, ARW))
     lk = lambda pairs: ''.join('<a class="mg-c" href="%s" data-mg="%s"><span class="mg-im" aria-hidden="true"></span><span class="mg-tx" data-t="%s"></span></a>' % (u, k, k) for u, k in pairs)
     # Revize 3: Kurumsal paneli görselli kart değil; iki sütun metin listesi (Biz · Medya) ve sağda tek büyük görsel.
     # Vizyon ve Misyon, Değerlerimiz menüde yok; Hakkımızda sayfasında bölüm olarak duruyor.
@@ -92,8 +97,8 @@ def revize1(h):
         col = lambda hk, pairs: '<div class="mg-col"><p class="mg-h" data-t="%s"></p>%s</div>' % (hk, ''.join('<a class="mg-l" href="%s" data-t="%s"></a>' % p for p in pairs))
         cols = (col('mg_biz', [('hakkimizda.html', 'nv_hak'), ('hakkimizda.html#is-ortaklari', 'nav_ort'), ('hakkimizda.html#kalite', 'nv_kal')])
                 + col('nav6', [('guncel.html#basinda-biz', 'nv_bas'), ('guncel.html#haberler', 'nv_hab'), ('guncel.html#videolar', 'nv_vid')]))
-        return ('<div class="nv nv-mg nv-kur" data-sec="kurumsal"><button type="button" class="nv-t" aria-expanded="false" data-t="n_kur"></button>'
-                '<div class="nv-m"><div class="mg-in mg-kur"><div class="mg-cols">%s</div>'
+        return ('<div class="nv nv-mg nv-kur" data-sec="kurumsal">' + head('kurumsal', 'n_kur', 'hakkimizda.html')
+                + '<div class="nv-m" id="mg-kurumsal"><div class="mg-in mg-kur"><div class="mg-cols">%s</div>'
                 '<a class="mg-fig" href="hakkimizda.html" tabindex="-1" aria-hidden="true"><span class="mg-im" data-mgk="kurumsal"></span></a>'
                 '<a class="mg-all" href="hakkimizda.html"><span data-t="mg_all"></span>%s</a></div></div></div>' % (cols, ARW))
     menu = ('<nav class="pub-nav" id="pubNav" aria-label="Menü">\n        <a class="nv-home" href="index.html" data-t="pg_home"></a>\n        '
@@ -106,6 +111,11 @@ def revize1(h):
             + '<button type="button" class="nv-sr2" data-srch><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg><span data-t="srch"></span></button>'
             + '\n        ')
     h = h[:a] + menu + h[b:]
+    # Revize 4: alt menüyü yalnızca ok düğmesi açar/kapatır; başlığa tıklamak sayfaya gider
+    h = _r1("$$('.nv-t').forEach(t=>t.addEventListener('click',e=>{const n=t.parentElement,o=!n.classList.contains('open');$$('.nv.open').forEach(x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');});",
+            "$$('.nv-tg').forEach(t=>t.addEventListener('click',e=>{const n=t.parentElement,o=!n.classList.contains('open');$$('.nv.open').forEach(x=>{x.classList.remove('open');const g=x.querySelector('.nv-tg');if(g)g.setAttribute('aria-expanded','false');});", h)
+    h = _r1("document.addEventListener('click',e=>{if(!e.target.closest('.nv'))$$('.nv.open').forEach(x=>{x.classList.remove('open');x.firstElementChild.setAttribute('aria-expanded','false');});});",
+            "document.addEventListener('click',e=>{if(!e.target.closest('.nv'))$$('.nv.open').forEach(x=>{x.classList.remove('open');const g=x.querySelector('.nv-tg');if(g)g.setAttribute('aria-expanded','false');});});", h)
     # arama düğmesi (masaüstünde dil seçicinin solunda, telefonda menü düğmesinin solunda)
     h = _r1('<button class="nv-burger" id="nvBurger"',
             '<button type="button" class="nv-srch" id="nvSrch" data-tl="srch"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg></button>\n      <button class="nv-burger" id="nvBurger"', h)

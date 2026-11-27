@@ -3558,3 +3558,29 @@ html body .site-top .nv-m a.mg-l:hover,html body .site-top .nv-m a.mg-l:focus-vi
 }
 /* açılış görseli: tablet ve telefonda video adı kontrollerin üstüne binmesin */
 @media (max-width:1100px){html body .vh .vh-cap{display:none!important}}
+
+/* =====================================================================
+   REVİZE 4 (27.11): menü başlığı bağlantı, ok ayrı düğme
+   Başlık bölümün ana sayfasına gider. Panel masaüstünde fareyle/klavyeyle (JS: .open), her ekranda ok düğmesiyle açılır.
+   ===================================================================== */
+html body .site-top .nv-t{text-decoration:none}
+html body .site-top .nv-t::after{display:none!important}
+.nv-tg{display:inline-grid;place-items:center;flex:none;padding:0;margin:0;border:0;background:none;color:inherit;cursor:pointer;border-radius:6px}
+.nv-tg svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--d2) var(--e2)}
+.nv.open>.nv-tg svg{transform:rotate(180deg)}
+@media (min-width:1101px){
+ html body .site-top .nv{gap:2px}
+ html body .site-top .nv-tg{width:22px;height:30px;color:#fff}
+ html body .site-top .nv-tg:hover,html body .site-top .nv.open>.nv-tg{color:var(--hdr-ac)}
+ html body .site-top .nv-tg:focus-visible{outline:2px solid var(--hdr-ac);outline-offset:1px}
+ html.nv-c4 body .site-top .nv-tg{width:16px}
+ /* panel yalnızca .open ile görünür (fare gecikmesi ve klavye JS'te) */
+ html body .site-top .nv:not(.open):hover>.nv-m,html body .site-top .nv:not(.open):focus-within>.nv-m{opacity:0!important;visibility:hidden!important;clip-path:inset(0 -80px 100% -80px)!important}
+}
+@media (max-width:1100px){
+ html body .site.nav-open .site-top .nv{display:grid;grid-template-columns:minmax(0,1fr) 48px;align-items:center}
+ html body .site.nav-open .site-top .nv>.nv-m{grid-column:1/-1}
+ html body .site.nav-open .site-top .nv-tg{width:48px;height:48px;color:var(--ink)}
+ html body .site.nav-open .site-top .nv.open>.nv-tg{color:var(--iris)}
+ .nv-tg svg{width:16px;height:16px}
+}
