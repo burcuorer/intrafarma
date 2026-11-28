@@ -399,7 +399,11 @@
     "hc3b": "Kullanım talimatları ve teknik dosyalar Pro alanında.",
     "al_pro_p": "Kullanım talimatları ve teknik dosyalar sağlık profesyoneli alanında.",
     "pr_t": "Bilgi talebi",
-    "rq_s3": "Ekibimiz sorunuza e-postayla dönüş yapar."
+    "rq_s3": "Ekibimiz sorunuza e-postayla dönüş yapar.",
+    "ex_h": "Eksozom nedir?",
+    "ex_p": "Gördüğünüz yapı bir hücre değil. Eksozom, hücrelerin salgıladığı 30–150 nm boyutunda, lipit zarlı bir keseciktir; hücreler arasında mesaj taşır.",
+    "ct_tip": "İpucu: Hücredeki 02 numaralı baloncuklara tıklayın; eksozomların nasıl oluştuğunu görün.",
+    "ct_tip_t": "İpucu: 02'ye dokunun; eksozomların nasıl oluştuğunu görün."
   },
   "en": {
     "draft": "Test version · text, figures and images are samples",
@@ -800,7 +804,11 @@
     "hc3b": "Instructions for use and technical files in the Pro area.",
     "al_pro_p": "Instructions for use and technical files are in the healthcare professional area.",
     "pr_t": "Information request",
-    "rq_s3": "Our team replies to your question by email."
+    "rq_s3": "Our team replies to your question by email.",
+    "ex_h": "What is an exosome?",
+    "ex_p": "What you see is not a cell. An exosome is a 30–150 nm lipid-membrane vesicle released by cells; it carries messages between cells.",
+    "ct_tip": "Tip: click the bubbles marked 02 to see how exosomes form.",
+    "ct_tip_t": "Tip: tap 02 to see how exosomes form."
   },
   "ar": {
     "draft": "نسخة تجريبية · النصوص والأرقام والصور للعرض فقط",
@@ -1190,7 +1198,11 @@
     "al_pro_p": "تعليمات الاستخدام والملفات الفنية متاحة في منطقة أخصائيي الرعاية الصحية.",
     "pr_t": "طلب معلومات",
     "rq_s3": "يرد فريقنا على استفسارك عبر البريد الإلكتروني.",
-    "nav_ur": "التصنيع لعلامتكم"
+    "nav_ur": "التصنيع لعلامتكم",
+    "ex_h": "ما هو الإكسوسوم؟",
+    "ex_p": "ما تراه ليس خلية. الإكسوسوم حويصلة ذات غشاء دهني بحجم 30–150 نانومتر تفرزها الخلايا، وتنقل الرسائل بين الخلايا.",
+    "ct_tip": "نصيحة: انقر على الفقاعات المرقّمة 02 لترى كيف تتكوّن الإكسوسومات.",
+    "ct_tip_t": "نصيحة: المس 02 لترى كيف تتكوّن الإكسوسومات."
   },
   "it": {
     "draft": "Versione di prova · testi, cifre e immagini sono esempi",
@@ -1580,7 +1592,11 @@
     "al_pro_p": "Istruzioni per l'uso e documentazione tecnica sono nell'area professionisti sanitari.",
     "pr_t": "Richiesta di informazioni",
     "rq_s3": "Il nostro team risponde alla tua domanda via email.",
-    "nav_ur": "Produzione per il vostro marchio"
+    "nav_ur": "Produzione per il vostro marchio",
+    "ex_h": "Che cos'è un esosoma?",
+    "ex_p": "Quella che vedi non è una cellula. L'esosoma è una vescicola a membrana lipidica di 30–150 nm rilasciata dalle cellule; trasporta messaggi tra le cellule.",
+    "ct_tip": "Suggerimento: fai clic sulle bolle con il numero 02 per vedere come si formano gli esosomi.",
+    "ct_tip_t": "Suggerimento: tocca 02 per vedere come si formano gli esosomi."
   },
   "ru": {
     "draft": "Тестовая версия · тексты, цифры и изображения — примеры",
@@ -1970,7 +1986,11 @@
     "al_pro_p": "Инструкции и техническая документация — в разделе для медицинских специалистов.",
     "pr_t": "Запрос информации",
     "rq_s3": "Наша команда ответит на ваш вопрос по электронной почте.",
-    "nav_ur": "Производство под ваш бренд"
+    "nav_ur": "Производство под ваш бренд",
+    "ex_h": "Что такое экзосома?",
+    "ex_p": "Это не клетка. Экзосома — пузырёк с липидной мембраной размером 30–150 нм, который выделяют клетки; она переносит сигналы между клетками.",
+    "ct_tip": "Подсказка: нажмите на пузырьки с номером 02, чтобы увидеть, как образуются экзосомы.",
+    "ct_tip_t": "Подсказка: нажмите 02, чтобы увидеть, как образуются экзосомы."
   },
   "es": {
     "pc_ey": "/ Pro · Productos",
@@ -2605,7 +2625,11 @@
     "vk_ey": "Kits premium",
     "vk_p": "Regenflex Kit, ArthroPlus Kit y PlusFlex Kit: una nueva serie premium con fórmulas sinérgicas para articulaciones, músculos y tendones.",
     "vk_cta": "Descubra los kits premium",
-    "v_cap5": "Productos · Kits premium"
+    "v_cap5": "Productos · Kits premium",
+    "ex_h": "¿Qué es un exosoma?",
+    "ex_p": "Lo que ve no es una célula. Un exosoma es una vesícula de membrana lipídica de 30–150 nm que liberan las células; transporta mensajes entre ellas.",
+    "ct_tip": "Consejo: haga clic en las burbujas marcadas con 02 para ver cómo se forman los exosomas.",
+    "ct_tip_t": "Consejo: toque 02 para ver cómo se forman los exosomas."
   },
   "fr": {
     "pc_ey": "/ Pro · Produits",
@@ -3240,6 +3264,10 @@
     "vk_ey": "Kits premium",
     "vk_p": "Regenflex Kit, ArthroPlus Kit et PlusFlex Kit : une nouvelle série premium aux formules synergiques pour les articulations, les muscles et les tendons.",
     "vk_cta": "Découvrir les kits premium",
-    "v_cap5": "Produits · Kits premium"
+    "v_cap5": "Produits · Kits premium",
+    "ex_h": "Qu'est-ce qu'un exosome ?",
+    "ex_p": "Ce que vous voyez n'est pas une cellule. Un exosome est une vésicule à membrane lipidique de 30 à 150 nm libérée par les cellules ; il transporte des messages entre elles.",
+    "ct_tip": "Astuce : cliquez sur les bulles marquées 02 pour voir comment se forment les exosomes.",
+    "ct_tip_t": "Astuce : touchez 02 pour voir comment se forment les exosomes."
   }
 }

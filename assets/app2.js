@@ -738,6 +738,29 @@ urBuild();
  if(P==='uzmanlik'){draw();IF.onLang.push(draw);}}
 
 
+/* Revize 8 · ana sayfa hücresi: etkileşim kaçırılmasın — "02 numaralı baloncuklar" (Golgi · eksozom) için minik yönerge.
+   Tıklanınca 02 açılır; 02 işareti ilk etkileşime kadar hafifçe nabız atar. */
+{const sec=$('#hucre'),cw=sec&&sec.querySelector('.cw');
+ if(cw){const touch=matchMedia('(hover: none)').matches,b=document.createElement('button');b.type='button';b.className='cell-tip';
+  const lab=()=>{b.innerHTML='<i aria-hidden="true"></i><span></span>';b.lastChild.textContent=tr(touch?'ct_tip_t':'ct_tip');};lab();IF.onLang.push(lab);
+  cw.parentNode.insertBefore(b,cw);document.documentElement.classList.add('tip-on');
+  const off=()=>document.documentElement.classList.remove('tip-on');
+  sec.addEventListener('click',e=>{if(e.target.closest('.mk,.oc-tabs button,.oc-c'))off();});
+  b.addEventListener('click',()=>{off();const t=sec.querySelector('.oc-tabs button[data-o="o_golgi"]'),m=sec.querySelector('.mk[data-o="o_golgi"]'),c=sec.querySelector('.oc-c[data-o="o_golgi"]');
+   if(t&&t.offsetParent)t.click();else if(m)m.click();if(c){c.focus({preventScroll:true});c.classList.add('tip-hit');setTimeout(()=>c.classList.remove('tip-hit'),2400);}
+   cw.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});}}
+
+/* Revize 8 · Pro: kürenin bir hücre değil eksozom olduğunu anlatan kısa not (bilgisayarda kürenin altında, telefonda metin panelinin başında) */
+{const pro=$('#pro'),hero=pro&&pro.querySelector('.pro-hero');
+ if(pro&&hero){const n=document.createElement('div');n.className='ex-cap';n.innerHTML='<b data-t="ex_h"></b><p data-t="ex_p"></p>';
+  const txt=()=>{n.firstChild.textContent=tr('ex_h');n.lastChild.textContent=tr('ex_p');};txt();IF.onLang.push(txt);
+  const put=()=>{const W=innerWidth,H=innerHeight;
+   if(W>900){if(n.parentNode!==pro)pro.appendChild(n);const R=Math.min(.23,.34*W/H)*H,rtl=document.documentElement.dir==='rtl';
+    n.classList.add('ex-abs');n.style.top=Math.round(.44*H+R+10)+'px';n.style.left=Math.round((rtl?.37:.63)*W)+'px';
+    /* alttaki kartlara binmesin */const cd=pro.querySelector('.pro-ui>.cards');if(cd){const ov=n.getBoundingClientRect().bottom-cd.getBoundingClientRect().top+8;if(ov>0)n.style.top=(parseFloat(n.style.top)-ov)+'px';}}
+   else{n.classList.remove('ex-abs');n.style.top=n.style.left='';const ey=hero.querySelector('.eyebrow');if(n.nextSibling!==ey||n.parentNode!==(ey||hero).parentNode)(ey?ey.parentNode:hero).insertBefore(n,ey||hero.firstChild);}};
+  put();addEventListener('resize',put);IF.onLang.push(put);new MutationObserver(()=>requestAnimationFrame(put)).observe(pro,{attributes:true,attributeFilter:['hidden','class']});}}
+
 labels();
 })();
 
