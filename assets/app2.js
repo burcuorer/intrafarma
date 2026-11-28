@@ -738,17 +738,17 @@ urBuild();
  if(P==='uzmanlik'){draw();IF.onLang.push(draw);}}
 
 
-/* Revize 8 · ana sayfa hücresi: etkileşim kaçırılmasın — "02 numaralı baloncuklar" (Golgi · eksozom) için minik yönerge.
-   Tıklanınca 02 açılır; 02 işareti ilk etkileşime kadar hafifçe nabız atar. */
+/* Revize 8 · ana sayfa hücresi: etkileşim kaçırılmasın — hücreye tıklayınca eksozom kopar, eksozoma tıklayınca büyüteç açılır.
+   Yönergeye tıklanınca bir eksozom salgılatılır; "Eksozom salgılat" düğmesi ilk eksozom açılana kadar hafifçe nabız atar. */
 {const sec=$('#hucre'),cw=sec&&sec.querySelector('.cw');
  if(cw){const touch=matchMedia('(hover: none)').matches,b=document.createElement('button');b.type='button';b.className='cell-tip';
   const lab=()=>{b.innerHTML='<i aria-hidden="true"></i><span></span>';b.lastChild.textContent=tr(touch?'ct_tip_t':'ct_tip');};lab();IF.onLang.push(lab);
   cw.parentNode.insertBefore(b,cw);document.documentElement.classList.add('tip-on');
-  const off=()=>document.documentElement.classList.remove('tip-on');
-  sec.addEventListener('click',e=>{if(e.target.closest('.mk,.oc-tabs button,.oc-c'))off();});
-  b.addEventListener('click',()=>{off();const t=sec.querySelector('.oc-tabs button[data-o="o_golgi"]'),m=sec.querySelector('.mk[data-o="o_golgi"]'),c=sec.querySelector('.oc-c[data-o="o_golgi"]');
-   if(t&&t.offsetParent)t.click();else if(m)m.click();if(c){c.focus({preventScroll:true});c.classList.add('tip-hit');setTimeout(()=>c.classList.remove('tip-hit'),2400);}
-   cw.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});}}
+  const st=$('#stage'),off=()=>document.documentElement.classList.remove('tip-on');
+  if(st)new MutationObserver(()=>{if(st.classList.contains('x-open'))off();}).observe(st,{attributes:true,attributeFilter:['class']});
+  b.addEventListener('click',()=>{const e=$('#tourBtn'),p=sec.querySelector('.cell-poster button');
+   cw.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+   if(p&&p.offsetParent)p.click();else if(e)e.click();});}}
 
 /* Revize 8 · Pro: kürenin bir hücre değil eksozom olduğunu anlatan kısa not (bilgisayarda kürenin altında, telefonda metin panelinin başında) */
 {const pro=$('#pro'),hero=pro&&pro.querySelector('.pro-hero');
