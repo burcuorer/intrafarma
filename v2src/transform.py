@@ -479,5 +479,6 @@ for _a, _b in _POST:
 exec(io.open(os.path.join(HERE, 'revize1.py'), encoding='utf-8').read()); _h = revize1(_h)
 exec(io.open(os.path.join(HERE, 'revize7.py'), encoding='utf-8').read()); _h = revize7(_h)  # Revize 7 (28.11.2026)
 exec(io.open(os.path.join(HERE, 'revize8.py'), encoding='utf-8').read()); _h = revize8(_h)  # Revize 8 (28.11.2026): eksozom hücresi
+exec(io.open(os.path.join(HERE, 'revize9.py'), encoding='utf-8').read()); _h = revize9(_h)  # Revize 9 (28.11.2026): video alt yazıları, ürünler başlığı şerit
 io.open(_ap, 'w', encoding='utf-8').write(_h)
 print('app.html yazıldı', len(s), '|', '; '.join(LOG))

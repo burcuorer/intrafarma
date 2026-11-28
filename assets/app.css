@@ -3776,3 +3776,7 @@ html.c3:not(.stage-full) #stage .lens{display:none!important}
 html[dir=rtl] .x-x{right:auto;left:10px}
 html[dir=rtl] .x-info h3{margin:0 0 4px 40px}
 @media (max-width:760px){.x-info{left:10px;right:10px;bottom:10px;top:auto;width:auto}.x-cargo{display:flex}}
+
+/* Revize 9 */
+.vh .vh-cap{display:none!important}
+.pg-loop{overflow:hidden;clip-path:inset(0)}
