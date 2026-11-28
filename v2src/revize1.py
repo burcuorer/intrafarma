@@ -73,7 +73,7 @@ def revize1(h):
     h, n1 = _re.subn(r">0'\+\(([\w.]+)\+1\)", r">'+String(\1+1).padStart(2,'0')", h)
     h, n2 = _re.subn(r"'0'\+\(([\w.]+)\+1\)", r"String(\1+1).padStart(2,'0')", h)
     h = _r1("const SEC={uzmanlik:'urunler',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'kurumsal',iletisim:'iletisim'}",
-            "const SEC={uzmanlik:'uzmanlik',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'kurumsal',iletisim:'iletisim'}", h)
+            "const SEC={uzmanlik:'uzmanlik',urunler:'urunler',uretim:'uretim',hakkimizda:'kurumsal',bilim:'bilim',guncel:'iletisim',iletisim:'iletisim'}", h)  # Revize 7: Medya Merkezi İletişim altında
 
     # ---------- 2) üst menü ----------
     a = h.index('<nav class="pub-nav" id="pubNav" aria-label="Menü">')
@@ -95,19 +95,30 @@ def revize1(h):
     # Vizyon ve Misyon, Değerlerimiz menüde yok; Hakkımızda sayfasında bölüm olarak duruyor.
     def kur():
         col = lambda hk, pairs: '<div class="mg-col"><p class="mg-h" data-t="%s"></p>%s</div>' % (hk, ''.join('<a class="mg-l" href="%s" data-t="%s"></a>' % p for p in pairs))
-        cols = (col('mg_biz', [('hakkimizda.html', 'nv_hak'), ('hakkimizda.html#is-ortaklari', 'nav_ort'), ('hakkimizda.html#kalite', 'nv_kal')])
-                + col('nav6', [('guncel.html#basinda-biz', 'nv_bas'), ('guncel.html#haberler', 'nv_hab'), ('guncel.html#videolar', 'nv_vid')]))
+        # Revize 7: Kurumsal tek liste (Hakkımızda sayfasının bölümleri); Medya İletişim › Medya Merkezi'ne taşındı
+        cols = '<div class="mg-col">%s</div>' % ''.join('<a class="mg-l" href="%s" data-t="%s"></a>' % p for p in [
+            ('hakkimizda.html', 'nv_hak'), ('hakkimizda.html#vizyon', 'nv_viz'), ('hakkimizda.html#degerler', 'nv_deg'),
+            ('hakkimizda.html#is-ortaklari', 'nav_ort'), ('hakkimizda.html#kalite', 'nv_kal')])
         return ('<div class="nv nv-mg nv-kur" data-sec="kurumsal">' + head('kurumsal', 'n_kur', 'hakkimizda.html')
-                + '<div class="nv-m" id="mg-kurumsal"><div class="mg-in mg-kur"><div class="mg-cols">%s</div>'
+                + '<div class="nv-m" id="mg-kurumsal"><div class="mg-in mg-kur mg-k1"><div class="mg-cols">%s</div>'
                 '<a class="mg-fig" href="hakkimizda.html" tabindex="-1" aria-hidden="true"><span class="mg-im" data-mgk="kurumsal"></span></a>'
                 '<a class="mg-all" href="hakkimizda.html"><span data-t="mg_all"></span>%s</a></div></div></div>' % (cols, ARW))
+    # Revize 7: İletişim alt menülü; ikinci sütun Medya Merkezi (Basında Biz, Haberler, Videolar). Sayfa adresleri aynı.
+    def ilt():
+        cl = lambda pairs: ''.join('<a class="mg-l" href="%s" data-t="%s"></a>' % p for p in pairs)
+        cols = ('<div class="mg-col">' + cl([('iletisim.html', 'nv_bize'), ('iletisim.html#form', 'nv_talep'), ('iletisim.html#bayilik', 'nv_bay'), ('iletisim.html#yan-etki', 'nv_ae')]) + '</div>'
+                + '<div class="mg-col"><a class="mg-h" href="guncel.html" data-t="nv_medya"></a>' + cl([('guncel.html#basinda-biz', 'nv_bas'), ('guncel.html#haberler', 'nv_hab'), ('guncel.html#videolar', 'nv_vid')]) + '</div>')
+        return ('<div class="nv nv-mg nv-kur nv-ct" data-sec="iletisim">' + head('iletisim', 'nav5', 'iletisim.html')
+                + '<div class="nv-m" id="mg-iletisim"><div class="mg-in mg-kur mg-ilt"><div class="mg-cols">%s</div>'
+                '<a class="mg-fig" href="iletisim.html" tabindex="-1" aria-hidden="true"><span class="mg-im" data-mgk="iletisim"></span></a>'
+                '<a class="mg-all" href="iletisim.html"><span data-t="mg_all"></span>%s</a></div></div></div>' % (cols, ARW))
     menu = ('<nav class="pub-nav" id="pubNav" aria-label="Menü">\n        <a class="nv-home" href="index.html" data-t="pg_home"></a>\n        '
             + kur()
             + nv('uzmanlik', 'n_uzm', '', 'uzmanlik.html', 'nvUa')
             + nv('urunler', 'nav3', '', 'urunler.html', 'nvHp')
             + nv('bilim', 'n_bil', lk([('bilim.html#kurul', 'nav_kurul'), ('bilim.html#yayinlar', 'nv_yay'), ('bilim.html#sss', 'ft_sss')]), 'bilim.html')
-            + nv('uretim', 'nav_ozel', lk([('uretim.html#gelistirme', 'nv_urg'), ('uretim.html#surec', 'nv_urs'), ('uretim.html#isbirligi', 'nv_isb')]), 'uretim.html')
-            + '<a class="nv-a nv-ct" href="iletisim.html" data-sec="iletisim" data-t="nav5"></a>'
+            + nv('uretim', 'nav_ozel', lk([('uretim.html#gelistirme', 'nv_ozc'), ('uretim.html#isbirligi', 'nv_ilk')]), 'uretim.html')
+            + ilt()
             + '<button type="button" class="nv-sr2" data-srch><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg><span data-t="srch"></span></button>'
             + '\n        ')
     h = h[:a] + menu + h[b:]
@@ -175,7 +186,7 @@ def revize1(h):
     blk = ('<section class="hs hk-how band tint al-how" aria-labelledby="alHowH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="hk_how_ey"></p><h2 id="alHowH" data-t="hk_how_h"></h2></div>'
            '<ol class="hk-steps">' + ''.join('<li data-rv="up"><i>0%d</i><h3 data-t="hk_s%d"></h3><p data-t="hk_s%dp"></p></li>' % (i, i, i) for i in range(1, 5)) + '</ol></section>'
            '<section class="hs fq al-fq" aria-labelledby="alFqH"><div class="hs-h" data-rv="rise"><p class="eyebrow" data-t="fq_ey"></p><h2 id="alFqH" data-t="ft_sss"></h2></div><div class="fq-l">'
-           + ''.join('<details><summary data-t="fq%d"></summary><p data-t="fq_a"></p></details>' % i for i in (1, 3, 4)) + '</div></section>'
+           + ''.join('<details><summary data-t="fq%d"></summary><p data-t="fq_a"></p></details>' % i for i in (1, 4)) + '</div></section>'
            '<section class="hs al-end" aria-labelledby="alEndH"><div class="al-end-in" data-rv="up"><div><h2 id="alEndH" data-t="al_pro"></h2><p data-t="al_pro_p"></p></div>'
            '<button class="b-pri" type="button" data-gate><span data-t="cta1"></span><span class="o"></span></button></div></section>')
     h = h[:b] + blk + h[b:]

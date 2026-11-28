@@ -1,12 +1,13 @@
 <?php
 /**
- * Talepler: numune, belge, fiyat teklifi ve bilgi istekleri.
+ * Talepler: belge ve bilgi istekleri, iş ortaklığı ve iş birliği başvuruları, yan etki bildirimleri.
+ * Revize 7: numune ve fiyat teklifi talebi kaldırıldı.
  * Site formu -> WordPress'e kaydedilir -> paneldeki adres(ler)e e-posta gider -> firma elle yanıtlar.
  * Otomatik belge gönderimi yoktur; belgeyi indirilebilir yapmak için ürüne PDF yüklemek yeterlidir.
  */
 if (!defined('ABSPATH')) { exit; }
 
-define('INTRAFARMA_TALEP_TUR', array('numune' => 'Numune', 'belge' => 'Belge', 'teklif' => 'Fiyat teklifi', 'bilgi' => 'Bilgi', 'bayilik' => 'Bayilik başvurusu', 'isbirligi' => 'İş birliği başvurusu', 'yanetki' => 'Yan etki bildirimi'));
+define('INTRAFARMA_TALEP_TUR', array('belge' => 'Belge', 'bilgi' => 'Bilgi', 'bayilik' => 'İş ortaklığı talebi', 'isbirligi' => 'İş birliği başvurusu', 'yanetki' => 'Yan etki bildirimi'));
 
 add_action('init', function () {
     register_post_type('if_talep', array(
@@ -75,7 +76,7 @@ add_action('admin_menu', function () {
 }, 20);
 
 function intrafarma_admin_talep() {
-    intrafarma_admin_head('Talepler', 'Sitedeki numune, belge, fiyat teklifi ve bilgi talepleri ile bayilik ve iş birliği başvuruları. Her talep aşağıdaki adreslere e-postayla da gelir; yanıtı siz elle gönderirsiniz. Yanıtladığınız talebi “Yanıtlandı” olarak işaretleyin.');
+    intrafarma_admin_head('Talepler', 'Sitedeki belge ve bilgi talepleri ile iş ortaklığı ve iş birliği başvuruları. Her talep aşağıdaki adreslere e-postayla da gelir; yanıtı siz elle gönderirsiniz. Yanıtladığınız talebi “Yanıtlandı” olarak işaretleyin.');
     echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '" class="if-form">';
     wp_nonce_field('intrafarma_save_talep_set');
     echo '<input type="hidden" name="action" value="intrafarma_save_talep_set"><table class="form-table"><tbody><tr><th><label for="if_te">Taleplerin gideceği e-posta</label></th><td><input id="if_te" type="text" class="large-text" name="talep_eposta" value="' . esc_attr((string) get_option('intrafarma_talep_eposta', '')) . '" placeholder="' . esc_attr(implode(', ', intrafarma_talep_alicilar())) . '"><p class="description">Birden çok adres için virgülle ayırın. Boşsa İletişim ekranındaki e-posta kullanılır. Şu an: <b>' . esc_html(implode(', ', intrafarma_talep_alicilar())) . '</b></p></td></tr></tbody></table><p><button class="button button-primary">Adresi kaydet</button></p></form>';

@@ -477,5 +477,6 @@ for _a, _b in _POST:
     if _h.count(_a) != 1: sys.exit('SON EK EŞLEŞMEDİ (' + str(_h.count(_a)) + '): ' + _a)
     _h = _h.replace(_a, _b)
 exec(io.open(os.path.join(HERE, 'revize1.py'), encoding='utf-8').read()); _h = revize1(_h)
+exec(io.open(os.path.join(HERE, 'revize7.py'), encoding='utf-8').read()); _h = revize7(_h)  # Revize 7 (28.11.2026)
 io.open(_ap, 'w', encoding='utf-8').write(_h)
 print('app.html yazıldı', len(s), '|', '; '.join(LOG))

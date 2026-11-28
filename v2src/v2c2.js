@@ -18,10 +18,12 @@ function v2route(){
 }
 
 /* ---- ürünler sayfası: eksen, klinik alan ve arama; ürün ayrıntısı aynı sayfada, her durumun kendi adresi var ---- */
-const UC={ax:-1,ca:-1,q:'',urun:-1};
-function ucRead(){const q=new URLSearchParams(location.search),PR=D2().PRODS;UC.ax=IFU.AXS.indexOf(q.get('eksen')||'');UC.ca=IFU.AL.indexOf(q.get('alan')||'');const u=q.get('urun');UC.urun=u?PR.findIndex(p=>IFU.slug(p.n)===u):-1;}
-function ucHref(o){const s=Object.assign({ax:UC.ax,ca:UC.ca,urun:-1},o||{}),q=new URLSearchParams();
- if(s.urun>=0)q.set('urun',IFU.slug(D2().PRODS[s.urun].n));else{if(s.ax>=0)q.set('eksen',IFU.AXS[s.ax]);if(s.ca>=0)q.set('alan',IFU.AL[s.ca]);}
+const UC={ax:-1,ca:-1,q:'',urun:-1,s:''};
+/* Revize 7: alt kategori (?alt=kas-iskelet-sistemi); eski "genital-estetik" grubu Hyaluronik Asitler › Genital Estetik'e gider */
+const SUBS=()=>(D2()&&D2().AXSUB)||{},subOf=ax=>Object.keys(SUBS()).filter(k=>SUBS()[k][0]===ax);
+function ucRead(){const q=new URLSearchParams(location.search),PR=D2().PRODS;let ek=q.get('eksen')||'',al=q.get('alt')||'';if(ek==='genital-estetik'){ek=IFU.AXS[2];al='genital-estetik';}UC.ax=IFU.AXS.indexOf(ek);UC.s=UC.ax>=0&&SUBS()[al]&&SUBS()[al][0]===UC.ax?al:'';UC.ca=IFU.AL.indexOf(q.get('alan')||'');const u=q.get('urun');UC.urun=u?PR.findIndex(p=>IFU.slug(p.n)===u):-1;}
+function ucHref(o){o=o||{};const s=Object.assign({ax:UC.ax,ca:UC.ca,urun:-1,s:('ax' in o)?'':UC.s},o),q=new URLSearchParams();
+ if(s.urun>=0)q.set('urun',IFU.slug(D2().PRODS[s.urun].n));else{if(s.ax>=0)q.set('eksen',IFU.AXS[s.ax]);if(s.ax>=0&&s.s)q.set('alt',s.s);if(s.ca>=0)q.set('alan',IFU.AL[s.ca]);}
  const qo={};q.forEach((v,k)=>{qo[k]=v;});return IFU.q(IFU.U.urunler,qo);}
 function ucCard(p,i,L,AX){const AXC=IF.AXC||[],open=!!p.open;
  const art=p.img?'<span class="uc-art" aria-hidden="true"><img class="uc-ci" src="'+esc2(p.img)+'" alt="" loading="lazy" decoding="async"></span>'
@@ -33,22 +35,28 @@ function renderUC(){
  if(P!=='urunler')return;
  const L=IF.lang||'tr',D=D2(),AX=D.AX[L]||D.AX.en,CA=D.CA[L]||D.CA.en,PR=D.PRODS,AXC=IF.AXC||[];
  const det=UC.urun>=0;
- $('#ucBar').hidden=det;$('#ucCa').hidden=det;$('#ucN').hidden=det;$('#ucG').hidden=det;$('#ucD').hidden=!det;
+ $('#ucBar').hidden=det;{const s=$('#ucSub');if(s&&det)s.hidden=true;}$('#ucCa').hidden=det;$('#ucN').hidden=det;$('#ucG').hidden=det;$('#ucD').hidden=!det;
  const h=$('#ucH'),ey=$('#ucEy'),pp=$('#ucP');
- if(det){const p=PR[UC.urun];h.textContent=p.n;ey.textContent='/ '+AX[p.a];const ds=p.d&&(p.d[L]||p.d.en||p.d.tr);pp.textContent=ds||tr('d_lede').replace('{n}',p.n).replace('{a}',AX[p.a]);}
+ if(det){const p=PR[UC.urun];h.textContent=p.n;ey.textContent='/ '+AX[p.a]+(p.s&&SUBS()[p.s]?' › '+tr(SUBS()[p.s][1]):'');const ds=p.d&&(p.d[L]||p.d.en||p.d.tr);pp.textContent=ds||tr('d_lede').replace('{n}',p.n).replace('{a}',AX[p.a]);}
  else{h.textContent=UC.ax>=0?AX[UC.ax]:tr('nav3');ey.textContent=tr('hp_ey');const axp=UC.ax>=0?tr('ax_p'+UC.ax):'';pp.textContent=axp&&axp!=='ax_p'+UC.ax?axp:tr('uc_p');}
  if(!det){
   const ax=$('#ucAx');ax.innerHTML='';
   const chip=(label,href,on,cls)=>{const a=document.createElement('a');a.href=href;a.className='chip'+(cls?' '+cls:'');a.textContent=label;if(on)a.setAttribute('aria-current','true');return a;};
   ax.appendChild(chip(tr('cat_all'),ucHref({ax:-1}),UC.ax<0));
   AX.forEach((n,i)=>ax.appendChild(chip(n,ucHref({ax:i}),UC.ax===i)));
+  {let sb=$('#ucSub');const ks=UC.ax>=0?subOf(UC.ax):[];if(!sb){sb=document.createElement('div');sb.id='ucSub';sb.className='uc-sub';$('#ucBar').after(sb);}sb.hidden=ks.length<2;sb.innerHTML='';
+   if(ks.length>1){sb.appendChild(chip(tr('cat_all'),ucHref({ax:UC.ax,s:''}),!UC.s,'sm'));ks.forEach(k=>sb.appendChild(chip(tr(SUBS()[k][1]),ucHref({ax:UC.ax,s:k}),UC.s===k,'sm')));}}
   const ca=$('#ucCa');ca.innerHTML='<span class="lab">'+esc2(tr('cat_ca'))+'</span>';
   ca.appendChild(chip(tr('cat_all'),ucHref({ca:-1}),UC.ca<0,'sm'));
   CA.forEach((n,i)=>ca.appendChild(chip(n,ucHref({ca:i}),UC.ca===i,'sm')));
   const q=UC.q.trim().toLocaleLowerCase(L);
   const list=PR.map((p,i)=>({p,i})).filter(({p})=>(UC.ax<0||p.a===UC.ax)&&(UC.ca<0||pCA(p).includes(UC.ca))&&(!q||p.n.toLocaleLowerCase(L).includes(q)));
   $('#ucN').textContent=tr('cat_n').replace('{n}',list.length);
-  $('#ucG').innerHTML=list.length?list.map(({p,i})=>ucCard(p,i,L,AX)).join(''):'<div class="uc-empty"><p>'+esc2(tr('cat_empty'))+'</p><a class="b-sec" href="'+IFU.U.urunler+'">'+esc2(tr('all_prods'))+'</a></div>';
+  /* grup seçiliyse alt kategoriler başlıkla: önce alt kategorisi olmayanlar, sonra her alt kategori */
+  const ks=UC.ax>=0&&!q?subOf(UC.ax):[],grp=ks.length&&list.some(o=>o.p.s);
+  $('#ucG').classList.toggle('uc-grp',!!grp);
+  $('#ucG').innerHTML=!list.length?'':grp?[''].concat(ks).map(k=>{const L2=list.filter(o=>(o.p.s||'')===k&&(!k||o.p.a===UC.ax));if(!k&&UC.ax>=0)L2.push(...list.filter(o=>o.p.a!==UC.ax&&!L2.includes(o)));return L2.length?(k?'<h2 class="uc-sh">'+esc2(tr(SUBS()[k][1]))+'</h2>':'')+'<div class="uc-gg">'+L2.map(({p,i})=>ucCard(p,i,L,AX)).join('')+'</div>':'';}).join(''):list.map(({p,i})=>ucCard(p,i,L,AX)).join('');
+  if(!list.length)$('#ucG').innerHTML='<div class="uc-empty"><p>'+esc2(tr('cat_empty'))+'</p><a class="b-sec" href="'+IFU.U.urunler+'">'+esc2(tr('all_prods'))+'</a></div>';
  }else{
   const p=PR[UC.urun],axn=AX[p.a],open=!!p.open;
   const areas=pCA(p).map(i=>'<a href="'+IFU.alan(i)+'">'+esc2(CA[i])+'</a>').join('');
@@ -335,7 +343,7 @@ if(matchMedia('(max-width:640px)').matches){addEventListener('scroll',()=>{const
 {const F=$('section.hp .hp-f');if(F&&window.IFD){const K=IFD.PRODS.filter(p=>p.pr&&p.img);let cur=0,tm=null;
  if(K.length){F.classList.add('kb-on');F.setAttribute('aria-live','polite');
  const draw=()=>{const L=IF.lang||'tr',ey=tr('kb_ey').replace(/^\/\s*/,'');
-  F.innerHTML=K.map((p,i)=>'<a class="kb-c'+(i===cur?' on':'')+'" href="'+esc2(IFU.prod(p))+'"'+(i===cur?'':' tabindex="-1" aria-hidden="true"')+'><img src="'+esc2(p.img)+'" alt="" decoding="async"'+(i?' loading="lazy"':'')+'><span class="kb-tx"><small>'+esc2(ey)+'</small><b>'+esc2(p.n)+'</b><span class="kb-go">'+esc2(tr('kb_go'))+' →</span></span></a>').join('')+(K.length>1?'<div class="kb-dots" role="group">'+K.map((p,i)=>'<button type="button" aria-label="'+esc2(p.n)+'" aria-pressed="'+(i===cur)+'"></button>').join('')+'</div>':'');
+  F.innerHTML=K.map((p,i)=>'<a class="kb-c'+(i===cur?' on':'')+'" href="'+esc2(IFU.prod(p))+'"'+(i===cur?'':' tabindex="-1" aria-hidden="true"')+'><img src="'+esc2(p.img)+'" alt="" decoding="async"'+(i?' loading="lazy"':'')+'><span class="kb-tx"><small>'+esc2(ey)+'</small><b>'+esc2(p.n)+'</b><span class="kb-go">'+esc2(tr('kb_go'))+' →</span></span></a>').join('')+'<p class="kb-sl" data-t="kb_slogan">'+esc2(tr('kb_slogan'))+'</p>'+(K.length>1?'<div class="kb-dots" role="group">'+K.map((p,i)=>'<button type="button" aria-label="'+esc2(p.n)+'" aria-pressed="'+(i===cur)+'"></button>').join('')+'</div>':'');
   F.querySelectorAll('.kb-dots button').forEach((b,i)=>b.addEventListener('click',e=>{e.preventDefault();go(i);stop();}));};
  const go=i=>{cur=(i+K.length)%K.length;F.querySelectorAll('.kb-c').forEach((c,j)=>{const on=j===cur;c.classList.toggle('on',on);if(on){c.removeAttribute('tabindex');c.removeAttribute('aria-hidden');}else{c.setAttribute('tabindex','-1');c.setAttribute('aria-hidden','true');}});F.querySelectorAll('.kb-dots button').forEach((b,j)=>b.setAttribute('aria-pressed',j===cur));};
  const play=()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches||K.length<2||tm)return;tm=setInterval(()=>go(cur+1),5200);};
@@ -435,8 +443,8 @@ soonCards();
  IF.onLang.push(()=>{nb.setAttribute('aria-label',tr('mb_lab'));nb.querySelectorAll('[data-t]').forEach(e=>e.textContent=tr(e.dataset.t));});}
 /* Revize 2 · mega menü: her başlık tam genişlikte, yukarıdan açılan panel; alt öğeler görselli kart.
    Görseli olmayan kart nötr yer tutucuyla görünür (gerçek fotoğraf gelince MG_IMG'ye ya da panelden IF_CMS.orn.menu'ya eklenir). */
-{const MG_IMG={nv_urg:'genis/regenyal-laboratuvar.webp',nv_urs:'genis/hero-uretim.webp',kurumsal:'genis/hero-uretim.webp'};
- const MG_MAX=5,MG_AX=[0,1,2,5];/* öne çıkan ürün grupları: Hücresel Tedaviler, Kök Hücre ve Eksozom Kitleri, Hyaluronik Asitler, PRP Kitleri */
+{const MG_IMG={nv_urg:'genis/regenyal-laboratuvar.webp',nv_urs:'genis/hero-uretim.webp',nv_ozc:'genis/regenyal-laboratuvar.webp',nv_ilk:'genis/hero-uretim.webp',kurumsal:'genis/hero-uretim.webp',iletisim:'genis/regenyal-equipe.webp'};
+
  const B=()=>window.IF_BASE||'',mgO=()=>(window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.menu)||{};
  const im=(s,u,fit)=>{s.classList.toggle('mg-ph',!u);s.classList.toggle('mg-fit',!!(u&&fit));s.innerHTML=u?'<img src="'+esc2(u)+'" alt="" loading="lazy" decoding="async">':'';
   const g=s.firstChild;if(g)g.addEventListener('error',()=>{g.remove();s.classList.remove('mg-fit');s.classList.add('mg-ph');},{once:true});};
@@ -445,19 +453,38 @@ soonCards();
  function megaBuild(){const D=window.IFD;if(!D)return;const L=IF.lang||'tr',O=mgO();
   $$('.mg-c[data-mg]').forEach(a=>{const k=a.dataset.mg,u=O[k]||(MG_IMG[k]?B()+'media/'+MG_IMG[k]:''),s=a.querySelector('.mg-im');if(s&&s.dataset.u!==u){s.dataset.u=u;im(s,u);}});
   $$('.mg-im[data-mgk]').forEach(s=>{const k=s.dataset.mgk,u=O[k]||(MG_IMG[k]?B()+'media/'+MG_IMG[k]:'');if(s.dataset.u!==u){s.dataset.u=u;im(s,u);}});
-  /* Revize 3: her panel tek sıra, en fazla 5 kart. Uzmanlık: ilk 5 alan (Diğer Alanlar "Tümünü Görüntüle" altında); kart görseli alanın başlık fotoğrafının kare kırpımı */
-  if(ua){const CA=D.CA[L]||D.CA.en;ua.replaceChildren(...CA.slice(0,MG_MAX).map((n,i)=>card(IFU.alan(i),n,(Array.isArray(O.alanKart)&&O.alanKart[i])||(UA_IMG[i]?B()+'media/alan/'+UA_IMG[i]+'.webp':''))));}
-  /* Ürünler: menüde görünecek gruplar (WordPress'te grup başına "Menüde göster" → IF_CMS.menuAx) */
-  if(hp){const AX=D.AX[L]||D.AX.en,S=(window.IF_CMS&&Array.isArray(IF_CMS.menuAx)&&IF_CMS.menuAx.length?IF_CMS.menuAx:MG_AX).map(Number).filter(i=>i>=0&&i<AX.length).slice(0,MG_MAX);
-   hp.replaceChildren(...S.map(i=>{const G=(D.PRODS||[]).filter(q=>q.a===i&&q.img),p=G.find(q=>!/^(https?:)?\/\//.test(q.img))||G[0];return card(IFU.ax(i),AX[i],p?p.img:'',1);}));}}
+  /* Revize 7 · Klinik Alanlar: 8 alan tek sırada, ikon + iki satırlı başlık (fotoğrafsız) */
+  if(ua){const CA=D.CA[L]||D.CA.en,C2=(D.CA2||{})[L]||(D.CA2||{}).en||[],IC=typeof UA_IC!=='undefined'?UA_IC:[];
+   ua.replaceChildren(...CA.map((n,i)=>{const a=document.createElement('a');a.className='mg-c mg-ic';a.href=IFU.alan(i);
+    a.innerHTML='<span class="mg-icb" aria-hidden="true"><svg viewBox="0 0 24 24">'+(IC[i]||'')+'</svg></span><span class="mg-tx"><b></b><small></small></span>';
+    a.querySelector('b').textContent=n;const sm=a.querySelector('small');if(C2[i]&&i<CA.length-1)sm.textContent=C2[i];else sm.remove();return a;}));}
+  /* Revize 7 · Ürünler: solda 9 grubun listesi (Hyaluronik Asitler'in üzerine gelince yanda alt kategoriler; telefonda dokununca alt alta),
+     yanda premium kitler. WordPress: grup adları ve alt kategoriler Ürünler panelinden, premium işareti üründen. */
+  if(hp){const AX=D.AX[L]||D.AX.en,SB=D.AXSUB||{},PR=(D.PRODS||[]).filter(p=>p.pr);
+   const lst=document.createElement('ul');lst.className='mg-gl';
+   AX.forEach((n,i)=>{const ks=Object.keys(SB).filter(k=>SB[k][0]===i),li=document.createElement('li'),a=document.createElement('a');a.className='mg-gi';a.href=IFU.ax(i);
+    a.innerHTML='<i>'+String(i+1).padStart(2,'0')+'</i><span></span>';a.querySelector('span').textContent=n;li.appendChild(a);
+    if(ks.length>1){li.classList.add('has-sub');const b=document.createElement('button');b.type='button';b.className='mg-sbt';b.setAttribute('aria-expanded','false');b.setAttribute('aria-label',tr('mg_open')+': '+n);
+     b.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>';li.appendChild(b);
+     const ul=document.createElement('ul');ul.className='mg-sub';ks.forEach(k=>{const l2=document.createElement('li'),s2=document.createElement('a');s2.href=IFU.q(IFU.U.urunler,{eksen:IFU.AXS[i],alt:k});s2.textContent=tr(SB[k][1]);l2.appendChild(s2);ul.appendChild(l2);});li.appendChild(ul);
+     const tog=o=>{li.classList.toggle('sub-open',o);b.setAttribute('aria-expanded',String(o));};
+     b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();tog(!li.classList.contains('sub-open'));});
+     li.addEventListener('mouseenter',()=>{if(hov.matches&&innerWidth>1100)tog(true);});li.addEventListener('mouseleave',()=>{if(hov.matches&&innerWidth>1100)tog(false);});
+     li.addEventListener('focusin',e=>{if(innerWidth>1100&&e.target.matches(':focus-visible'))tog(true);});li.addEventListener('focusout',e=>{if(!li.contains(e.relatedTarget))tog(false);});}
+    lst.appendChild(li);});
+   const kids=[lst];
+   if(PR.length){const pw=document.createElement('div');pw.className='mg-pk';pw.innerHTML='<p class="mg-h"></p><div class="mg-pkg"></div>';pw.firstChild.textContent=tr('mg_prem');
+    PR.slice(0,3).forEach(p=>pw.lastChild.appendChild(card(IFU.prod(p),p.n,p.img||'',1)));kids.push(pw);}
+   hp.replaceChildren(...kids);}}
  /* eski çizim (düz bağlantılar) araya girerse kartlara geri dön */
- [ua,hp].forEach(el=>{if(el)new MutationObserver(()=>{if([...el.children].some(c=>!c.classList.contains('mg-c')))megaBuild();}).observe(el,{childList:true});});
+ [ua,hp].forEach(el=>{if(el)new MutationObserver(()=>{if([...el.children].some(c=>!c.classList.contains('mg-c')&&!c.classList.contains('mg-gl')&&!c.classList.contains('mg-pk')))megaBuild();}).observe(el,{childList:true});});
+ const hov=matchMedia('(hover:hover) and (pointer:fine)');
  megaBuild();IF.onLang.push(()=>setTimeout(megaBuild,0));
  /* Revize 4: başlık bağlantısı bölümün sayfasına gider; panel masaüstünde fareyle (kısa gecikmeyle) ve klavye odağıyla açılır,
     ok düğmesi her ekranda açar/kapatır. Aynı anda tek panel; Esc kapatır. */
  const shut=x=>{x.classList.remove('open');const g=x.querySelector('.nv-tg');if(g)g.setAttribute('aria-expanded','false');};
  const show=nv=>{$$('.site-top .nv.open').forEach(x=>{if(x!==nv)shut(x);});nv.classList.add('open');const g=nv.querySelector('.nv-tg');if(g)g.setAttribute('aria-expanded','true');};
- const desk=()=>innerWidth>1100,hov=matchMedia('(hover:hover) and (pointer:fine)');
+ const desk=()=>innerWidth>1100;
  $$('.site-top .nv').forEach(nv=>{let tOpen=0,tShut=0;
   nv.addEventListener('mouseenter',()=>{if(!desk()||!hov.matches)return;clearTimeout(tShut);clearTimeout(tOpen);
    tOpen=setTimeout(()=>show(nv),$('.site-top .nv.open')?0:110);});
@@ -533,7 +560,7 @@ urBuild();
 
 /* Revize 3 · görsel odak noktası: başlık, alan ve menü görselleri dosya adına göre kırpılır ("yatay% dikey%").
    Varsayılan CSS'te 50% 25%. WordPress'te her görselin "Odak noktası" alanı IF_CMS.odak olarak gelir ve bu listenin üzerine yazar. */
-{const IF_ODAK={};
+{const IF_ODAK={'premium-poster':'72% 50%'};
  const all=()=>Object.assign({},IF_ODAK,(window.IF_CMS&&IF_CMS.odak)||{});
  const key=u=>String(u||'').split(/[?#]/)[0].split('/').pop().replace(/\.[a-z0-9]+$/i,'');
  const ok=v=>/^\s*-?\d+(\.\d+)?%\s+-?\d+(\.\d+)?%\s*$/.test(String(v||''));
@@ -543,3 +570,18 @@ urBuild();
  scan(document);
  new MutationObserver(ms=>ms.forEach(m=>{if(m.type==='attributes'){if(m.target.matches(SEL))apply(m.target);}else m.addedNodes.forEach(n=>{if(n.nodeType===1)scan(n);});}))
   .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['src']});}
+
+/* ===== Revize 7 ===== */
+/* açılış slaytları: premium kit karesinde metin bloğu sloganla değişir (kare WordPress'te Bölüm görselleri → video "premium") */
+{const vh=$('#vh'),K=vh&&vh.querySelector('.vh-kit'),M=vh&&vh.querySelector('.vh-copy:not(.vh-kit)');
+ if(vh&&K&&M){const sync=()=>{const v=vh.querySelector('.vh-v.on'),on=!!(v&&v.dataset.copy==='kit');vh.classList.toggle('kit-on',on);
+   K.setAttribute('aria-hidden',String(!on));M.setAttribute('aria-hidden',String(on));
+   K.querySelectorAll('a').forEach(a=>{if(on)a.removeAttribute('tabindex');else a.setAttribute('tabindex','-1');});
+   M.querySelectorAll('a').forEach(a=>{if(on)a.setAttribute('tabindex','-1');else a.removeAttribute('tabindex');});};
+  new MutationObserver(sync).observe(vh.querySelector('.vh-media'),{subtree:true,attributes:true,attributeFilter:['class']});sync();}}
+/* yeni klinik alanlar (Göğüs Hastalıkları, Oftalmoloji): ürün eşleştirmesi firma onayı bekliyor — sayfada küçük not (WordPress: IF_CMS.orn.alanNot=false kapatır) */
+{const NOTE=[5,6],draw=()=>{const g=$('#alG');if(!g)return;const i=IFU.AL.indexOf(new URLSearchParams(location.search).get('alan')||'');let n=$('#alNote');
+  const on=NOTE.includes(i)&&!(window.IF_CMS&&IF_CMS.orn&&IF_CMS.orn.alanNot===false);
+  if(!on){if(n)n.remove();return;}if(!n){n=document.createElement('p');n.id='alNote';n.className='al-note';g.before(n);}n.textContent=tr('al_ph_note');};
+ if(P==='uzmanlik'){draw();IF.onLang.push(draw);}}
+

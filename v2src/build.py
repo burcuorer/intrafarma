@@ -18,11 +18,11 @@ s = io.open(os.path.join(HERE, 'app.html'), encoding='utf-8').read()
 
 PAGES = [  # dosya, sayfa kimliği, ilk başlık (dil seçilince JS günceller)
  ('index.html', 'home', 'Intrafarma'),
- ('uzmanlik.html', 'uzmanlik', 'Uzmanlık · Intrafarma'),
+ ('uzmanlik.html', 'uzmanlik', 'Klinik Alanlar · Intrafarma'),
  ('urunler.html', 'urunler', 'Ürünler · Intrafarma'),
- ('uretim.html', 'uretim', 'Üretim ve özel marka · Intrafarma'),
+ ('uretim.html', 'uretim', 'Markanıza Özel Üretim · Intrafarma'),
  ('bilim.html', 'bilim', 'Bilimsel platform · Intrafarma'),
- ('guncel.html', 'guncel', 'Medya · Intrafarma'),
+ ('guncel.html', 'guncel', 'Medya Merkezi · Intrafarma'),
  ('iletisim.html', 'iletisim', 'İletişim · Intrafarma'),
  ('hakkimizda.html', 'hakkimizda', 'Hakkımızda · Intrafarma'),
  ('kvkk.html', 'kvkk', 'KVKK aydınlatma metni ve çerez politikası · Intrafarma'),

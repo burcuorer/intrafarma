@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) { exit; }
 define('INTRAFARMA_CAP', 'edit_pages');
 define('INTRAFARMA_LANG_NAMES', array('tr' => 'Türkçe', 'en' => 'English', 'es' => 'Español', 'fr' => 'Français', 'ar' => 'العربية', 'it' => 'Italiano', 'ru' => 'Русский'));
 define('INTRAFARMA_GROUPS', array('Ana sayfa', 'Menü', 'Uzmanlık', 'Ürünler', 'Üretim', 'Bilim', 'Güncel', 'İletişim', 'Hakkımızda',
-    'Sağlık çalışanı girişi', 'Sağlık çalışanları alanı (Pro)', 'Alt bilgi', 'Çerez bandı ve video'));
+    'Sağlık profesyoneli girişi', 'Sağlık profesyonelleri alanı (Pro)', 'Alt bilgi', 'Çerez bandı ve video'));
 /* iletişim bilgileri ayrı sayfadan yönetilir */
 define('INTRAFARMA_TX_SKIP', array('il_av', 'il_tv', 'il_mv'));
 
@@ -116,7 +116,7 @@ function intrafarma_admin_home() {
         array('intrafarma-urunler', 'Ürünler', 'Ürün ekleme, silme, sıralama; ad, kategori, görsel ve açıklama.', 'dashicons-products'),
         array('intrafarma-ortaklar', 'İş ortakları', 'Ana sayfa ve Hakkımızda\'daki logo şeridi: logo, ad ve web adresi.', 'dashicons-groups'),
         array('intrafarma-bolumler', 'Bölüm görselleri', 'Klinik alan ve üretim fotoğrafları, danışma kurulu fotoğrafları, yazı kapakları, tanıtım filmi; kart sayıları ve "Örnektir" etiketi.', 'dashicons-format-gallery'),
-        array('intrafarma-talepler', 'Talepler', 'Sitedeki numune, belge ve teklif talepleri; e-postanın gideceği adres. Yanıtı siz elle gönderirsiniz.', 'dashicons-email-alt'),
+        array('intrafarma-talepler', 'Talepler', 'Sitedeki belge ve bilgi talepleri; e-postanın gideceği adres. Yanıtı siz elle gönderirsiniz.', 'dashicons-email-alt'),
         array('intrafarma-iletisim', 'İletişim ve sosyal medya', 'Adres, telefon, e-posta ve sosyal medya bağlantıları.', 'dashicons-location'),
     );
     echo '<div class="if-cards">';
@@ -136,7 +136,7 @@ function intrafarma_admin_home() {
         <ol><li>Sitede değiştirmek istediğiniz cümleyi kopyalayın.</li><li><b>Intrafarma → Metinler</b>'e girin, üstteki <b>arama kutusuna</b> yapıştırıp Ara'ya basın.</li><li>Çıkan kutudaki yazıyı düzeltin ve <b>Kaydet</b>'e basın.</li><li>Diğer diller için üstteki dil sekmesini değiştirip aynı işlemi yapın. Soldaki sütun Türkçesini gösterir.</li></ol>
         <p>Kutuyu boşaltıp kaydederseniz yazı ilk haline döner. <code>{n}</code> gibi süslü parantezli parçalar otomatik dolan yerlerdir (sayı, ürün adı); silmeyin. <code>&lt;em&gt;sözcük&lt;/em&gt;</code> arasındaki sözcük başlıkta renkli görünür.</p></details>
       <details><summary>Ürün eklemek ya da düzenlemek</summary>
-        <ol><li><b>Intrafarma → Ürünler</b>'e girin.</li><li>Yeni ürün için en alttaki <b>Ürün ekle</b>'ye basın; var olan ürünü düzenlemek için adına tıklayın.</li><li>Ad ve kategori zorunludur. Görsel ve açıklama isteğe bağlıdır; açıklama boşsa sitede genel bir tanıtım cümlesi görünür.</li><li><b>Erişim</b>: "Herkese açık" ürünlerin bilgisi tüm ziyaretçilere, diğerlerininki yalnızca sağlık çalışanı girişi yapanlara gösterilir.</li><li>Sırayı ↑ ↓ ile değiştirin, <b>Kaydet</b>'e basın.</li></ol>
+        <ol><li><b>Intrafarma → Ürünler</b>'e girin.</li><li>Yeni ürün için en alttaki <b>Ürün ekle</b>'ye basın; var olan ürünü düzenlemek için adına tıklayın.</li><li>Ad ve kategori zorunludur. Görsel ve açıklama isteğe bağlıdır; açıklama boşsa sitede genel bir tanıtım cümlesi görünür.</li><li><b>Erişim</b>: "Herkese açık" ürünlerin bilgisi tüm ziyaretçilere, diğerlerininki yalnızca sağlık profesyoneli girişi yapanlara gösterilir.</li><li>Sırayı ↑ ↓ ile değiştirin, <b>Kaydet</b>'e basın.</li></ol>
         <p>Ürünün adı değişirse sayfa adresi de değişir (örnek: "Regenflex Kit" → <code>?urun=regenflex-kit</code>).</p></details>
       <details><summary>İş ortağı logosu eklemek</summary>
         <ol><li><b>Intrafarma → İş ortakları</b>'na girin, <b>İş ortağı ekle</b>'ye basın.</li><li><b>Logo seç</b> ile görseli yükleyin. Beyaz zeminli, yatay bir JPG ya da PNG en iyi sonucu verir.</li><li>Adı ve web adresini yazın, <b>Kaydet</b>'e basın.</li></ol></details>
@@ -267,7 +267,7 @@ function intrafarma_prod_row($i, $p, $axes) {
     $h .= '<h3 class="if-h">1 · Temel bilgiler</h3><div class="if-grid"><label>Ürün adı<input type="text" class="if-name regular-text" data-f="n" value="' . esc_attr($p['n']) . '" required></label>';
     $h .= '<label>Ürün grubu<select data-f="a">';
     foreach ($axes as $ai => $an) { $h .= '<option value="' . (int) $ai . '"' . selected((int) $p['a'], $ai, false) . '>' . str_pad((string) ($ai + 1), 2, '0', STR_PAD_LEFT) . ' · ' . esc_html($an) . '</option>'; }
-    $h .= '</select></label><label>Kimler görür<select data-f="open"><option value="0"' . selected(!empty($p['open']), false, false) . '>Yalnızca sağlık çalışanları (teknik ayrıntı)</option><option value="1"' . selected(!empty($p['open']), true, false) . '>Herkese açık</option></select></label><label class="if-check"><input type="checkbox" data-f="pr"' . checked(!empty($p['pr']), true, false) . '> Ana sayfadaki premium bantta göster</label><label class="if-check"><input type="checkbox" data-f="nw"' . checked(!empty($p['nw']), true, false) . '> Kartta &quot;Yeni&quot; etiketi göster</label></div>';
+    $h .= '</select></label><label>Kimler görür<select data-f="open"><option value="0"' . selected(!empty($p['open']), false, false) . '>Yalnızca sağlık profesyonelleri (teknik ayrıntı)</option><option value="1"' . selected(!empty($p['open']), true, false) . '>Herkese açık</option></select></label><label class="if-check"><input type="checkbox" data-f="pr"' . checked(!empty($p['pr']), true, false) . '> Ana sayfadaki premium bantta göster</label><label class="if-check"><input type="checkbox" data-f="nw"' . checked(!empty($p['nw']), true, false) . '> Kartta &quot;Yeni&quot; etiketi göster</label></div>';
     $h .= '<fieldset class="if-cas"><legend>Klinik alanlar</legend>';
     $ca = array_map('intval', (array) $p['ca']);
     foreach (intrafarma_ca_names() as $ci => $cn) { $h .= '<label><input type="checkbox" data-ca="' . $ci . '"' . checked(in_array($ci, $ca, true), true, false) . '> ' . esc_html($cn) . '</label>'; }
@@ -295,12 +295,12 @@ function intrafarma_prod_row($i, $p, $axes) {
         $h .= '<label>Kısa açıklama <small>kartta ve ürün sayfasının başında, 1–2 cümle</small><textarea rows="2" data-f="d.' . $l . '"' . $rtl . '>' . esc_textarea($g('d')) . '</textarea></label>';
         $h .= '<label>Ürün açıklaması <small>ürün sayfasında; paragrafları boş satırla ayırın</small><textarea rows="6" data-f="u.' . $l . '"' . $rtl . '>' . esc_textarea($g('u')) . '</textarea></label>';
         $h .= '<label>Öne çıkanlar <small>her satır bir madde</small><textarea rows="4" data-f="f.' . $l . '"' . $rtl . '>' . esc_textarea($g('f')) . '</textarea></label>';
-        $h .= '<label>Teknik bilgiler <small>yalnızca sağlık çalışanları görür; her satır “Başlık: değer” (ör. Hacim: 2 ml)</small><textarea rows="5" data-f="t.' . $l . '"' . $rtl . '>' . esc_textarea($g('t')) . '</textarea></label>';
+        $h .= '<label>Teknik bilgiler <small>yalnızca sağlık profesyonelleri görür; her satır “Başlık: değer” (ör. Hacim: 2 ml)</small><textarea rows="5" data-f="t.' . $l . '"' . $rtl . '>' . esc_textarea($g('t')) . '</textarea></label>';
         $h .= '</div>'; $first = false;
     }
     $h .= '<p class="description">Boş bırakılan dilde İngilizce, o da yoksa Türkçe yazı gösterilir.</p>';
     // 5. belgeler
-    $h .= '<h3 class="if-h">5 · Belgeler <small>sağlık çalışanları alanında</small></h3><div class="if-docs">';
+    $h .= '<h3 class="if-h">5 · Belgeler <small>sağlık profesyonelleri alanında</small></h3><div class="if-docs">';
     foreach ((array) $p['docs'] as $d) { $h .= intrafarma_doc_row((array) $d); }
     $h .= '</div><p><button type="button" class="button if-dadd">+ Belge ekle</button></p><p class="description">PDF yüklenen belge indirilebilir. Dosyası olmayan belge “Talep et” olarak görünür; talep e-postanıza gelir, siz elle gönderirsiniz.</p>';
     $h .= '</div></details>';
@@ -516,7 +516,7 @@ function intrafarma_admin_set() {
     echo '<tr><th><label for="if_adres">Adres</label></th><td><textarea id="if_adres" name="set[adres]" rows="3" class="large-text">' . esc_textarea($s['adres']) . '</textarea><p class="description">Boş bırakılırsa sitede "Hazırlanıyor" yazar.</p></td></tr>';
     echo '<tr><th><label for="if_tel">Telefon</label></th><td><input id="if_tel" type="text" name="set[telefon]" class="regular-text" value="' . esc_attr($s['telefon']) . '" placeholder="+90 212 000 00 00"><p class="description">Telefondan tıklanınca arama başlatır.</p></td></tr>';
     echo '<tr><th><label for="if_mail">E-posta</label></th><td><input id="if_mail" type="email" name="set[eposta]" class="regular-text" value="' . esc_attr($s['eposta']) . '" placeholder="info@intrafarma.com.tr"></td></tr>';
-    echo '</tbody></table><h2>Ürün kataloğu</h2><p>Katalog yalnızca Pro alanında (sağlık çalışanı girişinden sonra) indirilebilir. PDF yükleyin ya da kütüphaneden seçin.</p><table class="form-table"><tbody>';
+    echo '</tbody></table><h2>Ürün kataloğu</h2><p>Katalog yalnızca Pro alanında (sağlık profesyoneli girişinden sonra) indirilebilir. PDF yükleyin ya da kütüphaneden seçin.</p><table class="form-table"><tbody>';
     foreach (array('katalog_tr' => 'Türkçe katalog (PDF)', 'katalog_en' => 'İngilizce katalog (PDF)') as $k => $lab) {
         echo '<tr><th><label for="if_' . $k . '">' . $lab . '</label></th><td><div class="if-file"><input id="if_' . $k . '" type="url" name="set[' . $k . ']" class="large-text if-url" value="' . esc_attr($s[$k]) . '" placeholder="https://"> <button type="button" class="button if-pickf" data-type="application/pdf">PDF seç</button></div></td></tr>';
     }
